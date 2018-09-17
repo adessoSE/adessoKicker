@@ -21,8 +21,7 @@ public class Application {
     @Bean
     public CommandLineRunner demo(UserRepository userRepository) {
         return (args) -> {
-            
-        	// save a couple of customers
+            // save a couple of customers
             userRepository.save(new User("Jack", "Bauer", "jack.bauer@testmail.com"));
 
 

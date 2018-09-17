@@ -1,16 +1,22 @@
 package de.adesso.adessoKicker.objects;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 public class Team {
 
-	long matchId;
-	Datetime date;
-	int teamAPoints;
-	int teamBPoints;
-	Team teamA;
-	Team teamB;
-	Team winner;
-	String kicker;
-	Tournament tournament;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+	private long matchId;
+	private Datetime date;
+	private int teamAPoints;
+	private int teamBPoints;
+	private Team teamA;
+	private Team teamB;
+	private Team winner;
+	private String kicker;
+	private Tournament tournament;
 	
 	public Team() {
 		teamA = new Team();
