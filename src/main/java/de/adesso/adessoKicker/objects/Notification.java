@@ -3,6 +3,7 @@ package de.adesso.adessoKicker.objects;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 public class Notification {
 
@@ -12,16 +13,18 @@ public class Notification {
 
     private String notificationType;
 
-    private Datetime time;
+    private Date time;
 
     private User user;
+
+    private String notification;
 
     public Notification() {
 
         User user = new User();
     }
 
-    public Notification(long notificationId, String notificationType, Datetime time, User user) {
+    public Notification(long notificationId, String notificationType, Date time, User user) {
         this.notificationId = notificationId;
         this.notificationType = notificationType;
         this.time = time;
@@ -44,11 +47,11 @@ public class Notification {
         return notificationType;
     }
 
-    public void setTime(Datetime time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
-    public Datetime getTime() {
+    public Date getTime() {
         return time;
     }
 
@@ -58,5 +61,13 @@ public class Notification {
 
     public User getUser() {
         return user;
+    }
+
+    public void setNotification(String notification) {
+        this.notification = notification;
+    }
+
+    public String getNotification() {
+        return notification;
     }
 }
