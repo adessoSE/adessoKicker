@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name="tournament")
+@Table(name="Tournament")
 public class Tournament {
 
 	@Id
@@ -20,8 +20,10 @@ public class Tournament {
 	private Date startDate;
 	private Date endDate;
 	String format;
-
-    @ManyToOne(targetEntity = Team.class)
+	@OneToMany(targetEntity= Match.class)
+	private List<Match> matches;
+	//Ein Tournament hat viele Teams
+    @OneToMany(targetEntity = Team.class)
     private List<Team> teams;
 
 	protected Tournament() {

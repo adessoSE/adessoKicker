@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "match")
+@Table(name = "Match")
 public class Match {
 
     @Id
@@ -23,9 +23,11 @@ public class Match {
 
     private String kicker;
 
+    /*
     @OneToOne(targetEntity = Tournament.class)
     private Tournament tournament;
-
+	*/
+    
     @ManyToOne(targetEntity = Team.class)
     private Team teamA;
 
@@ -38,7 +40,7 @@ public class Match {
         Team winner = new Team();
     }
 
-    public Match(long matchId, Date date, int teamAPoints, int teamBPoints, Team winner, String kicker, Tournament tournament, Team teamA, Team teamB) {
+    public Match(long matchId, Date date, int teamAPoints, int teamBPoints, Team winner, String kicker, Team teamA, Team teamB) {
 
         this.matchId = matchId;
         this.date = date;
@@ -46,7 +48,7 @@ public class Match {
         this.teamBPoints = teamBPoints;
         this.winner = winner;
         this.kicker = kicker;
-        this.tournament = tournament;
+        //this.tournament = tournament;
         this.teamA = teamA;
         this.teamB = teamB;
 
@@ -99,7 +101,7 @@ public class Match {
     public void setKicker(String kicker) {
         this.kicker = kicker;
     }
-
+/*
     public Tournament getTournament() {
         return tournament;
     }
@@ -107,7 +109,7 @@ public class Match {
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
     }
-
+*/
     public Team getTeamA() {
         return teamA;
     }
