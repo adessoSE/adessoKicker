@@ -1,11 +1,11 @@
 package de.adesso.adessoKicker.objects;
 
+
 import javax.persistence.*;
-import java.lang.annotation.Target;
 import java.util.Date;
 
 @Entity
-@Table(name = "tbNotification")
+@Table(name = "notification")
 public class Notification {
 
     @Id

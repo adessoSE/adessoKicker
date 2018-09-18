@@ -1,9 +1,10 @@
 package de.adesso.adessoKicker.objects;
 
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tbUser")
+@Table(name = "user")
 public class User {
 
     @Id
@@ -83,7 +84,7 @@ public class User {
     @Override
     public String toString() {
 
-        return "Name: " + this.getFirstName() + " " + this.getLastName() + ", e-Mail " + this.email + ", Wins: " + this.wins + ", Losses: " + this.losses + ", ID: " + this.idUser;
+        return "Name: " + this.firstName + " " + this.lastName + ", e-Mail " + this.email + ", Wins: " + this.wins + ", Losses: " + this.losses + ", ID: " + this.idUser;
     }
 
 }

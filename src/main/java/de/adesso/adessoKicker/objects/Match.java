@@ -1,10 +1,11 @@
 package de.adesso.adessoKicker.objects;
 
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "tbMatch")
+@Table(name = "match")
 public class Match {
 
     @Id

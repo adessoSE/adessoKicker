@@ -4,6 +4,7 @@ package de.adesso.adessoKicker.objects;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "team")
 public class Team {
 
     @Id
