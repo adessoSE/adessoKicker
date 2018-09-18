@@ -23,6 +23,7 @@ public class Tournament {
 
 	@OneToMany(targetEntity= Match.class)
 	private List<Match> matches;
+
 	//Ein Tournament hat viele Teams
     @OneToMany(targetEntity = Team.class)
     private List<Team> teams;
