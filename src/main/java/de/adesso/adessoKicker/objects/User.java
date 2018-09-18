@@ -15,6 +15,10 @@ public class User {
 
     private String lastName;
 
+    private String username;
+
+    private String password;
+
     private String email;
 
     private long wins = 0;
@@ -87,6 +91,8 @@ public class User {
                 "idUser=" + idUser +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", wins=" + wins +
                 ", losses=" + losses +

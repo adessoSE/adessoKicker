@@ -16,7 +16,7 @@ public class Notification {
 
     private Date time;
 
-    @OneToMany(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class)
     private User user;
 
     private String notificationMessage;
