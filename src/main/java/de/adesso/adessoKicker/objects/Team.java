@@ -14,7 +14,7 @@ public class Team {
     private String teamName;
 
     private long teamWins;
- 
+
     private long teamLosses;
 
     @OneToOne(targetEntity = User.class)
@@ -22,13 +22,7 @@ public class Team {
 
     @OneToOne(targetEntity = User.class)
     private User playerB;
-   
-    /* 
-    * Ein Team kann unabhängig von einem Tournament existieren
-    @OneToOne(targetEntity = Tournament.class)
-    private Tournament tournament;
-	*
-	*/
+
     protected Team() {
         User playerA = new User();
         User playerB = new User();
@@ -64,15 +58,7 @@ public class Team {
     public void setTeamWins(long teamWins) {
         this.teamWins = teamWins;
     }
-/*
-    public Tournament getTournament() {
-        return tournament;
-    }
 
-    public void setTournament(Tournament tournament) {
-        this.tournament = tournament;
-    }
-*/
     public long getTeamLosses() {
         return teamLosses;
     }
@@ -97,4 +83,15 @@ public class Team {
         this.playerB = playerB;
     }
 
+    @Override
+    public String toString() {
+        return "Team{" +
+                "teamId=" + teamId +
+                ", teamName='" + teamName + '\'' +
+                ", teamWins=" + teamWins +
+                ", teamLosses=" + teamLosses +
+                ", playerA=" + playerA +
+                ", playerB=" + playerB +
+                '}';
+    }
 }

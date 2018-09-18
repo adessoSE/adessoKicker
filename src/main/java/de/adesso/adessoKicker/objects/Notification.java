@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "notification")
+@Table(name = "notificationMessage")
 public class Notification {
 
     @Id
@@ -19,15 +19,16 @@ public class Notification {
     @OneToMany(targetEntity = User.class)
     private User user;
 
-    private String notification;
+    private String notificationMessage;
 
     public Notification() {
 
         User user = new User();
     }
 
-    public Notification(String notificationType, Date time, User user) {
+    public Notification(String notificationType, String notificationMessage, Date time, User user) {
         this.notificationType = notificationType;
+        this.notificationMessage = notificationMessage;
         this.time = time;
         this.user = user;
     }
@@ -64,11 +65,22 @@ public class Notification {
         return user;
     }
 
-    public void setNotification(String notification) {
-        this.notification = notification;
+    public void setNotificationMessage(String notificationMessage) {
+        this.notificationMessage = notificationMessage;
     }
 
-    public String getNotification() {
-        return notification;
+    public String getNotificationMessage() {
+        return notificationMessage;
+    }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "notificationId=" + notificationId +
+                ", notificationType='" + notificationType + '\'' +
+                ", time=" + time +
+                ", user=" + user +
+                ", notificationMessage='" + notificationMessage + '\'' +
+                '}';
     }
 }

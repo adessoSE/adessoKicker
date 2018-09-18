@@ -83,8 +83,13 @@ public class User {
 
     @Override
     public String toString() {
-
-        return "Name: " + this.firstName + " " + this.lastName + ", e-Mail " + this.email + ", Wins: " + this.wins + ", Losses: " + this.losses + ", ID: " + this.idUser;
+        return "User{" +
+                "idUser=" + idUser +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", wins=" + wins +
+                ", losses=" + losses +
+                '}';
     }
-
 }

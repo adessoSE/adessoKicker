@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name="Tournament")
+@Table(name="tournament")
 public class Tournament {
 
 	@Id
@@ -19,7 +19,8 @@ public class Tournament {
 	private String tournamentName;
 	private Date startDate;
 	private Date endDate;
-	String format;
+	private String format;
+
 	@OneToMany(targetEntity= Match.class)
 	private List<Match> matches;
 	//Ein Tournament hat viele Teams
@@ -46,7 +47,15 @@ public class Tournament {
 		this.tournamentId = tournamentId;
 	}
 
-	public Date getStartDate() {
+    public String getTournamentName() {
+        return tournamentName;
+    }
+
+    public void setTournamentName(String tournamentName) {
+        this.tournamentName = tournamentName;
+    }
+
+    public Date getStartDate() {
 		return startDate;
 	}
 
@@ -77,4 +86,16 @@ public class Tournament {
 	public void setTeams(List<Team> teams) {
 		this.teams = teams;
 	}
+
+    @Override
+    public String toString() {
+        return "Tournament{" +
+                "tournamentId=" + tournamentId +
+                ", tournamentName='" + tournamentName + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", format='" + format + '\'' +
+                ", teams=" + teams +
+                '}';
+    }
 }
