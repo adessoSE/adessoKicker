@@ -17,9 +17,13 @@ public class Tournament {
 	private long tournamentId;
 
 	private String tournamentName;
+
+	@Date
 	private Date startDate;
 	private Date endDate;
 	private String format;
+	private Team winner;
+	private  boolean finished;
 
 	@OneToMany(targetEntity= Match.class)
 	private List<Match> matches;
@@ -28,7 +32,7 @@ public class Tournament {
     @OneToMany(targetEntity = Team.class)
     private List<Team> teams;
 
-	protected Tournament() {
+	public Tournament() {
 
 	}
 
@@ -38,6 +42,8 @@ public class Tournament {
 		this.endDate = endDate;
 		this.format = format;
 		this.teams = teams;
+		this.winner = null;
+		this.finished = false;
 	}
 
 	public long getTournamentId() {
@@ -87,6 +93,22 @@ public class Tournament {
 	public void setTeams(List<Team> teams) {
 		this.teams = teams;
 	}
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setWinner(Team winner) {
+        this.winner = winner;
+    }
+
+    public Team getWinner() {
+        return winner;
+    }
 
     @Override
     public String toString() {
