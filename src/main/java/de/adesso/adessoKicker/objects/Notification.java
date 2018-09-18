@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "notificationMessage")
+@Table(name = "notification")
 public class Notification {
 
     @Id
@@ -16,7 +16,7 @@ public class Notification {
 
     private Date time;
 
-    @OneToMany(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class)
     private User user;
 
     private String notificationMessage;
