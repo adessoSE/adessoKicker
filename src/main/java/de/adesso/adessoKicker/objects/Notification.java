@@ -1,10 +1,11 @@
 package de.adesso.adessoKicker.objects;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.lang.annotation.Target;
 import java.util.Date;
 
+@Entity
+@Table(name = "tbNotification")
 public class Notification {
 
     @Id
@@ -15,6 +16,7 @@ public class Notification {
 
     private Date time;
 
+    @ManyToOne(targetEntity = User.class)
     private User user;
 
     private String notification;
@@ -24,8 +26,7 @@ public class Notification {
         User user = new User();
     }
 
-    public Notification(long notificationId, String notificationType, Date time, User user) {
-        this.notificationId = notificationId;
+    public Notification(String notificationType, Date time, User user) {
         this.notificationType = notificationType;
         this.time = time;
         this.user = user;

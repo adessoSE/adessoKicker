@@ -1,10 +1,10 @@
 package de.adesso.adessoKicker.objects;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "tbMatch")
 public class Match {
 
     @Id
@@ -17,14 +17,18 @@ public class Match {
 
     private int teamBPoints;
 
+    @OneToOne(targetEntity = Team.class)
     private Team winner;
 
     private String kicker;
 
+    @OneToOne(targetEntity = Tournament.class)
     private Tournament tournament;
 
+    @ManyToOne(targetEntity = Team.class)
     private Team teamA;
 
+    @ManyToOne(targetEntity = Team.class)
     private Team teamB;
 
     public Match() {

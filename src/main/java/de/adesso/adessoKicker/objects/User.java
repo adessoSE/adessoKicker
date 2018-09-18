@@ -20,7 +20,7 @@ public class User {
 
     private long losses = 0;
 
-    public User() {}
+    protected User() {}
 
     public User(String firstName, String lastName, String email) {
         this.firstName = firstName;

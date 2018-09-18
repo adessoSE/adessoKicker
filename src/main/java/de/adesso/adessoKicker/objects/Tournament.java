@@ -1,37 +1,34 @@
 package de.adesso.adessoKicker.objects;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+
 
 @Entity
 @Table(name="tbTournament")
 public class Tournament {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	private long tournamentId;
+
 	private Date startDate;
 	private Date endDate;
 	String format;
-	@ManyToOne
-	List<Team> teams;
-	
+
+	//private List<Team> teams;
+    @ManyToOne(targetEntity = Team.class)
+    private List<Team> teams;
+
 	public Tournament() {
-		teams = new ArrayList<Team>();
-		
+
+
 	}
-	
-	public Tournament(long tournamentId, Date startDate, Date endDate, String format, List<Team> teams) {
-		super();
-		this.tournamentId = tournamentId;
+
+	public Tournament(Date startDate, Date endDate, String format, List<Team> teams) {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.format = format;
@@ -61,12 +58,16 @@ public class Tournament {
 	public void setFormat(String format) {
 		this.format = format;
 	}
+
+	/***
 	public List<Team> getTeams() {
 		return teams;
 	}
+     ***/
+	/***
 	public void setTeams(List<Team> teams) {
 		this.teams = teams;
 	}
-	
-	
+***/
+
 }
