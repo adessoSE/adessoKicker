@@ -59,15 +59,11 @@ public class Tournament {
 		this.format = format;
 	}
 
-	/***
 	public List<Team> getTeams() {
 		return teams;
 	}
-     ***/
-	/***
+
 	public void setTeams(List<Team> teams) {
 		this.teams = teams;
 	}
-***/
-
 }
