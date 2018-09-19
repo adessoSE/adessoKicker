@@ -58,7 +58,7 @@ public class TournamentController {
     public ModelAndView tournamentPage(@PathVariable("tournamentId") long id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournament", tournamentService.returnTournament(id));
-        modelAndView.setViewName("tournamentPage");
+        modelAndView.setViewName("tournamentpage");
         return modelAndView;
     }
 
