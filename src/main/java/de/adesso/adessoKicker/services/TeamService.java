@@ -93,8 +93,9 @@ public class TeamService {
 		teamRepository.save(teamRepository.findById(id).get());
 	}
 	
-	public Team findTeamByTeamName(String teamName)
+	public Team findByTeamName(String teamName)
 	{
 		return teamRepository.findByTeamName(teamName);
 	}
+	
 }

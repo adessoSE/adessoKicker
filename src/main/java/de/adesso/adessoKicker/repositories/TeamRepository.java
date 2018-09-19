@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface TeamRepository extends CrudRepository<Team, Long> {
-    List<Team> findByTeamName(String teamName);
+    Team findByTeamName(String teamName);
 }

@@ -62,7 +62,7 @@ public class TeamController {
 	public ModelAndView createNewTeam(@Valid Team team, BindingResult bindingResult)
 	{
 		ModelAndView modelAndView = new ModelAndView();
-		Team teamExists = teamService.findTeamByTeamName(team.getTeamName());
+		Team teamExists = teamService.findByTeamName(team.getTeamName());
 		if (teamExists != null) {
 			bindingResult.rejectValue("teamName", "error.teamName", "Fail: Team Name already exists.");
 		}
