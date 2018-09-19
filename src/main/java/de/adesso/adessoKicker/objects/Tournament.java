@@ -17,31 +17,29 @@ public class Tournament {
 	private long tournamentId;
 
 	private String tournamentName;
-
-	@Date
 	private Date startDate;
 	private Date endDate;
 	private String format;
+
+	@OneToOne(targetEntity = Team.class, cascade = CascadeType.ALL)
 	private Team winner;
 	private  boolean finished;
 
 	@OneToMany(targetEntity= Match.class)
 	private List<Match> matches;
 
-	//Ein Tournament hat viele Teams
-    @OneToMany(targetEntity = Team.class)
-    private List<Team> teams;
+    @OneToMany(targetEntity = Team.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Team> teams = new ArrayList<>();
 
 	public Tournament() {
 
 	}
 
-	public Tournament(String tournamentName, Date startDate, Date endDate, String format, List<Team> teams) {
+	public Tournament(String tournamentName, Date startDate, String format) {
 		this.tournamentName = tournamentName;
 	    this.startDate = startDate;
-		this.endDate = endDate;
 		this.format = format;
-		this.teams = teams;
+        this.teams = new ArrayList<>();
 		this.winner = null;
 		this.finished = false;
 	}
@@ -104,6 +102,14 @@ public class Tournament {
 
     public void setWinner(Team winner) {
         this.winner = winner;
+    }
+
+    public void addTeam(Team team) {
+	    teams.add(team);
+    }
+
+    public void removeTeam(Team team) {
+	    teams.remove(team);
     }
 
     public Team getWinner() {

@@ -38,6 +38,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password = "test";
         this.wins = 0;
         this.losses = 0;
     }

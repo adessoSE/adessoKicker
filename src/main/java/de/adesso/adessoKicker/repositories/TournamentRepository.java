@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TournamentRepository extends CrudRepository<Tournament, Long> {
 
-    Tournament findByTounamentName(String tournamentName);
+    Tournament findByTournamentName(String tournamentName);
 
     List<Tournament> findByFormat(String format);
 }

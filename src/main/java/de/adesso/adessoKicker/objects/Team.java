@@ -17,18 +17,18 @@ public class Team {
 
     private long teamLosses;
 
-    @OneToOne(targetEntity = User.class)
+    @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
     private User playerA;
 
-    @OneToOne(targetEntity = User.class)
+    @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
     private User playerB;
 
-    protected Team() {
-        User playerA = new User();
-        User playerB = new User();
+    public Team() {
+        //User playerA = new User();
+        //User playerB = new User();
     }
 
-    public Team(String teamName) {
+    public Team(String teamName, User playerA, User playerB) {
 
         this.teamName = teamName;
         this.playerA = playerA;
