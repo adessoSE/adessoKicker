@@ -1,7 +1,11 @@
 package de.adesso.adessoKicker.objects;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +21,13 @@ public class Tournament {
 	private long tournamentId;
 
 	private String tournamentName;
+
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private Date startDate;
+
+	@Nullable
+	private int maxTeams;
+
 	private Date endDate;
 	private String format;
 
@@ -38,7 +48,8 @@ public class Tournament {
 	public Tournament(String tournamentName, Date startDate, String format) {
 		this.tournamentName = tournamentName;
 	    this.startDate = startDate;
-		this.format = format;
+	    this.maxTeams = 0;
+        this.format = format;
         this.teams = new ArrayList<>();
 		this.winner = null;
 		this.finished = false;
@@ -68,7 +79,19 @@ public class Tournament {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+    public void setMatches(List<Match> matches) {
+        this.matches = matches;
+    }
+
+    public void setMaxTeams(int maxTeams) {
+        this.maxTeams = maxTeams;
+    }
+
+    public int getMaxTeams() {
+        return maxTeams;
+    }
+
+    public Date getEndDate() {
 		return endDate;
 	}
 

@@ -1,0 +1,28 @@
+<!--
+    Create Form for Tournament creation with fields:
+
+    tournamentName : String,
+    startDate : Date,
+    format : String
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tournament Form</title>
+</head>
+<body>
+<form action="#" th:action="@{/tournaments/create}" th:object="${tournament}" method="post">
+    <p>Tournament Name: <input type="text" th:field="*{tournamentName}" /></p>
+    <p>Start Date: <input type="date" th:field="*{startDate}" /></p>
+    <p>Format: <input type="text" th:field="*{format}" /></p>
+    <p>Max Players: <input type="number" th:field="*{maxTeams}"></p>
+    <p><input type="submit" value="Submit"></p>
+
+    <span th:utext="${successMessage}"></span>
+
+
+</form>
+</body>
+</html>
+
