@@ -54,7 +54,7 @@ public class TeamController {
         ModelAndView modelAndView = new ModelAndView();
         Team team = new Team();
         modelAndView.addObject("team", team);
-        modelAndView.setViewName("addTeam");
+        modelAndView.setViewName("addteam");
         return modelAndView;
     }
 	
@@ -67,14 +67,14 @@ public class TeamController {
 			bindingResult.rejectValue("teamName", "error.teamName", "Fail: Team Name already exists.");
 		}
 		if (bindingResult.hasErrors()) {
-			modelAndView.setViewName("addTeam");
+			modelAndView.setViewName("addteam");
 		}
 		else
 		{
 			teamService.addTeam(team);
 			modelAndView.addObject("successMessage", "Success: Team has been added.");
 			modelAndView.addObject("team", new Team());
-			modelAndView.setViewName("addTeam");
+			modelAndView.setViewName("addteam");
 		
 		}
 		
