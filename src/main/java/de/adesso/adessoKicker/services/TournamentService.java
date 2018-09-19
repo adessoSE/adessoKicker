@@ -6,6 +6,8 @@ import de.adesso.adessoKicker.repositories.TournamentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TournamentService {
 
@@ -25,6 +27,11 @@ public class TournamentService {
     public void addTeamToTournament(Tournament tournament, Team team) {
         tournament.addTeam(team);
         tournamentRepository.save(tournament);
+    }
+
+    public List<Tournament> listRunningTournaments() {
+
+        return tournamentRepository.findByFinished(false);
     }
 
     public void saveTournament(Tournament tournament) {

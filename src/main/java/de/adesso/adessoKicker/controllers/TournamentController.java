@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.jws.WebParam;
 import javax.validation.Valid;
 
 
@@ -42,6 +41,15 @@ public class TournamentController {
             modelAndView.setViewName("createTournament");
         }
 
+        return modelAndView;
+    }
+
+    @GetMapping("/tournaments")
+    public ModelAndView showTournamentList() {
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("tournaments", tournamentService.listRunningTournaments());
+        modelAndView.setViewName("listTournaments");
         return modelAndView;
     }
 

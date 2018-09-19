@@ -10,4 +10,6 @@ public interface TournamentRepository extends CrudRepository<Tournament, Long> {
     Tournament findByTournamentName(String tournamentName);
 
     List<Tournament> findByFormat(String format);
+
+    List<Tournament> findByFinished(boolean finished);
 }

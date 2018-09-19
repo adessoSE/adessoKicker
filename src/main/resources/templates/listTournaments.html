@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<table>
+    <tbody>
+    <tr th:if="${tournaments.empty}">
+        <td colspan="2"> No Tournaments Available </td>
+    </tr>
+    <tr th:each="tournament : ${tournaments}">
+        <td><span th:text="${tournament.tournamentName}"> Tournament Name</span></td>
+        <td><span th:text="${tournament.startDate}"> Start Date</span></td>
+        <td><span th:text="${tournament.finished}"> Finished</span></td>
+    </tr>
+    </tbody>
+</table>
+</html>
