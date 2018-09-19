@@ -12,4 +12,6 @@ public interface TournamentRepository extends CrudRepository<Tournament, Long> {
     List<Tournament> findByFormat(String format);
 
     List<Tournament> findByFinished(boolean finished);
+
+    Tournament findByTournamentId(Long id);
 }

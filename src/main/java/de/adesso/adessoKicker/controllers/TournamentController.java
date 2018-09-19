@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -50,6 +51,14 @@ public class TournamentController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournaments", tournamentService.listRunningTournaments());
         modelAndView.setViewName("listTournaments");
+        return modelAndView;
+    }
+
+    @GetMapping("/tournaments/{tournamentId}")
+    public ModelAndView tournamentPage(@PathVariable("tournamentId") long id) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("tournament", tournamentService.returnTournament(id));
+        modelAndView.setViewName("tournamentPage");
         return modelAndView;
     }
 

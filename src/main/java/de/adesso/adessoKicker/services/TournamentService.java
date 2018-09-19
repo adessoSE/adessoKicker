@@ -34,6 +34,11 @@ public class TournamentService {
         return tournamentRepository.findByFinished(false);
     }
 
+    public Tournament returnTournament(Long id) {
+
+        return tournamentRepository.findByTournamentId(id);
+    }
+
     public void saveTournament(Tournament tournament) {
         tournamentRepository.save(tournament);
     }
