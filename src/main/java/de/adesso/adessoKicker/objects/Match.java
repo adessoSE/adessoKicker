@@ -35,12 +35,9 @@ public class Match {
         Team winner = new Team();
     }
 
-    public Match(long matchId, Date date, int teamAPoints, int teamBPoints, Team winner, String kicker, Tournament tournament, Team teamA, Team teamB) {
+    public Match(Date date, String kicker, Team teamA, Team teamB) {
 
-        this.matchId = matchId;
         this.date = date;
-        this.teamAPoints = teamAPoints;
-        this.teamBPoints = teamBPoints;
         this.winner = winner;
         this.kicker = kicker;
         this.teamA = teamA;

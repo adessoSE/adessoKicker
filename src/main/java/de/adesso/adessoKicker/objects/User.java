@@ -24,21 +24,24 @@ public class User {
 
     private int active;
 
-    private long wins = 0;
+    private long wins;
 
-    private long losses = 0;
+    private long losses;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public User() {}
+    public User() {
+    	this.wins=0;
+    	this.losses=0;
+    }
 
-    public User(String firstName, String lastName, String email) {
+    public User(String firstName, String lastName, String password, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.password = "test";
+        this.email = email;
         this.wins = 0;
         this.losses = 0;
     }
