@@ -12,14 +12,14 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 @Service
-public class UserService {
+public class LoginService {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public LoginService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
 
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -30,6 +30,9 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    /**
+     * Saves a User in the User Table with a salt hashed password and a Role
+     */
     public void saveUser(User user) {
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

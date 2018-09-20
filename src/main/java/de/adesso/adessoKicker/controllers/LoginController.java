@@ -1,7 +1,12 @@
 package de.adesso.adessoKicker.controllers;
 
+/**
+ *  Controller managing user logins and registrations
+ */
+
+
 import de.adesso.adessoKicker.objects.User;
-import de.adesso.adessoKicker.services.UserService;
+import de.adesso.adessoKicker.services.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,8 +22,11 @@ import javax.validation.Valid;
 public class LoginController {
 
     @Autowired
-    private UserService userService;
+    private LoginService userService;
 
+    /**
+     *  Maps GET requests for "/login" to the login template
+     */
     @GetMapping("/login")
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
@@ -26,6 +34,11 @@ public class LoginController {
         return modelAndView;
     }
 
+
+    /**
+     *  Maps GET request for "/registration" to the registration template and bind an empty object of
+     *  the type user to it
+     */
     @GetMapping("/registration")
     public ModelAndView registration() {
         ModelAndView modelAndView = new ModelAndView();
@@ -34,6 +47,12 @@ public class LoginController {
         modelAndView.setViewName("registration");
         return modelAndView;
     }
+
+    /**
+     * Maps POST request for "/registration" checks for validity of the input and if there's already an entry in the
+     * database for the entered eMail. It everything is valid and the eMail doesn't exist in the database a new User
+     * entry will be created in the User Table and a message that the User has been created will be displayed
+     */
 
     @PostMapping("/registration")
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {

@@ -1,3 +1,7 @@
+/**
+ *  Bind views to specific URL paths
+ */
+
 package de.adesso.adessoKicker.configurations;
 
 import org.springframework.context.annotation.Bean;

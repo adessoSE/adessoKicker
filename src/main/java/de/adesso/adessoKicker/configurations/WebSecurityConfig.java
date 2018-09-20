@@ -1,3 +1,7 @@
+/**
+ *  Security configuration
+ */
+
 package de.adesso.adessoKicker.configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/admin/home")
+                .defaultSuccessUrl("/home")
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .and().logout()
