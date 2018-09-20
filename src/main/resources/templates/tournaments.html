@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Tournaments</title>
-</head>
-<body>
-<h2>Tournaments</h2>
-</body>
+<title>Tournaments</title>
+<table>
+    <tbody>
+    <tr th:if="${tournaments.empty}">
+        <td colspan="2"> No Tournaments Available </td>
+    </tr>
+    <tr th:each="tournament : ${tournaments}">
+        <td><a th:href="@{'/tournaments/' + ${tournament.tournamentId}}" ><span th:text="${tournament.tournamentName}">Tournament Name</span></a></td>
+        <td><span th:text="${tournament.startDate}"> Start Date</span></td>
+        <td><span th:text="${tournament.finished}"> Finished</span></td>
+    </tr>
+    </tbody>
+</table>
 </html>

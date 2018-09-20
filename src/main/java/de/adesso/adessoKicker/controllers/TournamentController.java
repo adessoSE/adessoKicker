@@ -25,7 +25,7 @@ public class TournamentController {
         ModelAndView modelAndView = new ModelAndView();
         Tournament tournament = new Tournament();
         modelAndView.addObject("tournament", tournament);
-        modelAndView.setViewName("createtournament");
+        modelAndView.setViewName("tournamentscreate");
         return modelAndView;
     }
 
@@ -34,12 +34,12 @@ public class TournamentController {
 
         ModelAndView modelAndView = new ModelAndView();
         if(bindingResult.hasErrors()) {
-            modelAndView.setViewName("createtournament");
+            modelAndView.setViewName("tournamentscreate");
         } else {
             tournamentService.saveTournament(tournament);
-            modelAndView.addObject("successMessage", "Tournament has been created");
+            //modelAndView.addObject("successMessage", "Tournament has been created");
             modelAndView.addObject("tournament", new Tournament());
-            modelAndView.setViewName("createtournament");
+            modelAndView.setViewName("tournamentscreate");
         }
 
         return modelAndView;
@@ -50,7 +50,7 @@ public class TournamentController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournaments", tournamentService.listRunningTournaments());
-        modelAndView.setViewName("listtournaments");
+        modelAndView.setViewName("tournaments");
         return modelAndView;
     }
 
@@ -58,7 +58,7 @@ public class TournamentController {
     public ModelAndView tournamentPage(@PathVariable("tournamentId") long id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournament", tournamentService.returnTournament(id));
-        modelAndView.setViewName("tournamentpage");
+        modelAndView.setViewName("tournamentspage");
         return modelAndView;
     }
 

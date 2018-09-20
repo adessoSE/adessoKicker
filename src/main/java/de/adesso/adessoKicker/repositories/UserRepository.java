@@ -28,4 +28,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
      * Returns a single User found with id
      */
     User findByUserId(Long id);
+
 }
