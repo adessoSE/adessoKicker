@@ -1,0 +1,47 @@
+﻿.box {
+    border: 1px solid black;
+    text-align: center;
+    width: 107.5px;
+    height: 107.5px;
+    font-size: 80px;
+    margin-left: 0px;
+    background-color: tan;
+}
+
+.team {
+    border: 1px solid black;
+    text-align: center;
+    font-size: 30px;
+    background-color: tan;
+    flex-grow: 2;
+}
+
+.scrollElement_expired{
+    opacity: 0.55;
+}
+
+.containerMatch {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.elementMatch{
+    text-align: center;
+    flex-grow: 1.3;
+}
+
+.elementMatch2{
+    text-align: center;
+    flex-grow: 2;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #333;
+    margin-top: 10px;
+    /*Makes it so that hr covers the hole page horizontally*/
+    margin-left: -100px;
+    margin-right: -100px;
+}
