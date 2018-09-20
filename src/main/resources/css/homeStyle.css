@@ -1,0 +1,20 @@
+
+.iconBig{
+	font-size: 150px;
+	text-align: center;
+	margin: 50px;
+
+}
+
+.heading{
+	text-align: center;
+	margin: 40px;
+}
+
+.homeDiv{	
+	border-style: groove;
+	margin-bottom: 50px;
+    min-height: 300px;
+	box-shadow: 6px 6px black;
+}
+

@@ -1,11 +1,126 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-<h2>HOME</h2>
-</body>
+<html>
+
+	<head>
+		<meta charset=utf-8>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+		<link rel="stylesheet" href="../css/homeStyle.css">
+	</head>
+	
+	<body>
+	
+		<div class='row'>
+			<div class='col-lg-4'></div>			
+			<div class='col-lg-4'>
+				<h1 class='heading' style='font-size: 50px; font-weight: bold;'>Adesso - Kicker</h1>
+				<h3 class='heading'>Kicker Turnier- und Ranking Tool</h3>	
+			</div>
+			
+			<div class='col-lg-4'>
+				<div class='row'>
+					<div class='col-lg-3'></div>
+					<div class='col-lg-8' style='margin-top: 20px; margin-bottom: 20px;'>
+						<h3>Eingeloggt als [NAME]</h3>
+					</div>
+				</div>
+				<div class='row'>
+					<div class='col-lg-2'></div>
+					<div class='col-lg-5 container' style='border-style: groove; margin-top: 10px; box-shadow: 4px 4px black;' onmouseover='this.style.backgroundColor = "lightgrey"; this.style.boxShadow = "8px 8px black";' onmouseout='this.style.backgroundColor = "white"; this.style.boxShadow = "4px 4px black";'>						
+						<h3 style='text-align: center; margin: 10px;'>Abmelden</h3>						
+					</div>
+					<div class='col-lg-1'></div>
+					<div class='col-lg-2 container' style='padding: 10px; border-radius: 10px; width: 90px; height: 85px' onclick='toggleNotificationList()' onmouseover=' this.style.boxShadow = "5px 5px 2px grey"; this.style.borderStyle = "groove";' onmouseout=' this.style.boxShadow = "none"; this.style.borderStyle = "none";'>
+						<span id='notificationIcon' class='glyphicon glyphicon-envelope' style='font-size: 60px; text-align: left;'>
+					</div>
+				</div>				
+			</div>			
+		</div>
+		
+		</div class='row'>
+			<div class='col-lg-10'></div>
+			<div class='col-lg-2' id='note' style='position: relative;'></div>
+		</div>
+		
+		
+		<div class='row'>
+			<div class='col-lg-6'>
+				<div class='row'>
+					<div class='col-lg-11 container homeDiv' onmouseover='onMouseInteractDiv(this)' onmouseout='outMouseInteractDiv(this)' onclick='javacript:location.href="localhost:8080/[UserID]"'>
+						<div class='row'>
+							<div class='col-lg-8'>
+								<h2 class='heading'>Dein Profil</h2>
+								<h3 class='heading'>Sieh dir dein Profil und deine Statistiken an</h3>
+							</div>
+							<div class='col-lg-4'>
+								<span class='iconBig glyphicon glyphicon-user'>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>		
+		
+			<div class='col-lg-6'>
+				<div class='row'>
+					<div class='col-lg-11 container homeDiv' style='float: right;' onmouseover='onMouseInteractDiv(this)' onmouseout='outMouseInteractDiv(this)' onclick='javacript:location.href="localhost:8080/tournament/current"'>
+						<div class='row'>
+							<div class='col-lg-3'>
+								<span class='iconBig glyphicon glyphicon-time'>
+							</div>
+							<div class='col-lg-9'>
+								<h2 class='heading'>Aktuelles Turnier</h2>
+								<h3 class='heading'>Tritt dem aktuellen Turnier bei oder sieh dir die Spielzeten an</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class='row'>
+			<div class='col-lg-6'>
+				<div class='row'>
+					<div class='col-lg-11 container homeDiv' onmouseover='onMouseInteractDiv(this)' onmouseout='outMouseInteractDiv(this)' onclick='javacript:location.href="localhost:8080/matches"'>
+						<div class='row'>
+							<div class='col-lg-8'>
+								<h2 class='heading'>Matches</h2>
+								<h3 class='heading'>Übersicht auf all deine ausstehenden und geplanten Matches</h3>
+							</div>
+							<div class='col-lg-4'>
+								<span class='iconBig glyphicon glyphicon-flag'>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>		
+		
+			<div class='col-lg-6'>
+				<div class='row'>
+					<div class='col-lg-11 container homeDiv' style='float: right;' onmouseover='onMouseInteractDiv(this)' onmouseout='outMouseInteractDiv(this)' onclick='javacript:location.href="localhost:8080/tournaments"'>
+						<div class='row'>
+							<div class='col-lg-3'>
+								<span class='iconBig glyphicon glyphicon-calendar'>
+							</div>
+							<div class='col-lg-9'>
+								<h2 class='heading'>Turnierliste</h2>
+								<h3 class='heading'>Sieh dir alle anstehende und vergangenen Turniere an </h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</body>
+	
+	<footer>
+		<script type='text/javascript' src='../js/homeUiHandle.js'></script>
+		<script>
+		</script>
+	</footer>
+		
 </html>
