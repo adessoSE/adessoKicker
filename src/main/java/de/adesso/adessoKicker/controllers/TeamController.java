@@ -1,10 +1,10 @@
+
 package de.adesso.adessoKicker.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -19,13 +19,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import de.adesso.adessoKicker.objects.Team;
 import de.adesso.adessoKicker.objects.User;
+import de.adesso.adessoKicker.repositories.UserRepository;
 import de.adesso.adessoKicker.services.TeamService;
+
 
 @RestController
 public class TeamController {
 
 	@Autowired
 	TeamService teamService;
+	@Autowired
+	UserRepository userRepository;
 	
 	@RequestMapping("/teams")
 	public List<Team> getAllTeams()
@@ -53,7 +57,12 @@ public class TeamController {
     public ModelAndView registration() {
         ModelAndView modelAndView = new ModelAndView();
         Team team = new Team();
+        User user = new User();
+        List<User> users = new ArrayList<User>();
+        userRepository.findAll().forEach(users::add);          
         modelAndView.addObject("team", team);
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("users", users);
         modelAndView.setViewName("addteam");
         return modelAndView;
     }
