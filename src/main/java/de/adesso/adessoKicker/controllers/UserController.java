@@ -10,44 +10,82 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.adesso.adessoKicker.objects.User;
-import de.adesso.adessoKicker.services.UserSearchService;
+import de.adesso.adessoKicker.services.UserService;
 
+/**
+ * Controller managing user
+ * @author caylak
+ *
+ */
 @RestController
 public class UserController {
 
 	@Autowired
-	private UserSearchService userSearchService;
+	private UserService userService;
 	
+	/**
+	 * get all users
+	 * @return
+	 */
 	@RequestMapping("/users")
 	public List<User> getAllUsers()
 	{	
-		return userSearchService.getAllUsers();
+		return userService.getAllUsers();
 	}
 	
+	/**
+	 * gets a single user identified by his id
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping("/users/{id}")
 	public User getOneUser(@PathVariable long id)
 	{
-		return userSearchService.getOneUser(id);
+		return userService.getOneUser(id);
 	}
 	
+	/**
+	 * gets the user thats currently logged in 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * NOTE:NOT WORKING YET
+	 * @param user
+	 * @return
+	 */
 	@RequestMapping("/users/you")
 	public User getUserSelf(User user)
 	{
-		return userSearchService.getUserSelf(user);
+		return userService.getUserSelf(user);
 		
 	}
 	
-	//for admins
+	/**
+	 * updates users profile parameter: object and the id of the user
+	 * @param user
+	 * @param id
+	 */
 	@RequestMapping(method=RequestMethod.PUT, value="users/edit/{id}")
 	public void updateUser(@RequestBody User user, @PathVariable long id)
 	{
-		userSearchService.updateUser(user, id);
+		userService.updateUser(user, id);
 	}
-	//for admins
+	
+	/**
+	 * deletes a user identified by its id
+	 * @param user
+	 * @param id
+	 */
 	@RequestMapping(method=RequestMethod.DELETE, value="users/delete/{id}")
 	public void deleteUser(@RequestBody User user, @PathVariable long id)
 	{
-		userSearchService.deleteUser(id);
+		userService.deleteUser(id);
 	}
 	
 }

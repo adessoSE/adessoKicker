@@ -10,7 +10,7 @@ import de.adesso.adessoKicker.objects.User;
 import de.adesso.adessoKicker.repositories.UserRepository;
 
 @Service
-public class UserSearchService {
+public class UserService {
 	
 		@Autowired
 		private UserRepository userRepository;

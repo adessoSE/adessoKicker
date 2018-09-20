@@ -22,7 +22,11 @@ import de.adesso.adessoKicker.objects.User;
 import de.adesso.adessoKicker.repositories.UserRepository;
 import de.adesso.adessoKicker.services.TeamService;
 
-
+/**
+ * Controller managing Teams
+ * @author caylak
+ *
+ */
 @RestController
 public class TeamController {
 
@@ -31,6 +35,10 @@ public class TeamController {
 	@Autowired
 	UserRepository userRepository;
 	
+	/**
+	 * gets all teams
+	 * @return
+	 */
 	@RequestMapping("/teams")
 	public List<Team> getAllTeams()
 	{
@@ -39,6 +47,11 @@ public class TeamController {
 		return allTeams;
 	}
 	
+	/**
+	 * gets a single team specified by its id
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(method=RequestMethod.GET,value="/teams/{id}")
 	public Team getOneTeam(@PathVariable long id)
 	{
@@ -53,8 +66,13 @@ public class TeamController {
 		teamService.addTeam(team);
 	}
 	*/
+	
+	/**
+	 * ui for team creation
+	 * @return
+	 */
 	@GetMapping("/teams/add")
-    public ModelAndView registration() {
+    public ModelAndView showTeams() {
         ModelAndView modelAndView = new ModelAndView();
         Team team = new Team();
         User user = new User();
@@ -66,7 +84,12 @@ public class TeamController {
         modelAndView.setViewName("addteam");
         return modelAndView;
     }
-	
+	/**
+	 * posts ui form to database
+	 * @param team
+	 * @param bindingResult
+	 * @return
+	 */
 	@PostMapping("/teams/add")
 	public ModelAndView createNewTeam(@Valid Team team, BindingResult bindingResult)
 	{
@@ -90,12 +113,21 @@ public class TeamController {
 		return modelAndView;
 	}
 	
+	/**
+	 * deletes team identified by its id
+	 * @param id
+	 */
 	@RequestMapping(method=RequestMethod.DELETE, value="/teams/delete/{id}")
 	public void deleteTeam(@PathVariable long id)
 	{
 		teamService.deleteTeam(id);
 	}
 	
+	/**
+	 * updates team identified by the actual object and the id
+	 * @param team
+	 * @param id
+	 */
 	@RequestMapping(method=RequestMethod.PUT, value="/teams/update/{id}")
 	public void updateTeam(@RequestBody Team team, @PathVariable long id)
 	{
