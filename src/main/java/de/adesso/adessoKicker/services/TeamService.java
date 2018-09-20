@@ -97,5 +97,10 @@ public class TeamService {
 	{
 		return teamRepository.findByTeamName(teamName);
 	}
+
+	public Team findTeamByUserId(long id) {
+
+	    return new Team();
+    }
 	
 }

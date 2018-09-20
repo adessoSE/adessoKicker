@@ -1,5 +1,6 @@
 package de.adesso.adessoKicker.objects;
 
+import javax.annotation.sql.DataSourceDefinition;
 import javax.persistence.*;
 
 @Entity
@@ -7,7 +8,7 @@ import javax.persistence.*;
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long roleId;
 
     private String role;

@@ -2,6 +2,8 @@ package de.adesso.adessoKicker.objects;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -24,11 +26,16 @@ public class User {
 
     private int active;
 
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_team", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+    private List<Team> teams;
+
     private long wins;
 
     private long losses;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
@@ -39,6 +46,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.teams = new ArrayList<>();
         this.active = 0;
         this.wins = 0;
         this.losses = 0;
@@ -126,6 +134,26 @@ public class User {
         this.roles = roles;
     }
 
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
+
+    public void setWins(long wins) {
+        this.wins = wins;
+    }
+
+    public void setLosses(long losses) {
+        this.losses = losses;
+    }
+
+    public void addToTeam(Team team) {
+        teams.add(team);
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -135,8 +163,10 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", active=" + active +
                 ", wins=" + wins +
                 ", losses=" + losses +
+                ", roles=" + roles +
                 '}';
     }
 }

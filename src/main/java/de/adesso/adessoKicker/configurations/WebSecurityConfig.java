@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
 
     @Value("${spring.queries.users-query}")
     private String usersQuery;

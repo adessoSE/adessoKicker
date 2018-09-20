@@ -90,8 +90,6 @@ public class Team {
                 ", teamName='" + teamName + '\'' +
                 ", teamWins=" + teamWins +
                 ", teamLosses=" + teamLosses +
-                ", playerA=" + playerA +
-                ", playerB=" + playerB +
                 '}';
     }
 }

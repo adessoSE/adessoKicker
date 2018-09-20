@@ -6,15 +6,20 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<h1>Form</h1>
-    <form autocomplete="off" action="#" th:action="@{/teams/add}" th:object="${team}" method="POST">
-    	<p>Team Name: <input type="text" th:field="*{teamName}" placeholder="Name of your Team"/></p>
-        <select th:object="${user}">
-       <option th:each="user : ${users}"
-               th:value="${user.userId}"
-               th:text="${user.userId}+' : '+${user.firstName}"></option>
-   </select>
-        <p><input type="submit" value="Team erstellen." /> <input type="reset" value="Reset" /></p>
-    </form>
+<h1>Form</h1>
+<form autocomplete="off" action="#" th:action="@{/teams/add}" th:object="${team}" method="POST">
+    <p>Team Name: <input type="text" th:field="*{teamName}" placeholder="Name of your Team"/></p>
+    <select class="form-control" id="playerA" name="playerAId">
+        <option th:each="playerA : ${users}"
+                th:value="${playerA.userId}"
+                th:text="${playerA.userId}+' : '+${playerA.firstName}"></option>
+    </select>
+    <select class="form-control" id="playerB" name="playerBId">
+        <option th:each="playerB : ${users}"
+                th:value="${playerB.userId}"
+                th:text="${playerB.userId}+' : '+${playerB.firstName}"></option>
+    </select>
+    <p><input type="submit" value="Team erstellen." /> <input type="reset" value="Reset" /></p>
+</form>
 </body>
 </html>
