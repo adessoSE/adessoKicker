@@ -41,7 +41,7 @@ public class MatchController {
 	@RequestMapping("/matches/{id}")
 	public Match getOneMatch(@PathVariable long id)
 	{
-		return matchService.getOneMatch(id);
+		return matchService.getMatchById(id);
 	}
 	/*
 	@RequestMapping("matches/your")
@@ -59,7 +59,7 @@ public class MatchController {
 	@RequestMapping(method=RequestMethod.POST, value="matches/add")
 	public void addMatch(@RequestBody Match match)
 	{
-		matchService.addMatch(match);
+		matchService.saveMatch(match);
 	}
 	
 	/**
@@ -81,7 +81,7 @@ public class MatchController {
 	@RequestMapping(method=RequestMethod.PUT, value="matches/update/{id}")
 	public void updateMatch(@RequestBody Match match, @PathVariable long id)
 	{
-		matchService.updateMatch(match, id);
+		matchService.saveMatch(match);
 	}
 	
 }

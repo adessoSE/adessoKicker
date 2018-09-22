@@ -21,38 +21,32 @@ public class MatchService {
 	
 	public List<Match> getAllMatches()
 	{
-		matches = new ArrayList<Match>();
+
+		matches = new ArrayList<>();
 		matchRepository.findAll().forEach(matches::add);
 		return matches;
 	}
 	
-	public Match getOneMatch(long id)
-	{
+	public Match getMatchById(long id) {
+
 		return matchRepository.findById(id).get();
 	}
 	
-	public List<Match> getAllMatchesSelf(User user)
+	public List<Match> getAllMatchesUser(User user)
 	{
-		matches = new ArrayList<Match>();
+
+		matches = new ArrayList<>();
 		return matches;
-				
 	}
 	
-	public void addMatch(Match match)
-	{
+	public void saveMatch(Match match) {
+
 		matchRepository.save(match);
 	}
 	
-	public void deleteMatch(long id)
-	{
+	public void deleteMatch(long id) {
+
 		matchRepository.deleteById(id);
 	}
-	
-	public void updateMatch(Match match, long id)
-	{
-		matchRepository.save(matchRepository.findById(id).get());
-	}
-	
-
 	
 }

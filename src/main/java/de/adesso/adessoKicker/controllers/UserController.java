@@ -28,9 +28,9 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("/users")
-	public List<User> getAllUsers()
-	{	
-		return userService.getAllUsers();
+	public List<User> getAllUsers() {
+
+	    return userService.getAllUsers();
 	}
 	
 	/**
@@ -39,9 +39,9 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("/users/{id}")
-	public User getOneUser(@PathVariable long id)
-	{
-		return userService.getOneUser(id);
+	public User getOneUser(@PathVariable long id) {
+
+	    return userService.getUserById(id);
 	}
 	
 	/**
@@ -56,14 +56,14 @@ public class UserController {
 	 * 
 	 * 
 	 * NOTE:NOT WORKING YET
-	 * @param user
+	 * @param id
 	 * @return
 	 */
 	@RequestMapping("/users/you")
-	public User getUserSelf(User user)
+	public User getUser(long id)
 	{
-		return userService.getUserSelf(user);
-		
+
+		return userService.getUserById(id);
 	}
 	
 	/**
@@ -74,7 +74,8 @@ public class UserController {
 	@RequestMapping(method=RequestMethod.PUT, value="users/edit/{id}")
 	public void updateUser(@RequestBody User user, @PathVariable long id)
 	{
-		userService.updateUser(user, id);
+
+		userService.saveUser(user);
 	}
 	
 	/**
@@ -83,8 +84,8 @@ public class UserController {
 	 * @param id
 	 */
 	@RequestMapping(method=RequestMethod.DELETE, value="users/delete/{id}")
-	public void deleteUser(@RequestBody User user, @PathVariable long id)
-	{
+	public void deleteUser(@RequestBody User user, @PathVariable long id) {
+
 		userService.deleteUser(id);
 	}
 	

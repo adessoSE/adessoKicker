@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<title>Tournaments</title>
+<table>
+    <tbody>
+    <tr th:if="${teams.empty}">
+        <td colspan="2"> No Team Available </td>
+    </tr>
+    <tr th:each="team : ${teams}">
+        <td><a th:href="@{'/teams/' + ${team.teamId}}" ><span th:text="${team.teamName}">Team Name</span></a></td>
+        <td><span th:text="${team.playerA.firstName}"> Start Date</span></td>
+        <td><span th:text="${team.playerB.firstName}"> Finished</span></td>
+    </tr>
+    </tbody>
+</table>
+</html>

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import de.adesso.adessoKicker.objects.Team;
-import de.adesso.adessoKicker.objects.User;
 import de.adesso.adessoKicker.repositories.UserRepository;
 import de.adesso.adessoKicker.services.TeamService;
 
@@ -42,12 +41,14 @@ public class TeamController {
      * gets all teams
      * @return
      */
-    @RequestMapping("/teams")
-    public List<Team> getAllTeams()
+    @GetMapping("/teams")
+    public ModelAndView getAllTeams()
     {
-        List<Team> allTeams = new ArrayList<Team>();
+        ModelAndView modelAndView = new ModelAndView();
+        List<Team> allTeams = new ArrayList<>();
         teamService.getAllTeams().forEach(allTeams::add);
-        return allTeams;
+        modelAndView.addObject("teams", allTeams);
+        return modelAndView;
     }
 
     /**
@@ -55,20 +56,13 @@ public class TeamController {
      * @param id
      * @return
      */
-    @RequestMapping(method=RequestMethod.GET,value="/teams/{id}")
+    @GetMapping("/teams/{id}")
     public Team getOneTeam(@PathVariable long id)
     {
 
         return teamService.getOneTeam(id);
     }
 
-    /*
-    @RequestMapping(method=RequestMethod.POST, value="/teams/add")
-    public void addTeam(Team team)
-    {
-        teamService.addTeam(team);
-    }
-    */
     /**
      * ui for team creation
      * @return
@@ -77,11 +71,9 @@ public class TeamController {
     public ModelAndView showTeamCreation() {
         ModelAndView modelAndView = new ModelAndView();
         Team team = new Team();
-        List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(users::add);
         modelAndView.addObject("team", team);
-        modelAndView.addObject("users", users);
-        modelAndView.setViewName("addteam");
+        modelAndView.addObject("users", userService.getAllUsers());
+        modelAndView.setViewName("teamadd");
         return modelAndView;
     }
 
@@ -100,22 +92,19 @@ public class TeamController {
             bindingResult.rejectValue("teamName", "error.teamName", "Fail: Team Name already exists.");
         }
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("addteam");
+            modelAndView.setViewName("teamadd");
         }
         else
         {
-            /**
-             *  Refactor to use an array instead of two variables
-             *
-             */
-            team.setPlayerA(userService.findUserById(playerAId));
-            team.setPlayerB(userService.findUserById(playerBId));
+            team.setPlayerA(userService.getUserById(playerAId));
+            team.setPlayerB(userService.getUserById(playerBId));
             teamService.addTeam(team);
-            userService.addUserToTeam(team, playerAId);
-            userService.addUserToTeam(team, playerBId);
+            userService.addTeamIdToUser(team, playerAId);
+            userService.addTeamIdToUser(team, playerBId);
             modelAndView.addObject("successMessage", "Success: Team has been added.");
             modelAndView.addObject("team", new Team());
-            modelAndView.setViewName("addteam");
+            modelAndView.addObject("users", userService.getAllUsers());
+            modelAndView.setViewName("teamadd");
 
         }
 

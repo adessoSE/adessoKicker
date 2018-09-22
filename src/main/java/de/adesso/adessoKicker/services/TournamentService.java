@@ -23,6 +23,7 @@ public class TournamentService {
      *  Sets Tournament.finished to true
      */
     public void setTournamentFinished(Tournament tournament){
+
         tournament.setFinished(true);
         tournamentRepository.save(tournament);
     }
@@ -31,6 +32,7 @@ public class TournamentService {
      * Adds a Team to a Tournament
      */
     public void addTeamToTournament(Tournament tournament, Team team) {
+
         tournament.addTeam(team);
         tournamentRepository.save(tournament);
     }
@@ -55,6 +57,7 @@ public class TournamentService {
      *  Saves a Tournament in the Tournament table
      */
     public void saveTournament(Tournament tournament) {
+
         tournamentRepository.save(tournament);
     }
 

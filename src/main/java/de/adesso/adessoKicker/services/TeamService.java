@@ -67,7 +67,7 @@ public class TeamService {
 	
 	public List<Team> getAllTeams()
 	{
-		teams = new ArrayList<Team>();
+		teams = new ArrayList<>();
 		teamRepository.findAll().forEach(teams::add);
 		return teams;
 	}

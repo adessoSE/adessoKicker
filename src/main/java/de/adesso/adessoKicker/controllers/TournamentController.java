@@ -37,7 +37,7 @@ public class TournamentController {
             modelAndView.setViewName("tournamentscreate");
         } else {
             tournamentService.saveTournament(tournament);
-            //modelAndView.addObject("successMessage", "Tournament has been created");
+            modelAndView.addObject("successMessage", "Tournament has been created");
             modelAndView.addObject("tournament", new Tournament());
             modelAndView.setViewName("tournamentscreate");
         }
