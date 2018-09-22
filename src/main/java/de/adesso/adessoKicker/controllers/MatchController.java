@@ -24,7 +24,7 @@ public class MatchController {
 	private MatchService matchService;
 	
 	/**
-	 * gets all matches
+	 * POST all matches on "/matches"
 	 * @return
 	 */
 	@RequestMapping("/matches")

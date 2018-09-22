@@ -1,4 +1,3 @@
-
 package de.adesso.adessoKicker.controllers;
 
 import java.util.ArrayList;
