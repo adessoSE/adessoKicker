@@ -17,6 +17,8 @@ public class Team {
 
     private long teamLosses;
 
+    //private User[] userList;
+
 
     /**
      *  Change from two variables to an array
