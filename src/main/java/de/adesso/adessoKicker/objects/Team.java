@@ -17,7 +17,7 @@ public class Team {
 
     private long teamLosses;
 
-    //private User[] userList;
+    private User[] players;
 
 
     /**
