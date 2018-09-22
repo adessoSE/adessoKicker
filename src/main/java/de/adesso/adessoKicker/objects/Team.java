@@ -17,6 +17,10 @@ public class Team {
 
     private long teamLosses;
 
+
+    /**
+     *  Change from two variables to an array
+     */
     @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
     private User playerA;
 

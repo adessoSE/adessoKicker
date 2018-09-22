@@ -87,7 +87,7 @@ public class TeamController {
     }
 
     /**
-     * posts ui form to database
+     * POST chosen players and create a team with them and add the teamId to the players Team List
      * @param team
      * @param bindingResult
      * @return
@@ -105,6 +105,10 @@ public class TeamController {
         }
         else
         {
+            /**
+             *  Refactor to use an array instead of two variables
+             *
+             */
             team.setPlayerA(userService.findUserById(playerAId));
             team.setPlayerB(userService.findUserById(playerBId));
             teamService.addTeam(team);
