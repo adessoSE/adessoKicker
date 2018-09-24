@@ -40,7 +40,7 @@ function printTree (){
 	for(i = 0; i < levels; i ++){
 		
 		
-		level = '<div class="container" id="level' + i + '" style="display: flex; flex-flow: row nowrap; justify-content: space-between; zIndex: 5;">'
+		level = '<div class="container" id="level' + i + '" style="display: flex; flex-flow: row nowrap; justify-content: space-between; z-index: 5;">'
 		
 		
 		teamBoxes = "";

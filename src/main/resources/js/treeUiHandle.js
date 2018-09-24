@@ -6,15 +6,15 @@ function checkName() {
 	
 }
 
-function onMouseInteractDiv(div) {
+function onMouseInteractDiv(tgt) {
 	
-	div.style.backgroundColor = 'lightgrey';
-	div.style.boxShadow = '5px 5px 1px black';
+	tgt.style.backgroundColor = 'lightgrey';
+	tgt.style.boxShadow = '5px 5px 1px black';
 
 }
 
-function outMouseInteractDiv(div) {
+function outMouseInteractDiv(tgt) {
 	
-	div.style.backgroundColor = 'white';
-	div.style.boxShadow = '2px 2px 1px black';
+	tgt.style.backgroundColor = 'white';
+	tgt.style.boxShadow = '2px 2px 1px black';
 }
