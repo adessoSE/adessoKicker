@@ -62,7 +62,6 @@ public class UserController {
 	@RequestMapping("/users/you")
 	public User getUser(long id)
 	{
-
 		return userService.getUserById(id);
 	}
 	

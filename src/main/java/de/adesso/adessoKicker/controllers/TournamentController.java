@@ -45,6 +45,16 @@ public class TournamentController {
         return modelAndView;
     }
 
+    //TournamentList View --> Jan
+    @GetMapping("/tournaments")
+    public ModelAndView showTournamentList() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("tournaments", tournamentService.listRunningTournaments());
+        modelAndView.setViewName("tournamentList");
+        return modelAndView;
+    }
+    
+    /*
     @GetMapping("/tournaments")
     public ModelAndView showTournamentList() {
 
@@ -52,7 +62,7 @@ public class TournamentController {
         modelAndView.addObject("tournaments", tournamentService.listRunningTournaments());
         modelAndView.setViewName("tournaments");
         return modelAndView;
-    }
+    } */
 
     @GetMapping("/tournaments/{tournamentId}")
     public ModelAndView tournamentPage(@PathVariable("tournamentId") long id) {
