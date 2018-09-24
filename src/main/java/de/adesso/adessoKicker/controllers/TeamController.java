@@ -1,8 +1,5 @@
 package de.adesso.adessoKicker.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import de.adesso.adessoKicker.services.UserService;
@@ -45,9 +42,7 @@ public class TeamController {
     public ModelAndView getAllTeams()
     {
         ModelAndView modelAndView = new ModelAndView();
-        List<Team> allTeams = new ArrayList<>();
-        teamService.getAllTeams().forEach(allTeams::add);
-        modelAndView.addObject("teams", allTeams);
+        modelAndView.addObject("teams", teamService.getAllTeams());
         return modelAndView;
     }
 
@@ -56,11 +51,13 @@ public class TeamController {
      * @param id
      * @return
      */
-    @GetMapping("/teams/{id}")
-    public Team getOneTeam(@PathVariable long id)
-    {
+    @GetMapping("/teams/{teamId}")
+    public ModelAndView showTeamPage(@PathVariable("teamId") long id) {
 
-        return teamService.getOneTeam(id);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject(teamService.getTeamById(id));
+        modelAndView.setViewName("teamspage");
+        return modelAndView;
     }
 
     /**
@@ -98,7 +95,7 @@ public class TeamController {
         {
             team.setPlayerA(userService.getUserById(playerAId));
             team.setPlayerB(userService.getUserById(playerBId));
-            teamService.addTeam(team);
+            teamService.saveTeam(team);
             userService.addTeamIdToUser(team, playerAId);
             userService.addTeamIdToUser(team, playerBId);
             modelAndView.addObject("successMessage", "Success: Team has been added.");
@@ -129,6 +126,6 @@ public class TeamController {
     @RequestMapping(method=RequestMethod.PUT, value="/teams/update/{id}")
     public void updateTeam(@RequestBody Team team, @PathVariable long id)
     {
-        teamService.updateTeam(team, id);
+        teamService.saveTeam(team);
     }
 }

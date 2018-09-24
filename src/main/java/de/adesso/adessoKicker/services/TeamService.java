@@ -63,39 +63,34 @@ public class TeamService {
 	
 		return TeamList;
 	}
-	private List<Team> teams = new ArrayList<>();
 	
 	public List<Team> getAllTeams()
 	{
-		teams = new ArrayList<>();
+
+		List<Team> teams = new ArrayList<>();
 		teamRepository.findAll().forEach(teams::add);
 		return teams;
 	}
 	
-	public Team getOneTeam(long id)
+	public Team getTeamById(long id)
 	{
-		return teamRepository.findById(id).get();
-		
+
+		return teamRepository.findByTeamId(id);
 	}
 	
-	public void addTeam(Team team)
-	{
+	public void saveTeam(Team team) {
+
 		teamRepository.save(team);
 	}
 	
-	public void deleteTeam(long id)
-	{
-		teamRepository.deleteById(id);
+	public void deleteTeam(long id) {
+
+	    teamRepository.deleteById(id);
 	}
 	
-	public void updateTeam(Team team, long id)
-	{
-		teamRepository.save(teamRepository.findById(id).get());
-	}
-	
-	public Team findByTeamName(String teamName)
-	{
-		return teamRepository.findByTeamName(teamName);
+	public Team findByTeamName(String teamName) {
+
+	    return teamRepository.findByTeamName(teamName);
 	}
 
 	public Team findTeamByUserId(long id) {
