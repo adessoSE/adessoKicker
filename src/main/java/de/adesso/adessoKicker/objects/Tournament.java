@@ -34,7 +34,7 @@ public class Tournament {
 	private List<Match> matches;
 
     @OneToMany(targetEntity = Team.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Team> teams = new ArrayList<>();
+    private List<Team> teams;
 
 	public Tournament() {
 	}

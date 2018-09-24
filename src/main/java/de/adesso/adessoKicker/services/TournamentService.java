@@ -48,7 +48,7 @@ public class TournamentService {
     /**
      *  Returns a Tournament with the specified id
      */
-    public Tournament returnTournament(Long id) {
+    public Tournament getTournamentById(Long id) {
 
         return tournamentRepository.findByTournamentId(id);
     }

@@ -57,7 +57,7 @@ public class TournamentController {
     @GetMapping("/tournaments/{tournamentId}")
     public ModelAndView tournamentPage(@PathVariable("tournamentId") long id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("tournament", tournamentService.returnTournament(id));
+        modelAndView.addObject("tournament", tournamentService.getTournamentById(id));
         modelAndView.setViewName("tournamentspage");
         return modelAndView;
     }
@@ -65,7 +65,7 @@ public class TournamentController {
     @GetMapping("tournaments/{tournamentId}/join")
     public ModelAndView showAddTeam(@PathVariable("tournamentId") long id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("tournament", tournamentService.returnTournament(id));
+        modelAndView.addObject("tournament", tournamentService.getTournamentById(id));
         modelAndView.addObject("teams", null);
         return modelAndView;
     }
