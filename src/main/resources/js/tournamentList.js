@@ -18,7 +18,7 @@ function CreateMatchEl() {
     var date = "19.09.2018";
     var time = "14.00 Uhr - 17 Uhr";
     var place = "Dortmund Kicker 1";
-    var describtion = "Raucherraum in der dortmunder Gesch‰ftstelle, Currywurst und Getr‰nke vor Ort. Alle Kollegen/innen sind eingeladen zu kommen wir freuen uns auf alle Leute die Zeit haben.";
+    var description = "Raucherraum in der dortmunder Gesch√§ftstelle, Currywurst und Getr√§nke vor Ort. Alle Kollegen/innen sind eingeladen zu kommen wir freuen uns auf alle Leute die Zeit haben.";
 
     //Expired
     var isExpired = false;
@@ -38,7 +38,7 @@ function CreateMatchEl() {
     var containerMatch = $("<div class='containerMatch'></div>");
     var el_A = $("<div class='elementMatch'></div>");
     var el_B = $("<div class='elementMatch2'></div>");
-    var text = $("<p>" + describtion + "</p>");
+    var text = $("<p>" + description + "</p>");
     //Function binding
     var bt = $("<button onclick='viewTournament("+id+");' class='.btn-primary'>Ansehen</button>");  
     //Child-Parent

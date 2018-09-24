@@ -36,6 +36,8 @@ public class Tournament {
     @OneToMany(targetEntity = Team.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Team> teams;
 
+    private Team tournamentTree[][];
+
 	public Tournament() {
 	}
 
@@ -122,6 +124,18 @@ public class Tournament {
 
     public Team getWinner() {
         return winner;
+    }
+
+    public List<Match> getMatches() {
+        return matches;
+    }
+
+    public Team[][] getTournamentTree() {
+        return tournamentTree;
+    }
+
+    public void setTournamentTree(Team[][] tournamentTree) {
+        this.tournamentTree = tournamentTree;
     }
 
     @Override

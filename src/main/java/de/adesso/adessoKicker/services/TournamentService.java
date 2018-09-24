@@ -61,4 +61,19 @@ public class TournamentService {
         tournamentRepository.save(tournament);
     }
 
+    public void createTournamentTree(List<Team> teams, Tournament tournament) {
+
+        int tournamentSize = (int) Math.pow(2, Math.ceil(Math.log(teams.size() / Math.log(2))));
+        int treeSize = (int) (Math.log(tournamentSize)/Math.log(2) + 1);
+        Team tournamentTree[][] = new Team[treeSize][];
+
+        for (int i = 0; i < tournamentTree.length; i++) {
+
+            int roundSize = (int) (tournamentSize / Math.pow(2, i));
+            tournamentTree[i] = new Team[roundSize];
+        }
+
+        tournament.setTournamentTree(tournamentTree);
+    }
+
 }
