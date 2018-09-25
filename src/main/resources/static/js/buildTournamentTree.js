@@ -1,9 +1,25 @@
-var teams = 16, levels, currentLevel, tournamentName = 'Adesso Einsteiger Tournier', tournamentStartDate = '19. September 2018';
+var teams, teamBoxes = 16, levels, currentLevel, tournamentName = 'Adesso Einsteiger Tournier', tournamentStartDate = '19. September 2018';
 
 
 function setHeadline () {
 	
 	document.getElementById('heading').innerHTML = tournamentName + ' - ' + tournamentStartDate;
+	
+}
+
+function setTeamBoxes () {
+	
+	/*<![CDATA[*/
+    var tmp = [[${teams}]];
+	altert(tmp);
+    teams = tmp.length;
+    /*]]>*/
+	
+	
+}
+
+function fillTeamBoxes() {
+	
 }
 
 function setLevels () {
@@ -11,7 +27,7 @@ function setLevels () {
 
 	if(!currentLevel) {
 		
-		var i = teams;
+		var i = teamBoxes;
 		levels = 1;
 		
 		for(i; i != 1; i /= 2){
@@ -45,15 +61,15 @@ function printTree (){
 		
 		teamBoxes = "";
 		
-		for(j = 0; j < (teams / Math.pow(2, i)); j++) {
+		for(j = 0; j < (teamBoxes / Math.pow(2, i)); j++) {
 			
 			if(i > 0) {
 			
 				posx = (((document.getElementById('level' + (i - 1) + 'team' + (j * 2)).getBoundingClientRect().left + document.getElementById('level' + (i - 1) + 'team' + ((j * 2) + 1)).getBoundingClientRect().right) / 2) - (document.getElementById('level' + (i - 1) + 'team' + (j * 2)).offsetWidth / 2));
-				teamBoxes += '<div class="" id="level' + i + 'team' + j +'" ' + divEvents + ' style="left: ' + posx + 'px; ' + boxStyle + ' position: absolute;" >Team' + j +'</div>';
+				teamBoxes += '<div class="" id="level' + i + 'team' + j +'" ' + divEvents + ' style="left: ' + posx + 'px; ' + boxStyle + ' position: absolute;" ></div>';
 			}
 			else {
-				teamBoxes += '<div class="" id="level' + i + 'team' + j +'" ' + divEvents + ' style="' + boxStyle + '" >Team' + j +'</div>';
+				teamBoxes += '<div class="" id="level' + i + 'team' + j +'" ' + divEvents + ' style="' + boxStyle + '" ></div>';
 			}
 		}
 		
@@ -68,7 +84,7 @@ function printLines () {
 	for(i = 1; i < levels; i ++){
 		
 		
-		for(j = 0; j < (teams / Math.pow(2, i)); j++) {
+		for(j = 0; j < (teamBoxes / Math.pow(2, i)); j++) {
 	
 			
 			canvas = document.getElementById('canvas');
@@ -102,6 +118,7 @@ function returnCenter (element) {
 	return ((element.getBoundingClientRect().left + element.getBoundingClientRect().right) / 2);
 }
 
+setTeamBoxes();
 setHeadline();
 setLevels();
 printTree();
