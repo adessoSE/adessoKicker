@@ -73,7 +73,7 @@ public class MatchController {
      * @return
      */
     @PostMapping("/matches/add")
-    public ModelAndView createNewMatch(@Valid Match match, long teamAId, long teamBId, BindingResult bindingResult)
+    public ModelAndView createNewMatch(@Valid Match match, BindingResult bindingResult)
     {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
@@ -81,11 +81,9 @@ public class MatchController {
         }
         else
         {
-        	match.setTeamA(teamService.getTeamById(teamAId));
-        	match.setTeamB(teamService.getTeamById(teamBId));
             matchService.saveMatch(match);
-            teamService.addMatchIdToTeam(match, teamAId);
-            teamService.addMatchIdToTeam(match, teamBId);
+            teamService.addMatchIdToTeam(match, match.getTeamA().getTeamId());
+            teamService.addMatchIdToTeam(match, match.getTeamB().getTeamId());
             modelAndView.addObject("successMessage", "Success: Team has been added.");
             modelAndView.addObject("match", new Match());
             modelAndView.addObject("teams", teamService.getAllTeams());
