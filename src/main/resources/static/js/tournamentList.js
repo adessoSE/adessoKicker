@@ -1,3 +1,6 @@
+/*
+ * Replaced JS with Thymeleaf --> Jan
+
 //On document load
 $(function () {
     //[User/Matches/Count]
@@ -50,10 +53,11 @@ function CreateMatchEl() {
     //Add new element to scrollbar
     $("#scrollbar").append(scrollEl);
 }
+*/
 
 //Button Event --> View a specific tournament(URL access)
 function viewTournament(id) {
     //alert("View Tournament " + id);
-    //window.open("/tournaments/" + id);
-    window.open("tournamentList.html");
+    window.open("/tournaments/" + id);
+    //window.open("tournamentList.html");
 }
