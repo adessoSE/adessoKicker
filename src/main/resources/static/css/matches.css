@@ -39,6 +39,10 @@
     flex-grow: 2;
 }
 
+a {
+    display: block;
+}
+
 .hr{
     border: 0;
     height: 1px;

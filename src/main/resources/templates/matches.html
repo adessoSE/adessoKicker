@@ -34,7 +34,7 @@
                     <div class='elementMatch2'>
                         <!--Team-->
                         <div class='team'>
-                            <p style="margin-bottom:-20px;" th:text="${m.teamA.teamName}">Team wurde gelöscht</p>
+                            <a th:href="@{/teams/{id}(id=${m.teamA.teamId})}" style="margin-bottom:-20px;" th:text="${m.teamA.teamName}">Team wurde gelöscht</a>
                             <hr class="innerHr">
                             <p style="margin-top:-15px;" th:text="${m.teamA.playerA.firstName} + ' ' + ${m.teamA.playerA.lastName}">ERROR</p>
                             <p th:text="${m.teamA.playerB.firstName} + ' ' + ${m.teamA.playerB.lastName}">ERROR</p>
@@ -47,7 +47,7 @@
                     <div class='elementMatch2'>
                         <!--Team-->
                         <div class='team'>
-                            <p style="margin-bottom:-20px;" th:text="${m.teamB.teamName}">Team wurde gelöscht</p>
+                            <a th:href="@{/teams/{id}(id=${m.teamB.teamId})}" style="margin-bottom:-20px;" th:text="${m.teamB.teamName}">Team wurde gelöscht</a>
                             <hr class="innerHr">
                             <p style="margin-top:-15px;" th:text="${m.teamB.playerA.firstName} + ' ' + ${m.teamB.playerA.lastName}">ERROR</p>
                             <p th:text="${m.teamB.playerB.firstName} + ' ' + ${m.teamB.playerB.lastName}">ERROR</p>
