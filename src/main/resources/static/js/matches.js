@@ -1,4 +1,4 @@
-$(function () {
+/*$(function () {
     //[User/Matches/Count]
     var matchCount = 2000;
 
@@ -62,3 +62,4 @@ function CreateMatchEl() {
 
     $("#scrollbar").append(scrollEl);
 }
+*/
