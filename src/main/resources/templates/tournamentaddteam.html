@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Add team</title>
+    <title>Add Team</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-
+<h1>Form</h1>
+<form autocomplete="off" action="#" th:action="@{/tournaments/} + ${tournamentId} + @{/join}" th:object="${tournament}" method="POST">
+    <select class="form-control" id="teams" name="teamId">
+        <option th:each="team : ${teams}"
+                th:value="${team.teamId}"
+                th:text="${team.teamId}+' : '+${team.teamName}"></option>
+    </select>
+    <p><input type="submit" value="Team hinzufuegen." /> <input type="reset" value="Reset" /></p>
+</form>
 </body>
 </html>

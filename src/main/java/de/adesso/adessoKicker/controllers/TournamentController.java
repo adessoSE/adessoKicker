@@ -53,7 +53,7 @@ public class TournamentController {
     @GetMapping("/tournaments")
     public ModelAndView showTournamentList() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("tournaments", tournamentService.listRunningTournaments());
+        modelAndView.addObject("tournaments", tournamentService.getAllTournaments());
         modelAndView.setViewName("tournamentList");
         return modelAndView;
     }
@@ -81,15 +81,17 @@ public class TournamentController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournament", tournamentService.getTournamentById(id));
         modelAndView.addObject("teams", teamService.getAllTeams());
+        modelAndView.setViewName("tournamentaddteam");
         return modelAndView;
     }
 
     @PostMapping("tournaments/{tournamentId}/join")
-    public ModelAndView addTeam(@PathVariable("tournamentId") long id) {
+    public ModelAndView addTeamToTournament(@PathVariable("tournamentId") long id, @Valid Tournament tournament, BindingResult bindingResult, long teamId) {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournament", tournamentService.getTournamentById(id));
         modelAndView.addObject("teams", teamService.getAllTeams());
+        modelAndView.setViewName("tournamentaddteam");
         return modelAndView;
     }
 

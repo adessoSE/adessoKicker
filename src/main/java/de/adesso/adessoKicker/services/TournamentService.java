@@ -7,6 +7,7 @@ import de.adesso.adessoKicker.repositories.TournamentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -46,6 +47,13 @@ public class TournamentService {
     public List<Tournament> listRunningTournaments() {
 
         return tournamentRepository.findByFinished(false);
+    }
+
+    public List<Tournament> getAllTournaments() {
+
+        List<Tournament> tournaments = new ArrayList<>();
+        tournamentRepository.findAll().forEach(tournaments::add);
+        return tournaments;
     }
 
     /**
