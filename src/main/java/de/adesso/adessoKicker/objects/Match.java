@@ -37,9 +37,6 @@ public class Match {
     private Team teamB;
  
     public Match() {
-        Team teamA = new Team();
-        Team teamB = new Team();
-        Team winner = new Team();
     }
 
     public Match(Date date, String kicker, Team teamA, Team teamB) {

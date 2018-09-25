@@ -41,7 +41,6 @@ public class Tournament {
 
     @Column
     @ElementCollection
-    //@CollectionTable(name = "tournament_tree", joinColumns = @JoinColumn(name = "tournamentId"))
     private List<ArrayList<Team>> tournamentTree;
 
 	public Tournament() {
