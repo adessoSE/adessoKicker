@@ -1,17 +1,50 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<title>Tournaments</title>
-<table>
-    <tbody>
-    <tr th:if="${teams.empty}">
-        <td colspan="2"> No Team Available </td>
-    </tr>
-    <tr th:each="team : ${teams}">
-        <td><a th:href="@{'/teams/' + ${team.teamId}}" ><span th:text="${team.teamName}">Team Name</span></a></td>
-        <td><span th:text="${team.playerA.firstName}"> Start Date</span></td>
-        <td><span th:text="${team.playerB.firstName}"> Finished</span></td>
-    </tr>
-    </tbody>
-</table>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset=utf-8>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+		<link rel="stylesheet" href="/css/teamsStyle.css">
+		<title>Tournaments</title>
+	</head>
+	
+	<body>
+	
+	
+		<h1>Alle Teams<h1>
+		
+		<div class='row'>
+			<div class='col-lg-2 sortbtn' style='padding: 20px;' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)'>Teamname</div>
+			<div class='col-lg-3 sortbtn' style='padding: 20px;' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)'>Spieler 1</div>
+			<div class='col-lg-3 sortbtn' style='padding: 20px;' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)'>Spieler 2</div>
+			<div class='col-lg-2 sortbtn' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)' id='btnWins'>Gewonnene Spiele</div>
+			<div class='col-lg-2 sortbtn' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)'>Verlorene Spiele</div>
+		</div>
+		
+		
+		
+			<div id='list' th:each="t : ${teams}">
+				<div class='row teamBox'>
+					<div class='col-lg-2' th:text="${t.teamName}">[teamName]</div>
+					<div class='col-lg-3' th:text="${t.playerA.firstName} + ' ' + ${t.playerA.lastName}">[playerA]</div>
+					<div class='col-lg-3' th:text="${t.playerB.firstName} + ' ' + ${t.playerB.lastName}">[playerB]</div>
+					<div class='col-lg-2 wins' th:text="${t.teamWins}">[teamWins]</div>
+					<div class='col-lg-2' th:text="${t.teamLosses}">[teamsLosses]</div>
+				</div>
+			</div>
+			
+		
+		
+		
+	</body>
+	
+	<footer>
+		<script  th:inline="javascript" src='/js/teams.js'></script>
+	</footer>
+	
 </html>
