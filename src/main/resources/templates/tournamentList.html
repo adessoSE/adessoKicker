@@ -18,16 +18,16 @@
 <body>
     <!--Scrollbar-->
     <div id="scrollbar" th:each="t : ${tournaments}">
-        <!--ScrollbarElement generated here-->
-        <div class='scrollElement_expired'>
+        <!--Tournament open-->
+        <div class='scrollElement' th:if="!${t.finished}">
             <div class='well'>
                 <!--Header-->
                 <h3 th:text="${t.tournamentName}"></h3>
                 <hr>
                 <div class='containerMatch'>
                     <div class='elementMatch'>
-                        <p style="font-size: 20px;">19.07.2018 | 14.00 Uhr - 17.00 Uhr | Dortmund Kicker 1</p>
-                        <p>Raucherraum in der dortmunder Geschäftstelle, Currywurst und Getränke vor Ort. Alle Kollegen/innen sind eingeladen zu kommen wir freuen uns auf alle Leute die Zeit haben.</p>
+                        <p th:text="${t.startDate}" style="font-size: 20px;">19.07.2018 | 14.00 Uhr - 17.00 Uhr | Dortmund Kicker 1</p>
+                        <p th:text="${t.description}">Raucherraum in der dortmunder Geschäftstelle, Currywurst und Getränke vor Ort. Alle Kollegen/innen sind eingeladen zu kommen wir freuen uns auf alle Leute die Zeit haben.</p>
                     </div>
                     <div class='elementMatch2'>
                         <button class=".btn-primary" th:onclick="'viewTournament(\'' + ${t.tournamentId} + '\');'">Ansehen</button>
@@ -35,6 +35,24 @@
                 </div>
             </div>
         </div>
+        <!--Tournament expired-->
+        <div class='scrollElement_expired' th:if="${t.finished}">
+            <div class='well'>
+                <!--Header-->
+                <h3 th:text="${t.tournamentName}"></h3>
+                <hr>
+                <div class='containerMatch'>
+                    <div class='elementMatch'>
+                        <p th:text="${t.startDate}" style="font-size: 20px;">19.07.2018 | 14.00 Uhr - 17.00 Uhr | Dortmund Kicker 1</p>
+                        <p th:text="${t.description}">Raucherraum in der dortmunder Geschäftstelle, Currywurst und Getränke vor Ort. Alle Kollegen/innen sind eingeladen zu kommen wir freuen uns auf alle Leute die Zeit haben.</p>
+                    </div>
+                    <div class='elementMatch2'>
+                        <button class=".btn-primary" th:onclick="'viewTournament(\'' + ${t.tournamentId} + '\');'">Ansehen</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </body>
 </html>
