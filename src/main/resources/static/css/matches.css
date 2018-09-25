@@ -14,14 +14,17 @@
     font-size: 30px;
     background-color: tan;
     flex-grow: 2;
+    line-height: 1.2;
 }
 
 .scrollElement_expired{
     opacity: 0.55;
 }
 
+
 .containerMatch {
     display: flex;
+    width: 100%;
     flex-flow: row nowrap;
     justify-content: space-between;
 }
@@ -36,7 +39,7 @@
     flex-grow: 2;
 }
 
-hr {
+.hr{
     border: 0;
     height: 1px;
     background: #333;
@@ -44,4 +47,9 @@ hr {
     /*Makes it so that hr covers the hole page horizontally*/
     margin-left: -100px;
     margin-right: -100px;
+}
+
+.innerHr {
+    height: 2px;
+    background: #fff;
 }

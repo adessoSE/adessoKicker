@@ -23,6 +23,8 @@ public class TournamentService {
         this.tournamentRepository = tournamentRepository;
     }
 
+    private Team tournamentTree[][];
+
     /**
      *  Sets Tournament.finished to true
      */
@@ -82,40 +84,43 @@ public class TournamentService {
 
     public void createTournamentTree(List<Team> teams, Tournament tournament) {
 
-        int tournamentSize = (int) Math.pow(2, Math.ceil(Math.log(teams.size() / Math.log(2))));
+        int tournamentSize = (int) Math.pow(2, Math.ceil((Math.log(teams.size()) / Math.log(2))));
         int treeSize = (int) (Math.log(tournamentSize)/Math.log(2) + 1);
-        Team tournamentTree[][] = new Team[treeSize][];
-
-        for (int i = 0; i < tournamentTree.length; i++) {
-
-            int roundSize = (int) (tournamentSize / Math.pow(2, i));
-            tournamentTree[i] = new Team[roundSize];
-        }
-
+        List<ArrayList<Team>>tournamentTree = tournament.getTournamentTree();
         Collections.shuffle(teams);
 
         while (teams.size() < tournamentSize) {
-
             teams.add(null);
+        }
+
+        while (tournamentTree.size() < treeSize) {
+
+            tournamentTree.add(new ArrayList<>());
+        }
+
+        for (int i = tournamentTree.get(0).size(); i < tournamentSize; i++) {
+
+            tournamentTree.get(0).add(null);
         }
 
         for (int i = 0; i < tournamentSize; i += 2) {
 
-            tournamentTree[0][i] = teams.get(i);
+            tournamentTree.get(0).set(i, teams.get(i));
         }
 
         for (int i = 1; i < tournamentSize; i += 2) {
 
-            tournamentTree[0][i] = teams.get(i);
+            tournamentTree.get(0).set(i, teams.get(i));
         }
 
         tournament.setTournamentTree(tournamentTree);
+        saveTournament(tournament);
     }
-
+/***
     public void advanceWinner(Tournament tournament, Match match) {
 
         Team winner = match.getWinner();
-        Team treeArray[][] = tournament.getTournamentTree();
+        //Team treeArray[][] = tournament.getTournamentTree();
         int treeSize = treeArray.length;
 
         for (int i = 0; i < treeSize; i++) {
@@ -132,5 +137,5 @@ public class TournamentService {
         tournament.setTournamentTree(treeArray);
         saveTournament(tournament);
     }
-
+***/
 }

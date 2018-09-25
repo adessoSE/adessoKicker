@@ -5,18 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -37,6 +26,7 @@ public class Tournament {
 
 	private Date endDate;
 	private String format;
+	private String description;
 
 	@OneToOne(targetEntity = Team.class, cascade = CascadeType.ALL)
 	private Team winner;
@@ -49,7 +39,10 @@ public class Tournament {
 	@JoinTable(name = "tournament_team", joinColumns = @JoinColumn(name = "tournament_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
     private List<Team> teams;
 
-    private Team tournamentTree[][];
+    @Column
+    @ElementCollection
+    //@CollectionTable(name = "tournament_tree", joinColumns = @JoinColumn(name = "tournamentId"))
+    private List<ArrayList<Team>> tournamentTree;
 
 	public Tournament() {
 	}
@@ -61,6 +54,8 @@ public class Tournament {
         this.teams = new ArrayList<>();
 		this.winner = null;
 		this.finished = false;
+		this.description = description;
+		this.tournamentTree = new ArrayList<ArrayList<Team>>();
 	}
 
 	public long getTournamentId() {
@@ -143,11 +138,11 @@ public class Tournament {
         return matches;
     }
 
-    public Team[][] getTournamentTree() {
+    public List<ArrayList<Team>> getTournamentTree() {
         return tournamentTree;
     }
 
-    public void setTournamentTree(Team[][] tournamentTree) {
+    public void setTournamentTree(List<ArrayList<Team>> tournamentTree) {
         this.tournamentTree = tournamentTree;
     }
 
@@ -160,6 +155,15 @@ public class Tournament {
                 ", endDate=" + endDate +
                 ", format='" + format + '\'' +
                 ", teams=" + teams +
+                ", description=" + description +
                 '}';
     }
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }
