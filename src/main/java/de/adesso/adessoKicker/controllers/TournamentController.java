@@ -1,6 +1,8 @@
 package de.adesso.adessoKicker.controllers;
 
+import de.adesso.adessoKicker.objects.Team;
 import de.adesso.adessoKicker.objects.Tournament;
+import de.adesso.adessoKicker.repositories.TeamRepository;
 import de.adesso.adessoKicker.services.TeamService;
 import de.adesso.adessoKicker.services.TournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Controller
@@ -19,6 +22,7 @@ public class TournamentController {
 
     @Autowired
     private TournamentService tournamentService;
+
 
     @Autowired
     private TeamService teamService;
@@ -89,11 +93,22 @@ public class TournamentController {
     public ModelAndView addTeamToTournament(@PathVariable("tournamentId") long id, @Valid Tournament tournament, BindingResult bindingResult, long teamId) {
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("tournament", tournamentService.getTournamentById(id));
+        tournamentService.addTeamToTournament(tournamentService.getTournamentById(id), teamService.getTeamById(teamId));
+        modelAndView.addObject("tournament",tournamentService.getTournamentById(id));
         modelAndView.addObject("teams", teamService.getAllTeams());
         modelAndView.setViewName("tournamentaddteam");
         return modelAndView;
     }
 
+    @GetMapping("tournaments/{tournamentId}/tournamenttreetest")
+    public ModelAndView showTournamentTree(@PathVariable("tournamentId") long id) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        List<Team> teams = tournamentService.getTournamentById(id).getTeams();
+        tournamentService.createTournamentTree(teams, tournamentService.getTournamentById(id));
+        modelAndView.addObject("tournament", tournamentService.getTournamentById(id));
+        modelAndView.setViewName("tournamenttreetest");
+        return modelAndView;
+    }
 
 }
