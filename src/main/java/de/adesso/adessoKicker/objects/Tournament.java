@@ -33,7 +33,8 @@ public class Tournament {
 	@OneToMany(targetEntity= Match.class)
 	private List<Match> matches;
 
-    @OneToMany(targetEntity = Team.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Team.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "tournament_team", joinColumns = @JoinColumn(name = "tournament_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
     private List<Team> teams;
 
     private Team tournamentTree[][];

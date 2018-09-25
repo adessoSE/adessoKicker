@@ -9,12 +9,12 @@
 <h1>Form</h1>
 <form autocomplete="off" action="#" th:action="@{/teams/add}" th:object="${team}" method="POST">
     <p>Team Name: <input type="text" th:field="*{teamName}" placeholder="Name of your Team"/></p>
-    <select class="form-control" id="playerA" name="playerAId">
+    <select class="form-control" id="playerA" name="playerA">
         <option th:each="playerA : ${users}"
                 th:value="${playerA.userId}"
                 th:text="${playerA.userId}+' : '+${playerA.firstName}"></option>
     </select>
-    <select class="form-control" id="playerB" name="playerBId">
+    <select class="form-control" id="playerB" name="playerB">
         <option th:each="playerB : ${users}"
                 th:value="${playerB.userId}"
                 th:text="${playerB.userId}+' : '+${playerB.firstName}"></option>
