@@ -20,7 +20,7 @@ public class Team {
     private long teamId;
 
     @NotNull
-    @Size(min=1, max=30)
+    @Size(min=1, max=30, message="Der Teamname muss zwischen 1-30 Zeichen lang sein.")
     private String teamName;
 
     private long teamWins;
