@@ -36,8 +36,7 @@ public class Team implements Serializable {
     private User playerB;
 
     public Team() {
-        //User playerA = new User();
-        //User playerB = new User();
+
     }
 
     public Team(String teamName, User playerA, User playerB) {

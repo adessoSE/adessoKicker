@@ -22,8 +22,6 @@ public class Notification {
     private String notificationMessage;
 
     public Notification() {
-
-        User user = new User();
     }
 
     public Notification(String notificationType, String notificationMessage, Date time, User user) {
