@@ -86,18 +86,25 @@ public class TeamController {
         ModelAndView modelAndView = new ModelAndView();
         Team teamExists = teamService.findByTeamName(team.getTeamName());
         if (teamExists != null) {
-            bindingResult.rejectValue("teamName", "error.teamName", "Fail: Team Name already exists.");
+            bindingResult.rejectValue("teamName", "error.teamName", "Teamname existiert bereits. Bitte einen anderen wählen.");
         }
+        
+       /* if (team.getPlayerA().getUserId()==team.getPlayerB().getUserId()) {
+        	bindingResult.rejectValue("teamPlayers", "error.teamPlayers", "Bitte zwei unterschiedliche Spieler auswählen.");
+        }
+        */
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("teams", teamService.getAllTeams());
+            modelAndView.addObject("team", team);
+            modelAndView.addObject("users", userService.getAllUsers());
             modelAndView.setViewName("teamadd");
+        	
         }
         else
         {
             teamService.saveTeam(team);
             userService.addTeamIdToUser(team, team.getPlayerA().getUserId());
             userService.addTeamIdToUser(team, team.getPlayerB().getUserId());
-            modelAndView.addObject("successMessage", "Success: Team has been added.");
+            modelAndView.addObject("successMessage", "Team wurde hinzugefügt.");
             modelAndView.addObject("team", new Team());
             modelAndView.addObject("users", userService.getAllUsers());
             modelAndView.setViewName("teamadd");
