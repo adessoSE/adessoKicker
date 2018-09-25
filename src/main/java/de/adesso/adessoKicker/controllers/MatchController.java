@@ -1,36 +1,42 @@
 package de.adesso.adessoKicker.controllers;
 
-/**
- * 	Controller managing Matches
- * @author caylak
- */
+import java.util.Date;
 
-import java.util.List;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import de.adesso.adessoKicker.objects.Match;
 import de.adesso.adessoKicker.services.MatchService;
+import de.adesso.adessoKicker.services.TeamService;
 
 @RestController
 public class MatchController {
 
 	@Autowired
 	private MatchService matchService;
+	@Autowired
+	private TeamService teamService;
 	
 	/**
 	 * POST all matches on "/matches"
 	 * @return
 	 */
-	@RequestMapping("/matches")
-	public List<Match> getAllMatches()
+	@GetMapping("/matches")
+	public ModelAndView getAllMatches()
 	{
-		return matchService.getAllMatches();
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("matches", matchService.getAllMatches());
+		return modelAndView;
 	}
 	
 	/**
@@ -38,29 +44,57 @@ public class MatchController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping("/matches/{id}")
-	public Match getOneMatch(@PathVariable long id)
+	@GetMapping("/matches/{id}")
+	public ModelAndView getMatch(@PathVariable long id)
 	{
-		return matchService.getMatchById(id);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("match", matchService.getMatchById(id));
+		return modelAndView;
 	}
-	/*
-	@RequestMapping("matches/your")
-	public List<Match> getYourMatchesSelf(User user)
-	{
-		return matchService.getAllMatches();
-	}
-	*/
-	//für admin
 	
 	/**
-	 * adds a match to the database
-	 * @param match
+	 * ui for adding a match
+	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.POST, value="matches/add")
-	public void addMatch(@RequestBody Match match)
-	{
-		matchService.saveMatch(match);
-	}
+	@GetMapping("/matches/add")
+	public ModelAndView showMatchCreation() {
+		ModelAndView modelAndView = new ModelAndView();
+		Match match= new Match();
+		modelAndView.addObject("match", match);
+		modelAndView.addObject("teams", teamService.getAllTeams());
+		modelAndView.setViewName("creatematch");
+		return modelAndView;
+	    }
+	
+	/**
+     * POST chosen players and create a team with them and add the teamId to the players Team List
+     * @param team
+     * @param bindingResult
+     * @return
+     */
+    @PostMapping("/matches/add")
+    public ModelAndView createNewMatch(@Valid Match match, long teamAId, long teamBId, BindingResult bindingResult)
+    {
+        ModelAndView modelAndView = new ModelAndView();
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("creatematch");
+        }
+        else
+        {
+        	match.setTeamA(teamService.getTeamById(teamAId));
+        	match.setTeamB(teamService.getTeamById(teamBId));
+            matchService.saveMatch(match);
+            teamService.addMatchIdToTeam(match, teamAId);
+            teamService.addMatchIdToTeam(match, teamBId);
+            modelAndView.addObject("successMessage", "Success: Team has been added.");
+            modelAndView.addObject("match", new Match());
+            modelAndView.addObject("teams", teamService.getAllTeams());
+            modelAndView.setViewName("creatematch");
+
+        }
+
+        return modelAndView;
+    }
 	
 	/**
 	 * deletes a match from the database identified by an id

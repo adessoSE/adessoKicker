@@ -1,8 +1,22 @@
 package de.adesso.adessoKicker.objects;
 
 
-import javax.persistence.*;
 import java.util.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "match")
@@ -12,11 +26,8 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long matchId;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
-
-    private int teamAPoints;
-
-    private int teamBPoints;
 
     @OneToOne(targetEntity = Team.class)
     private Team winner;
@@ -28,7 +39,7 @@ public class Match {
 
     @ManyToOne(targetEntity = Team.class)
     private Team teamB;
-
+ 
     public Match() {
         Team teamA = new Team();
         Team teamB = new Team();
@@ -59,22 +70,6 @@ public class Match {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public int getTeamAPoints() {
-        return teamAPoints;
-    }
-
-    public void setTeamAPoints(int teamAPoints) {
-        this.teamAPoints = teamAPoints;
-    }
-
-    public int getTeamBPoints() {
-        return teamBPoints;
-    }
-
-    public void setTeamBPoints(int teamBPoints) {
-        this.teamBPoints = teamBPoints;
     }
 
     public Team getWinner() {
@@ -108,14 +103,13 @@ public class Match {
     public void setTeamB(Team teamB) {
         this.teamB = teamB;
     }
+    
 
     @Override
     public String toString() {
         return "Match{" +
                 "matchId=" + matchId +
                 ", date=" + date +
-                ", teamAPoints=" + teamAPoints +
-                ", teamBPoints=" + teamBPoints +
                 ", winner=" + winner +
                 ", kicker='" + kicker + '\'' +
                 ", teamA=" + teamA +
