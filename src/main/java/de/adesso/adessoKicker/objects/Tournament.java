@@ -26,6 +26,7 @@ public class Tournament {
 
 	private Date endDate;
 	private String format;
+	private String description;
 
 	@OneToOne(targetEntity = Team.class, cascade = CascadeType.ALL)
 	private Team winner;
@@ -43,13 +44,14 @@ public class Tournament {
 	public Tournament() {
 	}
 
-	public Tournament(String tournamentName, Date startDate, String format) {
+	public Tournament(String tournamentName, Date startDate, String format, String description) {
 		this.tournamentName = tournamentName;
 	    this.startDate = startDate;
         this.format = format;
         this.teams = new ArrayList<>();
 		this.winner = null;
 		this.finished = false;
+		this.description = description;
 	}
 
 	public long getTournamentId() {
@@ -149,6 +151,15 @@ public class Tournament {
                 ", endDate=" + endDate +
                 ", format='" + format + '\'' +
                 ", teams=" + teams +
+                ", description=" + description +
                 '}';
     }
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }
