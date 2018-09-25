@@ -1,6 +1,7 @@
 package de.adesso.adessoKicker.controllers;
 
 import de.adesso.adessoKicker.objects.Tournament;
+import de.adesso.adessoKicker.services.TeamService;
 import de.adesso.adessoKicker.services.TournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,9 @@ public class TournamentController {
 
     @Autowired
     private TournamentService tournamentService;
+
+    @Autowired
+    private TeamService teamService;
 
     @GetMapping("/tournaments/create")
     public ModelAndView tournamentForm() {
@@ -76,8 +80,18 @@ public class TournamentController {
     public ModelAndView showAddTeam(@PathVariable("tournamentId") long id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournament", tournamentService.getTournamentById(id));
-        modelAndView.addObject("teams", null);
+        modelAndView.addObject("teams", teamService.getAllTeams());
         return modelAndView;
     }
+
+    @PostMapping("tournaments/{tournamentId}/join")
+    public ModelAndView addTeam(@PathVariable("tournamentId") long id) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("tournament", tournamentService.getTournamentById(id));
+        modelAndView.addObject("teams", teamService.getAllTeams());
+        return modelAndView;
+    }
+
 
 }

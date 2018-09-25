@@ -81,7 +81,7 @@ public class TeamController {
      * @return
      */
     @PostMapping("/teams/add")
-    public ModelAndView createNewTeam(@Valid Team team, long playerAId, long playerBId, BindingResult bindingResult)
+    public ModelAndView createNewTeam(@Valid Team team, BindingResult bindingResult)
     {
         ModelAndView modelAndView = new ModelAndView();
         Team teamExists = teamService.findByTeamName(team.getTeamName());
@@ -89,15 +89,14 @@ public class TeamController {
             bindingResult.rejectValue("teamName", "error.teamName", "Fail: Team Name already exists.");
         }
         if (bindingResult.hasErrors()) {
+            modelAndView.addObject("teams", teamService.getAllTeams());
             modelAndView.setViewName("teamadd");
         }
         else
         {
-            team.setPlayerA(userService.getUserById(playerAId));
-            team.setPlayerB(userService.getUserById(playerBId));
             teamService.saveTeam(team);
-            userService.addTeamIdToUser(team, playerAId);
-            userService.addTeamIdToUser(team, playerBId);
+            userService.addTeamIdToUser(team, team.getPlayerA().getUserId());
+            userService.addTeamIdToUser(team, team.getPlayerB().getUserId());
             modelAndView.addObject("successMessage", "Success: Team has been added.");
             modelAndView.addObject("team", new Team());
             modelAndView.addObject("users", userService.getAllUsers());
