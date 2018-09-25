@@ -5,7 +5,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,7 +37,6 @@ public class Tournament {
 
 	private Date endDate;
 	private String format;
-	private String description;
 
 	@OneToOne(targetEntity = Team.class, cascade = CascadeType.ALL)
 	private Team winner;
@@ -44,14 +54,13 @@ public class Tournament {
 	public Tournament() {
 	}
 
-	public Tournament(String tournamentName, Date startDate, String format, String description) {
+	public Tournament(String tournamentName, Date startDate, String format) {
 		this.tournamentName = tournamentName;
 	    this.startDate = startDate;
         this.format = format;
         this.teams = new ArrayList<>();
 		this.winner = null;
 		this.finished = false;
-		this.description = description;
 	}
 
 	public long getTournamentId() {
@@ -151,15 +160,6 @@ public class Tournament {
                 ", endDate=" + endDate +
                 ", format='" + format + '\'' +
                 ", teams=" + teams +
-                ", description=" + description +
                 '}';
     }
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 }
