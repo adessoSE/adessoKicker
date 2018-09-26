@@ -1,6 +1,5 @@
 package de.adesso.adessoKicker;
 
-import de.adesso.adessoKicker.objects.Tournament;
 import de.adesso.adessoKicker.objects.User;
 import de.adesso.adessoKicker.repositories.UserRepository;
 import org.slf4j.Logger;
@@ -23,21 +22,6 @@ public class Application {
     @Bean
     public CommandLineRunner demo(UserRepository userRepository) {
         return (args) -> {
-            // save a couple of customers
-            //List<Team> teams = new ArrayList<>();
-            //User user1 = new User("Peter", "Meier", "Test@mail.com");
-            //userRepository.save(user1);
-            //User user2 = new User("Hans", "Hans", "test@mail2.com");
-            //userRepository.save(user2);
-            //Team team = new Team("Test Team", userRepository.findByUserId(1L), userRepository.findByUserId(2L));
-            //Date date = new Date();
-            //Tournament tournament1 = new Tournament("Test Tournament", date, "Last Man Standing");
-            //teams.add(team);
-            //userRepository.save(new User("Jack", "Bauer", "jack.bauer@testmail.com"));
-            //tournamentRepository.save(tournament1);
-            //tournamentService.addTeamToTournament(tournament1, team);
-
-
             // fetch all customers
             log.info("Customers found with findAll():");
             log.info("-------------------------------");
