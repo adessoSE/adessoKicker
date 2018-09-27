@@ -30,7 +30,7 @@ public class LoginController {
     @GetMapping("/login")
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
+        modelAndView.setViewName("user/login");
         return modelAndView;
     }
 
@@ -44,7 +44,7 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         modelAndView.addObject("user", user);
-        modelAndView.setViewName("registration");
+        modelAndView.setViewName("user/registration");
         return modelAndView;
     }
 
@@ -64,13 +64,13 @@ public class LoginController {
                                                     "There is already a user with this eMail");
         }
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("registration");
+            modelAndView.setViewName("user/registration");
         } else {
 
             loginService.saveUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
-            modelAndView.setViewName("registration");
+            modelAndView.setViewName("user/registration");
         }
 
         return modelAndView;
@@ -83,7 +83,7 @@ public class LoginController {
         User user = loginService.findUserByEmail(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
-        modelAndView.setViewName("home");
+        modelAndView.setViewName("user/home");
         return modelAndView;
     }
 

@@ -43,6 +43,7 @@ public class TeamController {
     {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("teams", teamService.getAllTeams());
+        modelAndView.setViewName("team/teams");
         return modelAndView;
     }
 
@@ -56,7 +57,7 @@ public class TeamController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject(teamService.getTeamById(id));
-        modelAndView.setViewName("teamspage");
+        modelAndView.setViewName("team/page");
         return modelAndView;
     }
 
@@ -70,7 +71,7 @@ public class TeamController {
         Team team = new Team();
         modelAndView.addObject("team", team);
         modelAndView.addObject("users", userService.getAllUsers());
-        modelAndView.setViewName("teamadd");
+        modelAndView.setViewName("team/add");
         return modelAndView;
     }
 
@@ -91,7 +92,7 @@ public class TeamController {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("team", team);
             modelAndView.addObject("users", userService.getAllUsers());
-            modelAndView.setViewName("teamadd");
+            modelAndView.setViewName("team/add");
         }
         else
         {	
@@ -103,7 +104,7 @@ public class TeamController {
             modelAndView.addObject("successMessage", "Team wurde hinzugefügt.");
             modelAndView.addObject("team", new Team());
             modelAndView.addObject("users", userService.getAllUsers());
-            modelAndView.setViewName("teamadd");
+            modelAndView.setViewName("team/add");
         	}
         	else
         	{
@@ -112,7 +113,7 @@ public class TeamController {
         		modelAndView.addObject("team", team);
                 modelAndView.addObject("users", userService.getAllUsers());
                 modelAndView.addObject("failMessage", "Bitte keine identischen Spieler auswählen.");
-                modelAndView.setViewName("teamadd");
+                modelAndView.setViewName("team/add");
         	}
 
         }

@@ -37,6 +37,7 @@ public class MatchController {
 	{
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("matches", matchService.getAllMatches());
+		modelAndView.setViewName("match/matches");
 		return modelAndView;
 	}
 	
@@ -50,6 +51,7 @@ public class MatchController {
 	{
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("match", matchService.getMatchById(id));
+		modelAndView.setViewName("match/page");
 		return modelAndView;
 	}
 	
@@ -63,14 +65,14 @@ public class MatchController {
 		Match match= new Match();
 		modelAndView.addObject("match", match);
 		modelAndView.addObject("teams", teamService.getAllTeams());
-		modelAndView.setViewName("creatematch");
+		modelAndView.setViewName("match/create");
 		return modelAndView;
 	    }
 	
 	/**
      * POST chosen players and create a team with them and add the teamId to the players Team List
-     * @param team
-     * @param bindingResult
+     * @param
+     * @param
      * @return
      */
     @PostMapping("/matches/add")
@@ -83,7 +85,7 @@ public class MatchController {
         if (bindingResult.hasErrors()) {
         	modelAndView.addObject("match", new Match());
             modelAndView.addObject("teams", teamService.getAllTeams());
-            modelAndView.setViewName("creatematch");
+            modelAndView.setViewName("match/create");
         }
         try {
         	if (match.getTeamA().getTeamId()!=match.getTeamB().getTeamId())
@@ -100,7 +102,7 @@ public class MatchController {
                     modelAndView.addObject("successMessage", "Match wurde hinzugefügt.");
                     modelAndView.addObject("match", new Match());
                     modelAndView.addObject("teams", teamService.getAllTeams());
-                    modelAndView.setViewName("creatematch");
+                    modelAndView.setViewName("match/create");
                  }
             	else
             	{
@@ -108,7 +110,7 @@ public class MatchController {
             		System.out.println(time.getTime());
             		modelAndView.addObject("match", new Match());
                     modelAndView.addObject("teams", teamService.getAllTeams());
-                    modelAndView.setViewName("creatematch");
+                    modelAndView.setViewName("match/create");
                     modelAndView.addObject("dateMessage", "Bitte kein vergangenes Datum.");
             	}
         		
@@ -120,14 +122,14 @@ public class MatchController {
         		modelAndView.addObject("match", match);
                 modelAndView.addObject("teams", teamService.getAllTeams());
                 modelAndView.addObject("failMessage", "Bitte keine identischen Teams auswählen.");
-                modelAndView.setViewName("creatematch");
+                modelAndView.setViewName("match/create");
 
             }
         	
         } catch (NullPointerException e) {
         	modelAndView.addObject("match", new Match());
             modelAndView.addObject("teams", teamService.getAllTeams());
-            modelAndView.setViewName("creatematch");
+            modelAndView.setViewName("match/create");
             modelAndView.addObject("dateMessage", "Bitte ein Datum + Uhrzeit.");
         
 		}

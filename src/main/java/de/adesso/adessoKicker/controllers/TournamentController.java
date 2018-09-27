@@ -2,7 +2,6 @@ package de.adesso.adessoKicker.controllers;
 
 import de.adesso.adessoKicker.objects.Team;
 import de.adesso.adessoKicker.objects.Tournament;
-import de.adesso.adessoKicker.repositories.TeamRepository;
 import de.adesso.adessoKicker.services.TeamService;
 import de.adesso.adessoKicker.services.TournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ public class TournamentController {
         ModelAndView modelAndView = new ModelAndView();
         Tournament tournament = new Tournament();
         modelAndView.addObject("tournament", tournament);
-        modelAndView.setViewName("tournamentscreate");
+        modelAndView.setViewName("tournament/create");
         return modelAndView;
     }
 
@@ -42,12 +41,12 @@ public class TournamentController {
 
         ModelAndView modelAndView = new ModelAndView();
         if(bindingResult.hasErrors()) {
-            modelAndView.setViewName("tournamentscreate");
+            modelAndView.setViewName("tournament/create");
         } else {
             tournamentService.saveTournament(tournament);
             modelAndView.addObject("successMessage", "Tournament has been created");
             modelAndView.addObject("tournament", new Tournament());
-            modelAndView.setViewName("tournamentscreate");
+            modelAndView.setViewName("tournament/create");
         }
 
         return modelAndView;
@@ -58,25 +57,15 @@ public class TournamentController {
     public ModelAndView showTournamentList() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournaments", tournamentService.getAllTournaments());
-        modelAndView.setViewName("tournamentList");
+        modelAndView.setViewName("tournament/list");
         return modelAndView;
     }
-    
-    /*
-    @GetMapping("/tournaments")
-    public ModelAndView showTournamentList() {
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("tournaments", tournamentService.listRunningTournaments());
-        modelAndView.setViewName("tournaments");
-        return modelAndView;
-    } */
 
     @GetMapping("/tournaments/{tournamentId}")
     public ModelAndView tournamentPage(@PathVariable("tournamentId") long id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournament", tournamentService.getTournamentById(id));
-        modelAndView.setViewName("tournamentspage");
+        modelAndView.setViewName("tournament/page");
         return modelAndView;
     }
 
@@ -85,7 +74,7 @@ public class TournamentController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournament", tournamentService.getTournamentById(id));
         modelAndView.addObject("teams", teamService.getAllTeams());
-        modelAndView.setViewName("tournamentaddteam");
+        modelAndView.setViewName("tournament/addteam");
         return modelAndView;
     }
 
@@ -96,18 +85,18 @@ public class TournamentController {
         tournamentService.addTeamToTournament(tournamentService.getTournamentById(id), teamService.getTeamById(teamId));
         modelAndView.addObject("tournament",tournamentService.getTournamentById(id));
         modelAndView.addObject("teams", teamService.getAllTeams());
-        modelAndView.setViewName("tournamentaddteam");
+        modelAndView.setViewName("tournament/addteam");
         return modelAndView;
     }
 
-    @GetMapping("tournaments/{tournamentId}/tournamenttreetest")
+    @GetMapping("tournaments/{tournamentId}/treetest")
     public ModelAndView showTournamentTree(@PathVariable("tournamentId") long id) {
 
         ModelAndView modelAndView = new ModelAndView();
         List<Team> teams = tournamentService.getTournamentById(id).getTeams();
         tournamentService.createTournamentTree(teams, tournamentService.getTournamentById(id));
         modelAndView.addObject("tournament", tournamentService.getTournamentById(id));
-        modelAndView.setViewName("tournamenttreetest");
+        modelAndView.setViewName("tournament/treetest");
         return modelAndView;
     }
 
