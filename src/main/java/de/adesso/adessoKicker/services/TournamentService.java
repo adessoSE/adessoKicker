@@ -3,6 +3,7 @@ package de.adesso.adessoKicker.services;
 import de.adesso.adessoKicker.objects.Match;
 import de.adesso.adessoKicker.objects.Team;
 import de.adesso.adessoKicker.objects.Tournament;
+import de.adesso.adessoKicker.objects.User;
 import de.adesso.adessoKicker.repositories.MatchRepository;
 import de.adesso.adessoKicker.repositories.TeamRepository;
 import de.adesso.adessoKicker.repositories.TournamentRepository;
@@ -78,6 +79,12 @@ public class TournamentService {
         tournamentRepository.save(tournament);
     }
 
+    public void addPlayers(Tournament tournament, User player) {
+
+        tournament.getPlayers().add(player);
+        saveTournament(tournament);
+    }
+
     /***
      * Creates the tournament tree with the first level of playeres filled out.
      * If the amount of teams if not a power of 2 the remaining amount needed to get a power of two will be filled
@@ -126,6 +133,7 @@ public class TournamentService {
 
         tournament.setTournamentTree(tournamentTree);
     }
+
 
     public void advanceWinner(Tournament tournament, Match match) {
 

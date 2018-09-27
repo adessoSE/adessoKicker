@@ -39,6 +39,9 @@ public class Tournament {
 	//@JoinTable(name = "tournament_team", joinColumns = @JoinColumn(name = "tournament_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
     private List<Team> teams;
 
+    @ManyToMany(targetEntity =  User.class)
+    private List<User> players;
+
     @Column
     @ElementCollection
     private List<ArrayList<Team>> tournamentTree;
@@ -52,10 +55,19 @@ public class Tournament {
         this.format = format;
         this.teams = new ArrayList<>();
         this.matches = new ArrayList<>();
+        this.players = new ArrayList<>();
 		this.winner = null;
 		this.finished = false;
 		this.description = description;
 		this.tournamentTree = new ArrayList<ArrayList<Team>>();
+	}
+
+	public void addTeam(Team team) {
+		teams.add(team);
+	}
+
+	public void removeTeam(Team team) {
+		teams.remove(team);
 	}
 
 	public long getTournamentId() {
@@ -66,15 +78,15 @@ public class Tournament {
 		this.tournamentId = tournamentId;
 	}
 
-    public String getTournamentName() {
-        return tournamentName;
-    }
+	public String getTournamentName() {
+		return tournamentName;
+	}
 
-    public void setTournamentName(String tournamentName) {
-        this.tournamentName = tournamentName;
-    }
+	public void setTournamentName(String tournamentName) {
+		this.tournamentName = tournamentName;
+	}
 
-    public Date getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
@@ -82,11 +94,7 @@ public class Tournament {
 		this.startDate = startDate;
 	}
 
-    public void setMatches(List<Match> matches) {
-        this.matches = matches;
-    }
-
-    public Date getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
@@ -102,6 +110,30 @@ public class Tournament {
 		this.format = format;
 	}
 
+	public Team getWinner() {
+		return winner;
+	}
+
+	public void setWinner(Team winner) {
+		this.winner = winner;
+	}
+
+	public boolean isFinished() {
+		return finished;
+	}
+
+	public void setFinished(boolean finished) {
+		this.finished = finished;
+	}
+
+	public List<Match> getMatches() {
+		return matches;
+	}
+
+	public void setMatches(List<Match> matches) {
+		this.matches = matches;
+	}
+
 	public List<Team> getTeams() {
 		return teams;
 	}
@@ -110,43 +142,23 @@ public class Tournament {
 		this.teams = teams;
 	}
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
-    }
+	public List<User> getPlayers() {
+		return players;
+	}
 
-    public boolean isFinished() {
-        return finished;
-    }
+	public void setPlayers(List<User> players) {
+		this.players = players;
+	}
 
-    public void setWinner(Team winner) {
-        this.winner = winner;
-    }
+	public List<ArrayList<Team>> getTournamentTree() {
+		return tournamentTree;
+	}
 
-    public void addTeam(Team team) {
-	    teams.add(team);
-    }
+	public void setTournamentTree(List<ArrayList<Team>> tournamentTree) {
+		this.tournamentTree = tournamentTree;
+	}
 
-    public void removeTeam(Team team) {
-	    teams.remove(team);
-    }
-
-    public Team getWinner() {
-        return winner;
-    }
-
-    public List<Match> getMatches() {
-        return matches;
-    }
-
-    public List<ArrayList<Team>> getTournamentTree() {
-        return tournamentTree;
-    }
-
-    public void setTournamentTree(List<ArrayList<Team>> tournamentTree) {
-        this.tournamentTree = tournamentTree;
-    }
-
-    @Override
+	@Override
     public String toString() {
         return "Tournament{" +
                 "tournamentId=" + tournamentId +

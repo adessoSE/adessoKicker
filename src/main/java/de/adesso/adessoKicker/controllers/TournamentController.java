@@ -82,6 +82,7 @@ public class TournamentController {
     public ModelAndView addTeamToTournament(@PathVariable("tournamentId") long id, long teamId) {
 
         Tournament tournament = tournamentService.getTournamentById(id);
+        Team team = teamService.getTeamById(teamId);
         ModelAndView modelAndView = new ModelAndView();
 
         if (tournament.getTeams().contains(teamService.getTeamById(teamId))) {
@@ -92,7 +93,19 @@ public class TournamentController {
             return modelAndView;
         }
 
-        tournamentService.addTeamToTournament(tournamentService.getTournamentById(id), teamService.getTeamById(teamId));
+        if (tournament.getPlayers().contains(team.getPlayerA()) || tournament.getPlayers().contains(team.getPlayerB())) {
+
+            modelAndView.addObject("failMessage", "Player already is in tournament");
+            modelAndView.addObject("tournament", tournament);
+            modelAndView.addObject("teams", teamService.getAllTeams());
+            modelAndView.setViewName("tournament/addteam");
+            return modelAndView;
+        }
+
+
+        tournamentService.addTeamToTournament(tournamentService.getTournamentById(id), team);
+        tournamentService.addPlayers(tournament, team.getPlayerA());
+        tournamentService.addPlayers(tournament, team.getPlayerB());
         modelAndView.addObject("tournament", tournament);
         modelAndView.addObject("teams", teamService.getAllTeams());
         modelAndView.setViewName("tournament/addteam");
