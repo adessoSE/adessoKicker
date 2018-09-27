@@ -129,28 +129,23 @@ public class TournamentService {
         }
 
         tournament.setTournamentTree(tournamentTree);
-        advanceWinner(tournament, new Match());
     }
 
     public void advanceWinner(Tournament tournament, Match match) {
-        match = matchRepository.findMatchByMatchId(9L);
-        //tournament.getMatches().add(match);
-        match.setWinner(match.getTeamA());
+
         Team winner = match.getWinner();
         List<ArrayList<Team>> tournamentTree = tournament.getTournamentTree();
+        boolean winnerSet = false;
         int treeSize = tournamentTree.size();
 
-        for (int i = 0; i < treeSize; i++) {
-            for (int k = 0; k < tournamentTree.get(i).size(); k++) {
+        for (int i = 0; i < treeSize - 1 && !winnerSet; i++) {
+            for (int k = 0; k < tournamentTree.get(i).size() && !winnerSet; k++) {
                 if (tournamentTree.get(i).get(k) == winner && !(tournamentTree.get(i + 1).get(k / 2) == winner)) {
                     tournamentTree.get(i + 1).set(k / 2, winner);
-                    break;
+                    winnerSet = true;
                 }
-                break;
             }
-            break;
         }
-        tournament.setTournamentTree(tournamentTree);
         saveTournament(tournament);
     }
 
