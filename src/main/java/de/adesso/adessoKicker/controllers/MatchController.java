@@ -77,6 +77,7 @@ public class MatchController {
     public ModelAndView createNewMatch(@Valid Match match, BindingResult bindingResult)
     {
         ModelAndView modelAndView = new ModelAndView();
+        Date time = new Date();
         if (bindingResult.hasErrors()) {
         	modelAndView.addObject("match", new Match());
             modelAndView.addObject("teams", teamService.getAllTeams());
@@ -103,8 +104,10 @@ public class MatchController {
         try {
         	if (match.getTeamA().getTeamId()!=match.getTeamB().getTeamId())
             {
-            	if (match.getDate().after(yesterday()))
+            	if (match.getDate().after(yesterday()) && match.getTime().getTime()>=time.getTime())
                  {
+            		System.out.println(match.getTime().getTime());
+            		System.out.println(time.getTime());
             		matchService.saveMatch(match);
                     teamService.addMatchIdToTeam(match, match.getTeamA().getTeamId());
                     teamService.addMatchIdToTeam(match, match.getTeamB().getTeamId());

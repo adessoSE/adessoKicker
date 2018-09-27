@@ -45,6 +45,7 @@ public class Match {
     
 	public Match() {
     	date = new Date();
+    	time = new Date();
     }
     
 
