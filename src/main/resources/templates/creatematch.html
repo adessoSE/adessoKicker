@@ -13,8 +13,8 @@
     	<option value="Gebäude 1 - Raucherlounge">Gebäude 1 - Raucherlounge</option>
     	<option value="Gebäude 2 - Raucherlounde">Gebäude 2 - Raucherlounge</option>
    </select></p>
-    <p>Datum: <input type="date" th:field="*{date}" placeholder="Datum"/></p>
-    <p>Uhrzeit: <input type="time" th:field="*{time}" placeholder="Wixxa"/></p>
+    <p>Datum: <input type="date" th:field="*{date}"/></p>
+    <p>Uhrzeit: <input type="time" th:field="*{time}"/></p>
     <select class="form-control" id="teamA" name="teamA">
         <option th:each="teamA: ${teams}"
                 th:value="${teamA.teamId}"

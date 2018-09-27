@@ -78,36 +78,22 @@ public class MatchController {
     {
         ModelAndView modelAndView = new ModelAndView();
         Date time = new Date();
+        
+        
         if (bindingResult.hasErrors()) {
         	modelAndView.addObject("match", new Match());
             modelAndView.addObject("teams", teamService.getAllTeams());
             modelAndView.setViewName("creatematch");
         }
-       /*
-        try {
-        	if (match.getDate().before(yesterday()))
-            {
-            	modelAndView.addObject("match", new Match());
-                modelAndView.addObject("teams", teamService.getAllTeams());
-                modelAndView.setViewName("creatematch");
-                modelAndView.addObject("dateMessage", "Bitte kein vergangenes Datum.");
-            }
-            
-		} catch (NullPointerException e) {
-        	modelAndView.addObject("match", new Match());
-            modelAndView.addObject("teams", teamService.getAllTeams());
-            modelAndView.setViewName("creatematch");
-            modelAndView.addObject("dateMessage", "Bitte ein Datum.");
-        
-		}
-		*/
         try {
         	if (match.getTeamA().getTeamId()!=match.getTeamB().getTeamId())
             {
-            	if (match.getDate().after(yesterday()) && match.getTime().getTime()>=time.getTime())
+        		
+        		//Time check currently not working
+            	if (match.getDate().after(yesterday()) /*&& match.getTime().getTime()>=time.getTime()*/)
                  {
-            		System.out.println(match.getTime().getTime());
-            		System.out.println(time.getTime());
+            		System.out.println(match.getTime());
+            		System.out.println(time);
             		matchService.saveMatch(match);
                     teamService.addMatchIdToTeam(match, match.getTeamA().getTeamId());
                     teamService.addMatchIdToTeam(match, match.getTeamB().getTeamId());
@@ -118,6 +104,8 @@ public class MatchController {
                  }
             	else
             	{
+            		System.out.println(match.getTime().getTime());
+            		System.out.println(time.getTime());
             		modelAndView.addObject("match", new Match());
                     modelAndView.addObject("teams", teamService.getAllTeams());
                     modelAndView.setViewName("creatematch");
@@ -140,7 +128,7 @@ public class MatchController {
         	modelAndView.addObject("match", new Match());
             modelAndView.addObject("teams", teamService.getAllTeams());
             modelAndView.setViewName("creatematch");
-            modelAndView.addObject("dateMessage", "Bitte ein Datum.");
+            modelAndView.addObject("dateMessage", "Bitte ein Datum + Uhrzeit.");
         
 		}
 
