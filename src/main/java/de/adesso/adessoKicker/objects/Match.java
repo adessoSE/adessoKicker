@@ -37,6 +37,7 @@ public class Match {
     private Team teamB;
  
     public Match() {
+    	date = new Date();
     }
 
     public Match(Date date, String kicker, Team teamA, Team teamB) {

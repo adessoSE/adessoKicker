@@ -1,5 +1,6 @@
 package de.adesso.adessoKicker.controllers;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.validation.Valid;
@@ -75,18 +76,49 @@ public class MatchController {
     @PostMapping("/matches/add")
     public ModelAndView createNewMatch(@Valid Match match, BindingResult bindingResult)
     {
+    	
+    	Date today = new Date();
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
+        	modelAndView.addObject("match", new Match());
+            modelAndView.addObject("teams", teamService.getAllTeams());
             modelAndView.setViewName("creatematch");
+        }
+        try {
+        	if (match.getDate().before(yesterday()))
+            {
+            	System.out.println(match.getDate());
+            	modelAndView.addObject("match", new Match());
+                modelAndView.addObject("teams", teamService.getAllTeams());
+                modelAndView.setViewName("creatematch");
+                modelAndView.addObject("dateMessage", "Bitte kein vergangenes Datum.");
+            }
+            
+		} catch (NullPointerException e) {
+        	modelAndView.addObject("match", new Match());
+            modelAndView.addObject("teams", teamService.getAllTeams());
+            modelAndView.setViewName("creatematch");
+            modelAndView.addObject("dateMessage", "Bitte ein Datum.");
+        
+		}
+        
+        if (match.getTeamA().getTeamId()!=match.getTeamB().getTeamId())
+        {
+        	 matchService.saveMatch(match);
+             teamService.addMatchIdToTeam(match, match.getTeamA().getTeamId());
+             teamService.addMatchIdToTeam(match, match.getTeamB().getTeamId());
+             modelAndView.addObject("successMessage", "Match wurde hinzugefügt.");
+             modelAndView.addObject("match", new Match());
+             modelAndView.addObject("teams", teamService.getAllTeams());
+             modelAndView.setViewName("creatematch");
         }
         else
         {
-            matchService.saveMatch(match);
-            teamService.addMatchIdToTeam(match, match.getTeamA().getTeamId());
-            teamService.addMatchIdToTeam(match, match.getTeamB().getTeamId());
-            modelAndView.addObject("successMessage", "Success: Team has been added.");
-            modelAndView.addObject("match", new Match());
+        	bindingResult.rejectValue("teamA", "error.teamA");
+    		bindingResult.rejectValue("teamB", "error.teamB");
+    		modelAndView.addObject("match", match);
             modelAndView.addObject("teams", teamService.getAllTeams());
+            modelAndView.addObject("failMessage", "Bitte keine identischen Teams auswählen.");
             modelAndView.setViewName("creatematch");
 
         }
@@ -114,6 +146,12 @@ public class MatchController {
 	public void updateMatch(@RequestBody Match match, @PathVariable long id)
 	{
 		matchService.saveMatch(match);
+	}
+	
+	private Date yesterday() {
+	    final Calendar cal = Calendar.getInstance();
+	    cal.add(Calendar.DATE, -1);
+	    return cal.getTime();
 	}
 	
 }

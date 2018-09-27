@@ -8,11 +8,11 @@
 <body>
 <h1>Form</h1>
 <form autocomplete="off" action="#" th:action="@{/matches/add}" th:object="${match}" method="POST">
-    <p>Kicker: </p>
+    <p>Kicker:
     <select class="form-control" id="kicker" name="kicker">
     	<option value="Gebäude 1 - Raucherlounge">Gebäude 1 - Raucherlounge</option>
     	<option value="Gebäude 2 - Raucherlounde">Gebäude 2 - Raucherlounge</option>
-   </select>
+   </select></p>
     <p>Datum: <input type="date" th:field="*{date}" placeholder="Datum"/></p>
     
     <select class="form-control" id="teamA" name="teamA">
@@ -25,6 +25,10 @@
                 th:value="${teamB.teamId}"
                 th:text="${teamB.teamId}+' : '+${teamB.teamName}"></option>
     </select>
+    <p th:utext="${dateMessage}"></p>
+    <p th:utext="${successMessage}"></p>
+    <p th:utext="${failMessage}"></p>
+    
     <p><input type="submit" value="Match erstellen." /> <input type="reset" value="Reset" /></p>
 </form>
 </body>
