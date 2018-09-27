@@ -85,15 +85,21 @@ public class TournamentService {
     public void createTournamentTree(List<Team> teams, Tournament tournament) {
 
         int tournamentSize = (int) Math.pow(2, Math.ceil((Math.log(teams.size()) / Math.log(2))));
-        int treeSize = (int) (Math.log(tournamentSize)/Math.log(2) + 1);
+        int tournamentTreeSize = (int) (Math.log(tournamentSize)/Math.log(2) + 1);
         List<ArrayList<Team>>tournamentTree = tournament.getTournamentTree();
         Collections.shuffle(teams);
 
+        /**
+         * Fills remaining slots with null to fill the tree later
+         */
         while (teams.size() < tournamentSize) {
             teams.add(null);
         }
 
-        while (tournamentTree.size() < treeSize) {
+        /**
+         * Initializes the tournament tree with the right amount of levels so players can be added easily later
+         */
+        while (tournamentTree.size() < tournamentTreeSize) {
 
             tournamentTree.add(new ArrayList<>());
         }
@@ -112,30 +118,30 @@ public class TournamentService {
 
             tournamentTree.get(0).set(i, teams.get(i));
         }
+        System.out.println(tournamentTree.get(0).get(0));
 
         tournament.setTournamentTree(tournamentTree);
-        saveTournament(tournament);
     }
-/***
-    public void advanceWinner(Tournament tournament, Match match) {
 
+    public void advanceWinner(Tournament tournament, Match match) {
+        
         Team winner = match.getWinner();
-        //Team treeArray[][] = tournament.getTournamentTree();
-        int treeSize = treeArray.length;
+        List<ArrayList<Team>> tournamentTree = tournament.getTournamentTree();
+        int treeSize = tournamentTree.size();
 
         for (int i = 0; i < treeSize; i++) {
-            for (int k = 0; k < treeArray[i].length; k++) {
+            for (int k = 0; k < tournamentTree.get(i).size(); k++) {
 
-                if (treeArray[i][k] == winner && !(treeArray[i + 1][k / 2] == winner)) {
+                if (tournamentTree.get(i).get(k) == winner && !(tournamentTree.get(i + 1).get(k / 2) == winner)) {
 
-                    treeArray[i + 1][k / 2] = winner;
+                    tournamentTree.get(i + 1).set(k / 2, winner);
                     break;
                 }
             }
         }
 
-        tournament.setTournamentTree(treeArray);
+        tournament.setTournamentTree(tournamentTree);
         saveTournament(tournament);
     }
-***/
+
 }
