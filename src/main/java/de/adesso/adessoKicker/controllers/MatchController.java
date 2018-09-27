@@ -23,11 +23,17 @@ import de.adesso.adessoKicker.services.TeamService;
 @RestController
 public class MatchController {
 
-	@Autowired
 	private MatchService matchService;
-	@Autowired
+
 	private TeamService teamService;
-	
+
+	@Autowired
+	public MatchController(MatchService matchService, TeamService teamService) {
+
+	    this.matchService = matchService;
+	    this.teamService = teamService;
+    }
+
 	/**
 	 * POST all matches on "/matches"
 	 * @return

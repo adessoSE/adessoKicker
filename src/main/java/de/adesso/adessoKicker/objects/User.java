@@ -27,11 +27,6 @@ public class User implements Serializable {
     //Rename to verified
     private int active;
 
-/***
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_team", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
-    private List<Team> teams;
-***/
     private long wins;
 
     private long losses;
@@ -97,9 +92,7 @@ public class User implements Serializable {
         return wins;
     }
 
-    public long getLosses() {
-        return losses;
-    }
+    public long getLosses() { return losses; }
 
     public void setActive(int active) {
         this.active = active;
@@ -116,7 +109,7 @@ public class User implements Serializable {
 
     public void increaseLosses() {
 
-        this.losses = getLosses() + 1;
+        this.losses += 1;
     }
 
     public Set<Role> getRoles() {
@@ -126,15 +119,7 @@ public class User implements Serializable {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-/***
-    public List<Team> getTeams() {
-        return teams;
-    }
 
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
-    }
-***/
     public void setWins(long wins) {
         this.wins = wins;
     }
@@ -142,11 +127,7 @@ public class User implements Serializable {
     public void setLosses(long losses) {
         this.losses = losses;
     }
-/***
-    public void addToTeam(Team team) {
-        teams.add(team);
-    }
-***/
+
     @Override
     public String toString() {
         return "User{" +

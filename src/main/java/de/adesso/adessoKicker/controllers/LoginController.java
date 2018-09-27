@@ -1,10 +1,5 @@
 package de.adesso.adessoKicker.controllers;
 
-/**
- *  Controller managing user logins and registrations
- */
-
-
 import de.adesso.adessoKicker.objects.User;
 import de.adesso.adessoKicker.services.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +16,13 @@ import javax.validation.Valid;
 @Controller
 public class LoginController {
 
-    @Autowired
     private LoginService loginService;
+
+    @Autowired
+    public LoginController(LoginService loginService) {
+
+        this.loginService = loginService;
+    }
 
     /**
      *  Maps GET requests for "/login" to the login template
