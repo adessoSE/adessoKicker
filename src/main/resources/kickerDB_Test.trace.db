@@ -52,3 +52,11 @@ alter table tournament_matches drop index UK_4o9lr3tu4wy7qdsva0wvp31rp [90057-19
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
 	at java.lang.reflect.Method.invoke(Unknown Source)
 	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+2018-09-27 11:09:17 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Datenumwandlungsfehler beim Umwandeln von "'' (TOURNAMENT: TOURNAMENT_ID BIGINT NOT NULL)"
+Data conversion error converting "'' (TOURNAMENT: TOURNAMENT_ID BIGINT NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."TOURNAMENT"("TOURNAMENT_ID","DESCRIPTION","END_DATE","FINISHED","FORMAT","START_DATE","TOURNAMENT_NAME","WINNER_TEAM_ID")VALUES(?,?,?,?,?,?,?,?) -- (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8) [22018-197]
+2018-09-27 11:09:17 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Datenumwandlungsfehler beim Umwandeln von "'' (TOURNAMENT: TOURNAMENT_ID BIGINT NOT NULL)"
+Data conversion error converting "'' (TOURNAMENT: TOURNAMENT_ID BIGINT NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."TOURNAMENT"("TOURNAMENT_ID","DESCRIPTION","END_DATE","FINISHED","FORMAT","START_DATE","TOURNAMENT_NAME","WINNER_TEAM_ID")VALUES(?,?,?,?,?,?,?,?) -- (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8) [22018-197]
