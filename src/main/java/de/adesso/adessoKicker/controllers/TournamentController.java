@@ -79,11 +79,21 @@ public class TournamentController {
     }
 
     @PostMapping("tournaments/{tournamentId}/join")
-    public ModelAndView addTeamToTournament(@PathVariable("tournamentId") long id, @Valid Tournament tournament, BindingResult bindingResult, long teamId) {
+    public ModelAndView addTeamToTournament(@PathVariable("tournamentId") long id, long teamId) {
 
+        Tournament tournament = tournamentService.getTournamentById(id);
         ModelAndView modelAndView = new ModelAndView();
+
+        if (tournament.getTeams().contains(teamService.getTeamById(teamId))) {
+            modelAndView.addObject("failMessage", "Team already is in tournament");
+            modelAndView.addObject("tournament", tournament);
+            modelAndView.addObject("teams", teamService.getAllTeams());
+            modelAndView.setViewName("tournament/addteam");
+            return modelAndView;
+        }
+
         tournamentService.addTeamToTournament(tournamentService.getTournamentById(id), teamService.getTeamById(teamId));
-        modelAndView.addObject("tournament",tournamentService.getTournamentById(id));
+        modelAndView.addObject("tournament", tournament);
         modelAndView.addObject("teams", teamService.getAllTeams());
         modelAndView.setViewName("tournament/addteam");
         return modelAndView;

@@ -13,6 +13,8 @@
                 th:value="${team.teamId}"
                 th:text="${team.teamId}+' : '+${team.teamName}"></option>
     </select>
+    <span th:utext="${successMessage}"></span>
+    <span th:utext="${failMessage}"></span>
     <p><input type="submit" value="Team hinzufuegen." /> <input type="reset" value="Reset" /></p>
 </form>
 </body>
