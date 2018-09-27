@@ -18,7 +18,7 @@
     <div class="containerTop">
         <!--Everything displayed on the top left side-->
         <div id="topDisplay" style="width: 50%;">
-            <h1>[Name]</h1>
+            <h1 th:text="${user.firstName} + ' ' + ${user.lastName}"></h1>
             <p> Nach anderen Spielern suchen</p>
             <!--SearchBar-->
             <input id="searchBar" type="text" placeholder="Search...">
@@ -63,12 +63,12 @@
         <div class="elementStats">
             <p style="font-size: 15px;" class="stats">Siege</p>
             <span class="glyphicon glyphicon-flag"></span>
-            <p class="elementStats">[Wins]</p>
+            <p class="elementStats" th:text="${user.wins}">[Wins]</p>
         </div>
         <div class="elementStats">
             <p style="font-size: 15px;" class="stats">Niederlagen</p>
             <span class="glyphicon glyphicon-remove"></span>
-            <p class="elementStats">[Looses]</p>
+            <p class="elementStats" th:text="${user.losses}">[Looses]</p>
         </div>
         <div class="elementStats">
             <p style="font-size: 15px;" class="stats">Siegesquote</p>
@@ -76,5 +76,16 @@
             <p class="elementStats">[WinRatio]</p>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#searchBar").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $(".searchItems").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 </body>
 </html>
