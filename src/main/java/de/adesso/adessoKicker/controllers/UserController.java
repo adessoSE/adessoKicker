@@ -52,9 +52,7 @@ public class UserController {
 	@RequestMapping("/users/you")
 	public ModelAndView getUser(){
         ModelAndView modelAndView = new ModelAndView();
-	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String email = auth.getName();
-        modelAndView.addObject("user", userService.getUserByEmail(email));
+        modelAndView.addObject("user", userService.getLoggedInUser());
         modelAndView.setViewName("profile");
         return modelAndView;
 

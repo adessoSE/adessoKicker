@@ -3,9 +3,9 @@ package de.adesso.adessoKicker.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.adesso.adessoKicker.objects.Team;
-import de.adesso.adessoKicker.repositories.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import de.adesso.adessoKicker.objects.User;
@@ -15,13 +15,11 @@ import de.adesso.adessoKicker.repositories.UserRepository;
 public class UserService {
 
 	private UserRepository userRepository;
-	private TeamRepository teamRepository;
 
 	@Autowired
-	public UserService(UserRepository userRepository, TeamRepository teamRepository) {
+	public UserService(UserRepository userRepository) {
 
 		this.userRepository = userRepository;
-		this.teamRepository = teamRepository;
 	}
 
 		public List<User> getAllUsers() {
@@ -39,6 +37,13 @@ public class UserService {
 		public User getUserByEmail(String email) {
 
 			return userRepository.findByEmail(email);
+		}
+
+		public User getLoggedInUser() {
+
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			String email = auth.getName();
+			return getUserByEmail(email);
 		}
 
 		public void saveUser(User user) {
