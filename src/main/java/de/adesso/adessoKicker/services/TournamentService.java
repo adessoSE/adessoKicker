@@ -18,17 +18,13 @@ import java.util.List;
 public class TournamentService {
 
     TournamentRepository tournamentRepository;
-    TeamRepository teamRepository;
-    MatchRepository matchRepository;
 
 
 
     @Autowired
-    public TournamentService(TournamentRepository tournamentRepository, TeamRepository teamRepository, MatchRepository matchRepository) {
+    public TournamentService(TournamentRepository tournamentRepository) {
 
         this.tournamentRepository = tournamentRepository;
-        this.teamRepository = teamRepository;
-        this.matchRepository = matchRepository;
     }
 
     private Team tournamentTree[][];
@@ -140,12 +136,14 @@ public class TournamentService {
 
         for (int i = 0; i < treeSize - 1 && !winnerSet; i++) {
             for (int k = 0; k < tournamentTree.get(i).size() && !winnerSet; k++) {
+
                 if (tournamentTree.get(i).get(k) == winner && !(tournamentTree.get(i + 1).get(k / 2) == winner)) {
                     tournamentTree.get(i + 1).set(k / 2, winner);
                     winnerSet = true;
                 }
             }
         }
+
         saveTournament(tournament);
     }
 
