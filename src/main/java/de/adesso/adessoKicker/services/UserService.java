@@ -45,7 +45,7 @@ public class UserService {
 
 		    userRepository.delete(userRepository.findByUserId(id));
 		}
-
+/***
 		public void addTeamIdToUser(Team team, long userId) {
 
 			User user = userRepository.findByUserId(userId);
@@ -53,5 +53,5 @@ public class UserService {
 			userRepository.save(user);
 
 		}
-
+***/
 }

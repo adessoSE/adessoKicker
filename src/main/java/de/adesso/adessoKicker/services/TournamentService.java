@@ -3,6 +3,8 @@ package de.adesso.adessoKicker.services;
 import de.adesso.adessoKicker.objects.Match;
 import de.adesso.adessoKicker.objects.Team;
 import de.adesso.adessoKicker.objects.Tournament;
+import de.adesso.adessoKicker.repositories.MatchRepository;
+import de.adesso.adessoKicker.repositories.TeamRepository;
 import de.adesso.adessoKicker.repositories.TournamentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +18,17 @@ import java.util.List;
 public class TournamentService {
 
     TournamentRepository tournamentRepository;
+    TeamRepository teamRepository;
+    MatchRepository matchRepository;
+
+
 
     @Autowired
-    public TournamentService(TournamentRepository tournamentRepository) {
+    public TournamentService(TournamentRepository tournamentRepository, TeamRepository teamRepository, MatchRepository matchRepository) {
 
         this.tournamentRepository = tournamentRepository;
+        this.teamRepository = teamRepository;
+        this.matchRepository = matchRepository;
     }
 
     private Team tournamentTree[][];
@@ -85,8 +93,8 @@ public class TournamentService {
     public void createTournamentTree(List<Team> teams, Tournament tournament) {
 
         int tournamentSize = (int) Math.pow(2, Math.ceil((Math.log(teams.size()) / Math.log(2))));
-        int tournamentTreeSize = (int) (Math.log(tournamentSize)/Math.log(2) + 1);
-        List<ArrayList<Team>>tournamentTree = tournament.getTournamentTree();
+        int tournamentTreeSize = (int) (Math.log(tournamentSize) / Math.log(2) + 1);
+        List<ArrayList<Team>> tournamentTree = tournament.getTournamentTree();
         Collections.shuffle(teams);
 
         /**
@@ -104,9 +112,10 @@ public class TournamentService {
             tournamentTree.add(new ArrayList<>());
         }
 
-        for (int i = tournamentTree.get(0).size(); i < tournamentSize; i++) {
-
-            tournamentTree.get(0).add(null);
+        for (int i = 0; i < tournamentTreeSize; i++) {
+            for (int k = tournamentTree.get(i).size(); k < tournamentSize / Math.pow(2, i); k++) {
+                tournamentTree.get(i).add(null);
+            }
         }
 
         for (int i = 0; i < tournamentSize; i += 2) {
@@ -118,28 +127,29 @@ public class TournamentService {
 
             tournamentTree.get(0).set(i, teams.get(i));
         }
-        System.out.println(tournamentTree.get(0).get(0));
 
         tournament.setTournamentTree(tournamentTree);
+        advanceWinner(tournament, new Match());
     }
 
     public void advanceWinner(Tournament tournament, Match match) {
-        
+        match = matchRepository.findMatchByMatchId(9L);
+        //tournament.getMatches().add(match);
+        match.setWinner(match.getTeamA());
         Team winner = match.getWinner();
         List<ArrayList<Team>> tournamentTree = tournament.getTournamentTree();
         int treeSize = tournamentTree.size();
 
         for (int i = 0; i < treeSize; i++) {
             for (int k = 0; k < tournamentTree.get(i).size(); k++) {
-
                 if (tournamentTree.get(i).get(k) == winner && !(tournamentTree.get(i + 1).get(k / 2) == winner)) {
-
                     tournamentTree.get(i + 1).set(k / 2, winner);
                     break;
                 }
+                break;
             }
+            break;
         }
-
         tournament.setTournamentTree(tournamentTree);
         saveTournament(tournament);
     }

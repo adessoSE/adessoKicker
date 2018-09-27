@@ -36,7 +36,7 @@ public class Tournament {
 	private List<Match> matches;
 
     @ManyToMany(targetEntity = Team.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "tournament_team", joinColumns = @JoinColumn(name = "tournament_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+	//@JoinTable(name = "tournament_team", joinColumns = @JoinColumn(name = "tournament_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
     private List<Team> teams;
 
     @Column
@@ -51,6 +51,7 @@ public class Tournament {
 	    this.startDate = startDate;
         this.format = format;
         this.teams = new ArrayList<>();
+        this.matches = new ArrayList<>();
 		this.winner = null;
 		this.finished = false;
 		this.description = description;

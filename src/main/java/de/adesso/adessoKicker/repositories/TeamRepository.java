@@ -12,5 +12,5 @@ public interface TeamRepository extends CrudRepository<Team, Long> {
      */
     Team findByTeamName(String teamName);
 
-    Team findByTeamId(long id);
+    Team findByTeamId(Long id);
 }

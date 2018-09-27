@@ -98,8 +98,8 @@ public class TeamController {
         	if (team.getPlayerA().getUserId()!=team.getPlayerB().getUserId())
         	{
             teamService.saveTeam(team);
-            userService.addTeamIdToUser(team, team.getPlayerA().getUserId());
-            userService.addTeamIdToUser(team, team.getPlayerB().getUserId());
+            //userService.addTeamIdToUser(team, team.getPlayerA().getUserId());
+            //serService.addTeamIdToUser(team, team.getPlayerB().getUserId());
             modelAndView.addObject("successMessage", "Team wurde hinzugefügt.");
             modelAndView.addObject("team", new Team());
             modelAndView.addObject("users", userService.getAllUsers());
