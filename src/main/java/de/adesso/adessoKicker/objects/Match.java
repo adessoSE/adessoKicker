@@ -27,6 +27,10 @@ public class Match {
     @Temporal(TemporalType.DATE)
     private Date date;
 
+    @DateTimeFormat(pattern = "HH:mm")
+    @Temporal(TemporalType.TIME)
+    private Date time;
+    
     @OneToOne(targetEntity = Team.class)
     private Team winner;
 
@@ -37,15 +41,17 @@ public class Match {
 
     @ManyToOne(targetEntity = Team.class)
     private Team teamB;
- 
-    public Match() {
+    
+    
+	public Match() {
     	date = new Date();
     }
     
 
-    public Match(Date date, String kicker, Team teamA, Team teamB) {
+    public Match(Date date, Date time, String kicker, Team teamA, Team teamB) {
 
         this.date = date;
+        this.time=time;
         this.winner = winner;
         this.kicker = kicker;
         this.teamA = teamA;
@@ -84,6 +90,16 @@ public class Match {
     public void setKicker(String kicker) {
         this.kicker = kicker;
     }
+    
+
+    public Date getTime() {
+		return time;
+	}
+
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
 
     public Team getTeamA() {
         return teamA;
