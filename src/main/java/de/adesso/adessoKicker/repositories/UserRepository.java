@@ -20,11 +20,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
     User findByEmail(String email);
 
     /**
-     * Returns a single user found with username
-     */
-    User findByUsername(String username);
-
-    /**
      * Returns a single User found with id
      */
     User findByUserId(Long id);

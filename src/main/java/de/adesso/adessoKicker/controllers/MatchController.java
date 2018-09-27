@@ -140,7 +140,6 @@ public class MatchController {
             modelAndView.addObject("dateMessage", "Bitte ein Datum.");
         
 		}
-        
 
         return modelAndView;
     }

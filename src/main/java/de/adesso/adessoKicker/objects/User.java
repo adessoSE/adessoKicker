@@ -19,12 +19,12 @@ public class User implements Serializable {
 
     private String lastName;
 
-    private String username;
-
     private String password;
 
     private String email;
 
+    
+    //Rename to verified
     private int active;
 
 
@@ -75,14 +75,6 @@ public class User implements Serializable {
 
     public String getLastName() {
         return lastName;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public void setPassword(String password) {
@@ -161,7 +153,6 @@ public class User implements Serializable {
                 "userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", active=" + active +

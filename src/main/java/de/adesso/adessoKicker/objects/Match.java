@@ -10,7 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,6 +24,7 @@ public class Match {
     private long matchId;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     private Date date;
 
     @OneToOne(targetEntity = Team.class)
@@ -39,6 +41,7 @@ public class Match {
     public Match() {
     	date = new Date();
     }
+    
 
     public Match(Date date, String kicker, Team teamA, Team teamB) {
 
