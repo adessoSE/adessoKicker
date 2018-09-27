@@ -1,80 +1,10 @@
-﻿<!DOCTYPE html>
-
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>Adesso-Kicker</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!--My stylesheet-->
-    <link rel="stylesheet" href="../css/profile.css">
+    <meta charset="UTF-8">
+    <title>Profile</title>
 </head>
 <body>
-    <!--Top Part-->
-    <div class="containerTop">
-        <!--Everything displayed on the top left side-->
-        <div id="topDisplay" style="width: 50%;">
-            <h1>[Name]</h1>
-            <p> Nach anderen Spielern suchen</p>
-            <!--SearchBar-->
-            <input id="searchBar" type="text" placeholder="Search...">
-            <button class="btn btn-default btn-sm" type="submit" id="searchBt">
-                <span id="searchImg" class="glyphicon glyphicon-search"></span>
-            </button>
-        </div>
-        <!--TounamentMedals-->
-        <div class="containerMedal">
-            <div class="elementMedal">
-                <span class="glyphicon glyphicon-certificate"></span>
-                <p class="stats">[1.Platz]</p>
-            </div>
-            <div class="elementMedal">
-                <span class="glyphicon glyphicon-certificate"></span>
-                <p class="stats">[2.Platz]</p>
-            </div>
-            <div class="elementMedal">
-                <span class="glyphicon glyphicon-certificate"></span>
-                <p class="stats">[3.Platz]</p>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <!--Stats-->
-    <div class="containerStats">
-        <div class="elementStats">
-            <p style="font-size: 15px;" class="stats">Rangplatzierung</p>
-            <span class="glyphicon glyphicon-equalizer"></span>
-            <p class="elementStats">[RankingPos]</p>
-        </div>
-        <div class="elementStats">
-            <p style="font-size: 15px;" class="stats">Rangpunkte</p>
-            <span class="glyphicon glyphicon-tags"></span>
-            <p class="elementStats">[RankingPoints]</p>
-        </div>
-        <div class="elementStats">
-            <p style="font-size: 15px;" class="stats">Gespielte Spiele</p>
-            <span class="glyphicon glyphicon-pawn"></span>
-            <p class="elementStats">[GamesPlayed]</p>
-        </div>
-        <div class="elementStats">
-            <p style="font-size: 15px;" class="stats">Siege</p>
-            <span class="glyphicon glyphicon-flag"></span>
-            <p class="elementStats">[Wins]</p>
-        </div>
-        <div class="elementStats">
-            <p style="font-size: 15px;" class="stats">Niederlagen</p>
-            <span class="glyphicon glyphicon-remove"></span>
-            <p class="elementStats">[Looses]</p>
-        </div>
-        <div class="elementStats">
-            <p style="font-size: 15px;" class="stats">Siegesquote</p>
-            <span class="glyphicon glyphicon-king"></span>
-            <p class="elementStats">[WinRatio]</p>
-        </div>
-    </div>
+<p><span th:text="${user}"> User></span></p>
 </body>
 </html>

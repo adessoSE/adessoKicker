@@ -3,6 +3,8 @@ package de.adesso.adessoKicker.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.adesso.adessoKicker.objects.User;
 import de.adesso.adessoKicker.services.UserService;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Controller managing user
@@ -43,26 +48,16 @@ public class UserController {
 
 	    return userService.getUserById(id);
 	}
-	
-	/**
-	 * gets the user thats currently logged in 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * NOTE:NOT WORKING YET
-	 * @param id
-	 * @return
-	 */
+
 	@RequestMapping("/users/you")
-	public User getUser(long id)
-	{
-		return userService.getUserById(id);
+	public ModelAndView getUser(){
+        ModelAndView modelAndView = new ModelAndView();
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        modelAndView.addObject("user", userService.getUserByEmail(email));
+        modelAndView.setViewName("profile");
+        return modelAndView;
+
 	}
 	
 	/**
