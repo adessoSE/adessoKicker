@@ -13,13 +13,13 @@
     <p>Spieler 1: <select class="form-control" id="playerA" name="playerA">
         <option th:each="playerA : ${users}"
                 th:value="${playerA.userId}"
-                th:text="${playerA.userId}+' : '+${playerA.firstName}"></option>
+                th:text="${playerA.userId}+': '+${playerA.firstName}+' '+${playerA.lastName}"></option>
     </select>
     </p>
     <p>Spieler 2: <select class="form-control" id="playerB" name="playerB">
         <option th:each="playerB : ${users}"
                 th:value="${playerB.userId}"
-                th:text="${playerB.userId}+' : '+${playerB.firstName}"></option>
+                th:text="${playerB.userId}+': '+${playerB.firstName}+' '+${playerB.lastName}"></option>
     </select>
     </p>
     <span th:utext="${successMessage}"></span>
