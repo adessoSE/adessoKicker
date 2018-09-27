@@ -19,7 +19,7 @@
     <!--Scrollbar-->
     <div id="scrollbar" th:each="m : ${matches}">
         <!--Open-->
-        <div class='scrollElement' th:if="${m.winner == nulls}">
+        <div class='scrollElement' th:if="${m.winner == null}">
             <div class='well'>
                 <!--Header-->
                 <p style='font-size: 30px;' th:text="${m.date} + ' | ' + ${m.kicker}">Keine Zeit/Ort gefunden</p>
