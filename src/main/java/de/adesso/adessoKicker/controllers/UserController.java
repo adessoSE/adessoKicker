@@ -53,6 +53,7 @@ public class UserController {
 	public ModelAndView getUser(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getLoggedInUser());
+        modelAndView.addObject("allUsers", userService.getAllUsers());
         modelAndView.setViewName("user/_profile");
         return modelAndView;
 

@@ -13,7 +13,8 @@
     <!--My stylesheet-->
     <link rel="stylesheet" href="../css/profile.css">
 </head>
-<body>
+<!--Catch NullpointerEx of user-->
+<body th:if ="${user}!=null">
     <!--Top Part-->
     <div class="containerTop">
         <!--Everything displayed on the top left side-->
@@ -76,16 +77,5 @@
             <p class="elementStats">[WinRatio]</p>
         </div>
     </div>
-
-    <script>
-        $(document).ready(function () {
-            $("#searchBar").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $(".searchItems").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
 </body>
 </html>
