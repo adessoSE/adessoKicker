@@ -3,10 +3,6 @@ package de.adesso.adessoKicker.services;
 import de.adesso.adessoKicker.objects.Match;
 import de.adesso.adessoKicker.objects.Team;
 import de.adesso.adessoKicker.repositories.TeamRepository;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
@@ -14,6 +10,11 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class TeamService {
