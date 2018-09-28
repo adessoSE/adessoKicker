@@ -1,7 +1,7 @@
 ﻿/*Searchbar*/
 #searchBar {
+    width: 90%;
     margin-left: 10px;
-    width: 80%;
     border-radius: 2px;
     border: 1px solid gray;
 }
@@ -9,6 +9,9 @@
     font-size: 15px;
 }
 #searchBt {
+    margin-left: -20px;
+    width: 40px;
+    height: 40px;
 }
 
 /*ContainerTop*/
