@@ -9,13 +9,17 @@ import org.springframework.stereotype.Service;
 import de.adesso.adessoKicker.objects.Match;
 import de.adesso.adessoKicker.objects.User;
 import de.adesso.adessoKicker.repositories.MatchRepository;
-import de.adesso.adessoKicker.repositories.UserRepository;
 
 @Service
 public class MatchService {
 
-	@Autowired
 	private MatchRepository matchRepository;
+
+	@Autowired
+	public MatchService(MatchRepository matchRepository) {
+
+		this.matchRepository = matchRepository;
+	}
 	
 	private List<Match> matches;
 	
@@ -29,7 +33,7 @@ public class MatchService {
 	
 	public Match getMatchById(long id) {
 
-		return matchRepository.findById(id).get();
+		return matchRepository.findByMatchId(id);
 	}
 	
 	public List<Match> getAllMatchesUser(User user)

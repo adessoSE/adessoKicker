@@ -21,16 +21,14 @@ import de.adesso.adessoKicker.repositories.TeamRepository;
 @Service
 public class TeamService {
 
-	@Autowired
-	TeamRepository teamRepository;
-	
-	@Autowired
+	private TeamRepository teamRepository;
 	private final EntityManager entityManager;
 	
 	@Autowired
-	public TeamService(EntityManager entityManager)
+	public TeamService(TeamRepository teamRepository, EntityManager entityManager)
 	{
 		super();
+		this.teamRepository =teamRepository;
 		this.entityManager = entityManager;
 	}
 	

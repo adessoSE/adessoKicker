@@ -25,12 +25,17 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class UserController {
 
-	@Autowired
 	private UserService userService;
+
+	@Autowired
+	public UserController(UserService userService) {
+
+	    this.userService = userService;
+    }
 	
 	/**
 	 * get all users
-	 * @return
+	 * @return List<User>
 	 */
 	@RequestMapping("/users")
 	public List<User> getAllUsers() {
@@ -40,8 +45,8 @@ public class UserController {
 	
 	/**
 	 * gets a single user identified by his id
-	 * @param id
-	 * @return
+	 * @param id long
+	 * @return User
 	 */
 	@RequestMapping("/users/{id}")
 	public User getOneUser(@PathVariable long id) {
@@ -61,8 +66,8 @@ public class UserController {
 	
 	/**
 	 * updates users profile parameter: object and the id of the user
-	 * @param user
-	 * @param id
+	 * @param user User
+	 * @param id long
 	 */
 	@RequestMapping(method=RequestMethod.PUT, value="users/edit/{id}")
 	public void updateUser(@RequestBody User user, @PathVariable long id)
@@ -73,8 +78,8 @@ public class UserController {
 	
 	/**
 	 * deletes a user identified by its id
-	 * @param user
-	 * @param id
+	 * @param user User
+	 * @param id long
 	 */
 	@RequestMapping(method=RequestMethod.DELETE, value="users/delete/{id}")
 	public void deleteUser(@RequestBody User user, @PathVariable long id) {
