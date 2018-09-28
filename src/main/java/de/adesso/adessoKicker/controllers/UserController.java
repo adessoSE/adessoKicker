@@ -49,9 +49,13 @@ public class UserController {
 	 * @return User
 	 */
 	@RequestMapping("/users/{id}")
-	public User getOneUser(@PathVariable long id) {
+	public ModelAndView getOneUser(@PathVariable long id) {
 
-	    return userService.getUserById(id);
+		ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", userService.getUserById(id));
+        modelAndView.addObject("allUsers", userService.getAllUsers());
+        modelAndView.setViewName("user/_profile");
+        return modelAndView;
 	}
 
 	@RequestMapping("/users/you")
