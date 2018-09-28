@@ -36,7 +36,7 @@ public class MatchController {
 
 	/**
 	 * POST all matches on "/matches"
-	 * @return
+	 * @return ModelAndView
 	 */
 	@GetMapping("/matches")
 	public ModelAndView getAllMatches()
@@ -49,8 +49,8 @@ public class MatchController {
 	
 	/**
 	 * gets a match identified by its id
-	 * @param id
-	 * @return
+	 * @param id of the match
+	 * @return ModelAndView
 	 */
 	@GetMapping("/matches/{id}")
 	public ModelAndView getMatch(@PathVariable long id)
@@ -63,7 +63,7 @@ public class MatchController {
 	
 	/**
 	 * ui for adding a match
-	 * @return
+	 * @return ModelAndView
 	 */
 	@GetMapping("/matches/add")
 	public ModelAndView showMatchCreation() {
@@ -77,9 +77,9 @@ public class MatchController {
 	
 	/**
      * POST chosen players and create a team with them and add the teamId to the players Team List
-     * @param
-     * @param
-     * @return
+     * @param match Match
+     * @param bindingResult BindingResult
+     * @return ModelAndView
      */
     @PostMapping("/matches/add")
     public ModelAndView createNewMatch(@Valid Match match, BindingResult bindingResult)
@@ -145,7 +145,7 @@ public class MatchController {
 	
 	/**
 	 * deletes a match from the database identified by an id
-	 * @param id
+	 * @param id long
 	 */
 	@RequestMapping(method=RequestMethod.DELETE, value="matches/delete/{id}")
 	public void deleteMatch(@PathVariable long id)
@@ -156,8 +156,8 @@ public class MatchController {
 	
 	/**
 	 * updates an existing match by the actual object and its id
-	 * @param match
-	 * @param id
+	 * @param match Match
+	 * @param id long
 	 */
 	@RequestMapping(method=RequestMethod.PUT, value="matches/update/{id}")
 	public void updateMatch(@RequestBody Match match, @PathVariable long id)

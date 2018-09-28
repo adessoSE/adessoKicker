@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import de.adesso.adessoKicker.objects.Team;
-import de.adesso.adessoKicker.repositories.UserRepository;
 import de.adesso.adessoKicker.services.TeamService;
 
 /**
@@ -26,17 +25,19 @@ import de.adesso.adessoKicker.services.TeamService;
 @RestController
 public class TeamController {
 
-    @Autowired
-    TeamService teamService;
-    @Autowired
-    UserRepository userRepository;
+    private TeamService teamService;
+    private UserService userService;
 
     @Autowired
-    UserService userService;
+    public TeamController(TeamService teamService, UserService userService) {
+
+        this.teamService = teamService;
+        this.userService = userService;
+    }
 
     /**
      * gets all teams
-     * @return
+     * @return ModelAndView
      */
     @GetMapping("/teams")
     public ModelAndView getAllTeams()
@@ -49,8 +50,8 @@ public class TeamController {
 
     /**
      * gets a single team specified by its id
-     * @param id
-     * @return
+     * @param id long
+     * @return ModelAndView
      */
     @GetMapping("/teams/{teamId}")
     public ModelAndView showTeamPage(@PathVariable("teamId") long id) {
@@ -63,7 +64,7 @@ public class TeamController {
 
     /**
      * ui for team creation
-     * @return
+     * @return ModelAndView
      */
     @GetMapping("/teams/add")
     public ModelAndView showTeamCreation() {
@@ -77,9 +78,9 @@ public class TeamController {
 
     /**
      * POST chosen players and create a team with them and add the teamId to the players Team List
-     * @param team
-     * @param bindingResult
-     * @return
+     * @param team Team
+     * @param bindingResult BindingResult
+     * @return ModelAndView
      */
     @PostMapping("/teams/add")
     public ModelAndView createNewTeam(@Valid Team team, BindingResult bindingResult)
@@ -123,7 +124,7 @@ public class TeamController {
 
     /**
      * deletes team identified by its id
-     * @param id
+     * @param id long
      */
     @RequestMapping(method=RequestMethod.DELETE, value="/teams/delete/{id}")
     public void deleteTeam(@PathVariable long id)
@@ -133,8 +134,8 @@ public class TeamController {
 
     /**
      * updates team identified by the actual object and the id
-     * @param team
-     * @param id
+     * @param team Team
+     * @param id long
      */
     @RequestMapping(method=RequestMethod.PUT, value="/teams/update/{id}")
     public void updateTeam(@RequestBody Team team, @PathVariable long id)

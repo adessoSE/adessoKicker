@@ -19,12 +19,15 @@ import java.util.List;
 @Controller
 public class TournamentController {
 
-    @Autowired
     private TournamentService tournamentService;
-
+    private TeamService teamService;
 
     @Autowired
-    private TeamService teamService;
+    public TournamentController(TournamentService tournamentService, TeamService teamService) {
+
+        this.tournamentService = tournamentService;
+        this.teamService = teamService;
+    }
 
     @GetMapping("/tournaments/create")
     public ModelAndView tournamentForm() {

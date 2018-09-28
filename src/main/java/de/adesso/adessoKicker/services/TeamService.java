@@ -21,19 +21,19 @@ import de.adesso.adessoKicker.repositories.TeamRepository;
 @Service
 public class TeamService {
 
-	@Autowired
-	TeamRepository teamRepository;
-	
-	@Autowired
+	private TeamRepository teamRepository;
 	private final EntityManager entityManager;
 	
 	@Autowired
-	public TeamService(EntityManager entityManager)
-	{
-		super();
-		this.entityManager = entityManager;
-	}
-	
+	public TeamService(TeamRepository teamRepository, EntityManager entityManager) {
+		this.teamRepository = teamRepository;
+        this.entityManager = entityManager;
+    }
+/*
+    public TeamService(EntityManager entityManager) {
+	    this.entityManager = entityManager;
+    }
+	*/
 	public void initializeTeamSearch() {
 		try {
 			FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
