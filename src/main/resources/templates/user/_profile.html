@@ -15,23 +15,26 @@
 </head>
 <!--Catch NullpointerEx of user-->
 <body th:if="${user}!=null">
-    <!--AllUsers-->
-    <div class="panel-body">
-        <ul class="list-group">
-            <li th:each="u : ${allUsers}" class="list-group-item"><a th:text="${u.firstName} + ' ' + ${u.lastName}" href="#">No user found</a></li>
-        </ul>
-    </div>
     <!--Top Part-->
     <div class="containerTop">
         <!--Everything displayed on the top left side-->
         <div id="topDisplay" style="width: 50%;">
             <h1 th:text="${user.firstName} + ' ' + ${user.lastName}"></h1>
-            <p> Nach anderen Spielern suchen</p>
-            <!--SearchBar-->
-            <input id="searchBar" type="text" placeholder="Search...">
-            <button class="btn btn-default btn-sm" type="submit" id="searchBt">
-                <span id="searchImg" class="glyphicon glyphicon-search"></span>
-            </button>
+            <!--Searchbar-->
+            <div class="panel panel-primary">
+                <div class="panel-header">
+                    <p> Nach anderen Spielern suchen</p>
+                    <input class="form-control" id="searchBar" type="text" placeholder="Search...">
+                    <button class="btn btn-default btn-sm" type="submit" id="searchBt">
+                        <span id="searchImg" class="glyphicon glyphicon-search"></span>
+                    </button>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li th:each="u : ${allUsers}" class="list-group-item"><a th:text="${u.firstName} + ' ' + ${u.lastName}" href="#">No user found</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <!--TounamentMedals-->
         <div class="containerMedal">
@@ -83,5 +86,17 @@
             <p class="elementStats">[WinRatio]</p>
         </div>
     </div>
+
+    <!--Search Filter-->
+    <script>
+        $(document).ready(function () {
+            $("#searchBar").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $(".list-group li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 </body>
 </html>

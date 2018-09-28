@@ -18,8 +18,9 @@ public class TeamSearchConfiguration {
 	
 	
 	TeamService teamSearchService () {
-		TeamService teamSearchService = new TeamService(entityManager);
-		teamSearchService.initializeTeamSearch();
-		return teamSearchService;
+		//TeamService teamSearchService = new TeamService(entityManager);
+		//teamSearchService.initializeTeamSearch();
+		//return teamSearchService;
+		return null;
 	}
 }
