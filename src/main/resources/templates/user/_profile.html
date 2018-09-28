@@ -14,7 +14,13 @@
     <link rel="stylesheet" href="../css/profile.css">
 </head>
 <!--Catch NullpointerEx of user-->
-<body th:if ="${user}!=null">
+<body th:if="${user}!=null">
+    <!--AllUsers-->
+    <div class="panel-body">
+        <ul class="list-group">
+            <li th:each="u : ${allUsers}" class="list-group-item"><a th:text="${u.firstName} + ' ' + ${u.lastName}" href="#">No user found</a></li>
+        </ul>
+    </div>
     <!--Top Part-->
     <div class="containerTop">
         <!--Everything displayed on the top left side-->
