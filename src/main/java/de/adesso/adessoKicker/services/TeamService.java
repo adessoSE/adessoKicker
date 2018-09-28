@@ -25,13 +25,15 @@ public class TeamService {
 	private final EntityManager entityManager;
 	
 	@Autowired
-	public TeamService(TeamRepository teamRepository, EntityManager entityManager)
-	{
-		super();
-		this.teamRepository =teamRepository;
-		this.entityManager = entityManager;
-	}
-	
+	public TeamService(TeamRepository teamRepository, EntityManager entityManager) {
+		this.teamRepository = teamRepository;
+        this.entityManager = entityManager;
+    }
+/*
+    public TeamService(EntityManager entityManager) {
+	    this.entityManager = entityManager;
+    }
+	*/
 	public void initializeTeamSearch() {
 		try {
 			FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
