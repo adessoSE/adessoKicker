@@ -1,26 +1,29 @@
 package de.adesso.adessoKicker.searchcfgs;
 
+import de.adesso.adessoKicker.repositories.TeamRepository;
+import de.adesso.adessoKicker.services.TeamService;
 import javax.persistence.EntityManager;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import de.adesso.adessoKicker.services.TeamService;
 
 @EnableAutoConfiguration
 @Configuration
 public class TeamSearchConfiguration {
 
-	@Autowired
-	private EntityManager entityManager;
-	
-	
-	TeamService teamSearchService () {
-		//TeamService teamSearchService = new TeamService(entityManager);
-		//teamSearchService.initializeTeamSearch();
-		//return teamSearchService;
-		return null;
-	}
+    private EntityManager entityManager;
+    private TeamRepository teamRepository;
+
+    @Autowired
+    public TeamSearchConfiguration(EntityManager entityManager, TeamRepository teamRepository) {
+
+        this.entityManager = entityManager;
+        this.teamRepository = teamRepository;
+    }
+
+    TeamService teamSearchService() {
+        TeamService teamSearchService = new TeamService(teamRepository, entityManager);
+        teamSearchService.initializeTeamSearch();
+        return teamSearchService;
+    }
 }

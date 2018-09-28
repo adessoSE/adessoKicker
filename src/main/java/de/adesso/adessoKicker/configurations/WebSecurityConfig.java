@@ -1,9 +1,10 @@
-/**
- *  Security configuration
+/*
+ * Security configuration
  */
 
 package de.adesso.adessoKicker.configurations;
 
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -44,27 +43,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http
-                .authorizeRequests()
-                    .anyRequest().permitAll()
-                .and()
-                .formLogin()
-                    .loginPage("/login").failureUrl("/login?error=true")
-                    .defaultSuccessUrl("/home")
-                    .usernameParameter("email")
-                    .passwordParameter("password")
-                .and()
-                    .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/")
-                .and()
-                .exceptionHandling()
-                    .accessDeniedPage("/access-denied")
-                .and()
-                .rememberMe()
-                    .rememberMeCookieName("adessoKicker-remember-me")
-                    .tokenValiditySeconds(60 * 60 * 24 * 7)
-                    .tokenRepository(persistentTokenRepository());
+        http.authorizeRequests().anyRequest().permitAll().and().formLogin().loginPage("/login")
+                .failureUrl("/login?error=true").defaultSuccessUrl("/home").usernameParameter("email")
+                .passwordParameter("password").and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/").and().exceptionHandling().accessDeniedPage("/access-denied").and().rememberMe()
+                .rememberMeCookieName("adessoKicker-remember-me").tokenValiditySeconds(60 * 60 * 24 * 7)
+                .tokenRepository(persistentTokenRepository());
 
         http.csrf().disable();
         http.headers().frameOptions().disable();
@@ -80,22 +64,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.
-                jdbcAuthentication()
-                .usersByUsernameQuery(usersQuery)
-                .authoritiesByUsernameQuery(rolesQuery)
-                .dataSource(dataSource)
-                .passwordEncoder(bCryptPasswordEncoder);
+        auth.jdbcAuthentication().usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery)
+                .dataSource(dataSource).passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
 
-        web
-                .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/static/css/**", "/static/js/**", "/images/**");
+        web.ignoring().antMatchers("/resources/**", "/static/**", "/static/css/**", "/static/js/**", "/images/**");
     }
-
-
-
 }

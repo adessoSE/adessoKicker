@@ -1,11 +1,8 @@
 package de.adesso.adessoKicker.objects;
 
-
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
@@ -23,8 +20,7 @@ public class User implements Serializable {
 
     private String email;
 
-    
-    //Rename to verified
+    // Rename to verified
     private int active;
 
     private long wins;
@@ -35,7 +31,8 @@ public class User implements Serializable {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
@@ -91,7 +88,9 @@ public class User implements Serializable {
         return wins;
     }
 
-    public long getLosses() { return losses; }
+    public long getLosses() {
+        return losses;
+    }
 
     public void setActive(int active) {
         this.active = active;
@@ -129,16 +128,8 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", active=" + active +
-                ", wins=" + wins +
-                ", losses=" + losses +
-                ", roles=" + roles +
-                '}';
+        return "User{" + "userId=" + userId + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\''
+                + ", password='" + password + '\'' + ", email='" + email + '\'' + ", active=" + active + ", wins="
+                + wins + ", losses=" + losses + ", roles=" + roles + '}';
     }
 }

@@ -1,6 +1,6 @@
 package de.adesso.adessoKicker.objects;
 
-
+import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,8 +11,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import java.io.Serializable;
-
 @Entity
 @Table(name = "team")
 public class Team implements Serializable {
@@ -22,7 +20,7 @@ public class Team implements Serializable {
     private long teamId;
 
     @NotNull
-    @Size(min=1, max=30, message="Der Teamname muss zwischen 1-30 Zeichen lang sein.")
+    @Size(min = 1, max = 30, message = "Der Teamname muss zwischen 1-30 Zeichen lang sein.")
     private String teamName;
 
     private long teamWins;
@@ -36,11 +34,10 @@ public class Team implements Serializable {
     private User playerB;
 
     public Team() {
-    	teamName = new String();
-    	playerA = new User();
-    	playerB = new User();
-    	teamWins = 0;
-    	teamLosses = 0;
+        /*
+         * teamName = new String(); playerA = new User(); playerB = new User(); teamWins
+         * = 0; teamLosses = 0;
+         */
     }
 
     public Team(String teamName, User playerA, User playerB) {
@@ -102,11 +99,7 @@ public class Team implements Serializable {
 
     @Override
     public String toString() {
-        return "Team{" +
-                "teamId=" + teamId +
-                ", teamName='" + teamName + '\'' +
-                ", teamWins=" + teamWins +
-                ", teamLosses=" + teamLosses +
-                '}';
+        return "Team{" + "teamId=" + teamId + ", teamName='" + teamName + '\'' + ", teamWins=" + teamWins
+                + ", teamLosses=" + teamLosses + '}';
     }
 }

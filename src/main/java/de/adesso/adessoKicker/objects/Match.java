@@ -1,8 +1,6 @@
 package de.adesso.adessoKicker.objects;
 
-
 import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +10,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -30,7 +27,7 @@ public class Match {
     @DateTimeFormat(pattern = "HH:mm")
     @Temporal(TemporalType.TIME)
     private Date time;
-    
+
     @OneToOne(targetEntity = Team.class)
     private Team winner;
 
@@ -41,23 +38,20 @@ public class Match {
 
     @ManyToOne(targetEntity = Team.class)
     private Team teamB;
-    
-    
-	public Match() {
-    	date = new Date();
-    	time = new Date();
+
+    public Match() {
+        date = new Date();
+        time = new Date();
     }
-    
 
     public Match(Date date, Date time, String kicker, Team teamA, Team teamB) {
 
         this.date = date;
-        this.time=time;
-        this.winner = winner;
+        this.time = time;
+        this.winner = null;
         this.kicker = kicker;
         this.teamA = teamA;
         this.teamB = teamB;
-
     }
 
     public long getMatchId() {
@@ -91,16 +85,14 @@ public class Match {
     public void setKicker(String kicker) {
         this.kicker = kicker;
     }
-    
 
     public Date getTime() {
-		return time;
-	}
+        return time;
+    }
 
-
-	public void setTime(Date time) {
-		this.time = time;
-	}
+    public void setTime(Date time) {
+        this.time = time;
+    }
 
     public Team getTeamA() {
         return teamA;
@@ -117,17 +109,10 @@ public class Match {
     public void setTeamB(Team teamB) {
         this.teamB = teamB;
     }
-    
 
     @Override
     public String toString() {
-        return "Match{" +
-                "matchId=" + matchId +
-                ", date=" + date +
-                ", winner=" + winner +
-                ", kicker='" + kicker + '\'' +
-                ", teamA=" + teamA +
-                ", teamB=" + teamB +
-                '}';
+        return "Match{" + "matchId=" + matchId + ", date=" + date + ", winner=" + winner + ", kicker='" + kicker + '\''
+                + ", teamA=" + teamA + ", teamB=" + teamB + '}';
     }
 }

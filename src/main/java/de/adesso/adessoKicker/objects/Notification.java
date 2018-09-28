@@ -1,8 +1,7 @@
 package de.adesso.adessoKicker.objects;
 
-
-import javax.persistence.*;
 import java.util.Date;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "notification")
@@ -73,12 +72,7 @@ public class Notification {
 
     @Override
     public String toString() {
-        return "Notification{" +
-                "notificationId=" + notificationId +
-                ", notificationType='" + notificationType + '\'' +
-                ", time=" + time +
-                ", user=" + user +
-                ", notificationMessage='" + notificationMessage + '\'' +
-                '}';
+        return "Notification{" + "notificationId=" + notificationId + ", notificationType='" + notificationType + '\''
+                + ", time=" + time + ", user=" + user + ", notificationMessage='" + notificationMessage + '\'' + '}';
     }
 }

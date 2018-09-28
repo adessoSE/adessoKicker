@@ -20,6 +20,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project>spotless</project>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 	</properties>
@@ -91,6 +92,20 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>1.15.0</version>
+				<configuration>
+					<java>
+						<eclipse>
+							<file>${basedir}/eclipse-spaces-fmt.xml</file>
+							<!-- Optional, available versions: https://github.com/diffplug/spotless/tree/master/lib-extra/src/main/resources/com/diffplug/spotless/extra/config/eclipse_jdt_formatter -->
+							<version>4.8.0</version>
+						</eclipse>
+					</java>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
