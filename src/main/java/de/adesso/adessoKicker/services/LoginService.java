@@ -4,12 +4,11 @@ import de.adesso.adessoKicker.objects.Role;
 import de.adesso.adessoKicker.objects.User;
 import de.adesso.adessoKicker.repositories.RoleRepository;
 import de.adesso.adessoKicker.repositories.UserRepository;
+import java.util.Arrays;
+import java.util.HashSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.HashSet;
 
 @Service
 public class LoginService {
@@ -19,7 +18,8 @@ public class LoginService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public LoginService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public LoginService(UserRepository userRepository, RoleRepository roleRepository,
+            BCryptPasswordEncoder bCryptPasswordEncoder) {
 
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -30,9 +30,7 @@ public class LoginService {
         return userRepository.findByEmail(email);
     }
 
-    /**
-     * Saves a User in the User Table with a salt hashed password and a Role
-     */
+    /** Saves a User in the User Table with a salt hashed password and a Role */
     public void saveUser(User user) {
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

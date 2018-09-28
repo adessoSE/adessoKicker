@@ -1,21 +1,15 @@
 package de.adesso.adessoKicker.controllers;
 
+import de.adesso.adessoKicker.objects.User;
+import de.adesso.adessoKicker.services.UserService;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import de.adesso.adessoKicker.objects.User;
-import de.adesso.adessoKicker.services.UserService;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Controller managing user
@@ -63,7 +57,6 @@ public class UserController {
         modelAndView.addObject("allUsers", userService.getAllUsers());
         modelAndView.setViewName("user/_profile");
         return modelAndView;
-
     }
 
     /**
@@ -89,5 +82,4 @@ public class UserController {
 
         userService.deleteUser(id);
     }
-
 }

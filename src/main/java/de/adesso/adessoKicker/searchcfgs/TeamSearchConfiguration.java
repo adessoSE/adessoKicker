@@ -1,13 +1,11 @@
 package de.adesso.adessoKicker.searchcfgs;
 
-import javax.persistence.EntityManager;
-
 import de.adesso.adessoKicker.repositories.TeamRepository;
+import de.adesso.adessoKicker.services.TeamService;
+import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
-
-import de.adesso.adessoKicker.services.TeamService;
 
 @EnableAutoConfiguration
 @Configuration

@@ -5,12 +5,11 @@ import de.adesso.adessoKicker.objects.Team;
 import de.adesso.adessoKicker.objects.Tournament;
 import de.adesso.adessoKicker.objects.User;
 import de.adesso.adessoKicker.repositories.TournamentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class TournamentService {
@@ -102,15 +101,14 @@ public class TournamentService {
     }
 
     /**
-     * Creates the tournament tree with the first level of players filled out.
-     * If the amount of teams if not a power of 2 the remaining amount needed to get a power of two will be filled
-     * with null.
-     * Also fills all of the other levels with null so setting players will be easier later
+     * Creates the tournament tree with the first level of players filled out. If
+     * the amount of teams if not a power of 2 the remaining amount needed to get a
+     * power of two will be filled with null. Also fills all of the other levels
+     * with null so setting players will be easier later
      *
      * @param teams      List<Team>
      * @param tournament Tournament
      */
-
     public void createTournamentTree(List<Team> teams, Tournament tournament) {
 
         int tournamentSize = (int) Math.pow(2, Math.ceil((Math.log(teams.size()) / Math.log(2))));
@@ -126,7 +124,8 @@ public class TournamentService {
         }
 
         /*
-         * Initializes the tournament tree with the right amount of levels so players can be added easily later
+         * Initializes the tournament tree with the right amount of levels so players
+         * can be added easily later
          */
         while (tournamentTree.size() < tournamentTreeSize) {
 
@@ -134,7 +133,8 @@ public class TournamentService {
         }
 
         /*
-         * Initializes all places in the List with null to make it easier to set players later
+         * Initializes all places in the List with null to make it easier to set players
+         * later
          */
         for (int i = 0; i < tournamentTreeSize; i++) {
             for (int k = tournamentTree.get(i).size(); k < tournamentSize / Math.pow(2, i); k++) {
@@ -143,15 +143,16 @@ public class TournamentService {
         }
 
         /*
-         * The next two for-loops set the players in the first row of the tournament tree. This is done in an
-         * alternating pattern in the case the amount of teams isn't a multiple of two, as then, if we'd just fill it
-         * up without alternating there is a chance for a team to get to the finals without playing a single match.
+         * The next two for-loops set the players in the first row of the tournament
+         * tree. This is done in an alternating pattern in the case the amount of teams
+         * isn't a multiple of two, as then, if we'd just fill it up without alternating
+         * there is a chance for a team to get to the finals without playing a single
+         * match.
          */
         for (int i = 0; i < tournamentSize; i += 2) {
 
             tournamentTree.get(0).set(i, teams.get(i));
         }
-
 
         for (int i = 1; i < tournamentSize; i += 2) {
 
@@ -167,7 +168,6 @@ public class TournamentService {
      * @param tournament Tournament
      * @param match      Match
      */
-
     public void advanceWinner(Tournament tournament, Match match) {
 
         Team winner = match.getWinner();
@@ -187,5 +187,4 @@ public class TournamentService {
 
         saveTournament(tournament);
     }
-
 }

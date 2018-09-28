@@ -1,10 +1,11 @@
 package de.adesso.adessoKicker.controllers;
 
+import de.adesso.adessoKicker.objects.Match;
+import de.adesso.adessoKicker.services.MatchService;
+import de.adesso.adessoKicker.services.TeamService;
 import java.util.Calendar;
 import java.util.Date;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import de.adesso.adessoKicker.objects.Match;
-import de.adesso.adessoKicker.services.MatchService;
-import de.adesso.adessoKicker.services.TeamService;
 
 @RestController
 public class MatchController {
@@ -77,7 +74,8 @@ public class MatchController {
     }
 
     /**
-     * POST chosen players and create a team with them and add the teamId to the players Team List
+     * POST chosen players and create a team with them and add the teamId to the
+     * players Team List
      *
      * @param match         Match
      * @param bindingResult BindingResult
@@ -88,7 +86,6 @@ public class MatchController {
         ModelAndView modelAndView = new ModelAndView();
         Date time = new Date();
 
-
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("match", new Match());
             modelAndView.addObject("teams", teamService.getAllTeams());
@@ -97,8 +94,8 @@ public class MatchController {
         try {
             if (match.getTeamA().getTeamId() != match.getTeamB().getTeamId()) {
 
-                //Time check currently not working
-                if (match.getDate().after(yesterday()) /*&& match.getTime().getTime()>=time.getTime()*/) {
+                // Time check currently not working
+                if (match.getDate().after(yesterday()) /* && match.getTime().getTime()>=time.getTime() */) {
                     System.out.println(match.getTime());
                     System.out.println(time);
                     matchService.saveMatch(match);
@@ -124,7 +121,6 @@ public class MatchController {
                 modelAndView.addObject("teams", teamService.getAllTeams());
                 modelAndView.addObject("failMessage", "Bitte keine identischen Teams auswählen.");
                 modelAndView.setViewName("match/create");
-
             }
 
         } catch (NullPointerException e) {
@@ -132,7 +128,6 @@ public class MatchController {
             modelAndView.addObject("teams", teamService.getAllTeams());
             modelAndView.setViewName("match/create");
             modelAndView.addObject("dateMessage", "Bitte ein Datum + Uhrzeit.");
-
         }
 
         return modelAndView;
@@ -147,7 +142,6 @@ public class MatchController {
     public void deleteMatch(@PathVariable long id) {
         matchService.deleteMatch(id);
     }
-
 
     /**
      * updates an existing match by the actual object and its id
@@ -165,5 +159,4 @@ public class MatchController {
         cal.add(Calendar.DATE, -1);
         return cal.getTime();
     }
-
 }

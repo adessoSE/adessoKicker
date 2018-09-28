@@ -1,14 +1,12 @@
 package de.adesso.adessoKicker.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import de.adesso.adessoKicker.objects.Match;
 import de.adesso.adessoKicker.objects.User;
 import de.adesso.adessoKicker.repositories.MatchRepository;
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class MatchService {
@@ -50,6 +48,4 @@ public class MatchService {
 
         matchRepository.deleteById(id);
     }
-
-
 }

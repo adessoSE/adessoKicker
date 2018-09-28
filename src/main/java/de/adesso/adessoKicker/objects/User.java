@@ -1,9 +1,8 @@
 package de.adesso.adessoKicker.objects;
 
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
@@ -21,8 +20,7 @@ public class User implements Serializable {
 
     private String email;
 
-
-    //Rename to verified
+    // Rename to verified
     private int active;
 
     private long wins;
@@ -130,16 +128,8 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", active=" + active +
-                ", wins=" + wins +
-                ", losses=" + losses +
-                ", roles=" + roles +
-                '}';
+        return "User{" + "userId=" + userId + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\''
+                + ", password='" + password + '\'' + ", email='" + email + '\'' + ", active=" + active + ", wins="
+                + wins + ", losses=" + losses + ", roles=" + roles + '}';
     }
 }

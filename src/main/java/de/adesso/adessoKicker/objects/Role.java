@@ -1,7 +1,7 @@
 package de.adesso.adessoKicker.objects;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "role")
@@ -12,5 +12,4 @@ public class Role implements Serializable {
     private long roleId;
 
     private String role;
-
 }

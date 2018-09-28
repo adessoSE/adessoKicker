@@ -1,11 +1,12 @@
 package de.adesso.adessoKicker.services;
 
+import de.adesso.adessoKicker.objects.Match;
+import de.adesso.adessoKicker.objects.Team;
+import de.adesso.adessoKicker.repositories.TeamRepository;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-
 import org.apache.lucene.search.Query;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
@@ -13,10 +14,6 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import de.adesso.adessoKicker.objects.Match;
-import de.adesso.adessoKicker.objects.Team;
-import de.adesso.adessoKicker.repositories.TeamRepository;
 
 @Service
 public class TeamService {
@@ -31,10 +28,9 @@ public class TeamService {
     }
 
     /*
-        public TeamService(EntityManager entityManager) {
-            this.entityManager = entityManager;
-        }
-        */
+     * public TeamService(EntityManager entityManager) { this.entityManager =
+     * entityManager; }
+     */
     public void initializeTeamSearch() {
         try {
             FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
@@ -47,13 +43,14 @@ public class TeamService {
     @Transactional
     public List<Team> teamSearch(String searchTerm) {
         FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
-        QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Team.class).get();
+        QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Team.class)
+                .get();
 
-        Query luceneQuery = queryBuilder.keyword().fuzzy().withEditDistanceUpTo(1).onField("teamName").matching(searchTerm).createQuery();
+        Query luceneQuery = queryBuilder.keyword().fuzzy().withEditDistanceUpTo(1).onField("teamName")
+                .matching(searchTerm).createQuery();
         javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Team.class);
 
-
-        //execute search
+        // execute search
         List<Team> TeamList = null;
         try {
             TeamList = jpaQuery.getResultList();

@@ -4,6 +4,8 @@ import de.adesso.adessoKicker.objects.Team;
 import de.adesso.adessoKicker.objects.Tournament;
 import de.adesso.adessoKicker.services.TeamService;
 import de.adesso.adessoKicker.services.TournamentService;
+import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -11,10 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.validation.Valid;
-import java.util.List;
-
 
 @Controller
 public class TournamentController {
@@ -55,7 +53,7 @@ public class TournamentController {
         return modelAndView;
     }
 
-    //TournamentList View --> Jan
+    // TournamentList View --> Jan
     @GetMapping("/tournaments")
     public ModelAndView showTournamentList() {
         ModelAndView modelAndView = new ModelAndView();
@@ -96,7 +94,8 @@ public class TournamentController {
             return modelAndView;
         }
 
-        if (tournament.getPlayers().contains(team.getPlayerA()) || tournament.getPlayers().contains(team.getPlayerB())) {
+        if (tournament.getPlayers().contains(team.getPlayerA())
+                || tournament.getPlayers().contains(team.getPlayerB())) {
 
             modelAndView.addObject("failMessage", "Player already is in tournament");
             modelAndView.addObject("tournament", tournament);
@@ -104,7 +103,6 @@ public class TournamentController {
             modelAndView.setViewName("tournament/addteam");
             return modelAndView;
         }
-
 
         tournamentService.addTeamToTournament(tournamentService.getTournamentById(id), team);
         tournamentService.addPlayers(tournament, team.getPlayerA());
@@ -125,5 +123,4 @@ public class TournamentController {
         modelAndView.setViewName("tournament/treetest");
         return modelAndView;
     }
-
 }

@@ -1,8 +1,6 @@
 package de.adesso.adessoKicker.objects;
 
-
 import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +10,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -42,12 +39,10 @@ public class Match {
     @ManyToOne(targetEntity = Team.class)
     private Team teamB;
 
-
     public Match() {
         date = new Date();
         time = new Date();
     }
-
 
     public Match(Date date, Date time, String kicker, Team teamA, Team teamB) {
 
@@ -117,13 +112,7 @@ public class Match {
 
     @Override
     public String toString() {
-        return "Match{" +
-                "matchId=" + matchId +
-                ", date=" + date +
-                ", winner=" + winner +
-                ", kicker='" + kicker + '\'' +
-                ", teamA=" + teamA +
-                ", teamB=" + teamB +
-                '}';
+        return "Match{" + "matchId=" + matchId + ", date=" + date + ", winner=" + winner + ", kicker='" + kicker + '\''
+                + ", teamA=" + teamA + ", teamB=" + teamB + '}';
     }
 }

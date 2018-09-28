@@ -1,12 +1,9 @@
 package de.adesso.adessoKicker.objects;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.*;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -28,13 +25,16 @@ public class Tournament {
 
     @OneToOne(targetEntity = Team.class, cascade = CascadeType.ALL)
     private Team winner;
+
     private boolean finished;
 
     @OneToMany(targetEntity = Match.class)
     private List<Match> matches;
 
     @ManyToMany(targetEntity = Team.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    //@JoinTable(name = "tournament_team", joinColumns = @JoinColumn(name = "tournament_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+    // @JoinTable(name = "tournament_team", joinColumns = @JoinColumn(name =
+    // "tournament_id"),
+    // inverseJoinColumns = @JoinColumn(name = "team_id"))
     private List<Team> teams;
 
     @ManyToMany(targetEntity = User.class)
@@ -159,15 +159,9 @@ public class Tournament {
 
     @Override
     public String toString() {
-        return "Tournament{" +
-                "tournamentId=" + tournamentId +
-                ", tournamentName='" + tournamentName + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", format='" + format + '\'' +
-                ", teams=" + teams +
-                ", description=" + description +
-                '}';
+        return "Tournament{" + "tournamentId=" + tournamentId + ", tournamentName='" + tournamentName + '\''
+                + ", startDate=" + startDate + ", endDate=" + endDate + ", format='" + format + '\'' + ", teams="
+                + teams + ", description=" + description + '}';
     }
 
     public String getDescription() {

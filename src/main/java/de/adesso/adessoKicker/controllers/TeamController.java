@@ -1,8 +1,9 @@
 package de.adesso.adessoKicker.controllers;
 
-import javax.validation.Valid;
-
+import de.adesso.adessoKicker.objects.Team;
+import de.adesso.adessoKicker.services.TeamService;
 import de.adesso.adessoKicker.services.UserService;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import de.adesso.adessoKicker.objects.Team;
-import de.adesso.adessoKicker.services.TeamService;
 
 /**
  * Controller managing Teams
@@ -79,7 +77,8 @@ public class TeamController {
     }
 
     /**
-     * POST chosen players and create a team with them and add the teamId to the players Team List
+     * POST chosen players and create a team with them and add the teamId to the
+     * players Team List
      *
      * @param team          Team
      * @param bindingResult BindingResult
@@ -90,7 +89,8 @@ public class TeamController {
         ModelAndView modelAndView = new ModelAndView();
         Team teamExists = teamService.findByTeamName(team.getTeamName());
         if (teamExists != null) {
-            bindingResult.rejectValue("teamName", "error.teamName", "Teamname existiert bereits. Bitte einen anderen wählen.");
+            bindingResult.rejectValue("teamName", "error.teamName",
+                    "Teamname existiert bereits. Bitte einen anderen wählen.");
         }
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("team", team);
@@ -99,8 +99,8 @@ public class TeamController {
         } else {
             if (team.getPlayerA().getUserId() != team.getPlayerB().getUserId()) {
                 teamService.saveTeam(team);
-                //userService.addTeamIdToUser(team, team.getPlayerA().getUserId());
-                //serService.addTeamIdToUser(team, team.getPlayerB().getUserId());
+                // userService.addTeamIdToUser(team, team.getPlayerA().getUserId());
+                // serService.addTeamIdToUser(team, team.getPlayerB().getUserId());
                 modelAndView.addObject("successMessage", "Team wurde hinzugefügt.");
                 modelAndView.addObject("team", new Team());
                 modelAndView.addObject("users", userService.getAllUsers());
@@ -113,7 +113,6 @@ public class TeamController {
                 modelAndView.addObject("failMessage", "Bitte keine identischen Spieler auswählen.");
                 modelAndView.setViewName("team/add");
             }
-
         }
 
         return modelAndView;
