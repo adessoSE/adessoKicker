@@ -1,5 +1,5 @@
-/**
- *  Security configuration
+/*
+ * Security configuration
  */
 
 package de.adesso.adessoKicker.configurations;
@@ -46,25 +46,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                    .anyRequest().permitAll()
+                .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                    .loginPage("/login").failureUrl("/login?error=true")
-                    .defaultSuccessUrl("/home")
-                    .usernameParameter("email")
-                    .passwordParameter("password")
+                .loginPage("/login").failureUrl("/login?error=true")
+                .defaultSuccessUrl("/home")
+                .usernameParameter("email")
+                .passwordParameter("password")
                 .and()
-                    .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/")
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
                 .and()
                 .exceptionHandling()
-                    .accessDeniedPage("/access-denied")
+                .accessDeniedPage("/access-denied")
                 .and()
                 .rememberMe()
-                    .rememberMeCookieName("adessoKicker-remember-me")
-                    .tokenValiditySeconds(60 * 60 * 24 * 7)
-                    .tokenRepository(persistentTokenRepository());
+                .rememberMeCookieName("adessoKicker-remember-me")
+                .tokenValiditySeconds(60 * 60 * 24 * 7)
+                .tokenRepository(persistentTokenRepository());
 
         http.csrf().disable();
         http.headers().frameOptions().disable();
@@ -95,7 +95,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .ignoring()
                 .antMatchers("/resources/**", "/static/**", "/static/css/**", "/static/js/**", "/images/**");
     }
-
 
 
 }

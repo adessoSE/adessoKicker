@@ -25,7 +25,7 @@ public class LoginController {
     }
 
     /**
-     *  Maps GET requests for "/login" to the login template
+     * Maps GET requests for "/login" to the login template
      */
     @GetMapping("/login")
     public ModelAndView login() {
@@ -36,8 +36,8 @@ public class LoginController {
 
 
     /**
-     *  Maps GET request for "/registration" to the registration template and bind an empty object of
-     *  the type user to it
+     * Maps GET request for "/registration" to the registration template and bind an empty object of
+     * the type user to it
      */
     @GetMapping("/registration")
     public ModelAndView registration() {
@@ -61,7 +61,7 @@ public class LoginController {
         if (userExists != null) {
             bindingResult
                     .rejectValue("email", "error.user",
-                                                    "There is already a user with this eMail");
+                            "There is already a user with this eMail");
         }
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("user/registration");
@@ -77,12 +77,12 @@ public class LoginController {
     }
 
     @GetMapping("/admin/home")
-    public ModelAndView home(){
+    public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = loginService.findUserByEmail(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-        modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
+        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
         modelAndView.setViewName("user/home");
         return modelAndView;
     }

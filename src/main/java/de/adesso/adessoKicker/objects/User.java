@@ -3,8 +3,6 @@ package de.adesso.adessoKicker.objects;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,7 +21,7 @@ public class User implements Serializable {
 
     private String email;
 
-    
+
     //Rename to verified
     private int active;
 
@@ -35,7 +33,8 @@ public class User implements Serializable {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
@@ -91,7 +90,9 @@ public class User implements Serializable {
         return wins;
     }
 
-    public long getLosses() { return losses; }
+    public long getLosses() {
+        return losses;
+    }
 
     public void setActive(int active) {
         this.active = active;

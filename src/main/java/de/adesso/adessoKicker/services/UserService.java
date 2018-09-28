@@ -14,54 +14,45 @@ import de.adesso.adessoKicker.repositories.UserRepository;
 @Service
 public class UserService {
 
-	private UserRepository userRepository;
+    private UserRepository userRepository;
 
-	@Autowired
-	public UserService(UserRepository userRepository) {
+    @Autowired
+    public UserService(UserRepository userRepository) {
 
-		this.userRepository = userRepository;
-	}
+        this.userRepository = userRepository;
+    }
 
-		public List<User> getAllUsers() {
+    public List<User> getAllUsers() {
 
-	        List<User> users = new ArrayList<>();
-	        userRepository.findAll().forEach(users::add);
-			return users;
-		}
+        List<User> users = new ArrayList<>();
+        userRepository.findAll().forEach(users::add);
+        return users;
+    }
 
-		public User getUserById(long id) {
+    public User getUserById(long id) {
 
-		    return userRepository.findByUserId(id);
-		}
+        return userRepository.findByUserId(id);
+    }
 
-		public User getUserByEmail(String email) {
+    public User getUserByEmail(String email) {
 
-			return userRepository.findByEmail(email);
-		}
+        return userRepository.findByEmail(email);
+    }
 
-		public User getLoggedInUser() {
+    public User getLoggedInUser() {
 
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			String email = auth.getName();
-			return getUserByEmail(email);
-		}
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        return getUserByEmail(email);
+    }
 
-		public void saveUser(User user) {
+    public void saveUser(User user) {
 
-	        userRepository.save(user);
-		}
+        userRepository.save(user);
+    }
 
-		public void deleteUser(long id) {
+    public void deleteUser(long id) {
 
-		    userRepository.delete(userRepository.findByUserId(id));
-		}
-/***
-		public void addTeamIdToUser(Team team, long userId) {
-
-			User user = userRepository.findByUserId(userId);
-			user.addToTeam(teamRepository.findByTeamId(team.getTeamId()));
-			userRepository.save(user);
-
-		}
-***/
+        userRepository.delete(userRepository.findByUserId(id));
+    }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 public class TournamentService {
 
     private TournamentRepository tournamentRepository;
-    
+
     @Autowired
     public TournamentService(TournamentRepository tournamentRepository) {
 
@@ -24,10 +24,11 @@ public class TournamentService {
     }
 
     /**
-     *  Sets Tournament.finished to true
+     * Sets Tournament.finished to true
+     *
      * @param tournament Tournament
      */
-    public void setTournamentFinished(Tournament tournament){
+    public void setTournamentFinished(Tournament tournament) {
 
         tournament.setFinished(true);
         tournamentRepository.save(tournament);
@@ -35,8 +36,9 @@ public class TournamentService {
 
     /**
      * Adds a Team to a Tournament
+     *
      * @param tournament Tournament
-     * @param team Team
+     * @param team       Team
      */
     public void addTeamToTournament(Tournament tournament, Team team) {
 
@@ -46,6 +48,7 @@ public class TournamentService {
 
     /**
      * Returns a List of Tournaments where finished == false
+     *
      * @return List<Tournament>
      */
     public List<Tournament> listRunningTournaments() {
@@ -55,6 +58,7 @@ public class TournamentService {
 
     /**
      * Returns a list of all tournaments
+     *
      * @return tournaments List<Tournaments>
      */
     public List<Tournament> getAllTournaments() {
@@ -65,7 +69,8 @@ public class TournamentService {
     }
 
     /**
-     *  Returns a Tournament with the specified id
+     * Returns a Tournament with the specified id
+     *
      * @param id long
      * @return Tournament
      */
@@ -75,7 +80,8 @@ public class TournamentService {
     }
 
     /**
-     *  Saves a Tournament in the Tournament table
+     * Saves a Tournament in the Tournament table
+     *
      * @param tournament Tournament
      */
     public void saveTournament(Tournament tournament) {
@@ -85,8 +91,9 @@ public class TournamentService {
 
     /**
      * Adds a player to the list of players that are in the tournament
+     *
      * @param tournament Tournament
-     * @param player User
+     * @param player     User
      */
     public void addPlayers(Tournament tournament, User player) {
 
@@ -99,7 +106,8 @@ public class TournamentService {
      * If the amount of teams if not a power of 2 the remaining amount needed to get a power of two will be filled
      * with null.
      * Also fills all of the other levels with null so setting players will be easier later
-     * @param teams List<Team>
+     *
+     * @param teams      List<Team>
      * @param tournament Tournament
      */
 
@@ -155,8 +163,9 @@ public class TournamentService {
 
     /**
      * Advances the team that is the winner of the specified match
+     *
      * @param tournament Tournament
-     * @param match Match
+     * @param match      Match
      */
 
     public void advanceWinner(Tournament tournament, Match match) {

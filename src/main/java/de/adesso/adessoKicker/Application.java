@@ -15,9 +15,9 @@ public class Application {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 
     @Bean
     public CommandLineRunner demo(UserRepository userRepository) {

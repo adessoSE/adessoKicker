@@ -1,5 +1,5 @@
-/**
- *  Bind views to specific URL paths
+/*
+ * Bind views to specific URL paths
  */
 
 package de.adesso.adessoKicker.configurations;
@@ -24,8 +24,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
+        return new BCryptPasswordEncoder();
     }
 
 }

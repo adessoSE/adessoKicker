@@ -43,7 +43,7 @@ public class TournamentController {
     public ModelAndView createNewTournament(@Valid Tournament tournament, BindingResult bindingResult) {
 
         ModelAndView modelAndView = new ModelAndView();
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             modelAndView.setViewName("tournament/create");
         } else {
             tournamentService.saveTournament(tournament);
