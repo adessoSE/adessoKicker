@@ -27,20 +27,21 @@ public class UserController {
         this.userService = userService;
     }
 
-	/**
-	 * gets a single user identified by his id
-	 * @param id long
-	 * @return User
-	 */
-	@RequestMapping("/users/{id}")
-	public ModelAndView getOneUser(@PathVariable long id) {
+    /**
+     * gets a single user identified by his id
+     * 
+     * @param id long
+     * @return User
+     */
+    @RequestMapping("/users/{id}")
+    public ModelAndView getOneUser(@PathVariable long id) {
 
-		ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getUserById(id));
         modelAndView.addObject("allUsers", userService.getAllUsers());
         modelAndView.setViewName("user/_profile");
         return modelAndView;
-	}
+    }
 
     /**
      * get all users
