@@ -42,7 +42,6 @@ public class User implements Serializable {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        //this.teams = new ArrayList<>();
         this.active = 0;
         this.wins = 0;
         this.losses = 0;

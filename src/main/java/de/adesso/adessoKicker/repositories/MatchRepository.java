@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface MatchRepository extends CrudRepository<Match, Long> {
 
-    Match findMatchByMatchId(Long id);
+    Match findByMatchId(Long id);
 
 }
