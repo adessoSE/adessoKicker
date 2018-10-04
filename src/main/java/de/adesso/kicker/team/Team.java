@@ -36,10 +36,6 @@ public class Team implements Serializable {
     private User playerB;
 
     public Team() {
-        /*
-         * teamName = new String(); playerA = new User(); playerB = new User(); teamWins
-         * = 0; teamLosses = 0;
-         */
     }
 
     public Team(String teamName, User playerA, User playerB) {
