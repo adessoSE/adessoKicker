@@ -1,4 +1,4 @@
-package de.adesso.kicker.tournament.single_elimination;
+package de.adesso.kicker.tournament.singleelimination;
 
 import de.adesso.kicker.tournament.TournamentController;
 import org.springframework.stereotype.Controller;
