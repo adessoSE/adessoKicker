@@ -14,6 +14,12 @@
     height: 40px;
 }
 
+#searchedUser{
+    display: none;
+    position: fixed;
+    z-index: 10; 
+}
+
 /*ContainerTop*/
 .containerTop {
     display: flex;
@@ -67,6 +73,7 @@ p.elementStats {
 
 .list-group {
     max-height: 300px;
+    width: 500px;
     margin-bottom: 10px;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;

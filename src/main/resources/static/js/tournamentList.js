@@ -58,6 +58,6 @@ function CreateMatchEl() {
 //Button Event --> View a specific tournament(URL access)
 function viewTournament(id) {
     //alert("View Tournament " + id);
-    window.open("/tournaments/" + id);
+    window.open("/tournaments/" + id, "_self");
     //window.open("tournamentList.html");
 }
