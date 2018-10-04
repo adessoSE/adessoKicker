@@ -15,23 +15,33 @@
 </head>
 <!--Catch NullpointerEx of user-->
 <body th:if="${user}!=null">
-    <!--AllUsers-->
-    <div class="panel-body">
-        <ul class="list-group">
-            <li th:each="u : ${allUsers}" class="list-group-item"><a th:text="${u.firstName} + ' ' + ${u.lastName}" href="#">No user found</a></li>
-        </ul>
-    </div>
     <!--Top Part-->
     <div class="containerTop">
         <!--Everything displayed on the top left side-->
         <div id="topDisplay" style="width: 50%;">
             <h1 th:text="${user.firstName} + ' ' + ${user.lastName}"></h1>
-            <p> Nach anderen Spielern suchen</p>
-            <!--SearchBar-->
-            <input id="searchBar" type="text" placeholder="Search...">
-            <button class="btn btn-default btn-sm" type="submit" id="searchBt">
-                <span id="searchImg" class="glyphicon glyphicon-search"></span>
-            </button>
+            <!--Searchbar-->
+            <div>
+                <div>
+                    <p> Nach anderen Spielern suchen</p>
+                    <input class="form-control" id="searchBar" type="text" placeholder="Search...">
+                    <!--<div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-11"><input class="form-control" id="searchBar" type="text" placeholder="Search..."></div>
+                            <div class="col-sm-1">
+                                <button type="submit" id="searchBt">
+                                    <span id="searchImg" class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>-->
+                </div>
+                <div class="panel-body" id="searchedUser">
+                    <ul class="list-group">
+                        <li style="background-color: rgb(128, 128, 128);" th:each="u : ${allUsers}" class="list-group-item"><a style="color:white;" th:text="${u.firstName} + ' ' + ${u.lastName}" th:href="@{/users/{id}(id=${u.userId})}">No user found</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <!--TounamentMedals-->
         <div class="containerMedal">
@@ -83,5 +93,29 @@
             <p class="elementStats">[WinRatio]</p>
         </div>
     </div>
+
+    <!--Search Filter-->
+    <script>
+        //When doc has loaded
+        $(document).ready(function () {
+            //When clicking on the seachbar
+            $("#searchBar").on("focus", function () {
+                $("#searchedUser").toggle();
+            });
+            //'Leaving' the search bar
+            $("#searchBar").on("blur", function () {
+                $("#searchedUser").toggle();
+            });
+            //When typing a char in the seachbar
+            $("#searchBar").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                //Foreach element
+                $(".list-group li").filter(function () {
+                    //indexOf() returns the positions of the char typed in the search bar (returns -1 if word doesnt contain char --> toggle element)
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 </body>
 </html>
