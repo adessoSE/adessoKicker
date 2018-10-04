@@ -43,19 +43,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().anyRequest().permitAll()
-                .and()
-                .formLogin().loginPage("/login").failureUrl("/login?error=true").defaultSuccessUrl("/home")
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/").deleteCookies()
-                .and()
-                .exceptionHandling().accessDeniedPage("/access-denied")
-                .and()
-                .rememberMe()
-                .rememberMeCookieName("kicker-remember-me").tokenValiditySeconds(60 * 60 * 24 * 7)
+        http.authorizeRequests().anyRequest().permitAll().and().formLogin().loginPage("/login")
+                .failureUrl("/login?error=true").defaultSuccessUrl("/home").usernameParameter("email")
+                .passwordParameter("password").and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/").deleteCookies().and().exceptionHandling().accessDeniedPage("/access-denied")
+                .and().rememberMe().rememberMeCookieName("kicker-remember-me").tokenValiditySeconds(60 * 60 * 24 * 7)
                 .tokenRepository(persistentTokenRepository());
 
         http.csrf().disable();
