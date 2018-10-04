@@ -1,37 +1,35 @@
 package de.adesso.kicker.tournament;
 
 import de.adesso.kicker.team.Team;
-import de.adesso.kicker.team.TeamService;
 
 import java.util.List;
 import javax.validation.Valid;
+
+import de.adesso.kicker.tournament.single_elimination.SingleElimination;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
-public class TournamentController {
+public abstract class TournamentController {
 
     private TournamentService tournamentService;
-    private TeamService teamService;
 
     @Autowired
-    public TournamentController(TournamentService tournamentService, TeamService teamService) {
+    public TournamentController(TournamentService tournamentService) {
 
         this.tournamentService = tournamentService;
-        this.teamService = teamService;
     }
+
+    public TournamentController() {}
 
     @GetMapping("/tournaments/create")
     public ModelAndView tournamentForm() {
 
         ModelAndView modelAndView = new ModelAndView();
-        Tournament tournament = new Tournament();
-        modelAndView.addObject("tournament", tournament);
+        modelAndView.addObject("tournamentFormats", TournamentFormats.values());
         modelAndView.setViewName("tournament/create");
         return modelAndView;
     }
@@ -68,7 +66,7 @@ public class TournamentController {
         modelAndView.setViewName("tournament/page");
         return modelAndView;
     }
-
+/*
     @GetMapping("tournaments/{tournamentId}/join")
     public ModelAndView showAddTeam(@PathVariable("tournamentId") long id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -112,6 +110,7 @@ public class TournamentController {
         return modelAndView;
     }
 
+
     @GetMapping("tournaments/{tournamentId}/treetest")
     public ModelAndView showTournamentTree(@PathVariable("tournamentId") long id) {
 
@@ -122,4 +121,5 @@ public class TournamentController {
         modelAndView.setViewName("tournament/treetest");
         return modelAndView;
     }
+    */
 }
