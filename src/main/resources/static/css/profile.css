@@ -20,6 +20,10 @@
     z-index: 10; 
 }
 
+.panel-body{
+    
+}
+
 /*ContainerTop*/
 .containerTop {
     display: flex;
@@ -74,9 +78,12 @@ p.elementStats {
 .list-group {
     max-height: 300px;
     width: 500px;
+    margin-top: -15px;
+    margin-left: -5px;
     margin-bottom: 10px;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
+    overflow-y : scroll;
+    /*overflow: scroll;*/
+    /*webkit-overflow-scrolling: touch;*/
 }
 
 .btn-sm{

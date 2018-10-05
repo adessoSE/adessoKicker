@@ -21,20 +21,10 @@
         <div id="topDisplay" style="width: 50%;">
             <h1 th:text="${user.firstName} + ' ' + ${user.lastName}"></h1>
             <!--Searchbar-->
-            <div>
+            <div id="searchbarComplex">
                 <div>
                     <p> Nach anderen Spielern suchen</p>
                     <input class="form-control" id="searchBar" type="text" placeholder="Search...">
-                    <!--<div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-11"><input class="form-control" id="searchBar" type="text" placeholder="Search..."></div>
-                            <div class="col-sm-1">
-                                <button type="submit" id="searchBt">
-                                    <span id="searchImg" class="glyphicon glyphicon-search"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>-->
                 </div>
                 <div class="panel-body" id="searchedUser">
                     <ul class="list-group">
@@ -102,10 +92,10 @@
             $("#searchBar").on("focus", function () {
                 $("#searchedUser").toggle();
             });
-            //'Leaving' the search bar
+            /*'Leaving' the search bar
             $("#searchBar").on("blur", function () {
                 $("#searchedUser").toggle();
-            });
+            });*/
             //When typing a char in the seachbar
             $("#searchBar").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
