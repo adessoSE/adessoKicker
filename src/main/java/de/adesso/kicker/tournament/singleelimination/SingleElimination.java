@@ -2,10 +2,11 @@ package de.adesso.kicker.tournament.singleelimination;
 
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.tournament.Tournament;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.IndexColumn;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class SingleElimination extends Tournament {
     private Team winner;
 
     public SingleElimination() {
+        this.setFormat("Single Elimination");
     }
 
     public SingleElimination(String tournamentName) {
@@ -61,5 +63,14 @@ public class SingleElimination extends Tournament {
 
     public void setWinner(Team winner) {
         this.winner = winner;
+    }
+
+    @Override
+    public String toString() {
+        return "SingleElimination{"+ super.toString() +
+                "bracket=" + bracket +
+                ", teams=" + teams +
+                ", winner=" + winner +
+                '}';
     }
 }

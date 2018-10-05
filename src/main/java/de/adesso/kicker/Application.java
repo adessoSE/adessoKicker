@@ -1,6 +1,7 @@
 package de.adesso.kicker;
 
 import de.adesso.kicker.team.Team;
+import de.adesso.kicker.tournament.Tournament;
 import de.adesso.kicker.tournament.TournamentRepository;
 import de.adesso.kicker.tournament.singleelimination.SingleElimination;
 import de.adesso.kicker.tournament.singleelimination.SingleEliminationService;
@@ -29,12 +30,15 @@ public class Application {
     @Bean
     public CommandLineRunner demo(UserRepository userRepository, TournamentRepository tournamentRepository) {
         return (args) -> {
-            SingleElimination singleElimination = new SingleElimination("Test");
-            User userA = new User("test1", "test", "test", "test");
-            User userB = new User("test2", "test", "test2", "test");
-            Team team = new Team("Test", userA, userB);
-            singleElimination.addTeam(team);
-            tournamentRepository.save(singleElimination);
+//            SingleElimination singleElimination = new SingleElimination("Test");
+//            User userA = new User("test1", "test", "test", "test");
+//            User userB = new User("test2", "test", "test2", "test");
+//            Team team = new Team("Test", userA, userB);
+//            singleElimination.addTeam(team);
+//            tournamentRepository.save(singleElimination);
+//            for (Tournament tournament : tournamentRepository.findAll()) {
+//                log.info(tournament.toString());
+//            }
             // System.out.println(team + " " + singleElimination);
             // singleEliminationService.addTeamToTournament(singleElimination, team);
             // fetch all customers

@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
@@ -5,7 +6,7 @@
     <title>Create a Tournament</title>
 </head>
 <body>
-<form action="#" th:action="@{/tournaments/create}" th:object="${tournament}" method="post">
+<form action="#" th:action="@{/tournaments/create}" th:object="${tournamentFormats.SINGLEELIMINATION}" method="post">
     <p>Tournament Name: <input type="text" th:field="*{tournamentName}" /></p>
     <p>Start Date: <input type="date" th:field="*{startDate}" /></p>
     <p>Format: <input type="text" th:field="*{format}" /></p>
@@ -18,3 +19,24 @@
 </body>
 </html>
 
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create a Tournament</title>
+</head>
+<body>
+<form autocomplete="off" action="#" th:action="@{/tournaments/create}" method="POST">
+    <p><select class="form-control" id="tournamentFormat" name="tournamentFormat">
+        <option th:each="tournamentFormat : ${tournamentFormats}"
+                th:value="${tournamentFormat}"
+                th:text="${tournamentFormat}"></option>
+    </select>
+    </p>
+    <p><input type="submit" value="Submit"></p>
+
+    <span th:utext="${successMessage}"></span>
+</form>
+</body>
+</html>

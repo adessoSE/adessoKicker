@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "TOURNAMENT_FORMAT")
 public abstract class Tournament {
 
     @Id
@@ -27,6 +26,7 @@ public abstract class Tournament {
 
     private Date endDate;
     private String description;
+    private String format;
     /*
      * @OneToOne(targetEntity = Team.class, cascade = CascadeType.ALL) private Team
      * winner;
@@ -57,7 +57,6 @@ public abstract class Tournament {
 
         this.tournamentName = tournamentName;
         this.startDate = null;
-        // this.format = format;
         // this.teams = new ArrayList<>();
         this.matches = new ArrayList<>();
         this.players = new ArrayList<>();
@@ -103,6 +102,14 @@ public abstract class Tournament {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
     }
 
     /*
@@ -152,7 +159,7 @@ public abstract class Tournament {
     @Override
     public String toString() {
         return "Tournament{" + "tournamentId=" + tournamentId + ", tournamentName='" + tournamentName + '\''
-                + ", startDate=" + startDate + ", endDate=" + endDate + ", format='" + '\'' + ", teams="
+                + ", startDate=" + startDate + ", endDate=" + endDate + ", format='" + format + '\''
                 + ", description=" + description + '}';
     }
 

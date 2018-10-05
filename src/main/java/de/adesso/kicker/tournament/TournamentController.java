@@ -1,22 +1,19 @@
 package de.adesso.kicker.tournament;
 
-import de.adesso.kicker.team.Team;
-import de.adesso.kicker.tournament.singleelimination.SingleElimination;
-import de.adesso.kicker.tournament.singleelimination.SingleEliminationService;
-import de.adesso.kicker.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 public abstract class TournamentController {
 
     @Autowired
-    SingleEliminationService singleEliminationService;
-
     private TournamentService tournamentService;
 
-    @Autowired
     public TournamentController(TournamentService tournamentService) {
 
         this.tournamentService = tournamentService;
@@ -26,27 +23,32 @@ public abstract class TournamentController {
     }
 
     @GetMapping("/tournaments/create")
-    public ModelAndView tournamentForm() {
-
+    public ModelAndView chooseFormat() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournamentFormats", TournamentFormats.values());
         modelAndView.setViewName("tournament/create");
         return modelAndView;
     }
-    /*
-     * @PostMapping("/tournaments/create") public ModelAndView
-     * createNewTournament(@Valid Tournament tournament, BindingResult
-     * bindingResult) {
-     * 
-     * ModelAndView modelAndView = new ModelAndView(); if
-     * (bindingResult.hasErrors()) { modelAndView.setViewName("tournament/create");
-     * } else { tournamentService.saveTournament(tournament);
-     * modelAndView.addObject("successMessage", "Tournament has been created");
-     * modelAndView.addObject("tournament", new Tournament());
-     * modelAndView.setViewName("tournament/create"); }
-     * 
-     * return modelAndView; }
-     */
+
+     @PostMapping("/tournaments/create")
+     public ModelAndView getTournamentFormat(@RequestParam("tournamentFormat") String tournamentFormat) {
+        ModelAndView modelAndView = new ModelAndView();
+        System.out.println(tournamentFormat);
+        switch (tournamentFormat) {
+            case "SINGLEELIMINATION":
+                modelAndView.setViewName("redirect:/tournaments/create/singleelimination");
+                return modelAndView;
+
+            case "LASTMANSTANDING":
+                modelAndView.setViewName("redirect:/tournaments/create/lastmanstanding");
+                return modelAndView;
+
+            default:
+                modelAndView.addObject("tournamentFormats", TournamentFormats.values());
+                modelAndView.setViewName("tournament/create");
+                return modelAndView;
+        }
+    }
 
     // TournamentList View --> Jan
     @GetMapping("/tournaments")
@@ -112,15 +114,5 @@ public abstract class TournamentController {
      * tournamentService.getTournamentById(id));
      * modelAndView.setViewName("tournament/treetest"); return modelAndView; }
      */
-
-    @GetMapping("/test")
-    public ModelAndView testMapping() {
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("test");
-        singleEliminationService.addTeamToTournament(new SingleElimination("test"), new Team("test",
-                new User("test", "test", "test@mail", "test"), new User("test", "test", "test", "test")));
-        return modelAndView;
-    }
 
 }

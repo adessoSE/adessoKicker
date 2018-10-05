@@ -52,6 +52,7 @@ public class TournamentService {
     public List<Tournament> getAllTournaments() {
 
         List<Tournament> tournaments = new ArrayList<>();
+        System.out.println(tournamentRepository.findAll());
         tournamentRepository.findAll().forEach(tournaments::add);
         return tournaments;
     }
