@@ -1,0 +1,24 @@
+
+h1 {
+	text-align: center;
+}
+
+.sortbtn {
+	border-style: groove;
+	border-width: 5px;
+	height: 95px;
+}
+
+.teamBox {
+	border-style: groove;
+	border-width: 5px;
+	height: 110px;
+	background-color: #ccf3ff;
+	position: relative;
+	
+}
+
+.value {
+ 	top: 50%;
+ 	transform: translateY(-50%);
+}
