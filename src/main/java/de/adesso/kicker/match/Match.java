@@ -19,7 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Match {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long matchId;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

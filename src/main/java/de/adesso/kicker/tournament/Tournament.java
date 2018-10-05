@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 public abstract class Tournament {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long tournamentId;
 
     private String tournamentName;
