@@ -1,6 +1,5 @@
 package de.adesso.kicker.tournament;
 
-import de.adesso.kicker.team.Team;
 import de.adesso.kicker.team.TeamService;
 import de.adesso.kicker.tournament.lastmanstanding.LastManStandingController;
 import de.adesso.kicker.tournament.singleelimination.SingleEliminationController;

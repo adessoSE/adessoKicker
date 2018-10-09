@@ -4,21 +4,24 @@ import de.adesso.kicker.tournament.Tournament;
 import de.adesso.kicker.user.User;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 public class LastManStanding extends Tournament {
 
     private User winner;
 
-    @ElementCollection(targetClass = Integer.class)
-    private List<Integer> lives;
+    private int maxLives;
+
+    @ManyToMany(targetEntity = User.class, cascade = CascadeType.ALL)
+    private List<User> remainingPlayers;
+
+    @ElementCollection
+    private Map<User, Integer> livesMap;
 
     public LastManStanding(String tournamentName) {
 
-        super(tournamentName);
-        this.lives = new ArrayList<>();
     }
 
     public LastManStanding() {
@@ -34,16 +37,32 @@ public class LastManStanding extends Tournament {
         this.winner = winner;
     }
 
-    public List<Integer> getLives() {
-        return lives;
+    public int getMaxLives() {
+        return maxLives;
     }
 
-    public void setLives(List<Integer> lives) {
-        this.lives = lives;
+    public void setMaxLives(int maxLives) {
+        this.maxLives = maxLives;
+    }
+
+    public Map<User, Integer> getLivesMap() {
+        return livesMap;
+    }
+
+    public void setLivesMap(Map<User, Integer> livesMap) {
+        this.livesMap = livesMap;
+    }
+
+    public List<User> getRemainingPlayers() {
+        return remainingPlayers;
+    }
+
+    public void setRemainingPlayers(List<User> remainingPlayers) {
+        this.remainingPlayers = remainingPlayers;
     }
 
     @Override
     public String toString() {
-        return "LastManStanding{" + super.toString() + "winner=" + winner + ", lives=" + lives + '}';
+        return "LastManStanding{" + super.toString() + "winner=" + winner + ", livesMap=" + livesMap + '}';
     }
 }
