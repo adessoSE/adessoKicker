@@ -12,7 +12,7 @@ public class LastManStanding extends Tournament {
 
     private User winner;
 
-    @ElementCollection(fetch = FetchType.EAGER, targetClass = Integer.class)
+    @ElementCollection(targetClass = Integer.class)
     private List<Integer> lives;
 
     public LastManStanding(String tournamentName) {
@@ -23,7 +23,7 @@ public class LastManStanding extends Tournament {
 
     public LastManStanding() {
 
-        this.setFormat("Last Man Standing");
+        this.setFormat("LASTMANSTANDING");
     }
 
     public User getWinner() {

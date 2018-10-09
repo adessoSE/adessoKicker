@@ -7,14 +7,15 @@ import de.adesso.kicker.user.User;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TournamentService {
 
-    protected TournamentRepository tournamentRepository;
-
     @Autowired
+    private TournamentRepository tournamentRepository;
+
     public TournamentService(TournamentRepository tournamentRepository) {
 
         this.tournamentRepository = tournamentRepository;
@@ -52,7 +53,6 @@ public class TournamentService {
     public List<Tournament> getAllTournaments() {
 
         List<Tournament> tournaments = new ArrayList<>();
-        System.out.println(tournamentRepository.findAll());
         tournamentRepository.findAll().forEach(tournaments::add);
         return tournaments;
     }
@@ -84,7 +84,7 @@ public class TournamentService {
      * @param tournament Tournament
      * @param player     User
      */
-    public void addPlayers(Tournament tournament, User player) {
+    public void addPlayer(Tournament tournament, User player) {
 
         tournament.getPlayers().add(player);
         saveTournament(tournament);

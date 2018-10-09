@@ -15,8 +15,12 @@ import java.util.List;
 @Service
 public class SingleEliminationService extends TournamentService {
 
+
+    private TournamentRepository tournamentRepository;
+
     @Autowired
     public SingleEliminationService(TournamentRepository tournamentRepository) {
+
         this.tournamentRepository = tournamentRepository;
     }
 
@@ -35,6 +39,9 @@ public class SingleEliminationService extends TournamentService {
      * @param teams      List<Team>
      * @param singleElimination SingleElimination
      */
+
+
+
      public void createTournamentTree(List<Team> teams, SingleElimination singleElimination) {
 
          int tournamentSize = (int) Math.pow(2, Math.ceil((Math.log(teams.size()) / Math.log(2))));
@@ -81,6 +88,7 @@ public class SingleEliminationService extends TournamentService {
              tournamentTree.get(0).set(i, teams.get(i));
          }
          singleElimination.setBracket(tournamentTree);
+         System.out.println(singleElimination);
          saveTournament(singleElimination);
      }
 

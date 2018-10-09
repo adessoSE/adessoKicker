@@ -31,7 +31,7 @@
     <p><select class="form-control" id="tournamentFormat" name="tournamentFormat">
         <option th:each="tournamentFormat : ${tournamentFormats}"
                 th:value="${tournamentFormat}"
-                th:text="${tournamentFormat}"></option>
+                th:text="${tournamentFormat.getFormat()}"></option>
     </select>
     </p>
     <p><input type="submit" value="Submit"></p>

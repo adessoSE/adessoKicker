@@ -1,7 +1,9 @@
 package de.adesso.kicker.tournament.lastmanstanding;
 
+import de.adesso.kicker.tournament.Tournament;
 import de.adesso.kicker.tournament.TournamentFormats;
-import de.adesso.kicker.tournament.TournamentService;
+import de.adesso.kicker.user.User;
+import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,12 +17,16 @@ import javax.validation.Valid;
 @Controller
 public class LastManStandingController {
 
-    private TournamentService tournamentService;
+    private LastManStandingService lastManStandingService;
+    private UserService userService;
 
-    public LastManStandingController(TournamentService tournamentService) {
+    @Autowired
+    public LastManStandingController(LastManStandingService lastManStandingService, UserService userService) {
 
-        this.tournamentService = tournamentService;
+        this.lastManStandingService = lastManStandingService;
+        this.userService = userService;
     }
+
     @GetMapping("/tournaments/create/lastmanstanding")
     public ModelAndView lastManStandingForm() {
         ModelAndView modelAndView = new ModelAndView();
@@ -39,11 +45,37 @@ public class LastManStandingController {
             return modelAndView;
         } else {
             System.out.println(lastManStanding);
-            tournamentService.saveTournament(lastManStanding);
+            lastManStandingService.saveTournament(lastManStanding);
             redirectAttributes.addFlashAttribute("successMessage", "Tournament has been created");
             redirectAttributes.addFlashAttribute("tournamentFormats", TournamentFormats.values());
             modelAndView.setViewName("redirect:/tournaments/create");
         }
         return modelAndView;
     }
+
+    public ModelAndView getLastManStandingPage(Tournament tournament) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("tournament", tournament);
+        modelAndView.setViewName("tournament/page");
+        return modelAndView;
+    }
+
+    public ModelAndView joinTournament(Tournament tournament) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("tournament", tournament);
+        modelAndView.addObject("users", userService.getAllUsers());
+        modelAndView.setViewName("tournament/addplayer");
+        return modelAndView;
+    }
+
+    public ModelAndView addPlayerToTournament(Tournament tournament, User user) {
+        ModelAndView modelAndView = new ModelAndView();
+        lastManStandingService.addPlayer(tournament, user);
+        modelAndView.addObject("tournament", tournament);
+        modelAndView.addObject("users", userService.getAllUsers());
+        modelAndView.addObject("successMessage", "Player added to tournament");
+        modelAndView.setViewName("tournament/addplayer");
+        return modelAndView;
+    }
+
 }

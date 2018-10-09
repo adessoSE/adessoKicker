@@ -13,7 +13,9 @@ import java.util.List;
 @Entity
 public class SingleElimination extends Tournament {
 
-    @ManyToMany(targetEntity = Team.class, cascade = CascadeType.ALL)
+    //@ManyToMany(targetEntity = Team.class, cascade = CascadeType.ALL)
+    @Column
+    @ElementCollection
     private List<ArrayList<Team>> bracket;
 
     @ManyToMany(targetEntity = Team.class, cascade = CascadeType.ALL)
@@ -22,7 +24,8 @@ public class SingleElimination extends Tournament {
     private Team winner;
 
     public SingleElimination() {
-        this.setFormat("Single Elimination");
+
+        this.setFormat("SINGLEELIMINATION");
     }
 
     public SingleElimination(String tournamentName) {
