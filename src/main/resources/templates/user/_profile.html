@@ -92,12 +92,27 @@
             $("#searchBar").on("focus", function () {
                 $("#searchedUser").toggle();
             });
-            /*'Leaving' the search bar
+            //Leaving' the search bar
             $("#searchBar").on("blur", function () {
-                $("#searchedUser").toggle();
-            });*/
+				//Short delay -> workaround to allow clicking on searched users without toggling them so you cant click them
+            	setTimeout(function(){$("#searchedUser").toggle();}, 200);
+            });
+            /*Enter press in searchbar
+            if (event.which == 13) {
+                alert("Enter");
+            }*/
             //When typing a char in the seachbar
-            $("#searchBar").on("keyup", function () {
+            $("#searchBar").on("keyup", function (event) {
+                //Enter press in searchbar
+                if (event.which == 13) {
+                    //Open first list element
+                    
+
+                    var link = document.getElementById("searchedUser").querySelector("ul").querySelector("li").querySelector("a").href;
+                    alert(link);
+                    window.open(link, "_self");
+                    return;
+                }
                 var value = $(this).val().toLowerCase();
                 //Foreach element
                 $(".list-group li").filter(function () {
