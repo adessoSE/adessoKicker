@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 public class SingleElimination extends Tournament {
 
-    //@ManyToMany(targetEntity = Team.class, cascade = CascadeType.ALL)
+    // @ManyToMany(targetEntity = Team.class, cascade = CascadeType.ALL)
     @Column
     @ElementCollection
     private List<ArrayList<Team>> bracket;
@@ -70,10 +70,7 @@ public class SingleElimination extends Tournament {
 
     @Override
     public String toString() {
-        return "SingleElimination{"+ super.toString() +
-                "bracket=" + bracket +
-                ", teams=" + teams +
-                ", winner=" + winner +
-                '}';
+        return "SingleElimination{" + super.toString() + "bracket=" + bracket + ", teams=" + teams + ", winner="
+                + winner + '}';
     }
 }

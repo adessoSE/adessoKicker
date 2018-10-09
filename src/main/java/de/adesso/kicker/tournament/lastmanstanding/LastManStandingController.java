@@ -36,7 +36,8 @@ public class LastManStandingController {
     }
 
     @PostMapping("/tournaments/create/lastmanstanding")
-    public ModelAndView createLastManStanding (@Valid LastManStanding lastManStanding, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public ModelAndView createLastManStanding(@Valid LastManStanding lastManStanding, BindingResult bindingResult,
+            RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
 

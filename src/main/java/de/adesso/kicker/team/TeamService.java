@@ -93,8 +93,6 @@ public class TeamService {
         return teamRepository.findByTeamId(id);
     }
 
-
-
     public void addMatchIdToTeam(Match match, long teamId) {
         Team team = teamRepository.findByTeamId(teamId);
         teamRepository.save(team);

@@ -27,7 +27,7 @@ public class TournamentController {
     private SingleEliminationController singleEliminationController;
 
     @Autowired
-    private  LastManStandingController lastManStandingController;
+    private LastManStandingController lastManStandingController;
 
     @Autowired
     private UserService userService;
@@ -48,22 +48,22 @@ public class TournamentController {
         return modelAndView;
     }
 
-     @PostMapping("/tournaments/create")
-     public ModelAndView getTournamentFormat(@RequestParam("tournamentFormat") String tournamentFormat) {
+    @PostMapping("/tournaments/create")
+    public ModelAndView getTournamentFormat(@RequestParam("tournamentFormat") String tournamentFormat) {
         ModelAndView modelAndView = new ModelAndView();
         switch (tournamentFormat) {
-            case "SINGLEELIMINATION":
-                modelAndView.setViewName("redirect:/tournaments/create/singleelimination");
-                return modelAndView;
+        case "SINGLEELIMINATION":
+            modelAndView.setViewName("redirect:/tournaments/create/singleelimination");
+            return modelAndView;
 
-            case "LASTMANSTANDING":
-                modelAndView.setViewName("redirect:/tournaments/create/lastmanstanding");
-                return modelAndView;
+        case "LASTMANSTANDING":
+            modelAndView.setViewName("redirect:/tournaments/create/lastmanstanding");
+            return modelAndView;
 
-            default:
-                modelAndView.addObject("tournamentFormats", TournamentFormats.values());
-                modelAndView.setViewName("tournament/create");
-                return modelAndView;
+        default:
+            modelAndView.addObject("tournamentFormats", TournamentFormats.values());
+            modelAndView.setViewName("tournament/create");
+            return modelAndView;
         }
     }
 
@@ -83,20 +83,20 @@ public class TournamentController {
         String format = tournament.getFormat();
         switch (format) {
 
-            case "SINGLEELIMINATION":
-                return (singleEliminationController.getSingleEliminationPage(tournament));
+        case "SINGLEELIMINATION":
+            return (singleEliminationController.getSingleEliminationPage(tournament));
 
-            case "LASTMANSTANDING":
-                return lastManStandingController.getLastManStandingPage(tournament);
+        case "LASTMANSTANDING":
+            return lastManStandingController.getLastManStandingPage(tournament);
 
-            default:
-                modelAndView.setViewName("redirect:/tournaments/list");
-                return modelAndView;
+        default:
+            modelAndView.setViewName("redirect:/tournaments/list");
+            return modelAndView;
         }
     }
 
-     @GetMapping("tournaments/{tournamentId}/join")
-     public ModelAndView showAddTeam(@PathVariable("tournamentId") long id) {
+    @GetMapping("tournaments/{tournamentId}/join")
+    public ModelAndView showAddTeam(@PathVariable("tournamentId") long id) {
         ModelAndView modelAndView = new ModelAndView();
         Tournament tournament = tournamentService.getTournamentById(id);
         String format = tournament.getFormat();
@@ -105,31 +105,31 @@ public class TournamentController {
 //        modelAndView.setViewName("tournament/addteam");
         switch (format) {
 
-            case ("SINGLEELIMINATION"):
-                modelAndView = singleEliminationController.joinTournament(tournament);
-                return modelAndView;
+        case ("SINGLEELIMINATION"):
+            modelAndView = singleEliminationController.joinTournament(tournament);
+            return modelAndView;
 
-            case("LASTMANSTANDING"):
-                modelAndView = lastManStandingController.joinTournament(tournament);
+        case ("LASTMANSTANDING"):
+            modelAndView = lastManStandingController.joinTournament(tournament);
         }
         return modelAndView;
     }
 
-     @PostMapping("tournaments/{tournamentId}/join")
-     public ModelAndView addToTournament(@PathVariable("tournamentId") long id, Long teamId, Long userId) {
-         ModelAndView modelAndView = new ModelAndView();
-         Tournament tournament = tournamentService.getTournamentById(id);
-         String format = tournament.getFormat();
-         switch (format) {
-             case ("SINGLEELIMINATION"):
-                 return (singleEliminationController.addTeamToTournament(tournament, teamService.findTeamByTeamId(teamId)));
+    @PostMapping("tournaments/{tournamentId}/join")
+    public ModelAndView addToTournament(@PathVariable("tournamentId") long id, Long teamId, Long userId) {
+        ModelAndView modelAndView = new ModelAndView();
+        Tournament tournament = tournamentService.getTournamentById(id);
+        String format = tournament.getFormat();
+        switch (format) {
+        case ("SINGLEELIMINATION"):
+            return (singleEliminationController.addTeamToTournament(tournament, teamService.findTeamByTeamId(teamId)));
 
-             case ("LASTMANSTANDING"):
-                 return lastManStandingController.addPlayerToTournament(tournament, userService.getUserById(userId));
-             default:
-                 return modelAndView;
-         }
-     }
+        case ("LASTMANSTANDING"):
+            return lastManStandingController.addPlayerToTournament(tournament, userService.getUserById(userId));
+        default:
+            return modelAndView;
+        }
+    }
 
 //
 //        Tournament tournament = tournamentService.getTournamentById(id);
@@ -160,22 +160,21 @@ public class TournamentController {
 //         modelAndView.setViewName("tournament/addteam"); return modelAndView;
 //    }
 
+    @GetMapping("tournaments/{tournamentId}/tree")
+    public ModelAndView showTournamentTree(@PathVariable("tournamentId") long id) {
 
-     @GetMapping("tournaments/{tournamentId}/tree")
-     public ModelAndView showTournamentTree(@PathVariable("tournamentId") long id) {
+        ModelAndView modelAndView = new ModelAndView();
+        Tournament tournament = tournamentService.getTournamentById(id);
+        String format = tournament.getFormat();
+        switch (format) {
+        case ("SINGLEELIMINATION"):
+            modelAndView = singleEliminationController.showTree(tournament);
+            return modelAndView;
 
-         ModelAndView modelAndView = new ModelAndView();
-         Tournament tournament = tournamentService.getTournamentById(id);
-         String format = tournament.getFormat();
-         switch (format) {
-             case ("SINGLEELIMINATION"):
-                 modelAndView = singleEliminationController.showTree(tournament);
-                 return modelAndView;
-
-             default:
-                 modelAndView.setViewName("redirect:/tournaments");
-                 return modelAndView;
-         }
+        default:
+            modelAndView.setViewName("redirect:/tournaments");
+            return modelAndView;
+        }
     }
 
 }

@@ -41,7 +41,8 @@ public class SingleEliminationController extends TournamentController {
     }
 
     @PostMapping("/tournaments/create/singleelimination")
-    public ModelAndView createSingleElimination(@Valid SingleElimination singleElimination, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public ModelAndView createSingleElimination(@Valid SingleElimination singleElimination, BindingResult bindingResult,
+            RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("singleelimination", new SingleElimination());

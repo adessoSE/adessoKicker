@@ -44,9 +44,6 @@ public class LastManStanding extends Tournament {
 
     @Override
     public String toString() {
-        return "LastManStanding{" + super.toString() +
-                "winner=" + winner +
-                ", lives=" + lives +
-                '}';
+        return "LastManStanding{" + super.toString() + "winner=" + winner + ", lives=" + lives + '}';
     }
 }

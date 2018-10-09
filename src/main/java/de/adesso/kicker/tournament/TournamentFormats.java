@@ -1,8 +1,7 @@
 package de.adesso.kicker.tournament;
 
 public enum TournamentFormats {
-    SINGLEELIMINATION("Single Elimination"),
-    LASTMANSTANDING("Last Man Standing");
+    SINGLEELIMINATION("Single Elimination"), LASTMANSTANDING("Last Man Standing");
 
     private String format;
 

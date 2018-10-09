@@ -159,8 +159,8 @@ public abstract class Tournament {
     @Override
     public String toString() {
         return "Tournament{" + "tournamentId=" + tournamentId + ", tournamentName='" + tournamentName + '\''
-                + ", startDate=" + startDate + ", endDate=" + endDate + ", format='" + format + '\''
-                + ", description=" + description + '}';
+                + ", startDate=" + startDate + ", endDate=" + endDate + ", format='" + format + '\'' + ", description="
+                + description + '}';
     }
 
     public String getDescription() {
