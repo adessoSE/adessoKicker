@@ -8,8 +8,6 @@ import javax.persistence.*;
 import de.adesso.kicker.match.Match;
 import de.adesso.kicker.user.User;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -27,28 +25,13 @@ public abstract class Tournament {
     private Date endDate;
     private String description;
     private String format;
-    /*
-     * @OneToOne(targetEntity = Team.class, cascade = CascadeType.ALL) private Team
-     * winner;
-     */
     private boolean finished;
 
     @OneToMany(targetEntity = Match.class)
     private List<Match> matches;
-    /*
-     * @ManyToMany(targetEntity = Team.class, cascade = CascadeType.ALL, fetch =
-     * FetchType.EAGER) // @JoinTable(name = "tournament_team", joinColumns
-     * = @JoinColumn(name = // "tournament_id"), // inverseJoinColumns
-     * = @JoinColumn(name = "team_id")) private List<Team> teams;
-     */
 
     @ManyToMany(targetEntity = User.class)
     private List<User> players;
-    /*
-     * @Column
-     * 
-     * @ElementCollection private List<ArrayList<Team>> tournamentTree;
-     */
 
     public Tournament() {
     }
@@ -57,20 +40,11 @@ public abstract class Tournament {
 
         this.tournamentName = tournamentName;
         this.startDate = null;
-        // this.teams = new ArrayList<>();
         this.matches = new ArrayList<>();
         this.players = new ArrayList<>();
-        // this.winner = null;
         this.finished = false;
         this.description = null;
-        // this.tournamentTree = new ArrayList<ArrayList<Team>>();
     }
-
-    /*
-     * public void addTeam(Team team) { teams.add(team); }
-     * 
-     * public void removeTeam(Team team) { teams.remove(team); }
-     */
 
     public long getTournamentId() {
         return tournamentId;
@@ -112,15 +86,6 @@ public abstract class Tournament {
         this.format = format;
     }
 
-    /*
-     * public String getFormat() { return format; }
-     * 
-     * public void setFormat(String format) { this.format = format; }
-     * 
-     * public Team getWinner() { return winner; }
-     * 
-     * public void setWinner(Team winner) { this.winner = winner; }
-     */
     public boolean isFinished() {
         return finished;
     }
@@ -137,11 +102,6 @@ public abstract class Tournament {
         this.matches = matches;
     }
 
-    /*
-     * public List<Team> getTeams() { return teams; }
-     * 
-     * public void setTeams(List<Team> teams) { this.teams = teams; }
-     */
     public List<User> getPlayers() {
         return players;
     }
@@ -150,17 +110,12 @@ public abstract class Tournament {
         this.players = players;
     }
 
-    /*
-     * public List<ArrayList<Team>> getTournamentTree() { return tournamentTree; }
-     * 
-     * public void setTournamentTree(List<ArrayList<Team>> tournamentTree) {
-     * this.tournamentTree = tournamentTree; }
-     */
     @Override
     public String toString() {
         return "Tournament{" + "tournamentId=" + tournamentId + ", tournamentName='" + tournamentName + '\''
-                + ", startDate=" + startDate + ", endDate=" + endDate + ", format='" + format + '\'' + ", description="
-                + description + '}';
+                + ", startDate=" + startDate + ", endDate=" + endDate + ", description='" + description + '\''
+                + ", format='" + format + '\'' + ", finished=" + finished + ", matches=" + matches + ", players="
+                + players + '}';
     }
 
     public String getDescription() {

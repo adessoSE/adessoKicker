@@ -1,13 +1,10 @@
 package de.adesso.kicker.tournament;
 
-import de.adesso.kicker.match.Match;
-import de.adesso.kicker.team.Team;
 import de.adesso.kicker.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service

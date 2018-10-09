@@ -6,14 +6,11 @@ import de.adesso.kicker.tournament.lastmanstanding.LastManStandingController;
 import de.adesso.kicker.tournament.singleelimination.SingleEliminationController;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 
 public class TournamentController {
 
@@ -31,11 +28,6 @@ public class TournamentController {
 
     @Autowired
     private UserService userService;
-
-    public TournamentController(TournamentService tournamentService) {
-
-        this.tournamentService = tournamentService;
-    }
 
     public TournamentController() {
     }
@@ -67,7 +59,6 @@ public class TournamentController {
         }
     }
 
-    // TournamentList View --> Jan
     @GetMapping("/tournaments")
     public ModelAndView showTournamentList() {
         ModelAndView modelAndView = new ModelAndView();
@@ -100,9 +91,6 @@ public class TournamentController {
         ModelAndView modelAndView = new ModelAndView();
         Tournament tournament = tournamentService.getTournamentById(id);
         String format = tournament.getFormat();
-//        modelAndView.addObject("tournament", tournamentService.getTournamentById(id));
-//        modelAndView.addObject("teams", teamService.getAllTeams());
-//        modelAndView.setViewName("tournament/addteam");
         switch (format) {
 
         case ("SINGLEELIMINATION"):
@@ -130,35 +118,6 @@ public class TournamentController {
             return modelAndView;
         }
     }
-
-//
-//        Tournament tournament = tournamentService.getTournamentById(id);
-//        Team team = teamService.getTeamById(teamId);
-//        ModelAndView modelAndView = new ModelAndView();
-//
-//         if (tournament.getTeams().contains(teamService.getTeamById(teamId))) {
-//
-//             modelAndView.addObject("failMessage", "Team already is in tournament");
-//             modelAndView.addObject("tournament", tournament);
-//             modelAndView.addObject("teams", teamService.getAllTeams());
-//             modelAndView.setViewName("tournament/addteam"); return modelAndView;
-//         }
-//
-//         if (tournament.getPlayers().contains(team.getPlayerA()) || tournament.getPlayers().contains(team.getPlayerB())) {
-//
-//             modelAndView.addObject("failMessage", "Player already is in tournament");
-//             modelAndView.addObject("tournament", tournament);
-//             modelAndView.addObject("teams", teamService.getAllTeams());
-//             modelAndView.setViewName("tournament/addteam"); return modelAndView;
-//         }
-//
-//         tournamentService.addTeamToTournament(tournamentService.getTournamentById(id), team);
-//         tournamentService.addPlayers(tournament, team.getPlayerA());
-//         tournamentService.addPlayers(tournament, team.getPlayerB());
-//         modelAndView.addObject("tournament", tournament);
-//         modelAndView.addObject("teams", teamService.getAllTeams());
-//         modelAndView.setViewName("tournament/addteam"); return modelAndView;
-//    }
 
     @GetMapping("tournaments/{tournamentId}/tree")
     public ModelAndView showTournamentTree(@PathVariable("tournamentId") long id) {
