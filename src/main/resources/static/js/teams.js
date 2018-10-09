@@ -330,7 +330,7 @@ function sort (sortMode = "") {
 	
 	for(i = 0; i < elements; i++) {
 		
-		newHtml += "<div class='row teamBox'><div class='col-lg-2 value'>" + teamNames[newTeamIndex[i]] + "</div><div class='col-lg-3 value'>" + playerANames[newTeamIndex[i]] + "</div><div class='col-lg-3 value'>" + playerBNames[newTeamIndex[i]] + "</div><div class='col-lg-2 value'>" + teamWins[newTeamIndex[i]] + "</div><div class='col-lg-2 value'>" + teamLosses[newTeamIndex[i]] + "</div></div>";
+		newHtml += "<div class='row teamBox dissize'><div class='col-lg-2 value'>" + teamNames[newTeamIndex[i]] + "</div><div class='col-lg-3 value'>" + playerANames[newTeamIndex[i]] + "</div><div class='col-lg-3 value'>" + playerBNames[newTeamIndex[i]] + "</div><div class='col-lg-2 value'>" + teamWins[newTeamIndex[i]] + "</div><div class='col-lg-2 value'>" + teamLosses[newTeamIndex[i]] + "</div></div>";
 	}
 	
 	list.innerHTML = newHtml;

@@ -18,7 +18,7 @@
 	
 		<h1>Alle Teams<h1>
 		
-		<div class='row'>
+		<div class='row dissize'>
 			<div class='col-lg-2 sortbtn' style='padding: 20px;' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)' onclick='sort("teamnames")'>Teamname</div>
 			<div class='col-lg-3 sortbtn' style='padding: 20px;' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)' onclick='sort("playerA")'>Spieler 1</div>
 			<div class='col-lg-3 sortbtn' style='padding: 20px;' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)' onclick='sort("playerB")'>Spieler 2</div>
@@ -29,7 +29,7 @@
 		
 		
 			<div id='list' data-sorted="none">
-				<div class='row teamBox' th:each="t : ${teams}">
+				<div class='row teamBox dissize' th:each="t : ${teams}">
 					<div class='col-lg-2 value' th:text="${t.teamName}">[teamName]</div>
 					<div class='col-lg-3 value' th:text="${t.playerA.firstName} + ' ' + ${t.playerA.lastName}">[playerA]</div>
 					<div class='col-lg-3 value' th:text="${t.playerB.firstName} + ' ' + ${t.playerB.lastName}">[playerB]</div>

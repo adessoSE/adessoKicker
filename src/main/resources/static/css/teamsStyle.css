@@ -22,3 +22,8 @@ h1 {
  	top: 50%;
  	transform: translateY(-50%);
 }
+
+.dissize{
+	margin-left: 0px;
+	margin-right: 0px;
+}
