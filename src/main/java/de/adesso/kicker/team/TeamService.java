@@ -88,9 +88,9 @@ public class TeamService {
         return teamRepository.findByTeamName(teamName);
     }
 
-    public Team findTeamByUserId(long id) {
+    public Team findTeamByTeamId(long id) {
 
-        return new Team();
+        return teamRepository.findByTeamId(id);
     }
 
     public void addMatchIdToTeam(Match match, long teamId) {
