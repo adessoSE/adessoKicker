@@ -1,4 +1,4 @@
-﻿.box {
+.box {
     border: 1px solid black;
     text-align: center;
     width: 107.5px;
@@ -51,6 +51,6 @@ hr {
     background: #333;
     margin-top: 10px;
     /*Makes it so that hr covers the hole page horizontally*/
-    margin-left: -100px;
-    margin-right: -100px;
+    margin-left: -20px;
+    margin-right: -20px;
 }
