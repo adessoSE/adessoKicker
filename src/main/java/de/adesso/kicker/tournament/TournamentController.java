@@ -112,14 +112,14 @@ public class TournamentController {
         return modelAndView;
     }
 
-    @GetMapping("tournaments/{tournamentId}/treetest")
+    @GetMapping("tournaments/{tournamentId}/tree")
     public ModelAndView showTournamentTree(@PathVariable("tournamentId") long id) {
 
         ModelAndView modelAndView = new ModelAndView();
         List<Team> teams = tournamentService.getTournamentById(id).getTeams();
         tournamentService.createTournamentTree(teams, tournamentService.getTournamentById(id));
         modelAndView.addObject("tournament", tournamentService.getTournamentById(id));
-        modelAndView.setViewName("tournament/treetest");
+        modelAndView.setViewName("tournament/tree");
         return modelAndView;
     }
 }
