@@ -2,9 +2,6 @@ package de.adesso.kicker.tournament.singleelimination;
 
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.tournament.Tournament;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.IndexColumn;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +10,6 @@ import java.util.List;
 @Entity
 public class SingleElimination extends Tournament {
 
-    // @ManyToMany(targetEntity = Team.class, cascade = CascadeType.ALL)
     @Column
     @ElementCollection
     private List<ArrayList<Team>> bracket;
