@@ -99,7 +99,7 @@
 				<configuration>
 					<java>
 						<eclipse>
-							<file>${basedir}/eclipse-spaces-fmt.xml</file>
+							<file>${basedir}/formatting-rules.xml</file>
 							<!-- Optional, available versions: https://github.com/diffplug/spotless/tree/master/lib-extra/src/main/resources/com/diffplug/spotless/extra/config/eclipse_jdt_formatter -->
 							<version>4.8.0</version>
 						</eclipse>
