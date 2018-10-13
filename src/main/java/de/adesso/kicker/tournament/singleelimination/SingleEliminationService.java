@@ -42,7 +42,8 @@ public class SingleEliminationService extends TournamentService {
 
         int tournamentSize = (int) Math.pow(2, Math.ceil((Math.log(teams.size()) / Math.log(2))));
         int tournamentTreeSize = (int) (Math.log(tournamentSize) / Math.log(2) + 1);
-        List<ArrayList<Team>> tournamentTree = singleElimination.getBracket();
+//        List<ArrayList<Team>> tournamentTree = singleElimination.getBracket();
+        List<BracketRow> tournamentTree = singleElimination.getBracket();
         Collections.shuffle(teams);
 
         /* Fills remaining slots with null to fill the tree later */
@@ -55,9 +56,11 @@ public class SingleEliminationService extends TournamentService {
          * Initializes the tournament tree with the right amount of levels so players
          * can be added easily later
          */
+        //System.out.println(tournamentTree);
         while (tournamentTree.size() < tournamentTreeSize) {
 
-            tournamentTree.add(new ArrayList<>());
+            //tournamentTree.add(new ArrayList<>());
+            tournamentTree.add(new BracketRow());
         }
 
         /*
@@ -65,9 +68,9 @@ public class SingleEliminationService extends TournamentService {
          * later
          */
         for (int i = 0; i < tournamentTreeSize; i++) {
-            for (int k = tournamentTree.get(i).size(); k < tournamentSize / Math.pow(2, i); k++) {
+            for (int k = tournamentTree.get(i).getRow().size(); k < tournamentSize / Math.pow(2, i); k++) {
 
-                tournamentTree.get(i).add(null);
+                tournamentTree.get(i).getRow().add(null);
             }
         }
 
@@ -80,15 +83,14 @@ public class SingleEliminationService extends TournamentService {
          */
         for (int i = 0; i < tournamentSize; i += 2) {
 
-            tournamentTree.get(0).set(i, teams.get(i));
+            tournamentTree.get(0).getRow().set(i, teams.get(i));
         }
 
         for (int i = 1; i < tournamentSize; i += 2) {
 
-            tournamentTree.get(0).set(i, teams.get(i));
+            tournamentTree.get(0).getRow().set(i, teams.get(i));
         }
         singleElimination.setBracket(tournamentTree);
-        System.out.println(singleElimination);
         saveTournament(singleElimination);
     }
 
@@ -102,14 +104,15 @@ public class SingleEliminationService extends TournamentService {
     public void advanceWinner(SingleElimination singleElimination, Match match) {
 
         Team winner = match.getWinner();
-        List<ArrayList<Team>> tournamentTree = singleElimination.getBracket();
+//        List<ArrayList<Team>> tournamentTree = singleElimination.getBracket();
+        List<BracketRow> tournamentTree = singleElimination.getBracket();
         boolean winnerSet = false;
         int treeSize = tournamentTree.size();
 
         for (int i = 0; i < treeSize - 1 && !winnerSet; i++) {
-            for (int k = 0; k < tournamentTree.get(i).size() && !winnerSet; k++) {
-                if (tournamentTree.get(i).get(k) == winner && !(tournamentTree.get(i + 1).get(k / 2) == winner)) {
-                    tournamentTree.get(i + 1).set(k / 2, winner);
+            for (int k = 0; k < tournamentTree.get(i).getRow().size() && !winnerSet; k++) {
+                if (tournamentTree.get(i).getRow().get(k) == winner && !(tournamentTree.get(i + 1).getRow().get(k / 2) == winner)) {
+                    tournamentTree.get(i + 1).getRow().set(k / 2, winner);
                     winnerSet = true;
                 }
             }
