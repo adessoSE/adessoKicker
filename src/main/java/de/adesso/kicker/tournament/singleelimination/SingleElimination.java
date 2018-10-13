@@ -10,10 +10,6 @@ import java.util.List;
 @Entity
 public class SingleElimination extends Tournament {
 
-//    @Column
-//    @ElementCollection
-//    private List<ArrayList<Team>> bracket;
-
     @ManyToMany(cascade = CascadeType.ALL, targetEntity = BracketRow.class)
     private List<BracketRow> bracket;
 
@@ -43,15 +39,6 @@ public class SingleElimination extends Tournament {
     public void removeTeam(Team team) {
         teams.remove(team);
     }
-
-//    public List<ArrayList<Team>> getBracket() {
-//        return bracket;
-//    }
-//
-//    public void setBracket(List<ArrayList<Team>> bracket) {
-//        this.bracket = bracket;
-//    }
-
 
     public List<BracketRow> getBracket() {
         return bracket;

@@ -2,13 +2,11 @@ package de.adesso.kicker.tournament.singleelimination;
 
 import de.adesso.kicker.match.Match;
 import de.adesso.kicker.team.Team;
-import de.adesso.kicker.tournament.Tournament;
 import de.adesso.kicker.tournament.TournamentRepository;
 import de.adesso.kicker.tournament.TournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,7 +40,6 @@ public class SingleEliminationService extends TournamentService {
 
         int tournamentSize = (int) Math.pow(2, Math.ceil((Math.log(teams.size()) / Math.log(2))));
         int tournamentTreeSize = (int) (Math.log(tournamentSize) / Math.log(2) + 1);
-//        List<ArrayList<Team>> tournamentTree = singleElimination.getBracket();
         List<BracketRow> tournamentTree = singleElimination.getBracket();
         Collections.shuffle(teams);
 
@@ -56,10 +53,8 @@ public class SingleEliminationService extends TournamentService {
          * Initializes the tournament tree with the right amount of levels so players
          * can be added easily later
          */
-        //System.out.println(tournamentTree);
         while (tournamentTree.size() < tournamentTreeSize) {
 
-            //tournamentTree.add(new ArrayList<>());
             tournamentTree.add(new BracketRow());
         }
 
@@ -90,7 +85,7 @@ public class SingleEliminationService extends TournamentService {
 
             tournamentTree.get(0).getRow().set(i, teams.get(i));
         }
-        singleElimination.setBracket(tournamentTree);
+
         saveTournament(singleElimination);
     }
 
@@ -104,20 +99,20 @@ public class SingleEliminationService extends TournamentService {
     public void advanceWinner(SingleElimination singleElimination, Match match) {
 
         Team winner = match.getWinner();
-//        List<ArrayList<Team>> tournamentTree = singleElimination.getBracket();
         List<BracketRow> tournamentTree = singleElimination.getBracket();
         boolean winnerSet = false;
         int treeSize = tournamentTree.size();
 
         for (int i = 0; i < treeSize - 1 && !winnerSet; i++) {
             for (int k = 0; k < tournamentTree.get(i).getRow().size() && !winnerSet; k++) {
-                if (tournamentTree.get(i).getRow().get(k) == winner && !(tournamentTree.get(i + 1).getRow().get(k / 2) == winner)) {
+                if (tournamentTree.get(i).getRow().get(k) == winner
+                        && !(tournamentTree.get(i + 1).getRow().get(k / 2) == winner)) {
                     tournamentTree.get(i + 1).getRow().set(k / 2, winner);
                     winnerSet = true;
                 }
             }
         }
-        singleElimination.setBracket(tournamentTree);
+
         saveTournament(singleElimination);
     }
 }
