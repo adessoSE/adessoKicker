@@ -27,7 +27,7 @@ public abstract class Tournament {
     private String format;
     private boolean finished;
 
-    @OneToMany(targetEntity = Match.class)
+    @ManyToOne(targetEntity = Match.class)
     private List<Match> matches;
 
     @ManyToMany(targetEntity = User.class)
