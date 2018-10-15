@@ -1,4 +1,4 @@
-﻿/*Searchbar*/
+/*Searchbar*/
 #searchBar {
     width: 90%;
     margin-left: 10px;
@@ -12,6 +12,16 @@
     margin-left: -20px;
     width: 40px;
     height: 40px;
+}
+
+#searchedUser {
+    display: none;
+    position: fixed;
+    z-index: 10;
+}
+
+.panel-body{
+    
 }
 
 /*ContainerTop*/
@@ -66,10 +76,14 @@ p.elementStats {
 }
 
 .list-group {
+    width: 200%;
     max-height: 300px;
+    margin-top: -15px;
+    margin-left: -5px;
     margin-bottom: 10px;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll;
+    /*overflow: scroll;*/
+    /*webkit-overflow-scrolling: touch;*/
 }
 
 .btn-sm{
@@ -98,6 +112,6 @@ hr {
     background: #333;
     margin-top: 10px;
     /*Makes it so that hr covers the hole page horizontally*/
-    margin-left: -100px;
-    margin-right: -100px;
+    margin-left: -5px;
+    margin-right: 0x;
 }

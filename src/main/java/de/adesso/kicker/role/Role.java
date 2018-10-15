@@ -1,11 +1,10 @@
 package de.adesso.kicker.role;
 
-import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "role")
-public class Role implements Serializable {
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
