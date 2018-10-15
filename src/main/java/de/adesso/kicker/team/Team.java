@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 public class Team implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long teamId;
 
     @NotNull
