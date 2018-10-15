@@ -79,7 +79,7 @@ public class MatchController {
      * @param bindingResult BindingResult
      * @return ModelAndView
      */
-    
+
     @PostMapping("/matches/add")
     public ModelAndView createNewMatch(@Valid Match match, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
@@ -89,15 +89,17 @@ public class MatchController {
         try {
             if (match.getTeamA().getTeamId() != match.getTeamB().getTeamId()) {
                 // Time check currently not working
-                if (match.getDate().after(yesterday()) && (match.getTime().getHours()>=time.getHours() && match.getTime().getMinutes() >= time.getMinutes() ) ) {
-                    System.out.println("Eingegebene Zeit: "+ match.getTime().getHours() + ":" + match.getTime().getMinutes());
-                    System.out.println("Server Zeit: "+time.getHours()+":"+ time.getMinutes());
+                if (match.getDate().after(yesterday()) && (match.getTime().getHours() >= time.getHours()
+                        && match.getTime().getMinutes() >= time.getMinutes())) {
+                    System.out.println(
+                            "Eingegebene Zeit: " + match.getTime().getHours() + ":" + match.getTime().getMinutes());
+                    System.out.println("Server Zeit: " + time.getHours() + ":" + time.getMinutes());
                     System.out.println();
                     matchService.saveMatch(match);
                     teamService.addMatchIdToTeam(match, match.getTeamA().getTeamId());
                     teamService.addMatchIdToTeam(match, match.getTeamB().getTeamId());
                     modelAndView.addObject("successMessage", "Match wurde hinzugefügt.");
-;
+                    ;
                 } else {
                     System.out.println(match.getTime().getTime());
                     System.out.println(time.getTime());

@@ -57,18 +57,18 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping(value="users/list")
-    public ModelAndView showUsersByName(@RequestParam (value="search", required = false) String firstName
-                                        , @RequestParam (value="search", required = false) String lastName) {
+    @GetMapping(value = "users/list")
+    public ModelAndView showUsersByName(@RequestParam(value = "search", required = false) String firstName,
+            @RequestParam(value = "search", required = false) String lastName) {
         ModelAndView modelAndView = new ModelAndView();
         try {
             modelAndView.addObject("search", userService.getUserByName(firstName, lastName));
-        }
-        catch (Exception i){
+        } catch (Exception i) {
         }
         modelAndView.setViewName("user/testsearch");
         return modelAndView;
     }
+
     /**
      * deletes a user identified by its id
      *

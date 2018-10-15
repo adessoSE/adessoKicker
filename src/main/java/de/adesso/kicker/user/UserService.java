@@ -56,19 +56,19 @@ public class UserService {
         userRepository.delete(userRepository.findByUserId(id));
     }
 
-    public List<User> getUserByName(String firstName, String lastName){
+    public List<User> getUserByName(String firstName, String lastName) {
         List<User> users = new ArrayList<>();
         try {
-            if (firstName.contains(" ")){
+            if (firstName.contains(" ")) {
                 String[] name = firstName.split("\\s+", 2);
                 firstName = name[0];
                 lastName = name[1];
 
             }
+        } catch (NullPointerException n) {
         }
-        catch (NullPointerException n) {
-        }
-        userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(firstName, lastName).forEach(users::add);
+        userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(firstName, lastName)
+                .forEach(users::add);
         return users;
     }
 }
