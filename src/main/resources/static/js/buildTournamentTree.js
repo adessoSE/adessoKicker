@@ -1,4 +1,61 @@
-var teams, teamBoxes = 16, levels, currentLevel, tournamentName = 'Adesso Einsteiger Tournier', tournamentStartDate = '19. September 2018';
+var teamIds1 = [];
+var teamNames1 = [];
+var teamIds2 = [];
+var teamNames2 = [];
+var teamIds3 = [];
+var teamNames3 = [];
+var teamIds4 = [];
+var teamNames4 = [];
+var teamIds5 = [];
+var teamNames5 = [];
+var teamIds6 = [];
+var teamNames6 = [];
+var teamBoxes = 16;
+var levels = 0;
+var currentLevel;
+var tournamentName = 'Adesso Einsteiger Tournier';
+var tournamentStartDate = '19. September 2018';
+
+
+function extractParams () {
+	
+	var i;
+	
+	if(tournamentTree.length > 2) {
+		
+		for(i = 0; i < tournamentTree.length; i++) {
+			
+			if(tournamentTree[i] == "]") {
+				
+					levels ++;
+			}
+		}
+		levels --;
+		
+		alert("levels: " + levels);
+		
+		while(tournamentTree.slice(0, tournamentTree.indexOf(",")) != " null"){
+			
+			var level = tournamentTree.slice(tournamentTree.indexOf("Team{") + 5, index = tournamentTree.indexOf("},"));
+			
+			alert(level);
+			
+			level = level.slice(level.indexOf("=") + 1);
+			teamIds1.push(level.slice(0, level.indexOf(",")));
+			
+			if(level.search("=&#39;") != -1) {
+				level = level.slice(level.indexOf(";") + 1);
+				teamNames1.push(level.slice(0, level.indexOf("&#39;")));
+			}
+			else {
+				level = level.slice(level.indexOf("=") + 1);
+				teamNames1.push(level.slice(0, level.indexOf(",")));
+			}
+			
+			tournamentTree = tournamentTree.slice(tournamentTree.indexOf("}") + 2);
+		}
+	}
+}
 
 
 function setHeadline () {
@@ -7,20 +64,6 @@ function setHeadline () {
 	
 }
 
-function setTeamBoxes () {
-	
-	/*<![CDATA[*/
-    var tmp = [[${teams}]];
-	altert(tmp);
-    teams = tmp.length;
-    /*]]>*/
-	
-	
-}
-
-function fillTeamBoxes() {
-	
-}
 
 function setLevels () {
 	
@@ -118,7 +161,7 @@ function returnCenter (element) {
 	return ((element.getBoundingClientRect().left + element.getBoundingClientRect().right) / 2);
 }
 
-setTeamBoxes();
+extractParams();
 setHeadline();
 setLevels();
 printTree();
