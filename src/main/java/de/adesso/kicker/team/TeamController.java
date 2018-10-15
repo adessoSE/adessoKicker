@@ -91,28 +91,19 @@ public class TeamController {
                     "Teamname existiert bereits. Bitte einen anderen wählen.");
         }
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("team", team);
-            modelAndView.addObject("users", userService.getAllUsers());
-            modelAndView.setViewName("team/add");
         } else {
             if (team.getPlayerA().getUserId() != team.getPlayerB().getUserId()) {
                 teamService.saveTeam(team);
-                // userService.addTeamIdToUser(team, team.getPlayerA().getUserId());
-                // serService.addTeamIdToUser(team, team.getPlayerB().getUserId());
                 modelAndView.addObject("successMessage", "Team wurde hinzugefügt.");
-                modelAndView.addObject("team", new Team());
-                modelAndView.addObject("users", userService.getAllUsers());
-                modelAndView.setViewName("team/add");
             } else {
                 bindingResult.rejectValue("playerA", "error.playerA");
                 bindingResult.rejectValue("playerB", "error.playerB");
-                modelAndView.addObject("team", team);
-                modelAndView.addObject("users", userService.getAllUsers());
                 modelAndView.addObject("failMessage", "Bitte keine identischen Spieler auswählen.");
-                modelAndView.setViewName("team/add");
             }
         }
-
+        modelAndView.addObject("team", team);
+        modelAndView.addObject("users", userService.getAllUsers());
+        modelAndView.setViewName("team/add");
         return modelAndView;
     }
 
