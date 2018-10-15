@@ -1,9 +1,17 @@
 package de.adesso.kicker;
 
+import de.adesso.kicker.team.Team;
+import de.adesso.kicker.tournament.Tournament;
+import de.adesso.kicker.tournament.TournamentRepository;
+import de.adesso.kicker.tournament.lastmanstanding.LastManStanding;
+import de.adesso.kicker.tournament.lastmanstanding.LastManStandingService;
+import de.adesso.kicker.tournament.singleelimination.SingleElimination;
+import de.adesso.kicker.tournament.singleelimination.SingleEliminationService;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,9 +27,8 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(UserRepository userRepository) {
+    public CommandLineRunner demo(UserRepository userRepository, LastManStandingService lastManStandingService) {
         return (args) -> {
-            // fetch all customers
             log.info("Customers found with findAll():");
             log.info("-------------------------------");
             for (User user : userRepository.findAll()) {

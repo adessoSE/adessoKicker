@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add player</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Form</h1>
+<form autocomplete="off" action="#" th:action="@{/tournaments/} + ${tournamentId} + @{/join}" th:object="${tournament}" method="POST">
+    <select class="form-control" id="users" name="userId">
+        <option th:each="user : ${users}"
+                th:value="${user.userId}"
+                th:text="${user.firstName}+' : '+${user.lastName}"></option>
+    </select>
+    <span th:utext="${successMessage}"></span>
+    <span th:utext="${failMessage}"></span>
+    <p><input type="submit" value="User hinzufuegen." /> <input type="reset" value="Reset" /></p>
+</form>
+</body>
+</html>
