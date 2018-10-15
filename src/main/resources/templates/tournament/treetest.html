@@ -5,7 +5,7 @@
 <table>
     <div th:fragment="tree">
         <div th:each="row : ${tournament.bracket}">
-            <div><span th:text="${row.row}"></span></div>
+            <div th:each="team : ${row.row}"><span th:text="${team}"></span></div>
         </div>
     </div>
 </table>
