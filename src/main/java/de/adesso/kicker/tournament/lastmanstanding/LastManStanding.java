@@ -10,6 +10,7 @@ import java.util.Map;
 @Entity
 public class LastManStanding extends Tournament {
 
+    @ManyToOne(targetEntity = User.class)
     private User winner;
 
     private int maxLives;

@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "team")
-public class Team implements Serializable {
+public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

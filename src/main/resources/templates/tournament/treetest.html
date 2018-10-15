@@ -4,9 +4,8 @@
 <title>Tournament Tree Test</title>
 <table>
     <tbody>
-    </tr>
-    <tr>
-        <td><span th:text="${tournament.tournamentTree}"></span></td>
+    <tr th:each="row : ${tournament.getBracket()}">
+        <td><span th:text="${row.getRow()}"></span></td>
     </tr>
     </tbody>
 </table>
