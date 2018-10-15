@@ -2,6 +2,7 @@ package de.adesso.kicker.tournament.lastmanstanding;
 
 import de.adesso.kicker.tournament.Tournament;
 import de.adesso.kicker.tournament.TournamentFormats;
+import de.adesso.kicker.tournament.singleelimination.SingleElimination;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,8 @@ public class LastManStandingController {
 
     public ModelAndView getLastManStandingPage(Tournament tournament) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("tournament", tournament);
+        LastManStanding lastManStanding = (LastManStanding) tournament;
+        modelAndView.addObject("tournament", lastManStanding);
         modelAndView.setViewName("tournament/page");
         return modelAndView;
     }
@@ -76,6 +78,15 @@ public class LastManStandingController {
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.addObject("successMessage", "Player added to tournament");
         modelAndView.setViewName("tournament/addplayer");
+        return modelAndView;
+    }
+
+    public ModelAndView showLivesMap(Tournament tournament) {
+        LastManStanding lastManStanding = (LastManStanding) tournament;
+        ModelAndView modelAndView = new ModelAndView();
+        lastManStandingService.createLivesMap(lastManStanding);
+        modelAndView.addObject("tournament", lastManStanding);
+        modelAndView.setViewName("tournament/maptest");
         return modelAndView;
     }
 
