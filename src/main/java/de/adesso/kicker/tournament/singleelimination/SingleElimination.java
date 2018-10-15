@@ -10,13 +10,13 @@ import java.util.List;
 @Entity
 public class SingleElimination extends Tournament {
 
-    @Column
-    @ElementCollection
-    private List<ArrayList<Team>> bracket;
+    @ManyToMany(cascade = CascadeType.ALL, targetEntity = BracketRow.class)
+    private List<BracketRow> bracket;
 
     @ManyToMany(targetEntity = Team.class, cascade = CascadeType.ALL)
     private List<Team> teams;
 
+    @ManyToOne(targetEntity = Team.class)
     private Team winner;
 
     public SingleElimination() {
@@ -27,7 +27,7 @@ public class SingleElimination extends Tournament {
     public SingleElimination(String tournamentName) {
 
         super(tournamentName);
-        this.bracket = new ArrayList<ArrayList<Team>>();
+        this.bracket = new ArrayList<>();
         this.teams = new ArrayList<>();
         this.winner = null;
     }
@@ -40,11 +40,11 @@ public class SingleElimination extends Tournament {
         teams.remove(team);
     }
 
-    public List<ArrayList<Team>> getBracket() {
+    public List<BracketRow> getBracket() {
         return bracket;
     }
 
-    public void setBracket(List<ArrayList<Team>> bracket) {
+    public void setBracket(List<BracketRow> bracket) {
         this.bracket = bracket;
     }
 

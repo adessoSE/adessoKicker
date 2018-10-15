@@ -112,7 +112,7 @@ public class SingleEliminationController extends TournamentController {
         SingleElimination singleElimination = (SingleElimination) tournament;
         singleEliminationService.createTournamentTree(singleElimination.getTeams(), singleElimination);
         modelAndView.addObject("tournament", singleEliminationService.getTournamentById(tournament.getTournamentId()));
-        modelAndView.setViewName("tournament/tree");
+        modelAndView.setViewName("tournament/treetest");
         return modelAndView;
     }
 }
