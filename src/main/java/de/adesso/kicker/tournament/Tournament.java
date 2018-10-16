@@ -26,7 +26,6 @@ public abstract class Tournament {
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
-
     private Date endDate;
     private String description;
     private String format;

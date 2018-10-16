@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,7 +21,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-public class SingleEliminationController extends TournamentController {
+public class SingleEliminationController {
 
     private SingleEliminationService singleEliminationService;
     private TeamService teamService;
@@ -32,22 +33,22 @@ public class SingleEliminationController extends TournamentController {
         this.teamService = teamService;
     }
 
-    @GetMapping("/tournaments/create/singleelimination")
-    public ModelAndView singleEliminationForm() {
+    @GetMapping(value = "/tournaments/create", params = {"SINGLEELIMINATION"})
+    public ModelAndView tournamentCreation() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("singleElimination", new SingleElimination());
-        modelAndView.setViewName("tournament/createsingleelimination");
+        modelAndView.addObject("tournament", new SingleElimination());
+        modelAndView.setViewName("tournament/create");
         return modelAndView;
     }
 
-    @PostMapping("/tournaments/create/singleelimination")
+    @PostMapping(value = "/tournaments/create", params = {"SINGLEELIMINATION"})
     public ModelAndView createSingleElimination(@Valid SingleElimination singleElimination, BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
 
-            modelAndView.addObject("singleelimination", new SingleElimination());
-            modelAndView.setViewName("tournament/createsingleelimination");
+            modelAndView.addObject("tournament", new SingleElimination());
+            modelAndView.setViewName("tournament/create");
         } else {
 
             singleEliminationService.saveTournament(singleElimination);

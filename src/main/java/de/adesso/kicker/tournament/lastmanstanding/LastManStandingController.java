@@ -1,6 +1,7 @@
 package de.adesso.kicker.tournament.lastmanstanding;
 
 import de.adesso.kicker.tournament.Tournament;
+import de.adesso.kicker.tournament.TournamentController;
 import de.adesso.kicker.tournament.TournamentFormats;
 import de.adesso.kicker.tournament.singleelimination.SingleElimination;
 import de.adesso.kicker.user.User;
@@ -31,8 +32,8 @@ public class LastManStandingController {
     @GetMapping("/tournaments/create/lastmanstanding")
     public ModelAndView lastManStandingForm() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("lastManStanding", new LastManStanding());
-        modelAndView.setViewName("tournament/createlastmanstanding");
+        modelAndView.addObject("tournament", new LastManStanding());
+        modelAndView.setViewName("tournament/create");
         return modelAndView;
     }
 
@@ -42,8 +43,8 @@ public class LastManStandingController {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
 
-            modelAndView.addObject("lastManStanding", new LastManStanding());
-            modelAndView.setViewName("tournament/createlastmanstanding");
+            modelAndView.addObject("tournament", new LastManStanding());
+            modelAndView.setViewName("tournament/create");
             return modelAndView;
         } else {
             System.out.println(lastManStanding);
@@ -90,4 +91,30 @@ public class LastManStandingController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/tournaments/create", params = {"LASTMANSTANDING"})
+    public ModelAndView tournamentCreation() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("lastManStanding", new LastManStanding());
+        modelAndView.setViewName("tournament/createlastmanstanding");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/tournaments/create", params = {"LASTMANSTANDING"})
+    public ModelAndView createSingleElimination(@Valid SingleElimination singleElimination, BindingResult bindingResult,
+                                                RedirectAttributes redirectAttributes) {
+        ModelAndView modelAndView = new ModelAndView();
+        if (bindingResult.hasErrors()) {
+
+            modelAndView.addObject("lastManStanding", new LastManStanding());
+            modelAndView.setViewName("tournament/createsingleelimination");
+        } else {
+
+            lastManStandingService.saveTournament(singleElimination);
+            redirectAttributes.addFlashAttribute("successMessage", "Tournament has been created");
+            redirectAttributes.addFlashAttribute("tournamentFormats", TournamentFormats.values());
+            modelAndView.setViewName("redirect:/tournaments/create");
+        }
+
+        return modelAndView;
+    }
 }
