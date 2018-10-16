@@ -1,102 +1,37 @@
-var teamIds1 = [];
-var teamNames1 = [];
-var teamIds2 = [];
-var teamNames2 = [];
-var teamIds3 = [];
-var teamNames3 = [];
-var teamIds4 = [];
-var teamNames4 = [];
-var teamIds5 = [];
-var teamNames5 = [];
-var teamIds6 = [];
-var teamNames6 = [];
-var teamBoxes = 16;
-var levels = 0;
+var numBoxes;
 var currentLevel;
-var tournamentName = 'Adesso Einsteiger Tournier';
-var tournamentStartDate = '19. September 2018';
-
-
-function extractParams () {
-	
-	var i;
-	
-	if(tournamentTree.length > 2) {
-		
-		for(i = 0; i < tournamentTree.length; i++) {
-			
-			if(tournamentTree[i] == "]") {
-				
-					levels ++;
-			}
-		}
-		levels --;
-		
-		alert("levels: " + levels);
-		
-		while(tournamentTree.slice(0, tournamentTree.indexOf(",")) != " null"){
-			
-			var level = tournamentTree.slice(tournamentTree.indexOf("Team{") + 5, index = tournamentTree.indexOf("},"));
-			
-			alert(level);
-			
-			level = level.slice(level.indexOf("=") + 1);
-			teamIds1.push(level.slice(0, level.indexOf(",")));
-			
-			if(level.search("=&#39;") != -1) {
-				level = level.slice(level.indexOf(";") + 1);
-				teamNames1.push(level.slice(0, level.indexOf("&#39;")));
-			}
-			else {
-				level = level.slice(level.indexOf("=") + 1);
-				teamNames1.push(level.slice(0, level.indexOf(",")));
-			}
-			
-			tournamentTree = tournamentTree.slice(tournamentTree.indexOf("}") + 2);
-		}
-	}
-}
 
 
 function setHeadline () {
 	
-	document.getElementById('heading').innerHTML = tournamentName + ' - ' + tournamentStartDate;
+	document.getElementById('heading').innerHTML = tournamentName + ' - ' + tournamentStartDate.slice(8, 10) + '.' + tournamentStartDate.slice(5, 7) + '.' + tournamentStartDate.slice(0, 4);
 	
 }
 
-
-function setLevels () {
+function setNumBoxes () {
 	
-
-	if(!currentLevel) {
-		
-		var i = teamBoxes;
-		levels = 1;
-		
-		for(i; i != 1; i /= 2){
-			
-			if((i % 1) != 0) {
-				
-				i += (1 - (i % 1));
-			}
-				
-			levels ++;
-		}
+	var num = 2;
+	
+	while (rows[0].length > num)
+	{
+		num *= 2;
 	}
-	else {
-		
-		levels = currentLevel;
-	}
+	
+	numBoxes = num;
 }
 
 function printTree (){
 	
-	var i = 0, j = 0, teamBoxes = "", level = "", posx;
+	var i;
+	var j; 
+	var teamBoxes = "";
+	var level = "";
+	var	posx;
 	
 	var boxStyle = "border-radius: 5px; background-color: white; border-style: groove; padding: 5px; margin: 3px; box-shadow: 2px 2px 1px black;";
 	var divEvents = "onmouseover='onMouseInteractDiv(this)' onmouseout='outMouseInteractDiv(this)'";
 	
-	for(i = 0; i < levels; i ++){
+	for(i = 0; i < numRows; i ++){
 		
 		
 		level = '<div class="container" id="level' + i + '" style="display: flex; flex-flow: row nowrap; justify-content: space-between; z-index: 5;">'
@@ -104,15 +39,29 @@ function printTree (){
 		
 		teamBoxes = "";
 		
-		for(j = 0; j < (teamBoxes / Math.pow(2, i)); j++) {
+		for(j = 0; j < (numBoxes / Math.pow(2, i)); j++) {
 			
-			if(i > 0) {
-			
-				posx = (((document.getElementById('level' + (i - 1) + 'team' + (j * 2)).getBoundingClientRect().left + document.getElementById('level' + (i - 1) + 'team' + ((j * 2) + 1)).getBoundingClientRect().right) / 2) - (document.getElementById('level' + (i - 1) + 'team' + (j * 2)).offsetWidth / 2));
-				teamBoxes += '<div class="" id="level' + i + 'team' + j +'" ' + divEvents + ' style="left: ' + posx + 'px; ' + boxStyle + ' position: absolute;" ></div>';
+			if(j < rows[i].length) {
+				
+				if(i > 0) {
+				
+					posx = (((document.getElementById('level' + (i - 1) + 'team' + (j * 2)).getBoundingClientRect().left + document.getElementById('level' + (i - 1) + 'team' + ((j * 2) + 1)).getBoundingClientRect().right) / 2) - (document.getElementById('level' + (i - 1) + 'team' + (j * 2)).offsetWidth / 2));
+					teamBoxes += '<div class="" id="level' + i + 'team' + j +'" ' + divEvents + ' style="left: ' + posx + 'px; ' + boxStyle + ' position: absolute;" >' + rows[i][j].teamName + '</div>';
+				}
+				else {
+					teamBoxes += '<div class="" id="level' + i + 'team' + j +'" ' + divEvents + ' style="' + boxStyle + '" >' + rows[i][j].teamName + '</div>';
+				}
 			}
 			else {
-				teamBoxes += '<div class="" id="level' + i + 'team' + j +'" ' + divEvents + ' style="' + boxStyle + '" ></div>';
+				
+				if(i > 0) {
+				
+					posx = (((document.getElementById('level' + (i - 1) + 'team' + (j * 2)).getBoundingClientRect().left + document.getElementById('level' + (i - 1) + 'team' + ((j * 2) + 1)).getBoundingClientRect().right) / 2) - (document.getElementById('level' + (i - 1) + 'team' + (j * 2)).offsetWidth / 2));
+					teamBoxes += '<div class="" id="level' + i + 'team' + j +'" ' + divEvents + ' style="left: ' + posx + 'px; ' + boxStyle + ' position: absolute;" ></div>';
+				}
+				else {
+					teamBoxes += '<div class="" id="level' + i + 'team' + j +'" ' + divEvents + ' style="' + boxStyle + '" ></div>';
+				}
 			}
 		}
 		
@@ -122,12 +71,22 @@ function printTree (){
 
 function printLines () {
 	
-	var team1, team2, target, canvas, ctx, fixlx, fixly, fixrx, fixry, i, j;
+	var team1;
+	var team2;
+	var target; 
+	var canvas; 
+	var ctx;
+	var fixlx; 
+	var fixly; 
+	var fixrx; 
+	var fixry; 
+	var i;
+	var j;
 	
-	for(i = 1; i < levels; i ++){
+	for(i = 1; i < numRows; i ++){
 		
 		
-		for(j = 0; j < (teamBoxes / Math.pow(2, i)); j++) {
+		for(j = 0; j < (numBoxes / Math.pow(2, i)); j++) {
 	
 			
 			canvas = document.getElementById('canvas');
@@ -161,8 +120,7 @@ function returnCenter (element) {
 	return ((element.getBoundingClientRect().left + element.getBoundingClientRect().right) / 2);
 }
 
-extractParams();
+setNumBoxes();
 setHeadline();
-setLevels();
 printTree();
 printLines();
