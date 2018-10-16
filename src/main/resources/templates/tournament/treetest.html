@@ -3,10 +3,10 @@
       xmlns:th="http://www.thymeleaf.org">
 <title>Tournament Tree Test</title>
 <table>
-    <tbody>
-    <tr th:each="row : ${tournament.getBracket()}">
-        <td><span th:text="${row.getRow()}"></span></td>
-    </tr>
-    </tbody>
+    <div th:fragment="tree">
+        <div th:each="row : ${tournament.bracket}">
+            <div th:each="team : ${row.row}"><span th:text="${team}"></span></div>
+        </div>
+    </div>
 </table>
 </html>

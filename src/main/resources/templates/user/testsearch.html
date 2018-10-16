@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>Search for Users</h2>
+        <form th:object="${users}" th:action="@{/users/list}" method="get">
+            Name: <input type="text" name="search" id="search" placeholder="Vorname & Name"/>
+            <input type="submit" value="Suchen"/>
+            <div th:if="${not #lists.isEmpty(search)}">
+                <h2>User-List</h2>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                    <tr th:each="users: ${search}">
+                        <td><a th:href="@{'/users/'+${users.userId}}" th:text="${users.firstName}+' '+${users.lastName}"></td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+
+</body>
+</html>

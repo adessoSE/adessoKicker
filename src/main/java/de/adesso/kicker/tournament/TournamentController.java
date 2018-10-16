@@ -74,9 +74,11 @@ public class TournamentController {
         switch (format) {
 
         case "SINGLEELIMINATION":
-            return (singleEliminationController.getSingleEliminationPage(tournament));
+            System.out.println("SE: " + tournament.getFormat());
+            return singleEliminationController.getSingleEliminationPage(tournament);
 
         case "LASTMANSTANDING":
+            System.out.println("LMS: " + tournament.getFormat());
             return lastManStandingController.getLastManStandingPage(tournament);
 
         default:
@@ -127,6 +129,10 @@ public class TournamentController {
         switch (format) {
         case ("SINGLEELIMINATION"):
             modelAndView = singleEliminationController.showTree(tournament);
+            return modelAndView;
+
+        case ("LASTMANSTANDING"):
+            modelAndView = lastManStandingController.showLivesMap(tournament);
             return modelAndView;
 
         default:

@@ -6,7 +6,9 @@
     <tbody>
     </tr>
     <tr>
-        <td><span th:text="${tournament.toString()}"></span></td>
+        <!--<td><span th:text="${tournament.toString()}"></span></td>-->
+        <td th:if="${tournament.format=='SINGLEELIMINATION'}" th:insert="tournament/treetest"></td>
+        <td th:if="${tournament.format=='LASTMANSTANDING'}" th:insert="tournament/maptest"></td>
     </tr>
     </tbody>
 </table>
