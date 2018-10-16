@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
-<html>
-
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset='utf-8'>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,14 +29,16 @@
 				</div>
 				<div class='rowdissize'>
 					<div class='col-lg-2'></div>
+					<a href="/logout">
 					<div class='col-lg-5 container' style='border-style: groove; margin-top: 10px; box-shadow: 4px 4px black;' onmouseover='this.style.backgroundColor = "lightgrey"; this.style.boxShadow = "8px 8px black";' onmouseout='this.style.backgroundColor = "white"; this.style.boxShadow = "4px 4px black";'>						
-						<h3 style='text-align: center; margin: 10px;'>Abmelden</h3>						
+						<h3 style='text-align: center; margin: 10px;'>Abmelden</h3>
 					</div>
+					</a>
 					<div class='col-lg-1'></div>
 					<div class='col-lg-2 container' style='padding: 10px; border-radius: 10px; width: 90px; height: 85px' onclick='toggleNotificationList()' onmouseover=' this.style.boxShadow = "5px 5px 2px grey"; this.style.borderStyle = "groove";' onmouseout=' this.style.boxShadow = "none"; this.style.borderStyle = "none";'>
-						<span id='notificationIcon' class='glyphicon glyphicon-envelope' style='font-size: 60px; text-align: left;'>
+						<span id='notificationIcon' class='glyphicon glyphicon-envelope' style='font-size: 60px; text-align: left;'></span>
 					</div>
-				</div>				
+				</div>
 			</div>			
 		</div>
 		

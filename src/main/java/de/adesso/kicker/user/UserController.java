@@ -2,11 +2,7 @@ package de.adesso.kicker.user;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -31,7 +27,7 @@ public class UserController {
      * @param id long
      * @return User
      */
-    @RequestMapping("/users/{id}")
+    @GetMapping("/users/{id}")
     public ModelAndView getOneUser(@PathVariable long id) {
 
         ModelAndView modelAndView = new ModelAndView();
@@ -46,13 +42,13 @@ public class UserController {
      *
      * @return List<User>
      */
-    @RequestMapping("/users")
+    @GetMapping("/users")
     public List<User> getAllUsers() {
 
         return userService.getAllUsers();
     }
 
-    @RequestMapping("/users/you")
+    @GetMapping("/users/you")
     public ModelAndView getUser() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getLoggedInUser());
@@ -61,16 +57,16 @@ public class UserController {
         return modelAndView;
     }
 
-    /**
-     * updates users profile parameter: object and the id of the user
-     *
-     * @param user User
-     * @param id   long
-     */
-    @RequestMapping(method = RequestMethod.PUT, value = "users/edit/{id}")
-    public void updateUser(@RequestBody User user, @PathVariable long id) {
-
-        userService.saveUser(user);
+    @GetMapping(value = "users/list")
+    public ModelAndView showUsersByName(@RequestParam(value = "search", required = false) String firstName,
+            @RequestParam(value = "search", required = false) String lastName) {
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            modelAndView.addObject("search", userService.getUserByName(firstName, lastName));
+        } catch (Exception i) {
+        }
+        modelAndView.setViewName("user/testsearch");
+        return modelAndView;
     }
 
     /**
@@ -79,7 +75,7 @@ public class UserController {
      * @param user User
      * @param id   long
      */
-    @RequestMapping(method = RequestMethod.DELETE, value = "users/delete/{id}")
+    @DeleteMapping("users/delete/{id}")
     public void deleteUser(@RequestBody User user, @PathVariable long id) {
 
         userService.deleteUser(id);

@@ -4,15 +4,16 @@ import de.adesso.kicker.tournament.TournamentService;
 import de.adesso.kicker.user.User;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class LastManStandingService extends TournamentService {
 
-    public void createLivesMap(List<User> players, LastManStanding lastManStanding) {
-
-        lastManStanding.setRemainingPlayers(players);
+    public void createLivesMap(LastManStanding lastManStanding) {
+        List<User> players = lastManStanding.getPlayers();
+        lastManStanding.setRemainingPlayers(new ArrayList<>(players));
         Map<User, Integer> livesMap = lastManStanding.getLivesMap();
         int maxLives = lastManStanding.getMaxLives();
         for (User player : players) {

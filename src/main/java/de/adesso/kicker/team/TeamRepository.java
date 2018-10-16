@@ -1,5 +1,6 @@
 package de.adesso.kicker.team;
 
+import de.adesso.kicker.user.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface TeamRepository extends CrudRepository<Team, Long> {
@@ -8,4 +9,5 @@ public interface TeamRepository extends CrudRepository<Team, Long> {
     Team findByTeamName(String teamName);
 
     Team findByTeamId(Long id);
+
 }
