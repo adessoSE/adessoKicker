@@ -13,9 +13,9 @@
 	
 	<body>
 		
-		<img src='../img/tablefootball.jpg'>
+		<img src='/img/tablefootball.jpg'></img>
 		
-		<canvas id='canvas' width="1400" height='800'style=' position: absolute; z-index: -1;'></canvas>
+		<canvas id='canvas' width="1400" height='600'style=' position: absolute; z-index: -1;'></canvas>
 	
 		<div class="row">
 			<div class='col-lg-12' id='headline'>
@@ -47,6 +47,39 @@
 	</body>
 	
 	<footer>
+		<script th:inline='javascript'>
+		
+		var rows = [];
+		var numRows = 0;
+		
+			/*<![CDATA[*/
+			
+			var tournamentName = /*[[${tournament.tournamentName}]]*/;
+			var tournamentStartDate = /*[[${tournament.startDate}]]*/;
+			tournamentStartDate = tournamentStartDate.slice(0, 10);
+			
+				/*[# th:each="row : ${tournament.getBracket()}"]*/
+				
+					var teams = [];
+					numRows++;
+				
+					/*[# th:each="team : ${row.row}"]*/
+				
+						if(/*[[${team}]]*/ != null) 
+						{
+							teams.push(/*[[${team}]]*/);
+						}
+				 
+					/*[/]*/
+					
+					rows.push(teams);
+					
+				/*[/]*/
+				
+			/*]]>*/
+			
+		</script>
+		
 		<script type='text/javascript' src='/js/buildTournamentTree.js'></script>
 		<script type='text/javascript' src='/js/treeUiHandle.js'></script>
 	</footer>
