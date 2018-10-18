@@ -30,7 +30,7 @@ function checkCookie() {
     if (hadWarn == "" || hadWarn == false) {
 		
         popWarning();
-		setCookie("hasCook", true, 365);
+		setCookie("hasCook", true, 14);
     }
 } 
 
