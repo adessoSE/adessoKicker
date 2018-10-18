@@ -25,6 +25,7 @@ public class MatchService {
 
     /**
      * getAllMatches() returns a list of all matches.
+     * 
      * @return
      */
     public List<Match> getAllMatches() {
@@ -36,6 +37,7 @@ public class MatchService {
 
     /**
      * getMatchById() returns an unique match.
+     * 
      * @param id
      * @return
      */
@@ -46,6 +48,7 @@ public class MatchService {
 
     /**
      * getAllMatchesByUser() returns a list of all matches from an user.
+     * 
      * @param user
      * @return
      */
@@ -57,6 +60,7 @@ public class MatchService {
 
     /**
      * saveMatch() saves a match object.
+     * 
      * @param match
      */
     public void saveMatch(Match match) {
@@ -66,6 +70,7 @@ public class MatchService {
 
     /**
      * deleteMatch() deletes an unique match by it's id.
+     * 
      * @param id
      */
     public void deleteMatch(long id) {

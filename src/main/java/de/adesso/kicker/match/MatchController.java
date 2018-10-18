@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * RestController "MatchController" that manages everything related with matches.
+ * RestController "MatchController" that manages everything related with
+ * matches.
  *
  * @author caylak
  */
@@ -42,16 +43,16 @@ public class MatchController {
 
     /**
      * getAllMatches() gets all matches that are in the database.
+     * 
      * @return ModelAndView
      */
     @GetMapping("/matches")
     public ModelAndView getAllMatches() {
-         modelAndView = new ModelAndView();
-        if (matchService.getAllMatches().size()>0) {
+        modelAndView = new ModelAndView();
+        if (matchService.getAllMatches().size() > 0) {
             modelAndView.addObject("matches", matchService.getAllMatches());
             modelAndView.addObject("user", userService.getLoggedInUser());
-        }
-        else{
+        } else {
             modelAndView.addObject("noMatchesMessage", "Es gibt keine Matches.");
         }
 
@@ -61,6 +62,7 @@ public class MatchController {
 
     /**
      * getMatch() gets an unique team identified by an index.
+     * 
      * @param id long
      * @return ModelAndView
      */
@@ -74,6 +76,7 @@ public class MatchController {
 
     /**
      * getMatchAdd() gets all relevant variables for creating a match later on.
+     * 
      * @return ModelAndView
      */
     @GetMapping("/matches/add")
@@ -87,8 +90,10 @@ public class MatchController {
     }
 
     /**
-     * postMatch() posts all variables written to the form and checks if these are valid. (e.g already existing data)
-     * @param match          Match
+     * postMatch() posts all variables written to the form and checks if these are
+     * valid. (e.g already existing data)
+     * 
+     * @param match         Match
      * @param bindingResult BindingResult
      * @return ModelAndView
      */
@@ -129,6 +134,7 @@ public class MatchController {
 
     /**
      * deleteMatch() deletes an unique match identified by an index.
+     * 
      * @param id long
      */
     @RequestMapping(method = RequestMethod.DELETE, value = "matches/delete/{id}")
@@ -138,6 +144,7 @@ public class MatchController {
 
     /**
      * yesterDay() used for time comparison.
+     * 
      * @return
      */
     private Date yesterday() {

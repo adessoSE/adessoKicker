@@ -38,7 +38,7 @@ public class Team {
         this.playerB = playerB;
         this.teamWins = 0;
         this.teamLosses = 0;
-        }
+    }
 
     public long getTeamId() {
         return teamId;

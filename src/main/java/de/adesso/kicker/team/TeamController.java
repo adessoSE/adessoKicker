@@ -18,6 +18,7 @@ public class TeamController {
     private TeamService teamService;
     private UserService userService;
     private ModelAndView modelAndView;
+
     @Autowired
     public TeamController(TeamService teamService, UserService userService) {
 
@@ -27,6 +28,7 @@ public class TeamController {
 
     /**
      * getAllTeams() gets all teams that are in the database.
+     * 
      * @return ModelAndView
      */
     @GetMapping("/teams")
@@ -39,6 +41,7 @@ public class TeamController {
 
     /**
      * getTeam() gets an unique team identified by an index.
+     * 
      * @param id long
      * @return ModelAndView
      */
@@ -53,6 +56,7 @@ public class TeamController {
 
     /**
      * getTeamAdd() gets all relevant variables for creating a team later on.
+     * 
      * @return ModelAndView
      */
     @GetMapping("/teams/add")
@@ -66,7 +70,9 @@ public class TeamController {
     }
 
     /**
-     * postTeam() posts all variables written to the form and checks if these are valid. (e.g already existing data)
+     * postTeam() posts all variables written to the form and checks if these are
+     * valid. (e.g already existing data)
+     * 
      * @param team          Team
      * @param bindingResult BindingResult
      * @return ModelAndView
@@ -98,6 +104,7 @@ public class TeamController {
 
     /**
      * deleteTeam() deletes an unique team identified by an index.
+     * 
      * @param id long
      */
     @RequestMapping(method = RequestMethod.DELETE, value = "/teams/delete/{id}")
@@ -107,12 +114,12 @@ public class TeamController {
 
     /**
      * getTeamsSearchbar() gets all teams from the input of the user.
+     * 
      * @param teamName
      * @return
      */
     @GetMapping(value = "teams/list")
-    public ModelAndView getTeamsSearchbar(@RequestParam(value = "search", required = false) String teamName)
-                                         {
+    public ModelAndView getTeamsSearchbar(@RequestParam(value = "search", required = false) String teamName) {
         modelAndView = new ModelAndView();
         try {
             modelAndView.addObject("search", teamService.getTeamByName(teamName));

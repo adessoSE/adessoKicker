@@ -7,6 +7,7 @@ public interface TeamRepository extends CrudRepository<Team, Long> {
 
     /**
      * findByTeamName() finds a team by it's name.
+     * 
      * @param teamName
      * @return
      */
@@ -14,13 +15,16 @@ public interface TeamRepository extends CrudRepository<Team, Long> {
 
     /**
      * findByTeamId() finds a team by it's id.
+     * 
      * @param id
      * @return
      */
     Team findByTeamId(Long id);
 
     /**
-     * findByTeamNameContainingIgnoreCase() finds teams by the same teamName ignoring the case or something similar to it.
+     * findByTeamNameContainingIgnoreCase() finds teams by the same teamName
+     * ignoring the case or something similar to it.
+     * 
      * @param teamName
      * @return
      */

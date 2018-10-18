@@ -13,8 +13,8 @@ import java.util.List;
 @Service
 public class TeamService {
 
-
     private TeamRepository teamRepository;
+
     @Autowired
     public TeamService(TeamRepository teamRepository, EntityManager entityManager) {
         this.teamRepository = teamRepository;
@@ -24,6 +24,7 @@ public class TeamService {
 
     /**
      * getAllTeams() returns a list of all teams.
+     * 
      * @return
      */
     public List<Team> getAllTeams() {
@@ -35,6 +36,7 @@ public class TeamService {
 
     /**
      * getTeamById() returns an unique team identified by it's id.
+     * 
      * @param id
      * @return
      */
@@ -45,6 +47,7 @@ public class TeamService {
 
     /**
      * saveTeam() saves a team object.
+     * 
      * @param team
      */
     public void saveTeam(Team team) {
@@ -54,6 +57,7 @@ public class TeamService {
 
     /**
      * deleteTeamById() deletes an unique team by it's id.
+     * 
      * @param id
      */
     public void deleteTeamById(long id) {
@@ -63,6 +67,7 @@ public class TeamService {
 
     /**
      * addMatchIdToTeam() adds an id from a team to a match object.
+     * 
      * @param match
      * @param teamId
      */
@@ -72,8 +77,9 @@ public class TeamService {
     }
 
     /**
-     * getTeamByName returns a list of teams by the same teamName ignoring the case or something
-     * similar to it, custom method that's created in "TeamRepository".
+     * getTeamByName returns a list of teams by the same teamName ignoring the case
+     * or something similar to it, custom method that's created in "TeamRepository".
+     * 
      * @param teamName
      * @return
      */
@@ -84,7 +90,9 @@ public class TeamService {
     }
 
     /**
-     * findByTeamName() finds a team by it's teamName, custom method that's created in "TeamRepository".
+     * findByTeamName() finds a team by it's teamName, custom method that's created
+     * in "TeamRepository".
+     * 
      * @param teamName
      * @return
      */
@@ -94,7 +102,9 @@ public class TeamService {
     }
 
     /**
-     * findTeamById finds a team by it's id, custom method that's created in "TeamRepository".
+     * findTeamById finds a team by it's id, custom method that's created in
+     * "TeamRepository".
+     * 
      * @param id
      * @return
      */
@@ -102,7 +112,5 @@ public class TeamService {
 
         return teamRepository.findByTeamId(id);
     }
-
-
 
 }

@@ -28,8 +28,8 @@ public class TournamentController {
 
     @Autowired
     public TournamentController(TournamentService tournamentService, TeamService teamService,
-                                SingleEliminationController singleEliminationController,
-                                LastManStandingController lastManStandingController, UserService userService) {
+            SingleEliminationController singleEliminationController,
+            LastManStandingController lastManStandingController, UserService userService) {
 
         this.tournamentService = tournamentService;
         this.teamService = teamService;

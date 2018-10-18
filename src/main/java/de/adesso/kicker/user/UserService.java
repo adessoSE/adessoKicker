@@ -25,6 +25,7 @@ public class UserService {
 
     /**
      * getAllUsers() returns a list of all users.
+     * 
      * @return
      */
     public List<User> getAllUsers() {
@@ -36,6 +37,7 @@ public class UserService {
 
     /**
      * getUserById() returns an unique user identified by it's id.
+     * 
      * @param id
      * @return
      */
@@ -46,6 +48,7 @@ public class UserService {
 
     /**
      * getUserByEmail() returns an unique user identified by it's email.
+     * 
      * @param email
      */
     public User getUserByEmail(String email) {
@@ -55,6 +58,7 @@ public class UserService {
 
     /**
      * getLoggedInUser() returns the current user.
+     * 
      * @return
      */
     public User getLoggedInUser() {
@@ -66,6 +70,7 @@ public class UserService {
 
     /**
      * saveUser() saves an user object.
+     * 
      * @param user
      */
     public void saveUser(User user) {
@@ -75,6 +80,7 @@ public class UserService {
 
     /**
      * deleteUser() deletes an unique user identified by it's id.
+     * 
      * @param id
      */
     public void deleteUser(long id) {
@@ -83,8 +89,10 @@ public class UserService {
     }
 
     /**
-     * getUserByNameSearchbar is used for the searchbar, accepts a string and it will be validated by
-     * this method into two separate strings if there's a space inbetween.
+     * getUserByNameSearchbar is used for the searchbar, accepts a string and it
+     * will be validated by this method into two separate strings if there's a space
+     * inbetween.
+     * 
      * @param firstName
      * @param lastName
      * @return

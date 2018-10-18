@@ -33,7 +33,7 @@ public class SingleEliminationController {
         this.teamService = teamService;
     }
 
-    @GetMapping(value = "/tournaments/create", params = {"SINGLEELIMINATION"})
+    @GetMapping(value = "/tournaments/create", params = { "SINGLEELIMINATION" })
     public ModelAndView tournamentCreation() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournament", new SingleElimination());
@@ -41,7 +41,7 @@ public class SingleEliminationController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/tournaments/create", params = {"SINGLEELIMINATION"})
+    @PostMapping(value = "/tournaments/create", params = { "SINGLEELIMINATION" })
     public ModelAndView createSingleElimination(@Valid SingleElimination singleElimination, BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();

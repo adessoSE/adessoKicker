@@ -23,19 +23,21 @@ public class UserController {
 
     /**
      * getLoggedInUser() gets the current user.
+     * 
      * @return ModelAndView
      */
-    @GetMapping(value={"", "/", "home"})
+    @GetMapping(value = { "", "/", "home" })
     public ModelAndView getLoggedInUser() {
-    	
-    	ModelAndView modelAndView = new ModelAndView();
-    	modelAndView.addObject("user", userService.getLoggedInUser());
-    	modelAndView.setViewName("user/home");
-    	return modelAndView;
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", userService.getLoggedInUser());
+        modelAndView.setViewName("user/home");
+        return modelAndView;
     }
 
     /**
      * getUser() gets an unique user identified by an index.
+     * 
      * @param id long
      * @return ModelAndView
      */
@@ -51,6 +53,7 @@ public class UserController {
 
     /**
      * getAllUsers() gets all users that are in the database.
+     * 
      * @return ModelAndView
      */
     @GetMapping("/users")
@@ -61,6 +64,7 @@ public class UserController {
 
     /**
      * getUserYourself() gets the logged in user.
+     * 
      * @return
      */
     @GetMapping("/users/you")
@@ -73,7 +77,9 @@ public class UserController {
     }
 
     /**
-     * showUsersSearchbar() finds teams by the same teamName ignoring the case or something similar to it.
+     * showUsersSearchbar() finds teams by the same teamName ignoring the case or
+     * something similar to it.
+     * 
      * @param firstName
      * @param lastName
      * @return
@@ -92,6 +98,7 @@ public class UserController {
 
     /**
      * deleteUser() deletes an unique user identified by an index.
+     * 
      * @param id long
      */
     @DeleteMapping("users/delete/{id}")
