@@ -1,61 +1,49 @@
 package de.adesso.kicker.tournament;
 
 import de.adesso.kicker.team.TeamService;
+import de.adesso.kicker.tournament.lastmanstanding.LastManStanding;
 import de.adesso.kicker.tournament.lastmanstanding.LastManStandingController;
+import de.adesso.kicker.tournament.singleelimination.SingleElimination;
 import de.adesso.kicker.tournament.singleelimination.SingleEliminationController;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+@Controller
 public class TournamentController {
 
-    @Autowired
     private TournamentService tournamentService;
 
-    @Autowired
     private TeamService teamService;
 
-    @Autowired
     private SingleEliminationController singleEliminationController;
 
-    @Autowired
     private LastManStandingController lastManStandingController;
 
-    @Autowired
     private UserService userService;
 
-    public TournamentController() {
+    @Autowired
+    public TournamentController(TournamentService tournamentService, TeamService teamService,
+                                SingleEliminationController singleEliminationController,
+                                LastManStandingController lastManStandingController, UserService userService) {
+
+        this.tournamentService = tournamentService;
+        this.teamService = teamService;
+        this.singleEliminationController = singleEliminationController;
+        this.lastManStandingController = lastManStandingController;
+        this.userService = userService;
     }
 
-    @GetMapping("/tournaments/create")
+    @GetMapping(value = "/tournaments/create")
     public ModelAndView chooseFormat() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournamentFormats", TournamentFormats.values());
-        modelAndView.setViewName("tournament/create");
+        modelAndView.setViewName("tournament/format");
         return modelAndView;
-    }
-
-    @PostMapping("/tournaments/create")
-    public ModelAndView getTournamentFormat(@RequestParam("tournamentFormat") String tournamentFormat) {
-        ModelAndView modelAndView = new ModelAndView();
-        switch (tournamentFormat) {
-        case "SINGLEELIMINATION":
-            modelAndView.setViewName("redirect:/tournaments/create/singleelimination");
-            return modelAndView;
-
-        case "LASTMANSTANDING":
-            modelAndView.setViewName("redirect:/tournaments/create/lastmanstanding");
-            return modelAndView;
-
-        default:
-            modelAndView.addObject("tournamentFormats", TournamentFormats.values());
-            modelAndView.setViewName("tournament/create");
-            return modelAndView;
-        }
     }
 
     @GetMapping("/tournaments")
@@ -74,11 +62,9 @@ public class TournamentController {
         switch (format) {
 
         case "SINGLEELIMINATION":
-            System.out.println("SE: " + tournament.getFormat());
             return singleEliminationController.getSingleEliminationPage(tournament);
 
         case "LASTMANSTANDING":
-            System.out.println("LMS: " + tournament.getFormat());
             return lastManStandingController.getLastManStandingPage(tournament);
 
         default:

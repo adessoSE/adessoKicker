@@ -4,6 +4,8 @@ import de.adesso.kicker.team.TeamService;
 import java.util.Calendar;
 import java.util.Date;
 import javax.validation.Valid;
+
+import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +24,14 @@ public class MatchController {
 
     private TeamService teamService;
 
+    private UserService userService;
+
     @Autowired
-    public MatchController(MatchService matchService, TeamService teamService) {
+    public MatchController(MatchService matchService, TeamService teamService, UserService userService) {
 
         this.matchService = matchService;
         this.teamService = teamService;
+        this.userService = userService;
     }
 
     /**
@@ -37,7 +42,14 @@ public class MatchController {
     @GetMapping("/matches")
     public ModelAndView getAllMatches() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("matches", matchService.getAllMatches());
+        if (matchService.getAllMatches().size()>0) {
+            modelAndView.addObject("matches", matchService.getAllMatches());
+            modelAndView.addObject("user", userService.getLoggedInUser());
+        }
+        else{
+            modelAndView.addObject("noMatchesMessage", "Es gibt keine Matches.");
+        }
+
         modelAndView.setViewName("match/matches");
         return modelAndView;
     }
@@ -99,7 +111,7 @@ public class MatchController {
                     teamService.addMatchIdToTeam(match, match.getTeamA().getTeamId());
                     teamService.addMatchIdToTeam(match, match.getTeamB().getTeamId());
                     modelAndView.addObject("successMessage", "Match wurde hinzugefügt.");
-                    ;
+
                 } else {
                     System.out.println(match.getTime().getTime());
                     System.out.println(time.getTime());

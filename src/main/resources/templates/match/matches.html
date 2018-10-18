@@ -22,13 +22,13 @@
         <div class='scrollElement' th:if="${m.winner == null}">
             <div class='well'>
                 <!--Header-->
-                <p style='font-size: 30px;' th:text="${m.date} + ' | ' + ${m.kicker}">Keine Zeit/Ort gefunden</p>
+                <p style='font-size: 30px;' th:text="${m.getGermanDate()} + ' | ' + ${m.kicker}">Keine Zeit/Ort gefunden</p>
                 <hr class="hr">
                 <div class='containerMatch'>
                     <div class='elementMatch'>
                         <!--Box-->
                         <div class='box'>
-                            <span class='glyphicon glyphicon-ok'></span>
+                            
                         </div>
                     </div>
                     <div class='elementMatch2'>
@@ -66,7 +66,8 @@
                     <div class='elementMatch'>
                         <!--Box-->
                         <div class='box'>
-                            <span class='glyphicon glyphicon-ok'></span>
+                            <span th:if="${m.winner.playerA == user OR m.winner.playerB == user}" class='glyphicon glyphicon-ok'></span>
+							<span th:if="${m.winner.playerA != user AND m.winner.playerB != user}" class='glyphicon glyphicon-remove'></span>
                         </div>
                     </div>
                     <div class='elementMatch2'>

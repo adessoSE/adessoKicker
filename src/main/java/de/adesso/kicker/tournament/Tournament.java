@@ -1,5 +1,7 @@
 package de.adesso.kicker.tournament;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,8 +27,8 @@ public abstract class Tournament {
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     private Date startDate;
-
     private Date endDate;
     private String description;
     private String format;
@@ -49,6 +51,12 @@ public abstract class Tournament {
         this.players = new ArrayList<>();
         this.finished = false;
         this.description = null;
+    }
+
+    public String getGermanDate(){
+        DateFormat df = new SimpleDateFormat("EEEEE, dd. MMMMM yyyy");
+        String germanDate = df.format(startDate);
+        return germanDate;
     }
 
     public long getTournamentId() {

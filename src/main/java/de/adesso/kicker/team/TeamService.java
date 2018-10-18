@@ -8,6 +8,7 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -18,47 +19,9 @@ import java.util.List;
 public class TeamService {
 
     private TeamRepository teamRepository;
-    private final EntityManager entityManager;
-
     @Autowired
     public TeamService(TeamRepository teamRepository, EntityManager entityManager) {
         this.teamRepository = teamRepository;
-        this.entityManager = entityManager;
-    }
-
-    /*
-     * public TeamService(EntityManager entityManager) { this.entityManager =
-     * entityManager; }
-     */
-    public void initializeTeamSearch() {
-        try {
-            FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
-            fullTextEntityManager.createIndexer().startAndWait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Transactional
-    public List<Team> teamSearch(String searchTerm) {
-        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
-        QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Team.class)
-                .get();
-
-        Query luceneQuery = queryBuilder.keyword().fuzzy().withEditDistanceUpTo(1).onField("teamName")
-                .matching(searchTerm).createQuery();
-        javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Team.class);
-
-        // execute search
-        List<Team> TeamList = null;
-        try {
-            TeamList = jpaQuery.getResultList();
-        } catch (NoResultException nre) {
-            // do nothing
-
-        }
-
-        return TeamList;
     }
 
     public List<Team> getAllTeams() {
@@ -97,4 +60,11 @@ public class TeamService {
         Team team = teamRepository.findByTeamId(teamId);
         teamRepository.save(team);
     }
+
+    public List<Team> getTeamByName(String teamName) {
+        List<Team> teams = new ArrayList<>();
+        teamRepository.findByTeamNameContainingIgnoreCase(teamName).forEach(teams::add);
+        return teams;
+    }
+
 }

@@ -6,7 +6,7 @@
     <title>Create Last Man Standing Tournament</title>
 </head>
 <body>
-<form action="#" th:action="@{/tournaments/create/lastmanstanding}" th:object="${lastManStanding}" id="lastManStanding" name="lastManStanding" method="post">
+<form action="#" th:action="@{/tournaments/create/lastmanstanding?LASTMANSTANDING}" th:object="${tournament}" id="lastManStanding" name="lastManStanding" method="post">
     <p>Tournament Name: <input type="text" th:field="*{tournamentName}" /></p>
     <p>Start Date: <input type="date" th:field="*{startDate}" /></p>
     <p><input type="submit" value="Submit"></p>
