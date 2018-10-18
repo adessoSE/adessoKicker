@@ -12,7 +12,7 @@
 }
 
 .homeDiv{	
-	border-style: groove;
+	border-style: solid;
 	margin-bottom: 50px;
     min-height: 300px;
 	box-shadow: 6px 6px black;
@@ -21,5 +21,8 @@
 .dissize{
 	margin-right: 0px;
 	margin-left: 0px;
+}
+a {
+	color: inherit;
 }
 

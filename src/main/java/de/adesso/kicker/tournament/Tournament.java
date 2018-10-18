@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import de.adesso.kicker.match.Match;
 import de.adesso.kicker.user.User;
@@ -17,8 +19,11 @@ public abstract class Tournament {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long tournamentId;
 
+    @NotNull
+    @Size(min = 2, max = 30)
     private String tournamentName;
 
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
 

@@ -61,8 +61,9 @@ public class SingleEliminationController extends TournamentController {
 
     public ModelAndView getSingleEliminationPage(Tournament tournament) {
 
+        SingleElimination singleElimination = (SingleElimination) tournament;
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("tournament", tournament);
+        modelAndView.addObject("tournament", singleElimination);
         modelAndView.setViewName("tournament/page");
         return modelAndView;
     }
