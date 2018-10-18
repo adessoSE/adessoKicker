@@ -1,4 +1,5 @@
 
+//writes cookie to Browser storage
 function setCookie(cname, cvalue, exdays) {
 	
     var d = new Date();
@@ -7,6 +8,7 @@ function setCookie(cname, cvalue, exdays) {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
+//reads cookie attributes
 function getCookie(cname) {
 	
     var name = cname + "=";
@@ -23,6 +25,7 @@ function getCookie(cname) {
     return "";
 }
 
+//executes popWarning() if cookie is not set or expired
 function checkCookie() {
 	
     var hadWarn = getCookie("hasCook");
@@ -34,6 +37,7 @@ function checkCookie() {
     }
 } 
 
+//attaches a warning box to the top of the site
 function popWarning (){
 	
 	var warnBox = document.createElement('div');
@@ -43,6 +47,7 @@ function popWarning (){
 	document.body.insertBefore(warnBox, document.body.firstChild);
 }
 
+//removes the warning box
 function removeWarning () {
 	
 	document.body.removeChild(document.getElementById('cook'));
