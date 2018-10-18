@@ -6,6 +6,7 @@ function checkName() {
 	
 }
 
+//highlights target box
 function onMouseInteractDiv(tgt) {
 	
 	tgt.style.backgroundColor = 'lightgrey';
@@ -13,6 +14,7 @@ function onMouseInteractDiv(tgt) {
 
 }
 
+//target box back to normal
 function outMouseInteractDiv(tgt) {
 	
 	tgt.style.backgroundColor = 'white';

@@ -20,7 +20,16 @@ public class UserController {
 
         this.userService = userService;
     }
-
+    
+    @GetMapping(value={"", "/", "home"})
+    public ModelAndView getHome() {
+    	
+    	ModelAndView modelAndView = new ModelAndView();
+    	modelAndView.addObject("user", userService.getLoggedInUser());
+    	modelAndView.setViewName("user/home");
+    	return modelAndView;
+    }
+    
     /**
      * gets a single user identified by his id
      * 

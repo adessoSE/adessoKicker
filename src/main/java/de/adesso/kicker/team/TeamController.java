@@ -4,13 +4,7 @@ import de.adesso.kicker.user.UserService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -126,5 +120,17 @@ public class TeamController {
     @RequestMapping(method = RequestMethod.PUT, value = "/teams/update/{id}")
     public void updateTeam(@RequestBody Team team, @PathVariable long id) {
         teamService.saveTeam(team);
+    }
+
+    @GetMapping(value = "teams/list")
+    public ModelAndView showTeamsByName(@RequestParam(value = "search", required = false) String teamName)
+                                         {
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            modelAndView.addObject("search", teamService.getTeamByName(teamName));
+        } catch (Exception i) {
+        }
+        modelAndView.setViewName("user/testteamsearch");
+        return modelAndView;
     }
 }
