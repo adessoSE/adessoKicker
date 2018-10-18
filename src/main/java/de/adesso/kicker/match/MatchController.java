@@ -43,7 +43,7 @@ public class MatchController {
     public ModelAndView getAllMatches() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("matches", matchService.getAllMatches());
-        modelAndView.addObject("user", userService.getLoggedInUser());
+        
         modelAndView.setViewName("match/matches");
         return modelAndView;
     }
