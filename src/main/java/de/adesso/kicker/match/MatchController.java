@@ -22,11 +22,14 @@ public class MatchController {
 
     private TeamService teamService;
 
+    private UserService userService;
+
     @Autowired
-    public MatchController(MatchService matchService, TeamService teamService) {
+    public MatchController(MatchService matchService, TeamService teamService, UserService userService) {
 
         this.matchService = matchService;
         this.teamService = teamService;
+        this.userService = userService;
     }
 
     /**
@@ -39,10 +42,12 @@ public class MatchController {
         ModelAndView modelAndView = new ModelAndView();
         if (matchService.getAllMatches().size()>0) {
             modelAndView.addObject("matches", matchService.getAllMatches());
+            modelAndView.addObject("user", userService.getLoggedInUser());
         }
         else{
             modelAndView.addObject("noMatchesMessage", "Es gibt keine Matches.");
         }
+
         modelAndView.setViewName("match/matches");
         return modelAndView;
     }
@@ -104,6 +109,7 @@ public class MatchController {
                     teamService.addMatchIdToTeam(match, match.getTeamA().getTeamId());
                     teamService.addMatchIdToTeam(match, match.getTeamB().getTeamId());
                     modelAndView.addObject("successMessage", "Match wurde hinzugefügt.");
+
                 } else {
                     System.out.println(match.getTime().getTime());
                     System.out.println(time.getTime());
