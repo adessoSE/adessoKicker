@@ -24,7 +24,8 @@
 				<div class='row dissize'>
 					<div class='col-lg-3'></div>
 					<div class='col-lg-8' style='margin-top: 20px; margin-bottom: 20px;'>
-						<h3>Eingeloggt als [NAME]</h3>
+						<h3 th:if="${user != null}" th:text="${user.firstName} + ' ' + ${user.lastName}">Please login</h3>
+						<h3 th:if="${user == null}"><a href="/registration">Please login</a></h3>
 					</div>
 				</div>
 				<div class='rowdissize'>
