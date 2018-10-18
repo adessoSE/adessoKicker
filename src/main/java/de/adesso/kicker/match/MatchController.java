@@ -17,14 +17,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * RestController "MatchController" that manages everything related with matches.
+ *
+ * @author caylak
+ */
+
 @RestController
 public class MatchController {
 
     private MatchService matchService;
-
     private TeamService teamService;
-
     private UserService userService;
+    private ModelAndView modelAndView;
+    private Date time;
 
     @Autowired
     public MatchController(MatchService matchService, TeamService teamService, UserService userService) {
@@ -35,13 +41,12 @@ public class MatchController {
     }
 
     /**
-     * POST all matches on "/matches"
-     *
+     * getAllMatches() gets all matches that are in the database.
      * @return ModelAndView
      */
     @GetMapping("/matches")
     public ModelAndView getAllMatches() {
-        ModelAndView modelAndView = new ModelAndView();
+         modelAndView = new ModelAndView();
         if (matchService.getAllMatches().size()>0) {
             modelAndView.addObject("matches", matchService.getAllMatches());
             modelAndView.addObject("user", userService.getLoggedInUser());
@@ -55,27 +60,25 @@ public class MatchController {
     }
 
     /**
-     * gets a match identified by its id
-     *
-     * @param id of the match
+     * getMatch() gets an unique team identified by an index.
+     * @param id long
      * @return ModelAndView
      */
     @GetMapping("/matches/{id}")
     public ModelAndView getMatch(@PathVariable long id) {
-        ModelAndView modelAndView = new ModelAndView();
+        modelAndView = new ModelAndView();
         modelAndView.addObject("match", matchService.getMatchById(id));
         modelAndView.setViewName("match/page");
         return modelAndView;
     }
 
     /**
-     * ui for adding a match
-     *
+     * getMatchAdd() gets all relevant variables for creating a match later on.
      * @return ModelAndView
      */
     @GetMapping("/matches/add")
-    public ModelAndView showMatchCreation() {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView getMatchAdd() {
+        modelAndView = new ModelAndView();
         Match match = new Match();
         modelAndView.addObject("match", match);
         modelAndView.addObject("teams", teamService.getAllTeams());
@@ -84,37 +87,28 @@ public class MatchController {
     }
 
     /**
-     * POST chosen players and create a team with them and add the teamId to the
-     * players Team List
-     *
-     * @param match         Match
+     * postMatch() posts all variables written to the form and checks if these are valid. (e.g already existing data)
+     * @param match          Match
      * @param bindingResult BindingResult
      * @return ModelAndView
      */
 
     @PostMapping("/matches/add")
-    public ModelAndView createNewMatch(@Valid Match match, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        Date time = new Date();
+    public ModelAndView postMatch(@Valid Match match, BindingResult bindingResult) {
+        modelAndView = new ModelAndView();
+        time = new Date();
         if (bindingResult.hasErrors()) {
         }
         try {
             if (match.getTeamA().getTeamId() != match.getTeamB().getTeamId()) {
-                // Time check currently not working
                 if (match.getDate().after(yesterday()) && (match.getTime().getHours() >= time.getHours()
                         && match.getTime().getMinutes() >= time.getMinutes())) {
-                    System.out.println(
-                            "Eingegebene Zeit: " + match.getTime().getHours() + ":" + match.getTime().getMinutes());
-                    System.out.println("Server Zeit: " + time.getHours() + ":" + time.getMinutes());
-                    System.out.println();
                     matchService.saveMatch(match);
                     teamService.addMatchIdToTeam(match, match.getTeamA().getTeamId());
                     teamService.addMatchIdToTeam(match, match.getTeamB().getTeamId());
                     modelAndView.addObject("successMessage", "Match wurde hinzugefügt.");
 
                 } else {
-                    System.out.println(match.getTime().getTime());
-                    System.out.println(time.getTime());
                     modelAndView.addObject("dateMessage", "Bitte kein vergangenes Datum.");
                 }
 
@@ -134,8 +128,7 @@ public class MatchController {
     }
 
     /**
-     * deletes a match from the database identified by an id
-     *
+     * deleteMatch() deletes an unique match identified by an index.
      * @param id long
      */
     @RequestMapping(method = RequestMethod.DELETE, value = "matches/delete/{id}")
@@ -144,16 +137,9 @@ public class MatchController {
     }
 
     /**
-     * updates an existing match by the actual object and its id
-     *
-     * @param match Match
-     * @param id    long
+     * yesterDay() used for time comparison.
+     * @return
      */
-    @RequestMapping(method = RequestMethod.PUT, value = "matches/update/{id}")
-    public void updateMatch(@RequestBody Match match, @PathVariable long id) {
-        matchService.saveMatch(match);
-    }
-
     private Date yesterday() {
         final Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);

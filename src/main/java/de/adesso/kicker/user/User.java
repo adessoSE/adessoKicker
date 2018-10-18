@@ -2,7 +2,6 @@ package de.adesso.kicker.user;
 
 import de.adesso.kicker.role.Role;
 
-import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.*;
 
