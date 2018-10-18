@@ -1,14 +1,17 @@
 
+// highlights sort button
 function mouseOver(div) {
 	
 	div.style.backgroundColor = "lightgrey";
 }
 
+//sortbutton back to normal
 function mouseOut(div) {
 	
 	div.style.backgroundColor = "white";
 }
 
+//orders the list of teams corresponding to the used sortMode
 function sort (sortMode = "") {
 	
 	var list = document.getElementById('list');
@@ -24,7 +27,7 @@ function sort (sortMode = "") {
 	var i;
 	var j;
 	
-	
+	//get the values of all elements
 	for(i = 0; i < elements; i++) {
 		
 		teamNames[i] = list.children[i].children[0].innerHTML;
@@ -34,9 +37,10 @@ function sort (sortMode = "") {
 		teamLosses[i] = parseInt(list.children[i].children[4].innerHTML);
 	}
 	
-	
+
 	if(sortMode == "wins") {
-				
+		
+		//order to highest wins
 		if(list.dataset.sorted != "winsDESC") {
 			
 			newTeamIndex.push(0);
@@ -67,6 +71,8 @@ function sort (sortMode = "") {
 			
 			list.dataset.sorted = 'winsDESC';
 		}
+		
+		//order to lowest wins
 		else if (list.dataset.sorted == "winsDESC"){
 			
 			newTeamIndex.push(0);
@@ -102,6 +108,7 @@ function sort (sortMode = "") {
 	
 	if(sortMode == "losses") {
 		
+		//order to highest losses
 		if(list.dataset.sorted != "lossesDESC") {
 			
 			newTeamIndex.push(0);
@@ -132,6 +139,8 @@ function sort (sortMode = "") {
 			
 			list.dataset.sorted = 'lossesDESC';
 		}
+		
+		//order to lowest losses
 		else if (list.dataset.sorted == "lossesDESC"){
 			
 			newTeamIndex.push(0);
@@ -166,6 +175,7 @@ function sort (sortMode = "") {
 	
 	if(sortMode == "teamnames") {
 		
+		//order to teamnames alphabetical 
 		if(list.dataset.sorted != "teamnamesDESC") {
 			
 			newTeamIndex.push(0);
@@ -191,6 +201,8 @@ function sort (sortMode = "") {
 			
 			list.dataset.sorted = "teamnamesDESC";
 		}
+		
+		//order to teamnames alphabetical backwards
 		else if(list.dataset.sorted == "teamnamesDESC") {
 			
 			newTeamIndex.push(0);
@@ -218,6 +230,7 @@ function sort (sortMode = "") {
 		}
 	}
 	
+	//order to playerA names alphabetical
 	if(sortMode == "playerA") {
 		
 		if(list.dataset.sorted != "playerA_DESC") {
@@ -245,6 +258,8 @@ function sort (sortMode = "") {
 			
 			list.dataset.sorted = "playerA_DESC";
 		}
+		
+		//order to playerA names alphabetical backwards
 		else if(list.dataset.sorted == "playerA_DESC") {
 			
 			newTeamIndex.push(0);
@@ -272,6 +287,7 @@ function sort (sortMode = "") {
 		}
 	}
 	
+	//order to playerB names alphabetical
 	if(sortMode == "playerB") {
 		
 		if(list.dataset.sorted != "playerB_DESC") {
@@ -299,6 +315,8 @@ function sort (sortMode = "") {
 			
 			list.dataset.sorted = "playerB_DESC";
 		}
+		
+		//order to playerB names alphabetical backwards
 		else if(list.dataset.sorted == "playerB_DESC") {
 			
 			newTeamIndex.push(0);
@@ -327,11 +345,12 @@ function sort (sortMode = "") {
 	}
 	
 	
-	
+	//build new teamlist in relation to new indexes
 	for(i = 0; i < elements; i++) {
 		
 		newHtml += "<div class='row teamBox dissize'><div class='col-lg-2 value'>" + teamNames[newTeamIndex[i]] + "</div><div class='col-lg-3 value'>" + playerANames[newTeamIndex[i]] + "</div><div class='col-lg-3 value'>" + playerBNames[newTeamIndex[i]] + "</div><div class='col-lg-2 value'>" + teamWins[newTeamIndex[i]] + "</div><div class='col-lg-2 value'>" + teamLosses[newTeamIndex[i]] + "</div></div>";
 	}
 	
+	//replace old teamlist with new, ordered ist
 	list.innerHTML = newHtml;
 }
