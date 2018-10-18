@@ -8,7 +8,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class UserServiceTest {
+import de.adesso.masterTest.MasterTest;
+import junit.framework.TestCase;
+import junit.framework.TestResult;
+
+public class UserServiceTest extends TestCase{
 
 	@InjectMocks
 	private UserService service;
@@ -24,6 +28,8 @@ public class UserServiceTest {
 	@Test
 	public void test_GetUserByName() {
 		
+		TestResult result = this.createResult();
+		MasterTest.printTestResult(this, result);
 		service.getUserByName("Jan", "Schneider");
 	}
 
