@@ -94,7 +94,7 @@ public class LastManStandingController {
     @GetMapping(value = "/tournaments/create", params = {"LASTMANSTANDING"})
     public ModelAndView tournamentCreation() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("lastManStanding", new LastManStanding());
+        modelAndView.addObject("tournament", new LastManStanding());
         modelAndView.setViewName("tournament/createlastmanstanding");
         return modelAndView;
     }
@@ -105,7 +105,7 @@ public class LastManStandingController {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
 
-            modelAndView.addObject("lastManStanding", new LastManStanding());
+            modelAndView.addObject("tournament", new LastManStanding());
             modelAndView.setViewName("tournament/createsingleelimination");
         } else {
 
