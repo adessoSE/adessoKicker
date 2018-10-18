@@ -1,6 +1,8 @@
 package de.adesso.kicker.match;
 
 import de.adesso.kicker.team.TeamService;
+import de.adesso.kicker.user.UserService;
+
 import java.util.Calendar;
 import java.util.Date;
 import javax.validation.Valid;
@@ -21,12 +23,15 @@ public class MatchController {
     private MatchService matchService;
 
     private TeamService teamService;
+    
+    private UserService userService;
 
     @Autowired
-    public MatchController(MatchService matchService, TeamService teamService) {
+    public MatchController(MatchService matchService, TeamService teamService, UserService userService) {
 
         this.matchService = matchService;
         this.teamService = teamService;
+        this.userService = userService;
     }
 
     /**
@@ -38,6 +43,7 @@ public class MatchController {
     public ModelAndView getAllMatches() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("matches", matchService.getAllMatches());
+        modelAndView.addObject("user", userService.getLoggedInUser());
         modelAndView.setViewName("match/matches");
         return modelAndView;
     }
