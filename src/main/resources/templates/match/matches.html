@@ -22,7 +22,7 @@
         <div class='scrollElement' th:if="${m.winner == null}">
             <div class='well'>
                 <!--Header-->
-                <p style='font-size: 30px;' th:text="${m.date} + ' | ' + ${m.kicker}">Keine Zeit/Ort gefunden</p>
+                <p style='font-size: 30px;' th:text="${m.getGermanDate()} + ' | ' + ${m.kicker}">Keine Zeit/Ort gefunden</p>
                 <hr class="hr">
                 <div class='containerMatch'>
                     <div class='elementMatch'>

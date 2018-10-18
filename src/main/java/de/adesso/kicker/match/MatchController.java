@@ -37,7 +37,12 @@ public class MatchController {
     @GetMapping("/matches")
     public ModelAndView getAllMatches() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("matches", matchService.getAllMatches());
+        if (matchService.getAllMatches().size()>0) {
+            modelAndView.addObject("matches", matchService.getAllMatches());
+        }
+        else{
+            modelAndView.addObject("noMatchesMessage", "Es gibt keine Matches.");
+        }
         modelAndView.setViewName("match/matches");
         return modelAndView;
     }
@@ -99,7 +104,6 @@ public class MatchController {
                     teamService.addMatchIdToTeam(match, match.getTeamA().getTeamId());
                     teamService.addMatchIdToTeam(match, match.getTeamB().getTeamId());
                     modelAndView.addObject("successMessage", "Match wurde hinzugefügt.");
-                    ;
                 } else {
                     System.out.println(match.getTime().getTime());
                     System.out.println(time.getTime());
