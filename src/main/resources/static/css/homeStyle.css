@@ -12,7 +12,7 @@
 }
 
 .homeDiv{	
-	border-style: groove;
+	border-style: solid;
 	margin-bottom: 50px;
     min-height: 300px;
 	box-shadow: 6px 6px black;

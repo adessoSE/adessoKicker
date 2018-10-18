@@ -1,35 +1,57 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Create Match</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-<h1>Form</h1>
-<form autocomplete="off" action="#" th:action="@{/matches/add}" th:object="${match}" method="POST">
-    <p>Kicker:
-    <select class="form-control" id="kicker" name="kicker">
-    	<option value="Gebäude 1 - Raucherlounge">Gebäude 1 - Raucherlounge</option>
-    	<option value="Gebäude 2 - Raucherlounde">Gebäude 2 - Raucherlounge</option>
-   </select></p>
-    <p>Datum: <input type="date" th:field="*{date}"/></p>
-    <p>Uhrzeit: <input type="time" th:field="*{time}"/></p>
-    <select class="form-control" id="teamA" name="teamA">
-        <option th:each="teamA: ${teams}"
-                th:value="${teamA.teamId}"
-                th:text="${teamA.teamId}+' : '+${teamA.teamName}"></option>
-    </select>
-    <select class="form-control" id="teamB" name="teamB">
-        <option th:each="teamB: ${teams}"
-                th:value="${teamB.teamId}"
-                th:text="${teamB.teamId}+' : '+${teamB.teamName}"></option>
-    </select>
-    <p th:utext="${dateMessage}"></p>
-    <p th:utext="${successMessage}"></p>
-    <p th:utext="${failMessage}"></p>
-    
-    <p><input type="submit" value="Match erstellen." /> <input type="reset" value="Reset" /></p>
-</form>
-</body>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Create Match</title>
+		<meta charset='UTF-8'>
+		<meta name="viewport" content="width=device-width, initial-scale=1">	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel='stylesheet' href='/css/login.css'>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	
+	<body>
+	
+		</br></br></br></br>
+		
+		<div class='row'>
+			<div class='col-lg-4'></div>
+			<div class='col-lg-4 logBox'>
+			<h1>Form</h1>
+			
+				<form autocomplete="off" action="#" th:action="@{/matches/add}" th:object="${match}" method="POST">
+
+					<p>Kicker:
+						<select class="form-control" id="kicker" name="kicker">
+							<option value="Gebäude 1 - Raucherlounge">Gebäude 1 - Raucherlounge</option>
+							<option value="Gebäude 2 - Raucherlounde">Gebäude 2 - Raucherlounge</option>
+					   </select>
+				   </p>
+				   
+					<p>Datum: <input type="date" th:field="*{date}"/></p>
+					<p>Uhrzeit: <input type="time" th:field="*{time}"/></p>
+					<p style='color: red;'th:utext="${dateMessage}"></p>
+					</br>
+					
+					Team 1:
+					<select class="form-control" id="teamA" name="teamA">
+						<option th:each="teamA: ${teams}" th:value="${teamA.teamId}" th:text="${teamA.teamId}+' : '+${teamA.teamName}"></option>
+					</select>
+					Team 2:
+					<select class="form-control" id="teamB" name="teamB">
+						<option th:each="teamB: ${teams}" th:value="${teamB.teamId}" th:text="${teamB.teamId}+' : '+${teamB.teamName}"></option>
+					</select>
+					
+					<p style='color: darkgreen;'th:utext="${successMessage}"></p>
+					<p style='color: red;'th:utext="${failMessage}"></p>
+					
+					<p><input class='btn btn-secondary' type="reset" value="Reset" /><input class='btn btn-primary' type="submit" value="Match erstellen." /></p>
+					
+				</form>
+			</div>
+			<div class='col-lg-4'></div>
+		</div>
+		
+	</body>
 </html>
