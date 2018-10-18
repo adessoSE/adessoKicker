@@ -2,9 +2,7 @@ package de.adesso.kicker.team;
 
 import de.adesso.kicker.user.User;
 
-import java.io.Serializable;
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 

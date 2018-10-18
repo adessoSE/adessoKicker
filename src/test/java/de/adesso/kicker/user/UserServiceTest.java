@@ -30,7 +30,7 @@ public class UserServiceTest extends TestCase{
 		
 		TestResult result = this.createResult();
 		MasterTest.printTestResult(this, result);
-		service.getUserByName("Jan", "Schneider");
+		service.getUserByNameSearchbar("Jan", "Schneider");
 	}
 
 }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller managing user
+ * RestController "UserController" that manages everything related with users.
  *
  * @author caylak
  */
@@ -20,24 +20,27 @@ public class UserController {
 
         this.userService = userService;
     }
-    
+
+    /**
+     * getLoggedInUser() gets the current user.
+     * @return ModelAndView
+     */
     @GetMapping(value={"", "/", "home"})
-    public ModelAndView getHome() {
+    public ModelAndView getLoggedInUser() {
     	
     	ModelAndView modelAndView = new ModelAndView();
     	modelAndView.addObject("user", userService.getLoggedInUser());
     	modelAndView.setViewName("user/home");
     	return modelAndView;
     }
-    
+
     /**
-     * gets a single user identified by his id
-     * 
+     * getUser() gets an unique user identified by an index.
      * @param id long
-     * @return User
+     * @return ModelAndView
      */
     @GetMapping("/users/{id}")
-    public ModelAndView getOneUser(@PathVariable long id) {
+    public ModelAndView getUser(@PathVariable long id) {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getUserById(id));
@@ -47,9 +50,8 @@ public class UserController {
     }
 
     /**
-     * get all users
-     *
-     * @return List<User>
+     * getAllUsers() gets all users that are in the database.
+     * @return ModelAndView
      */
     @GetMapping("/users")
     public List<User> getAllUsers() {
@@ -57,8 +59,12 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    /**
+     * getUserYourself() gets the logged in user.
+     * @return
+     */
     @GetMapping("/users/you")
-    public ModelAndView getUser() {
+    public ModelAndView getUserYourself() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getLoggedInUser());
         modelAndView.addObject("allUsers", userService.getAllUsers());
@@ -66,12 +72,18 @@ public class UserController {
         return modelAndView;
     }
 
+    /**
+     * showUsersSearchbar() finds teams by the same teamName ignoring the case or something similar to it.
+     * @param firstName
+     * @param lastName
+     * @return
+     */
     @GetMapping(value = "users/list")
-    public ModelAndView showUsersByName(@RequestParam(value = "search", required = false) String firstName,
+    public ModelAndView showUsersSearchbar(@RequestParam(value = "search", required = false) String firstName,
             @RequestParam(value = "search", required = false) String lastName) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-            modelAndView.addObject("search", userService.getUserByName(firstName, lastName));
+            modelAndView.addObject("search", userService.getUserByNameSearchbar(firstName, lastName));
         } catch (Exception i) {
         }
         modelAndView.setViewName("user/testsearch");
@@ -79,10 +91,8 @@ public class UserController {
     }
 
     /**
-     * deletes a user identified by its id
-     *
-     * @param user User
-     * @param id   long
+     * deleteUser() deletes an unique user identified by an index.
+     * @param id long
      */
     @DeleteMapping("users/delete/{id}")
     public void deleteUser(@RequestBody User user, @PathVariable long id) {
