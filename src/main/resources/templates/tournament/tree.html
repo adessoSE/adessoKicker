@@ -11,6 +11,8 @@
 		<link rel="stylesheet" href="/css/tournamentTreeStyle.css">
 	</head>
 	
+	<header th:insert="~{fragments/header :: header}"></header>
+	
 	<body>
 		
 		<img src='/img/tablefootball.jpg'></img>
@@ -46,42 +48,44 @@
 	
 	</body>
 	
-	<footer>
-		<script th:inline='javascript'>
+	
+	<footer th:insert="~{fragments/footer :: footer}"></footer>
+
+	<script th:inline='javascript'>
 		
-		var rows = [];
-		var numRows = 0;
+	var rows = [];
+	var numRows = 0;
 		
-			/*<![CDATA[*/
+		/*<![CDATA[*/
 			
-			var tournamentName = /*[[${tournament.tournamentName}]]*/;
-			var tournamentStartDate = /*[[${tournament.startDate}]]*/;
-			tournamentStartDate = tournamentStartDate.slice(0, 10);
+		var tournamentName = /*[[${tournament.tournamentName}]]*/;
+		var tournamentStartDate = /*[[${tournament.startDate}]]*/;
+		tournamentStartDate = tournamentStartDate.slice(0, 10);
 			
-				/*[# th:each="row : ${tournament.getBracket()}"]*/
+			/*[# th:each="row : ${tournament.getBracket()}"]*/
 				
-					var teams = [];
-					numRows++;
+				var teams = [];
+				numRows++;
 				
-					/*[# th:each="team : ${row.row}"]*/
+				/*[# th:each="team : ${row.row}"]*/
 				
-						if(/*[[${team}]]*/ != null) 
-						{
-							teams.push(/*[[${team}]]*/);
-						}
+					if(/*[[${team}]]*/ != null) 
+					{
+						teams.push(/*[[${team}]]*/);
+					}
 				 
-					/*[/]*/
-					
-					rows.push(teams);
-					
 				/*[/]*/
+					
+				rows.push(teams);
+					
+			/*[/]*/
 				
-			/*]]>*/
+		/*]]>*/
 			
-		</script>
+	</script>
 		
-		<script type='text/javascript' src='/js/buildTournamentTree.js'></script>
-		<script type='text/javascript' src='/js/treeUiHandle.js'></script>
-		<script type='text/javascript' src='/js/cookieWarning.js'></script>
-	</footer>
+	<script type='text/javascript' src='/js/buildTournamentTree.js'></script>
+	<script type='text/javascript' src='/js/treeUiHandle.js'></script>
+
+		
 </html>
