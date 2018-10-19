@@ -29,7 +29,6 @@ public abstract class Tournament {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date startDate;
-
     private Date endDate;
     private String description;
     private String format;
@@ -54,7 +53,7 @@ public abstract class Tournament {
         this.description = null;
     }
 
-    public String getGermanDate(){
+    public String getGermanDate() {
         DateFormat df = new SimpleDateFormat("EEEEE, dd. MMMMM yyyy");
         String germanDate = df.format(startDate);
         return germanDate;

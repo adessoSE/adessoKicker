@@ -1,3 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create you tournament</title>
+</head>
+<body>
+<table>
+    <tbody>
+    </tr>
+    <tr>
+        <td th:if="${tournament.format=='SINGLEELIMINATION'}" th:insert="tournament/createsingleelimination"></td>
+        <td th:if="${tournament.format=='LASTMANSTANDING'}" th:insert="tournament/createlastmanstanding"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml"-->
+      <!--xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+    <!--<title>Create a Tournament</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<a th:each="tournamentFormat : ${tournamentFormats}">-->
+    <!--<a th:href="@{/tournaments/create(${tournamentFormat})}"><div class='col-lg-5 container' style='border-style: groove; margin-top: 10px; box-shadow: 4px 4px black;' onmouseover='this.style.backgroundColor = "lightgrey"; this.style.boxShadow = "8px 8px black";' onmouseout='this.style.backgroundColor = "white"; this.style.boxShadow = "4px 4px black";'>-->
+        <!--<h3 style='text-align: center; margin: 10px;' th:text="${tournamentFormat.getFormat()}"></h3>-->
+    <!--</div></a>-->
+<!--</a>-->
+<!--</body>-->
+<!--</html>-->
 <!--
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -20,23 +54,40 @@
 </html>
 
 -->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Create a Tournament</title>
-</head>
-<body>
-<form autocomplete="off" action="#" th:action="@{/tournaments/create}" method="POST">
-    <p><select class="form-control" id="tournamentFormat" name="tournamentFormat">
-        <option th:each="tournamentFormat : ${tournamentFormats}"
-                th:value="${tournamentFormat}"
-                th:text="${tournamentFormat.getFormat()}"></option>
-    </select>
-    </p>
-    <p><input type="submit" value="Submit"></p>
 
-    <span th:utext="${successMessage}"></span>
-</form>
-</body>
-</html>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml"-->
+<!--xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--<title>Create a Tournament</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<a th:each="tournamentFormat : ${tournamentFormats}">-->
+<!--<form action="#" th:action="@{/tournaments/create}">-->
+<!--<p><select class="form-control" id="tournamentFormat" name="SINGLEELIMINATION">-->
+<!--<option th:text="${tournamentFormat.getFormat()}"></option>-->
+<!--</select>-->
+<!--</p>-->
+<!--<p><input type="submit" value="Submit"></p>-->
+
+<!--<span th:utext="${successMessage}"></span>-->
+<!--</form>-->
+<!--</a>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml"-->
+<!--xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--<title>Create a Tournament</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<a th:each="tournamentFormat : ${tournamentFormats}">-->
+<!--<form action="#" th:action="@{tournament/create}">-->
+<!--<button th:formaction="@{/tournaments/create(${tournamentFormat})}" th:text="${tournamentFormat}"></button>-->
+<!--</form>-->
+<!--</a>-->
+<!--</body>-->
+<!--</html>-->

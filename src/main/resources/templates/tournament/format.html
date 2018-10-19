@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Tournament Format</title>
+    <title>Choose format</title>
 </head>
 <body>
-
+<a th:each="tournamentFormat : ${tournamentFormats}">
+    <a th:href="@{/tournaments/create(${tournamentFormat})}"><div class='col-lg-5 container' style='border-style: groove; margin-top: 10px; box-shadow: 4px 4px black;' onmouseover='this.style.backgroundColor = "lightgrey"; this.style.boxShadow = "8px 8px black";' onmouseout='this.style.backgroundColor = "white"; this.style.boxShadow = "4px 4px black";'>
+        <h3 style='text-align: center; margin: 10px;' th:text="${tournamentFormat.getFormat()}"></h3>
+    </div></a>
+</a>
 </body>
 </html>

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller managing Teams
+ * RestController "TeamController" that manages everything related with teams.
  *
  * @author caylak
  */
@@ -17,6 +17,7 @@ public class TeamController {
 
     private TeamService teamService;
     private UserService userService;
+    private ModelAndView modelAndView;
 
     @Autowired
     public TeamController(TeamService teamService, UserService userService) {
@@ -26,41 +27,41 @@ public class TeamController {
     }
 
     /**
-     * gets all teams
-     *
+     * getAllTeams() gets all teams that are in the database.
+     * 
      * @return ModelAndView
      */
     @GetMapping("/teams")
     public ModelAndView getAllTeams() {
-        ModelAndView modelAndView = new ModelAndView();
+        modelAndView = new ModelAndView();
         modelAndView.addObject("teams", teamService.getAllTeams());
         modelAndView.setViewName("team/teams");
         return modelAndView;
     }
 
     /**
-     * gets a single team specified by its id
-     *
+     * getTeam() gets an unique team identified by an index.
+     * 
      * @param id long
      * @return ModelAndView
      */
     @GetMapping("/teams/{teamId}")
-    public ModelAndView showTeamPage(@PathVariable("teamId") long id) {
+    public ModelAndView getTeam(@PathVariable("teamId") long id) {
 
-        ModelAndView modelAndView = new ModelAndView();
+        modelAndView = new ModelAndView();
         modelAndView.addObject(teamService.getTeamById(id));
         modelAndView.setViewName("team/page");
         return modelAndView;
     }
 
     /**
-     * ui for team creation
-     *
+     * getTeamAdd() gets all relevant variables for creating a team later on.
+     * 
      * @return ModelAndView
      */
     @GetMapping("/teams/add")
-    public ModelAndView showTeamCreation() {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView getTeamAdded() {
+        modelAndView = new ModelAndView();
         Team team = new Team();
         modelAndView.addObject("team", team);
         modelAndView.addObject("users", userService.getAllUsers());
@@ -69,16 +70,16 @@ public class TeamController {
     }
 
     /**
-     * POST chosen players and create a team with them and add the teamId to the
-     * players Team List
-     *
+     * postTeam() posts all variables written to the form and checks if these are
+     * valid. (e.g already existing data)
+     * 
      * @param team          Team
      * @param bindingResult BindingResult
      * @return ModelAndView
      */
     @PostMapping("/teams/add")
-    public ModelAndView createNewTeam(@Valid Team team, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView postTeam(@Valid Team team, BindingResult bindingResult) {
+        modelAndView = new ModelAndView();
         Team teamExists = teamService.findByTeamName(team.getTeamName());
         if (teamExists != null) {
             bindingResult.rejectValue("teamName", "error.teamName",
@@ -102,30 +103,24 @@ public class TeamController {
     }
 
     /**
-     * deletes team identified by its id
-     *
+     * deleteTeam() deletes an unique team identified by an index.
+     * 
      * @param id long
      */
     @RequestMapping(method = RequestMethod.DELETE, value = "/teams/delete/{id}")
     public void deleteTeam(@PathVariable long id) {
-        teamService.deleteTeam(id);
+        teamService.deleteTeamById(id);
     }
 
     /**
-     * updates team identified by the actual object and the id
-     *
-     * @param team Team
-     * @param id   long
+     * getTeamsSearchbar() gets all teams from the input of the user.
+     * 
+     * @param teamName
+     * @return
      */
-    @RequestMapping(method = RequestMethod.PUT, value = "/teams/update/{id}")
-    public void updateTeam(@RequestBody Team team, @PathVariable long id) {
-        teamService.saveTeam(team);
-    }
-
     @GetMapping(value = "teams/list")
-    public ModelAndView showTeamsByName(@RequestParam(value = "search", required = false) String teamName)
-                                         {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView getTeamsSearchbar(@RequestParam(value = "search", required = false) String teamName) {
+        modelAndView = new ModelAndView();
         try {
             modelAndView.addObject("search", teamService.getTeamByName(teamName));
         } catch (Exception i) {
