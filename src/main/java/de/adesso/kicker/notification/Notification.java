@@ -13,68 +13,144 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long notificationId;
 
-    private String notificationType;
-
-    private Date time;
-
+    //Notification receiver and sender -> One user
     @ManyToOne(targetEntity = User.class)
-    private User user;
+    private User receiver;
+    
+    @ManyToOne(targetEntity = User.class)
+    private User sender;
+    
+    /*	Defines the action executed, if a user interacts with notification
+       	Also the message can be based on the NotificationType (except "Standard")
+    */
+    public enum NotificationType {
+    	Standard, 
+    	TeamJoinRequest, 
+    	TournamentJoinRequest, 
+    	TeamAndTournamentJoinRequest, 
+    	MatchResultConfirmation}
+    ;
+    private NotificationType notificationType;
+    
+    //Date gets defined that moment when creating the notification
+    private Date sendDate;
 
-    private String notificationMessage;
+    private String message;
 
     public Notification() {
     }
 
-    public Notification(String notificationType, String notificationMessage, Date time, User user) {
+    //Fully customizable notification (For debugging or special notifications)
+    public Notification(NotificationType notificationType, String message, Date sendDate, User receiver, User sender) {
+    	
         this.notificationType = notificationType;
-        this.notificationMessage = notificationMessage;
-        this.time = time;
-        this.user = user;
+        this.message = message;
+        this.sendDate = sendDate;
+        this.receiver = receiver;
+        this.sender = sender;
     }
-
-    public void setNotificationId(long notificationId) {
-        this.notificationId = notificationId;
+    
+    //For standard notifications (because they require a custom text)
+    public Notification(String message, User receiver, User sender) {
+    	
+        this.notificationType = NotificationType.Standard;
+        this.message = message;
+        //Get date at initialization
+        this.sendDate = new Date();
+        this.receiver = receiver;
+        this.sender = sender;
     }
-
+    
+	//Default constructor for every other NotificationType (Standard can still be send here but without a custom text)
+    public Notification(NotificationType notificationType, User receiver, User sender) {
+    	
+        this.notificationType = notificationType;
+        //Get type based on notificationType
+        this.message = getMessageBasedOnNotificationType(notificationType);
+        //Get date at initialization
+        this.sendDate = new Date();
+        this.receiver = receiver;
+        this.sender = sender;
+    }
+    
+    //Returns String (message) that is needed for a specific NotificationType
+    public String getMessageBasedOnNotificationType(NotificationType notificationType) {
+    	
+    	if (notificationType == NotificationType.Standard) {
+    		
+    		return "Standard";
+    	}
+    	else if (notificationType == NotificationType.TeamJoinRequest) {
+    		
+    		return "TeamJoinRequest";
+    	}
+    	else if (notificationType == NotificationType.TournamentJoinRequest) {
+    		
+    		return "TournamentJoinRequest";
+    	}
+    	else if (notificationType == NotificationType.TeamAndTournamentJoinRequest) {
+    		
+    		return "TeamAndTournamentJoinRequest";
+    	}
+    	else if (notificationType == NotificationType.MatchResultConfirmation) {
+    		
+    		return "MatchResultConfirmation";
+    	}	
+    	return "ERROR";
+    }
+    
     public long getNotificationId() {
-        return notificationId;
-    }
+		return notificationId;
+	}
 
-    public void setNotificationType(String notificationType) {
-        this.notificationType = notificationType;
-    }
+	public void setNotificationId(long notificationId) {
+		this.notificationId = notificationId;
+	}
 
-    public String getNotificationType() {
-        return notificationType;
-    }
+	public User getReceiver() {
+		return receiver;
+	}
 
-    public void setTime(Date time) {
-        this.time = time;
-    }
+	public void setReceiver(User receiver) {
+		this.receiver = receiver;
+	}
 
-    public Date getTime() {
-        return time;
-    }
+	public User getSender() {
+		return sender;
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public void setSender(User sender) {
+		this.sender = sender;
+	}
 
-    public User getUser() {
-        return user;
-    }
+	public NotificationType getNotificationType() {
+		return notificationType;
+	}
 
-    public void setNotificationMessage(String notificationMessage) {
-        this.notificationMessage = notificationMessage;
-    }
+	public void setNotificationType(NotificationType notificationType) {
+		this.notificationType = notificationType;
+	}
 
-    public String getNotificationMessage() {
-        return notificationMessage;
-    }
+	public Date getSendDate() {
+		return sendDate;
+	}
+
+	public void setSendDate(Date sendDate) {
+		this.sendDate = sendDate;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
     @Override
     public String toString() {
-        return "Notification{" + "notificationId=" + notificationId + ", notificationType='" + notificationType + '\''
-                + ", time=" + time + ", user=" + user + ", notificationMessage='" + notificationMessage + '\'' + '}';
+        return "Notification{" + "notificationId=" + notificationId + ", notificationType=" + notificationType.toString() +
+        		", receiver=" + receiver + ", sender=" + sender + ", sendDate=" + sendDate + ", message=" + message;
+                
     }
 }
