@@ -73,7 +73,35 @@ public class Notification {
         this.sender = sender;
     }
     
+    //MOVE THIS TO CONTROLLER ???
+    //Calls method based on notificationType that should be called if the user interacts on the UI with the notification 
+    public void onUserInteract() {
+    	
+    	if (notificationType == NotificationType.Standard) {
+    		
+    		//Standard
+    	}
+    	else if (notificationType == NotificationType.TeamJoinRequest) {
+    		
+    		//TeamJoinRequest
+    	}
+    	else if (notificationType == NotificationType.TournamentJoinRequest) {
+    		
+    		//TournamentJoinRequest
+    	}
+    	else if (notificationType == NotificationType.TeamAndTournamentJoinRequest) {
+    		
+    		//TeamAndTournamentJoinRequest
+    	}
+    	else if (notificationType == NotificationType.MatchResultConfirmation) {
+    		
+    		//MatchResultConfirmation
+    	}
+    	//Do nothing
+    }
+    
     //Returns String (message) that is needed for a specific NotificationType
+    //(Language file should connect here)
     public String getMessageBasedOnNotificationType(NotificationType notificationType) {
     	
     	if (notificationType == NotificationType.Standard) {
