@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.adesso.kicker.user.User;
+import de.adesso.kicker.user.UserService;
 
 @Service
 public class NotificationService {
@@ -48,6 +49,7 @@ public class NotificationService {
         return notifications;
 	}
 	
+	//Save notification in repo
 	public void saveNotification(Notification notification) {
 	    notificationRepository.save(notification);
 	}
