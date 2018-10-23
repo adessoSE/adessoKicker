@@ -6,125 +6,24 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "notification")
-public class Notification {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Notification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long notificationId;
+    protected long notificationId;
 
-    //Notification receiver and sender -> One user
     @ManyToOne(targetEntity = User.class)
-    private User receiver;
+    protected User receiver;
     
     @ManyToOne(targetEntity = User.class)
-    private User sender;
+    protected User sender;
     
-    /*	Defines the action executed, if a user interacts with notification
-       	Also the message can be based on the NotificationType (except "Standard")
-    */
-    public enum NotificationType {
-    	Standard, 
-    	TeamJoinRequest, 
-    	TournamentJoinRequest, 
-    	TeamAndTournamentJoinRequest, 
-    	MatchResultConfirmation}
-    ;
-    private NotificationType notificationType;
-    
-    //Date gets defined that moment when creating the notification
-    private Date sendDate;
+    protected Date sendDate;
 
-    private String message;
+    protected String message;
 
     public Notification() {
-    }
-
-    //Fully customizable notification (For debugging or special notifications)
-    public Notification(NotificationType notificationType, String message, Date sendDate, User receiver, User sender) {
-    	
-        this.notificationType = notificationType;
-        this.message = message;
-        this.sendDate = sendDate;
-        this.receiver = receiver;
-        this.sender = sender;
-    }
-    
-    //For standard notifications (because they require a custom text)
-    public Notification(String message, User receiver, User sender) {
-    	
-        this.notificationType = NotificationType.Standard;
-        this.message = message;
-        //Get date at initialization
-        this.sendDate = new Date();
-        this.receiver = receiver;
-        this.sender = sender;
-    }
-    
-	//Default constructor for every other NotificationType (Standard can still be send here but without a custom text)
-    public Notification(NotificationType notificationType, User receiver, User sender) {
-    	
-        this.notificationType = notificationType;
-        //Get type based on notificationType
-        this.message = getMessageBasedOnNotificationType(notificationType);
-        //Get date at initialization
-        this.sendDate = new Date();
-        this.receiver = receiver;
-        this.sender = sender;
-    }
-    
-    //MOVE THIS TO CONTROLLER ???
-    //Calls method based on notificationType that should be called if the user interacts on the UI with the notification 
-    public void onUserInteract() {
-    	
-    	if (notificationType == NotificationType.Standard) {
-    		
-    		//Standard
-    	}
-    	else if (notificationType == NotificationType.TeamJoinRequest) {
-    		
-    		//TeamJoinRequest
-    	}
-    	else if (notificationType == NotificationType.TournamentJoinRequest) {
-    		
-    		//TournamentJoinRequest
-    	}
-    	else if (notificationType == NotificationType.TeamAndTournamentJoinRequest) {
-    		
-    		//TeamAndTournamentJoinRequest
-    	}
-    	else if (notificationType == NotificationType.MatchResultConfirmation) {
-    		
-    		//MatchResultConfirmation
-    	}
-    	//Do nothing
-    }
-    
-    //Returns String (message) that is needed for a specific NotificationType
-    //(Language file should connect here)
-    public String getMessageBasedOnNotificationType(NotificationType notificationType) {
-    	
-    	if (notificationType == NotificationType.Standard) {
-    		
-    		return "Standard";
-    	}
-    	else if (notificationType == NotificationType.TeamJoinRequest) {
-    		
-    		return "TeamJoinRequest";
-    	}
-    	else if (notificationType == NotificationType.TournamentJoinRequest) {
-    		
-    		return "TournamentJoinRequest";
-    	}
-    	else if (notificationType == NotificationType.TeamAndTournamentJoinRequest) {
-    		
-    		return "TeamAndTournamentJoinRequest";
-    	}
-    	else if (notificationType == NotificationType.MatchResultConfirmation) {
-    		
-    		return "MatchResultConfirmation";
-    	}	
-    	return "ERROR";
     }
     
     public long getNotificationId() {
@@ -151,14 +50,6 @@ public class Notification {
 		this.sender = sender;
 	}
 
-	public NotificationType getNotificationType() {
-		return notificationType;
-	}
-
-	public void setNotificationType(NotificationType notificationType) {
-		this.notificationType = notificationType;
-	}
-
 	public Date getSendDate() {
 		return sendDate;
 	}
@@ -177,7 +68,7 @@ public class Notification {
 
     @Override
     public String toString() {
-        return "Notification{" + "notificationId=" + notificationId + ", notificationType=" + notificationType.toString() +
+        return "Notification{" + "notificationId=" + notificationId + ", notificationType=" +
         		", receiver=" + receiver + ", sender=" + sender + ", sendDate=" + sendDate + ", message=" + message;
                 
     }

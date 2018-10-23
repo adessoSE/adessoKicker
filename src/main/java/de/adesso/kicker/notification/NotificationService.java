@@ -3,15 +3,12 @@ package de.adesso.kicker.notification;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import de.adesso.kicker.notification.Notification.NotificationType;
-import de.adesso.kicker.team.Team;
-import de.adesso.kicker.team.TeamRepository;
 import de.adesso.kicker.user.User;
 
+@Service
 public class NotificationService {
 	
 	private NotificationRepository notificationRepository;
@@ -31,25 +28,14 @@ public class NotificationService {
 	public List<Notification> getAllNotifications() {
 		
 		List<Notification> notifications = new ArrayList<>();
-		//Add every element of Iterable (because findAll() returns Iterable) to List
         notificationRepository.findAll().forEach(notifications::add);
         return notifications;
     }
-	
-	 //Get all notifications of a specific type
-	public List<Notification> getAllNotificationsByNotificationType(NotificationType notificationType) {
-		
-		List<Notification> notifications = new ArrayList<>();
-		//Add every element of Iterable (because findAll() returns Iterable) to List
-        notificationRepository.findByNotificationType(notificationType).forEach(notifications::add);
-        return notifications;
-	}
 	
 	 //Get all notifications that were send by a specific user
 	public List<Notification> getAllNotificationsBySender(User sender) {
 		
 		List<Notification> notifications = new ArrayList<>();
-		//Add every element of Iterable (because findAll() returns Iterable) to List
         notificationRepository.findBySender(sender).forEach(notifications::add);
         return notifications;
 	}
@@ -58,8 +44,11 @@ public class NotificationService {
 	public List<Notification> getAllNotificationsByReceiver(User receiver) {
 		
 		List<Notification> notifications = new ArrayList<>();
-		//Add every element of Iterable (because findAll() returns Iterable) to List
         notificationRepository.findByReceiver(receiver).forEach(notifications::add);
         return notifications;
+	}
+	
+	public void saveNotification(Notification notification) {
+	    notificationRepository.save(notification);
 	}
 }
