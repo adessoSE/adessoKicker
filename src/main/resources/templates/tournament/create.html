@@ -2,21 +2,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Create you tournament</title>
+    <title>Choose format</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type='text/javascript' th:src="@{/js/tournamentCreation.js}"></script>
 </head>
 <body>
-<table>
-    <tbody>
-    </tr>
-    <tr>
-        <td th:if="${tournament.format=='SINGLEELIMINATION'}" th:insert="tournament/createsingleelimination"></td>
-        <td th:if="${tournament.format=='LASTMANSTANDING'}" th:insert="tournament/createlastmanstanding"></td>
-    </tr>
-    </tbody>
-</table>
+<div>
+    <select class="form-control" id="tournamentFormats" name="tournamentFormats">
+        <option th:each="tournamentFormat : ${tournamentFormats}"
+                th:value="${tournamentFormat}"
+                th:text="${tournamentFormat.getFormat()}"></option>
+    </select>
+    <p id="form"></p>
+</div>
 </body>
 </html>
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml"-->
+      <!--xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Create you tournament</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<table>-->
+    <!--<tbody>-->
+    <!--</tr>-->
+    <!--<tr>-->
+        <!--<td th:if="${tournament.format=='SINGLEELIMINATION'}" th:insert="tournament/createsingleelimination"></td>-->
+        <!--<td th:if="${tournament.format=='LASTMANSTANDING'}" th:insert="tournament/createlastmanstanding"></td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+<!--</table>-->
+<!--</body>-->
+<!--</html>-->
 
 <!--<!DOCTYPE html>-->
 <!--<html xmlns="http://www.w3.org/1999/xhtml"-->

@@ -22,14 +22,12 @@
 </head>
 <body>
 <div>
-    <form action="#" th:action="@{/tournaments/create}" class="form-select-button" method="post">
         <select class="form-control" id="tournamentFormats" name="tournamentFormats">
             <option th:each="tournamentFormat : ${tournamentFormats}"
                     th:value="${tournamentFormat}"
                     th:text="${tournamentFormat.getFormat()}"></option>
         </select>
-    </form>
-    <input type="submit" value="Create Tournament"/>
+        <p id="form"></p>
 </div>
 </body>
 </html>

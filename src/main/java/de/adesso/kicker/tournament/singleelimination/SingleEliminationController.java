@@ -31,7 +31,7 @@ public class SingleEliminationController {
     public ModelAndView tournamentCreation() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournament", new SingleElimination());
-        modelAndView.setViewName("tournament/create");
+        modelAndView.setViewName("tournament/createsingleelimination");
         return modelAndView;
     }
 

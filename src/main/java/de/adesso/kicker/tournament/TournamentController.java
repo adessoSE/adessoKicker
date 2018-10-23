@@ -40,7 +40,7 @@ public class TournamentController {
     public ModelAndView chooseFormat() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournamentFormats", TournamentFormats.values());
-        modelAndView.setViewName("tournament/format");
+        modelAndView.setViewName("tournament/create");
         return modelAndView;
     }
 
