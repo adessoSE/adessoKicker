@@ -6,75 +6,70 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "notification")
-public class Notification {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Notification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long notificationId;
-
-    private String notificationType;
-
-    private Date time;
+    protected long notificationId;
 
     @ManyToOne(targetEntity = User.class)
-    private User user;
+    protected User receiver;
+    
+    @ManyToOne(targetEntity = User.class)
+    protected User sender;
+    
+    protected Date sendDate;
 
-    private String notificationMessage;
+    protected String message;
 
     public Notification() {
     }
-
-    public Notification(String notificationType, String notificationMessage, Date time, User user) {
-        this.notificationType = notificationType;
-        this.notificationMessage = notificationMessage;
-        this.time = time;
-        this.user = user;
-    }
-
-    public void setNotificationId(long notificationId) {
-        this.notificationId = notificationId;
-    }
-
+    
     public long getNotificationId() {
-        return notificationId;
-    }
+		return notificationId;
+	}
 
-    public void setNotificationType(String notificationType) {
-        this.notificationType = notificationType;
-    }
+	public void setNotificationId(long notificationId) {
+		this.notificationId = notificationId;
+	}
 
-    public String getNotificationType() {
-        return notificationType;
-    }
+	public User getReceiver() {
+		return receiver;
+	}
 
-    public void setTime(Date time) {
-        this.time = time;
-    }
+	public void setReceiver(User receiver) {
+		this.receiver = receiver;
+	}
 
-    public Date getTime() {
-        return time;
-    }
+	public User getSender() {
+		return sender;
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public void setSender(User sender) {
+		this.sender = sender;
+	}
 
-    public User getUser() {
-        return user;
-    }
+	public Date getSendDate() {
+		return sendDate;
+	}
 
-    public void setNotificationMessage(String notificationMessage) {
-        this.notificationMessage = notificationMessage;
-    }
+	public void setSendDate(Date sendDate) {
+		this.sendDate = sendDate;
+	}
 
-    public String getNotificationMessage() {
-        return notificationMessage;
-    }
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
     @Override
     public String toString() {
-        return "Notification{" + "notificationId=" + notificationId + ", notificationType='" + notificationType + '\''
-                + ", time=" + time + ", user=" + user + ", notificationMessage='" + notificationMessage + '\'' + '}';
+        return "Notification{" + "notificationId=" + notificationId + ", notificationType=" +
+        		", receiver=" + receiver + ", sender=" + sender + ", sendDate=" + sendDate + ", message=" + message;
+                
     }
 }
