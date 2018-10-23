@@ -112,6 +112,7 @@ public class TournamentController {
 
         ModelAndView modelAndView = new ModelAndView();
         Tournament tournament = tournamentService.getTournamentById(id);
+        modelAndView.addObject("tournament", tournament);
         String format = tournament.getFormat();
         switch (format) {
         case ("SINGLEELIMINATION"):

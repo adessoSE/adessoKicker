@@ -49,7 +49,7 @@ public class NotificationService {
         return notifications;
 	}
 	
-	//Save notification in repo
+	//Save notification in repository
 	public void saveNotification(Notification notification) {
 	    notificationRepository.save(notification);
 	}
