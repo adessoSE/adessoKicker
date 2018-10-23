@@ -45,4 +45,10 @@ public class LastManStandingService extends TournamentService {
         }
     }
 
+    public void checkPlayerInTournament(LastManStanding lastManStanding, User user) {
+        if (lastManStanding.getPlayers().contains(user)) {
+            throw new PlayerAlreadyInTournamentException();
+        }
+    }
+
 }
