@@ -5,13 +5,16 @@
 		<meta charset='utf-8'>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
 		<link rel="stylesheet" href="/css/homeStyle.css">
 	</head>
 	
 	<header th:fragment="header" style="background-color: lightgrey;">
+	
+		<style>#navbar{overflow: hidden; background-color: #333; z-index: 1000;}.sticky{position: fixed; top: 0; width: 100%;}</style>
+	
 		<div class='row dissize'>
 			<div class='col-lg-4'></div>			
 			<div class='col-lg-4'>
@@ -45,11 +48,30 @@
 		<div class='row dissize'>
 			<div class='col-lg-10'></div>
 			<div class='col-lg-2' id='note' style='position: relative;'></div>
-</div>	</div>
+		</div>	
 		
-			<script type='text/javascript' src='/js/notification.js'></script>
+		<nav id='navbar' class="navbar sticky-top navbar-light">
+		  <div class="container-fluid">
+  
+			<div class="navbar-header">
+			  <a class="navbar-brand" href="#">Adesso Kicker</a>
+			</div>
 			
-		</div>
+			<ul class="nav sticky-top navbar-nav">
+			
+				<li class="active"><a href="#">Home</a></li>
+				<li><a th:href="@{/tournaments}">Turniere</a></li>
+				<li><a th:href="@{/users}">Users</a></li>  
+				<li><a th:href="@{/teams}">Teams</a></li>
+				<li><a th:href="@{/matches}">Matches</a></li>
+			  
+			</ul>
+		  </div>  
+		</nav> 
+		
+			<script type='text/javascript' th:src='@{/js/notification.js}'></script>
+			<script type='text/javascript' th:src='@{/js/navbar.js}'></script>
+			
 	</header>
 	
 	<body style="background-color: black;"></body>
