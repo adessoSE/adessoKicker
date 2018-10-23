@@ -1,5 +1,8 @@
 package de.adesso.kicker;
 
+import de.adesso.kicker.notification.Notification;
+import de.adesso.kicker.notification.NotificationService;
+import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequest;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.tournament.Tournament;
 import de.adesso.kicker.tournament.TournamentRepository;
@@ -28,8 +31,12 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(UserRepository userRepository, LastManStandingService lastManStandingService) {
+    public CommandLineRunner demo(UserRepository userRepository, LastManStandingService lastManStandingService, NotificationService notificationService) {
         return (args) -> {
+            
+            notificationService.saveNotification(new TeamJoinRequest());
+            notificationService.saveNotification(new TeamJoinRequest());
+            
             log.info("Customers found with findAll():");
             log.info("-------------------------------");
             for (User user : userRepository.findAll()) {
@@ -57,6 +64,8 @@ public class Application {
             // log.info(bauer.toString());
             // }
             log.info("");
+            
+            
         };
     }
 }
