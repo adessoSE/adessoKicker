@@ -91,7 +91,7 @@ public class LastManStandingController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/tournaments/create", params = {"LASTMANSTANDING"})
+    @GetMapping(value = "/tournaments/create", params = { "LASTMANSTANDING" })
     public ModelAndView tournamentCreation() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournament", new LastManStanding());
@@ -99,9 +99,9 @@ public class LastManStandingController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/tournaments/create", params = {"LASTMANSTANDING"})
+    @PostMapping(value = "/tournaments/create", params = { "LASTMANSTANDING" })
     public ModelAndView createSingleElimination(@Valid SingleElimination singleElimination, BindingResult bindingResult,
-                                                RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
 

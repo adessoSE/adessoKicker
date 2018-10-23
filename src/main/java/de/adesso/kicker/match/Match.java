@@ -41,7 +41,7 @@ public class Match {
 
     }
 
-    public String getGermanDate(){
+    public String getGermanDate() {
         DateFormat df = new SimpleDateFormat("EEEEE, dd. MMMMM yyyy");
         String germanDate = df.format(date);
         return germanDate;

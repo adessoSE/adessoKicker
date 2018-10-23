@@ -53,7 +53,7 @@ public abstract class Tournament {
         this.description = null;
     }
 
-    public String getGermanDate(){
+    public String getGermanDate() {
         DateFormat df = new SimpleDateFormat("EEEEE, dd. MMMMM yyyy");
         String germanDate = df.format(startDate);
         return germanDate;

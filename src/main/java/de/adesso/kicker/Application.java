@@ -9,6 +9,7 @@ import de.adesso.kicker.tournament.singleelimination.SingleElimination;
 import de.adesso.kicker.tournament.singleelimination.SingleEliminationService;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
