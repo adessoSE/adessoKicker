@@ -2,8 +2,6 @@ package de.adesso.kicker.user;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,8 +34,7 @@ public class LoginController {
     @GetMapping("/registration")
     public ModelAndView registration() {
         ModelAndView modelAndView = new ModelAndView();
-        User user = new User();
-        modelAndView.addObject("user", user);
+        modelAndView.addObject("user", new User());
         modelAndView.setViewName("user/registration");
         return modelAndView;
     }
@@ -52,32 +49,22 @@ public class LoginController {
     @PostMapping("/registration")
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        User userExists = loginService.findUserByEmail(user.getEmail());
-        if (userExists != null) {
-            bindingResult.rejectValue("email", "error.user", "There is already a user with this eMail");
-        }
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("user/registration");
-        } else {
-
-            loginService.saveUser(user);
-            modelAndView.addObject("successMessage", "User has been registered successfully");
-            modelAndView.addObject("user", new User());
+            return modelAndView;
+        }
+        try {
+            loginService.checkUserExists(user);
+        } catch (UserAlreadyExistsException e) {
+            bindingResult.rejectValue("email", "error.user", "There is already a user with this eMail");
             modelAndView.setViewName("user/registration");
+            return modelAndView;
         }
 
-        return modelAndView;
-    }
-
-    @GetMapping("/admin/home")
-    public ModelAndView home() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = loginService.findUserByEmail(auth.getName());
-        modelAndView.addObject("userName",
-                "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-        modelAndView.setViewName("user/home");
+        loginService.saveUser(user);
+        modelAndView.addObject("successMessage", "User has been registered successfully");
+        modelAndView.addObject("user", new User());
+        modelAndView.setViewName("user/registration");
         return modelAndView;
     }
 }

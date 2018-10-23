@@ -4,6 +4,10 @@ import de.adesso.kicker.role.Role;
 
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "user")
@@ -13,12 +17,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
 
+    @NotNull
+    @NotBlank(message = "Please enter your first name")
+    @Size(max = 30, message = "Your first name can't be longer than 30 characters")
     private String firstName;
 
+    @NotNull
+    @NotBlank(message = "Please enter your last name")
+    @Size(max = 30, message = "Your last name can't be longer than 30 characters")
     private String lastName;
 
+    @NotNull
+    @NotBlank(message = "Please enter a valid password")
+    @Size(min = 8, max = 100, message = "Your password has to be between 8 and 100 characters long")
     private String password;
 
+    @Email(message = "Please enter a valid e-Mail address")
     private String email;
 
     // Rename to verified

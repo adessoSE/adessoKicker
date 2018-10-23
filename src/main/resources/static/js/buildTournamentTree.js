@@ -46,10 +46,10 @@ function printTree (){
 			//creates a box with a team in it
 			if(j < rows[i].length) {
 				
-				//if box is not in the first row its x-position is set between thw two parent boxes
+				//if box is not in the first row its x-position is set between the two parent boxes
 				if(i > 0) {
 				
-					posx = (((document.getElementById('level' + (i - 1) + 'team' + (j * 2)).getBoundingClientRect().left + document.getElementById('level' + (i - 1) + 'team' + ((j * 2) + 1)).getBoundingClientRect().right) / 2) - (document.getElementById('level' + (i - 1) + 'team' + (j * 2)).offsetWidth / 2));
+					posx = ((returnCenter(document.getElementById('level' + (i - 1) + 'team' + (j * 2))) + returnCenter(document.getElementById('level' + (i - 1) + 'team' + ((j * 2) + 1)))) / 2);
 					teamBoxes += '<div class="" id="level' + i + 'team' + j +'" ' + divEvents + ' style="left: ' + posx + 'px; ' + boxStyle + ' position: absolute;" >' + rows[i][j].teamName + '</div>';
 				}
 				//box position is set automatically
@@ -64,7 +64,7 @@ function printTree (){
 				//if box is not in the first row its x-position is set between thw two parent boxes
 				if(i > 0) {
 				
-					posx = (((document.getElementById('level' + (i - 1) + 'team' + (j * 2)).getBoundingClientRect().left + document.getElementById('level' + (i - 1) + 'team' + ((j * 2) + 1)).getBoundingClientRect().right) / 2) - (document.getElementById('level' + (i - 1) + 'team' + (j * 2)).offsetWidth / 2));
+					posx = ((document.getElementById('level' + (i - 1) + 'team' + (j * 2)).getBoundingClientRect().right + document.getElementById('level' + (i - 1) + 'team' + ((j * 2) + 1)).getBoundingClientRect().left) / 2);
 					teamBoxes += '<div class="" id="level' + i + 'team' + j +'" ' + divEvents + ' style="left: ' + posx + 'px; ' + boxStyle + ' position: absolute;" ></div>';
 				}
 				//box position is set automatically
@@ -93,6 +93,7 @@ function printLines () {
 	var fixry; 
 	var i;
 	var j;
+	var yOffset = 181;
 	
 	//ilterates through each row of teams
 	for(i = 1; i < numRows; i ++){
@@ -109,21 +110,21 @@ function printLines () {
 			
 			//get position of first team
 			fixlx = returnCenter(team1);
-			fixly = team1.getBoundingClientRect().bottom + 40;
+			fixly = team1.getBoundingClientRect().bottom - 130;
 			
 			//get position of second team
 			fixrx = returnCenter(team2);
-			fixry = team2.getBoundingClientRect().bottom + 40;
+			fixry = team2.getBoundingClientRect().bottom - 130;
 			
 			//draw lines to target team in next row
-			ctx.moveTo(fixlx, team1.getBoundingClientRect().bottom);
+			ctx.moveTo(fixlx, team1.getBoundingClientRect().bottom - yOffset);
 			ctx.lineTo(fixlx, fixly);
-			ctx.moveTo(fixrx, team2.getBoundingClientRect().bottom);
+			ctx.moveTo(fixrx, team2.getBoundingClientRect().bottom - yOffset);
 			ctx.lineTo(fixrx, fixry);
 			ctx.moveTo(fixlx, fixly);
 			ctx.lineTo(fixrx, fixry);
 			ctx.moveTo(returnCenter(target), fixly);
-			ctx.lineTo(returnCenter(target), target.getBoundingClientRect().top);
+			ctx.lineTo(returnCenter(target), target.getBoundingClientRect().top - yOffset);
 			ctx.stroke();
 		
 		}

@@ -1,9 +1,7 @@
 package de.adesso.kicker.tournament;
 
 import de.adesso.kicker.team.TeamService;
-import de.adesso.kicker.tournament.lastmanstanding.LastManStanding;
 import de.adesso.kicker.tournament.lastmanstanding.LastManStandingController;
-import de.adesso.kicker.tournament.singleelimination.SingleElimination;
 import de.adesso.kicker.tournament.singleelimination.SingleEliminationController;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +40,7 @@ public class TournamentController {
     public ModelAndView chooseFormat() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournamentFormats", TournamentFormats.values());
-        modelAndView.setViewName("tournament/format");
+        modelAndView.setViewName("tournament/create");
         return modelAndView;
     }
 
@@ -81,13 +79,16 @@ public class TournamentController {
         switch (format) {
 
         case ("SINGLEELIMINATION"):
-            modelAndView = singleEliminationController.joinTournament(tournament);
-            return modelAndView;
+            return singleEliminationController.joinTournament(tournament);
 
         case ("LASTMANSTANDING"):
-            modelAndView = lastManStandingController.joinTournament(tournament);
+           return lastManStandingController.joinTournament(tournament);
+
+       default:
+           modelAndView.addObject("tournaments", tournamentService.getAllTournaments());
+           modelAndView.setViewName("tournaments");
+           return modelAndView;
         }
-        return modelAndView;
     }
 
     @PostMapping("tournaments/{tournamentId}/join")

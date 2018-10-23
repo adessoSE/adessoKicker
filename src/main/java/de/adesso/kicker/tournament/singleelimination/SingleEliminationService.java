@@ -4,6 +4,7 @@ import de.adesso.kicker.match.Match;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.tournament.TournamentRepository;
 import de.adesso.kicker.tournament.TournamentService;
+import de.adesso.kicker.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -114,5 +115,19 @@ public class SingleEliminationService extends TournamentService {
         }
 
         saveTournament(singleElimination);
+    }
+
+    public void checkTeamInTournament(SingleElimination singleElimination, Team team) {
+
+        if(singleElimination.getTeams().contains(team)) {
+            throw new TeamAlreadyInTournamentException();
+        }
+    }
+
+    public void checkPlayerTeamInTournament(SingleElimination singleElimination, Team team) {
+        List<User> players = singleElimination.getPlayers();
+        if(players.contains(team.getPlayerA()) || players.contains(team.getPlayerB())) {
+            throw new PlayerOfTeamAlreadyInTournamentException();
+        }
     }
 }

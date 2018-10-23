@@ -27,8 +27,7 @@ public class UserController {
      * @return ModelAndView
      */
     @GetMapping(value = { "", "/", "home" })
-    public ModelAndView getLoggedInUser() {
-
+    public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getLoggedInUser());
         modelAndView.setViewName("user/home");
@@ -43,7 +42,6 @@ public class UserController {
      */
     @GetMapping("/users/{id}")
     public ModelAndView getUser(@PathVariable long id) {
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getUserById(id));
         modelAndView.addObject("allUsers", userService.getAllUsers());
@@ -58,14 +56,13 @@ public class UserController {
      */
     @GetMapping("/users")
     public List<User> getAllUsers() {
-
         return userService.getAllUsers();
     }
 
     /**
      * getUserYourself() gets the logged in user.
      * 
-     * @return
+     * @return ModelAndView
      */
     @GetMapping("/users/you")
     public ModelAndView getUserYourself() {

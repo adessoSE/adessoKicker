@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset='utf-8'>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+		<link rel="stylesheet" href="/css/homeStyle.css">
+	</head>
+	
+	<body style="background-color: black;"></body>
+	
+	<footer th:fragment="footer" style="background-color: lightgrey;">
+	
+		<div class='row dissize'>
+			</br>
+			
+			<div class="col-lg-4"></div>
+			<div class="col-lg-4">
+				<div style="text-align: center">
+					<a th:href="@{/impressum}">Impressum</a>
+				</div>
+				</br>
+				<div style="text-align: center">Copyright&copy adesso AG 2018</div>
+				</br></br></br>
+			</div>
+			<div class="col-lg-4"></div>
+			
+		</div>
+		
+		<script type='text/javascript' th:src='@{/js/cookieWarning.js}'></script>
+		
+	</footer>
+
+</html>
