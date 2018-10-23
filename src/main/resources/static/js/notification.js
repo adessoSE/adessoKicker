@@ -1,17 +1,4 @@
 
-//opens notificationlist and inserts notifications if not open. Else close the list
-function toggleNotificationList() {
-	
-	if(document.getElementById('notificationList')){
-		
-		closeNotificationList();
-	}
-	else{
-		
-		openNotificationList();
-		insertNotifications();
-	}
-}
 
 //creates and attaches notificationlist box
 function openNotificationList() {
@@ -116,6 +103,20 @@ function deleteNotification (notification) {
 function acceptNotification (notification) {
 	
 	document.getElementById('notificationList').removeChild(document.getElementById(notification));
+}
+
+//opens notificationlist and inserts notifications if not open. Else close the list
+function toggleNotificationList() {
+	
+	if(document.getElementById('notificationList')){
+		
+		closeNotificationList();
+	}
+	else{
+		
+		openNotificationList();
+		insertNotifications();
+	}
 }
 
 getNotificationAlert();

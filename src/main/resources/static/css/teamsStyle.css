@@ -7,14 +7,18 @@ h1 {
 	border-style: groove;
 	border-width: 5px;
 	height: 95px;
+	text-align: center;
+	font-size: 30px;
 }
 
 .teamBox {
 	border-style: groove;
 	border-width: 5px;
-	height: 110px;
-	background-color: #ccf3ff;
+	height: 80px;
+	background-color: #ddf6ff;
 	position: relative;
+	text-align: center;
+	font-size: 30px;
 	
 }
 
