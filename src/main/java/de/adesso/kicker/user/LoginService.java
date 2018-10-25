@@ -38,4 +38,11 @@ public class LoginService {
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         userRepository.save(user);
     }
+
+    public void checkUserExists(User user) {
+        if (findUserByEmail(user.getEmail()) != null) {
+            throw new UserAlreadyExistsException();
+        }
+    }
+
 }
