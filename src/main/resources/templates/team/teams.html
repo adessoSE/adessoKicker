@@ -17,9 +17,6 @@
 	<script> setTabActive('tabTeams') </script>
 	
 	<body>
-	
-	
-		<h1>Alle Teams</h1>
 		
 		<div class='row dissize'>
 			<div class='col-lg-2 sortbtn' style='padding: 20px;' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)' onclick='sort("teamnames")'>Teamname</div>
@@ -29,17 +26,16 @@
 			<div class='col-lg-2 sortbtn' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)' onclick='sort("losses")'>Verlorene Spiele</div>
 		</div>
 		
-		
-		
-			<div id='list' data-sorted="none">
-				<div class='row teamBox dissize' th:each="t : ${teams}">
-					<div class='col-lg-2 value' th:text="${t.teamName}">[teamName]</div>
-					<div class='col-lg-3 value' th:text="${t.playerA.firstName} + ' ' + ${t.playerA.lastName}">[playerA]</div>
-					<div class='col-lg-3 value' th:text="${t.playerB.firstName} + ' ' + ${t.playerB.lastName}">[playerB]</div>
-					<div class='col-lg-2 value' th:text="${t.teamWins}">[teamWins]</div>
-					<div class='col-lg-2 value' th:text="${t.teamLosses}">[teamsLosses]</div>
-				</div>
+
+		<div id='list' data-sorted="none">
+			<div class='row teamBox dissize' th:each="t : ${teams}">
+				<div class='col-lg-2 value' th:text="${t.teamName}">[teamName]</div>
+				<div class='col-lg-3 value' th:text="${t.playerA.firstName} + ' ' + ${t.playerA.lastName}">[playerA]</div>
+				<div class='col-lg-3 value' th:text="${t.playerB.firstName} + ' ' + ${t.playerB.lastName}">[playerB]</div>
+				<div class='col-lg-2 value' th:text="${t.teamWins}">[teamWins]</div>
+				<div class='col-lg-2 value' th:text="${t.teamLosses}">[teamsLosses]</div>
 			</div>
+		</div>
 			
 		
 		
