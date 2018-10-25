@@ -1,5 +1,4 @@
 
-
 //creates and attaches notificationlist box
 function openNotificationList() {
 	
