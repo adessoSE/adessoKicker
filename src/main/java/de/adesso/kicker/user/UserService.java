@@ -17,7 +17,6 @@ public class UserService {
 
     private UserRepository userRepository;
     private List<User> users;
-    private AuthenticationInfo authenticationInfo;
 
     @Autowired
     public UserService(UserRepository userRepository) {
