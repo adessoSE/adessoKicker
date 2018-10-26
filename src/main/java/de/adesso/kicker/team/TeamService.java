@@ -104,30 +104,26 @@ public class TeamService {
     }
 
     /*
-    public Team createMatch(Match match) {
-        denySameTeam(match.getTeamA(), match.getTeamB());
-
-        return null;
-    }
-    */
+     * public Team createMatch(Match match) { denySameTeam(match.getTeamA(),
+     * match.getTeamB());
+     * 
+     * return null; }
+     */
 
     public void denySameTeam(Team team) {
         try {
             if (team.getTeamName() == teamRepository.findByTeamName(team.getTeamName()).getTeamName()) {
                 throw new TeamNameExistingException();
             }
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
 
-            }
+        }
     }
 
     public void denySameTeamPlayers(Team team) {
-        if (team.getPlayerA()==team.getPlayerB()){
+        if (team.getPlayerA() == team.getPlayerB()) {
             throw new IdenticalPlayersException();
         }
     }
-
-
 
 }

@@ -107,9 +107,7 @@ public class MatchController {
         }
         try {
             matchService.denyPastDate(match);
-        }
-        catch (PasteDateException p)
-        {
+        } catch (PasteDateException p) {
             bindingResult.rejectValue("date", "error.date", "Kein vergangenes Datum.");
 
             modelAndView.addObject("teams", teamService.getAllTeams());
@@ -119,8 +117,7 @@ public class MatchController {
 
         try {
             matchService.identicalTeams(match);
-        }
-        catch (IdenticalTeamsException i){
+        } catch (IdenticalTeamsException i) {
             bindingResult.rejectValue("teamA", "error.teamA", "Keine identischen Teams.");
             modelAndView.addObject("teams", teamService.getAllTeams());
             modelAndView.setViewName("match/create");

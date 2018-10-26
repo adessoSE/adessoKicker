@@ -78,7 +78,7 @@ public class TeamController {
      * @return ModelAndView
      */
 
-    //Validation in Services
+    // Validation in Services
     @PostMapping("/teams/add")
     public ModelAndView postTeam(@Valid Team team, BindingResult bindingResult) {
         modelAndView = new ModelAndView();
@@ -91,7 +91,7 @@ public class TeamController {
             teamService.denySameTeamPlayers(team);
         } catch (IdenticalPlayersException e) {
             bindingResult.rejectValue("playerA", "error.playerA", "Keine identischen Teams");
-            bindingResult.rejectValue("playerB", "error.playerB" , "Keine identischen Teams");
+            bindingResult.rejectValue("playerB", "error.playerB", "Keine identischen Teams");
             modelAndView.addObject("users", userService.getAllUsers());
             modelAndView.setViewName("team/add");
             return modelAndView;
@@ -105,7 +105,7 @@ public class TeamController {
             return modelAndView;
         }
         teamService.saveTeam(team);
-        modelAndView.addObject("successMessage" , "Team wurde erfolgreich erstellt.");
+        modelAndView.addObject("successMessage", "Team wurde erfolgreich erstellt.");
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.setViewName("team/add");
         return modelAndView;

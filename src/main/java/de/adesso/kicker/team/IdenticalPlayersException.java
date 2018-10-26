@@ -2,7 +2,7 @@ package de.adesso.kicker.team;
 
 public class IdenticalPlayersException extends RuntimeException {
 
-    IdenticalPlayersException(){
+    IdenticalPlayersException() {
         super("You cannot play with identical players.");
     }
 

@@ -80,8 +80,7 @@ public class MatchService {
         matchRepository.deleteById(id);
     }
 
-    public void denyPastDate(Match match)
-    {
+    public void denyPastDate(Match match) {
         Date currentDate = new Date();
         if (match.getDate().after(yesterday()) && (match.getTime().getHours() >= currentDate.getHours()
                 && match.getTime().getMinutes() >= currentDate.getMinutes())) {
@@ -91,8 +90,8 @@ public class MatchService {
 
     }
 
-    public void identicalTeams(Match match){
-        if (match.getTeamA().getTeamId()==match.getTeamB().getTeamId()){
+    public void identicalTeams(Match match) {
+        if (match.getTeamA().getTeamId() == match.getTeamB().getTeamId()) {
             throw new IdenticalTeamsException();
         }
     }
