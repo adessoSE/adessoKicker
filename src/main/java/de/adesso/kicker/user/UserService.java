@@ -74,9 +74,6 @@ public class UserService {
     public User getLoggedInUser() throws UserNotFoundException {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth == null) {
-            throw new UserNotLoggedInException();
-        }
         String email = auth.getName();
         return getUserByEmail(email);
     }
@@ -86,9 +83,9 @@ public class UserService {
      * 
      * @param user
      */
-    public void saveUser(User user) {
+    public User saveUser(User user) {
 
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     /**

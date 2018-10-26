@@ -6,16 +6,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.mockito.stubbing.Answer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class UserServiceTest {
@@ -42,6 +40,11 @@ class UserServiceTest {
 
         when(userRepository.findByEmail(anyString())).thenReturn(null);
         when(userRepository.findByEmail(eq(user.getEmail()))).thenReturn(user);
+
+        when(userRepository.save(any(User.class))).thenAnswer((Answer<User>) invocation -> {
+            Object[] args = invocation.getArguments();
+            return (User) args[0];
+        });
     }
 
     @Test
@@ -86,14 +89,10 @@ class UserServiceTest {
     }
 
     @Test
-    void saveUser() {
+    void testSaveUser() {
+        User savedUser = userService.saveUser(user);
+        verify(userRepository).save(user);
+        assertEquals(savedUser, user);
     }
 
-    @Test
-    void deleteUser() {
-    }
-
-    @Test
-    void getUserByNameSearchbar() {
-    }
 }

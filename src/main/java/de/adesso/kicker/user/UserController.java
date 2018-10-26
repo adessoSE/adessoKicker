@@ -29,7 +29,12 @@ public class UserController {
     @GetMapping(value = { "", "/", "home" })
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", userService.getLoggedInUser());
+        try {
+            modelAndView.addObject("user", userService.getLoggedInUser());
+        } catch (UserNotFoundException e) {
+            modelAndView.setViewName("redirect:/login");
+            return modelAndView;
+        }
         modelAndView.setViewName("user/home");
         return modelAndView;
     }
