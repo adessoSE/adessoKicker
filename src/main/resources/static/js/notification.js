@@ -1,5 +1,4 @@
 
-
 //creates and attaches notificationlist box
 function openNotificationList() {
 	
@@ -8,7 +7,7 @@ function openNotificationList() {
 	posx = (document.getElementById('notificationIcon').style.left) - 25 + 'px';
 	posy = document.getElementById('notificationIcon').style.top + 'px';
 	var mainDiv = document.createElement('div');
-	mainDiv.style = 'overflow-y: scroll; background-color: white; z-index: 10; Position: absolute; margin-bottom: 25px; border-style: groove; textAlign: left; height:400px; width: 225px; left:' + posx + '; top:' + posy +';';
+	mainDiv.style = 'overflow-y: scroll; background-color: white; z-index: 1200; Position: absolute; margin-bottom: 25px; border-style: groove; textAlign: left; height:400px; width: 225px; left:' + posx + '; top:' + posy +';';
 	mainDiv.id = 'notificationList';
 	document.getElementById('note').appendChild(mainDiv);
 }

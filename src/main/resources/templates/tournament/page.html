@@ -2,14 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <title>Tournament Page</title>
-<table>
-    <tbody>
-    </tr>
-    <tr>
-        <!--<td><span th:text="${tournament.toString()}"></span></td>-->
-        <td th:if="${tournament.format=='SINGLEELIMINATION'}" th:insert="tournament/treetest"></td>
-        <td th:if="${tournament.format=='LASTMANSTANDING'}" th:insert="tournament/maptest"></td>
-    </tr>
-    </tbody>
-</table>
+
+    <!--<td><span th:text="${tournament.toString()}"></span></td>-->
+    <th:block th:if="${tournament.format=='SINGLEELIMINATION'}" th:replace="tournament/tree"></th:block>
+    <th:block th:if="${tournament.format=='LASTMANSTANDING'}" th:replace="tournament/maptest"></th:block>
+        
 </html>

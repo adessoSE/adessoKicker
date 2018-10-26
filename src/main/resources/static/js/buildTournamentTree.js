@@ -93,7 +93,8 @@ function printLines () {
 	var fixry; 
 	var i;
 	var j;
-	var yOffset = 181;
+	var yOffset = 234;
+	var centerSpacing = 180;
 	
 	//ilterates through each row of teams
 	for(i = 1; i < numRows; i ++){
@@ -110,11 +111,11 @@ function printLines () {
 			
 			//get position of first team
 			fixlx = returnCenter(team1);
-			fixly = team1.getBoundingClientRect().bottom - 130;
+			fixly = team1.getBoundingClientRect().bottom - centerSpacing;
 			
 			//get position of second team
 			fixrx = returnCenter(team2);
-			fixry = team2.getBoundingClientRect().bottom - 130;
+			fixry = team2.getBoundingClientRect().bottom - centerSpacing;
 			
 			//draw lines to target team in next row
 			ctx.moveTo(fixlx, team1.getBoundingClientRect().bottom - yOffset);

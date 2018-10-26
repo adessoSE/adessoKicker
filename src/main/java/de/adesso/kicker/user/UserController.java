@@ -45,7 +45,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getUserById(id));
         modelAndView.addObject("allUsers", userService.getAllUsers());
-        modelAndView.setViewName("user/_profile");
+        modelAndView.setViewName("user/profile");
         return modelAndView;
     }
 
@@ -69,7 +69,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getLoggedInUser());
         modelAndView.addObject("allUsers", userService.getAllUsers());
-        modelAndView.setViewName("user/_profile");
+        modelAndView.setViewName("user/profile");
         return modelAndView;
     }
 
