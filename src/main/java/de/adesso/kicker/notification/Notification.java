@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Notification {
+public class Notification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,21 @@ public abstract class Notification {
 		return notificationId;
 	}
 
-	public void setNotificationId(long notificationId) {
+	public Notification(String message, User receiver, User sender) {
+	    this.sendDate = new Date();
+        this.receiver = receiver;
+        this.sender = sender;
+        this.message = message;
+    }
+	
+	public Notification(Date sendDate, String message, User receiver, User sender) {
+	    this.sendDate = sendDate;
+        this.receiver = receiver;
+        this.sender = sender;
+        this.message = message;
+    }
+
+    public void setNotificationId(long notificationId) {
 		this.notificationId = notificationId;
 	}
 

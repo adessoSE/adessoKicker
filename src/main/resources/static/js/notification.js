@@ -1,8 +1,9 @@
-
+/*
 //creates and attaches notificationlist box
 function openNotificationList() {
 	
-	var posx,posy;
+	var posx;
+	var posy;
 	
 	posx = (document.getElementById('notificationIcon').style.left) - 25 + 'px';
 	posy = document.getElementById('notificationIcon').style.top + 'px';
@@ -25,7 +26,8 @@ function getNotificationAlert() {
 	 
 	if(isNotification) {
 		 
-		var posx,posy;
+		var posx;
+		var posy;
 	
 		posx = (document.getElementById('notificationIcon').style.left) + 55  + 'px';
 		posy = (document.getElementById('notificationIcon').style.top) - 2  + 'px';
@@ -91,31 +93,27 @@ function insertNotifications () {
 		document.getElementById('notificationList').appendChild(noteMainDiv);
 	}
 }
+*/
 
-//deletes a notification and removes it from list
-function deleteNotification (notification) {
+function sum(a, b){
 	
-	document.getElementById('notificationList').removeChild(document.getElementById(notification));
+	var c = a + b;
+	alert(c);
 }
 
-//accepts a notification and removes it from list
-function acceptNotification (notification) {
+function declineNotification(service = "", notification = "") {
 	
-	document.getElementById('notificationList').removeChild(document.getElementById(notification));
+	alert(service + notification);
 }
 
-//opens notificationlist and inserts notifications if not open. Else close the list
+//--> Triggered 
+function acceptNotification(service, notification) {
+	
+	service.removeNotificationById(notification.getNotificationId());
+}
+
+//--> Triggered on Notification Button click
 function toggleNotificationList() {
 	
-	if(document.getElementById('notificationList')){
-		
-		closeNotificationList();
-	}
-	else{
-		
-		openNotificationList();
-		insertNotifications();
-	}
+	$('#notificationList').toggle();
 }
-
-getNotificationAlert();

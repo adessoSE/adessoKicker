@@ -34,7 +34,7 @@ public class Application {
     public CommandLineRunner demo(UserRepository userRepository, LastManStandingService lastManStandingService, NotificationService notificationService) {
         return (args) -> {
             
-            notificationService.saveNotification(new TeamJoinRequest());
+
             notificationService.saveNotification(new TeamJoinRequest());
             
             log.info("Customers found with findAll():");

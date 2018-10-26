@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import de.adesso.kicker.notification.NotificationService;
+
 /**
  * RestController "UserController" that manages everything related with users.
  *
@@ -14,11 +16,13 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
 
     private UserService userService;
+    private NotificationService notificationService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, NotificationService notificationService) {
 
         this.userService = userService;
+        this.notificationService = notificationService;
     }
 
     /**
@@ -29,7 +33,10 @@ public class UserController {
     @GetMapping(value = { "", "/", "home" })
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
+        User user = userService.getLoggedInUser();
         modelAndView.addObject("user", userService.getLoggedInUser());
+        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
+        modelAndView.addObject("notificationService", notificationService);
         modelAndView.setViewName("user/home");
         return modelAndView;
     }
