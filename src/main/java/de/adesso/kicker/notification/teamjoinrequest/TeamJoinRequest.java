@@ -11,16 +11,16 @@ import de.adesso.kicker.team.Team;
 import de.adesso.kicker.user.User;
 
 @Entity
-public class TeamJoinRequest extends Notification{
-    
+public class TeamJoinRequest extends Notification {
+
     @ManyToOne(targetEntity = Team.class)
     private Team targetTeam;
-    
+
     public TeamJoinRequest() {
-        
+
         super();
     }
-    
+
     public TeamJoinRequest(Team targetTeam, User sender, User receiver) {
         this.targetTeam = targetTeam;
         this.sender = sender;
@@ -30,9 +30,10 @@ public class TeamJoinRequest extends Notification{
     }
 
     public String generateMessage() {
-        return sender.getFirstName() +  " " + sender.getLastName() + " has invited you to join team: " + targetTeam.getTeamName();
+        return sender.getFirstName() + " " + sender.getLastName() + " has invited you to join team: "
+                + targetTeam.getTeamName();
     }
-    
+
     public Team getTargetTeam() {
         return targetTeam;
     }

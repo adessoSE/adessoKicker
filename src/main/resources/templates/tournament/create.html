@@ -9,6 +9,7 @@
 <body>
 <div>
     <select class="form-control" id="tournamentFormats" name="tournamentFormats">
+        <option value="" selected disabled hidden>Choose format</option>
         <option th:each="tournamentFormat : ${tournamentFormats}"
                 th:value="${tournamentFormat}"
                 th:text="${tournamentFormat.getFormat()}"></option>

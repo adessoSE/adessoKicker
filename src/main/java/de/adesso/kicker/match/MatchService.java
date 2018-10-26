@@ -2,6 +2,8 @@ package de.adesso.kicker.match;
 
 import de.adesso.kicker.user.User;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -77,4 +79,27 @@ public class MatchService {
 
         matchRepository.deleteById(id);
     }
+
+    public void denyPastDate(Match match) {
+        Date currentDate = new Date();
+        if (match.getDate().after(yesterday()) && (match.getTime().getHours() >= currentDate.getHours()
+                && match.getTime().getMinutes() >= currentDate.getMinutes())) {
+        } else {
+            throw new PasteDateException();
+        }
+
+    }
+
+    public void identicalTeams(Match match) {
+        if (match.getTeamA().getTeamId() == match.getTeamB().getTeamId()) {
+            throw new IdenticalTeamsException();
+        }
+    }
+
+    private Date yesterday() {
+        final Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        return cal.getTime();
+    }
+
 }

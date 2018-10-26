@@ -132,7 +132,7 @@ class SingleEliminationServiceTest {
     }
 
     @Test
-    void checkPlayerTeamInTournament() {
+    void testCheckPlayerTeamInTournament() {
         singleEliminationService.addTeamToTournament(singleElim, team1);
         Assertions.assertThrows(PlayerOfTeamAlreadyInTournamentException.class, () -> {
             singleEliminationService.checkPlayerTeamInTournament(singleElim, team1);
