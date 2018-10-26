@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,8 @@ import java.util.List;
 public class UserService {
 
     private UserRepository userRepository;
-    List<User> users;
+    private List<User> users;
+    private AuthenticationInfo authenticationInfo;
 
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -43,7 +45,11 @@ public class UserService {
      */
     public User getUserById(long id) {
 
-        return userRepository.findByUserId(id);
+        User user = userRepository.findByUserId(id);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+        return user;
     }
 
     /**
@@ -53,7 +59,11 @@ public class UserService {
      */
     public User getUserByEmail(String email) {
 
-        return userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+        return user;
     }
 
     /**
@@ -61,9 +71,12 @@ public class UserService {
      * 
      * @return
      */
-    public User getLoggedInUser() {
+    public User getLoggedInUser() throws UserNotFoundException {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth == null) {
+            throw new UserNotLoggedInException();
+        }
         String email = auth.getName();
         return getUserByEmail(email);
     }

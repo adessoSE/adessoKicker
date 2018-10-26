@@ -1,36 +1,99 @@
 package de.adesso.kicker.user;
 
-import static org.junit.Assert.*;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-import de.adesso.masterTest.MasterTest;
-import junit.framework.TestCase;
-import junit.framework.TestResult;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class UserServiceTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
 
-    @InjectMocks
-    private UserService service;
+class UserServiceTest {
 
     @Mock
-    private UserRepository rep;
+    UserRepository userRepository;
 
-    @Before
-    public void setUp() {
+    @InjectMocks
+    UserService userService;
+
+    private UserDummy userDummy = new UserDummy();
+
+    private User user = userDummy.defaultUser();
+    private User otherUser = userDummy.alternateUser();
+
+    @BeforeEach
+    void setUp() {
         MockitoAnnotations.initMocks(this);
+
+        when(userRepository.findAll()).thenReturn(Arrays.asList(user, otherUser));
+
+        when(userRepository.findByUserId(anyLong())).thenReturn(null);
+        when(userRepository.findByUserId(eq(user.getUserId()))).thenReturn(user);
+
+        when(userRepository.findByEmail(anyString())).thenReturn(null);
+        when(userRepository.findByEmail(eq(user.getEmail()))).thenReturn(user);
     }
 
     @Test
-    public void test_GetUserByName() {
-
-        TestResult result = this.createResult();
-        MasterTest.printTestResult(this, result);
-        service.getUserByNameSearchbar("Jan", "Schneider");
+    void testGetAllUsers() {
+        ArrayList<User> allUsers = new ArrayList<>();
+        userService.getAllUsers().forEach(allUsers::add);
+        assertTrue(allUsers.contains(user));
     }
 
+    @Test
+    void testGetUserById_Success() {
+        User idUser = userService.getUserById(user.getUserId());
+        assertEquals(idUser, user);
+    }
+
+    @Test
+    void testGetUserById_NotExisting() {
+        Assertions.assertThrows(UserNotFoundException.class, () -> {
+            userService.getUserById(-1);
+        });
+    }
+
+    @Test
+    void testGetUserByEmail_Success() {
+        User emailUser = userService.getUserByEmail(user.getEmail());
+        assertEquals(emailUser, user);
+    }
+
+    @Test
+    void testGetUserByEmail_NotExisting() {
+        Assertions.assertThrows(UserNotFoundException.class, () -> {
+            userService.getUserByEmail("not-existing-email");
+        });
+    }
+
+
+    @Test
+    void testGetLoggedInUser_NotLoggedIn() {
+        Assertions.assertThrows(UserNotLoggedInException.class, () -> {
+            userService.getLoggedInUser();
+        });
+    }
+
+    @Test
+    void saveUser() {
+    }
+
+    @Test
+    void deleteUser() {
+    }
+
+    @Test
+    void getUserByNameSearchbar() {
+    }
 }
