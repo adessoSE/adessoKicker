@@ -1,6 +1,6 @@
 package de.adesso.kicker.tournament.lastmanstanding;
 
-public class PlayerAlreadyInTournamentException extends RuntimeException{
+public class PlayerAlreadyInTournamentException extends RuntimeException {
 
     private static final long serialVersionUID = 2848819969898886059L;
 

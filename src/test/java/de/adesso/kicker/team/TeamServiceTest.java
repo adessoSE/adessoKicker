@@ -70,7 +70,6 @@ class TeamServiceTest {
         assertEquals(team, savedTeam);
     }
 
-
     @Test
     void findByTeamName() {
         Team teamByName = teamService.findByTeamName(team.getTeamName());

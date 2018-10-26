@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SingleEliminationServiceTest {
 
@@ -55,10 +54,11 @@ class SingleEliminationServiceTest {
     @BeforeEach
     void setUp() {
 
-        when(tournamentRepository.save(any(SingleElimination.class))).thenAnswer((Answer<SingleElimination>) invocation -> {
-            Object[] args = invocation.getArguments();
-            return (SingleElimination) args[0];
-        });
+        when(tournamentRepository.save(any(SingleElimination.class)))
+                .thenAnswer((Answer<SingleElimination>) invocation -> {
+                    Object[] args = invocation.getArguments();
+                    return (SingleElimination) args[0];
+                });
 
         when(tournamentRepository.save(any(Tournament.class))).thenAnswer((Answer<Tournament>) invocation -> {
             Object[] args = invocation.getArguments();
@@ -78,7 +78,7 @@ class SingleEliminationServiceTest {
     void testCreateTournamentTree_MultipleTwo() {
         ArrayList<Team> treeTeamsEven = new ArrayList<>(teamsMultiple);
         singleEliminationService.createTournamentTree(treeTeamsEven, singleElim);
-        for(int i = 0; i < treeTeamsEven.size(); i++) {
+        for (int i = 0; i < treeTeamsEven.size(); i++) {
             assertTrue(treeTeamsEven.contains(teamsMultiple.get(i)));
         }
     }
@@ -91,14 +91,14 @@ class SingleEliminationServiceTest {
         int nullSpotSize = treeSize - treeTeamsOdd.size();
         ArrayList<Team> afterTeams = new ArrayList<>();
         singleEliminationService.createTournamentTree(treeTeamsOdd, singleElim);
-        for(int i = 0; i < treeTeamsOdd.size(); i++) {
+        for (int i = 0; i < treeTeamsOdd.size(); i++) {
             if (treeTeamsOdd.get(i) == null) {
                 nullSpots++;
             } else {
                 afterTeams.add(treeTeamsOdd.get(i));
             }
         }
-        for(int i = 0; i < teamsOdd.size(); i++) {
+        for (int i = 0; i < teamsOdd.size(); i++) {
             assertTrue(afterTeams.contains(treeTeamsOdd.get(i)));
         }
         assertEquals(nullSpots, nullSpotSize);
@@ -126,16 +126,14 @@ class SingleEliminationServiceTest {
     @Test
     void testCheckTeamInTournament() {
         singleEliminationService.addTeamToTournament(singleElim, team1);
-        Assertions.assertThrows(TeamAlreadyInTournamentException.class, () -> {
-            singleEliminationService.checkTeamInTournament(singleElim, team1);
-        });
+        Assertions.assertThrows(TeamAlreadyInTournamentException.class,
+                () -> singleEliminationService.checkTeamInTournament(singleElim, team1));
     }
 
     @Test
     void testCheckPlayerTeamInTournament() {
         singleEliminationService.addTeamToTournament(singleElim, team1);
-        Assertions.assertThrows(PlayerOfTeamAlreadyInTournamentException.class, () -> {
-            singleEliminationService.checkPlayerTeamInTournament(singleElim, team1);
-        });
+        Assertions.assertThrows(PlayerOfTeamAlreadyInTournamentException.class,
+                () -> singleEliminationService.checkPlayerTeamInTournament(singleElim, team1));
     }
 }

@@ -30,7 +30,7 @@ class LoginServiceTest {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @InjectMocks
-    private  LoginService loginService;
+    private LoginService loginService;
 
     private UserDummy userDummy = new UserDummy();
 
@@ -63,9 +63,7 @@ class LoginServiceTest {
 
     @Test
     void checkUserExists() {
-        Assertions.assertThrows(UserAlreadyExistsException.class, () -> {
-            loginService.checkUserExists(user);
-        });
+        Assertions.assertThrows(UserAlreadyExistsException.class, () -> loginService.checkUserExists(user));
     }
 
     @Test

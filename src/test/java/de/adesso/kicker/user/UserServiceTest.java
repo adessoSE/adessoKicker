@@ -75,9 +75,7 @@ class UserServiceTest {
 
     @Test
     void testGetUserByEmail_NotExisting() {
-        Assertions.assertThrows(UserNotFoundException.class, () -> {
-            userService.getUserByEmail("not-existing-email");
-        });
+        Assertions.assertThrows(UserNotFoundException.class, () -> userService.getUserByEmail("not-existing-email"));
     }
 
     @Test
