@@ -80,14 +80,6 @@ class UserServiceTest {
         });
     }
 
-
-    @Test
-    void testGetLoggedInUser_NotLoggedIn() {
-        Assertions.assertThrows(UserNotLoggedInException.class, () -> {
-            userService.getLoggedInUser();
-        });
-    }
-
     @Test
     void testSaveUser() {
         User savedUser = userService.saveUser(user);

@@ -97,8 +97,6 @@ public class SingleEliminationController {
         }
 
         singleEliminationService.addTeamToTournament(singleElimination, team);
-        singleEliminationService.addPlayer(singleElimination, team.getPlayerA());
-        singleEliminationService.addPlayer(singleElimination, team.getPlayerB());
         modelAndView.addObject("tournament", singleElimination);
         modelAndView.addObject("teams", teamService.getAllTeams());
         modelAndView.addObject("successMessage", "Team was added to tournament");

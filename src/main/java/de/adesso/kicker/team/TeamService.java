@@ -50,9 +50,9 @@ public class TeamService {
      * 
      * @param team
      */
-    public void saveTeam(Team team) {
+    public Team saveTeam(Team team) {
 
-        teamRepository.save(team);
+        return teamRepository.save(team);
     }
 
     /**

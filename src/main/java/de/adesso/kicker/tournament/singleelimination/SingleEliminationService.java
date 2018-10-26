@@ -18,12 +18,13 @@ public class SingleEliminationService extends TournamentService {
 
     @Autowired
     public SingleEliminationService(TournamentRepository tournamentRepository) {
-
         this.tournamentRepository = tournamentRepository;
     }
 
     public void addTeamToTournament(SingleElimination singleElimination, Team team) {
         singleElimination.addTeam(team);
+        singleElimination.getPlayers().add(team.getPlayerA());
+        singleElimination.getPlayers().add(team.getPlayerB());
         tournamentRepository.save(singleElimination);
     }
 
@@ -87,7 +88,7 @@ public class SingleEliminationService extends TournamentService {
             tournamentTree.get(0).getRow().set(i, teams.get(i));
         }
 
-        saveTournament(singleElimination);
+        tournamentRepository.save(singleElimination);
     }
 
     /**
@@ -114,7 +115,7 @@ public class SingleEliminationService extends TournamentService {
             }
         }
 
-        saveTournament(singleElimination);
+        tournamentRepository.save(singleElimination);
     }
 
     public void checkTeamInTournament(SingleElimination singleElimination, Team team) {

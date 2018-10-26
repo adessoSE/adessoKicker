@@ -98,7 +98,7 @@ public class TournamentController {
         String format = tournament.getFormat();
         switch (format) {
         case ("SINGLEELIMINATION"):
-            return (singleEliminationController.addTeamToTournament(tournament, teamService.findTeamById(teamId)));
+            return singleEliminationController.addTeamToTournament(tournament, teamService.findTeamById(teamId));
 
         case ("LASTMANSTANDING"):
             return lastManStandingController.addPlayerToTournament(tournament, userService.getUserById(userId));
