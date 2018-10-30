@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Adesso Kicker</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/homeStyle.css}">
+</head>
+<header th:insert="~{fragments/header :: header}"></header>
+<body>
+<div class='row dissize' style="padding-top: 20px">
+    <div class='col-lg-6'>
+        <div class='row dissize'>
+            <div class='col-lg-11 container homeDiv' onmouseover='onMouseInteractDiv(this)' onmouseout='outMouseInteractDiv(this)' onclick='location.href="/users/you"'>
+                <div class='row dissize'>
+                    <div class='col-lg-8'>
+                        <h2 class='heading'>Dein Profil</h2>
+                        <h3 class='heading'>Sieh dir dein Profil und deine Statistiken an</h3>
+                    </div>
+                    <div class='col-lg-4'>
+                        <span class='iconBig fas fa-user'></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='col-lg-6'>
+        <div class='row dissize'>
+            <div class='col-lg-11 container homeDiv' style='float: right;' onmouseover='onMouseInteractDiv(this)' onmouseout='outMouseInteractDiv(this)' onclick='location.href="localhost:8080/tournament/current"'>
+                <div class='row dissize'>
+                    <div class='col-lg-3'>
+                        <span class='iconBig fas fa-clock'></span>
+                    </div>
+                    <div class='col-lg-9'>
+                        <h2 class='heading'>Aktuelles Turnier</h2>
+                        <h3 class='heading'>Tritt dem aktuellen Turnier bei oder sieh dir die Spielzeiten an</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class='row dissize'>
+    <div class='col-lg-6'>
+        <div class='row dissize'>
+            <div class='col-lg-11 container homeDiv' onmouseover='onMouseInteractDiv(this)' onmouseout='outMouseInteractDiv(this)' onclick='location.href="/matches#latest"'>
+                <div class='row dissize'>
+                    <div class='col-lg-8'>
+                        <h2 class='heading'>Matches</h2>
+                        <h3 class='heading'>Übersicht auf all deine ausstehenden und geplanten Matches</h3>
+                    </div>
+                    <div class='col-lg-4'>
+                        <span class='iconBig fas fa-flag'></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='col-lg-6'>
+        <div class='row dissize'>
+            <div class='col-lg-11 container homeDiv' style='float: right;' onmouseover='onMouseInteractDiv(this)' onmouseout='outMouseInteractDiv(this)' onclick='location.href="/tournaments#latest"'>
+                <div class='row dissize'>
+                    <div class='col-lg-3'>
+                        <span class='iconBig fas fa-calendar'></span>
+                    </div>
+                    <div class='col-lg-9'>
+                        <h2 class='heading'>Turnierliste</h2>
+                        <h3 class='heading'>Sieh dir alle anstehende und vergangenen Turniere an </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<footer th:insert="~{fragments/footer :: footer}"></footer>
+<script type='text/javascript' th:src="@{/js/homeUiHandle.js}"></script>
+</html>
