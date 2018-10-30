@@ -34,7 +34,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping(value="/impressum")
+    @GetMapping(value = "/impressum")
     public ModelAndView impressum() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("./impressum");
