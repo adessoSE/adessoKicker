@@ -1,64 +1,18 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Adesso-Kicker</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!--My stylesheet-->
-    <link rel="stylesheet" type="text/css" href="/css/tournamentList.css">
-    <!--JavaScript-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script language="javascript" type="text/javascript" src="/js/tournamentList.js"></script>
 </head>
 
 <header th:insert="~{fragments/header :: header}"></header>
-
 <body>
-    <!--Scrollbar-->
-    <div id="scrollbar" th:each="t : ${tournaments}">
-        <!--Tournament open-->
-        <div class='scrollElement' th:if="!${t.finished}">
-            <div class='well'>
-                <!--Header-->
-                <h3 th:text="${t.tournamentName}"></h3>
-                <hr>
-                <div class='containerMatch'>
-                    <div class='elementMatch'>
-                        <p th:text="${t.getGermanDate()}" style="font-size: 20px;">19.07.2018 | 14.00 Uhr - 17.00 Uhr | Dortmund Kicker 1</p>
-                        <p th:text="${t.description}">Raucherraum in der dortmunder Geschäftstelle, Currywurst und Getränke vor Ort. Alle Kollegen/innen sind eingeladen zu kommen wir freuen uns auf alle Leute die Zeit haben.</p>
-                    </div>
-                    <div class='elementMatch2'>
-                        <button class=".btn-primary" th:onclick="'viewTournament(\''+ ${t.tournamentId} +'\')'">Ansehen</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Tournament expired-->
-        <div class='scrollElement_expired' th:if="${t.finished}">
-            <div class='well'>
-                <!--Header-->
-                <h3 th:text="${t.tournamentName}"></h3>
-                <hr>
-                <div class='containerMatch'>
-                    <div class='elementMatch'>
-                        <p th:text="${t.startDate}" style="font-size: 20px;">19.07.2018 | 14.00 Uhr - 17.00 Uhr | Dortmund Kicker 1</p>
-                        <p th:text="${t.description}">Raucherraum in der dortmunder Geschäftstelle, Currywurst und Getränke vor Ort. Alle Kollegen/innen sind eingeladen zu kommen wir freuen uns auf alle Leute die Zeit haben.</p>
-                    </div>
-                    <div class='elementMatch2'>
-                        <button class=".btn-primary" th:onclick="'viewTournament(\'' + ${t.tournamentId} + '\')'">Ansehen</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <a id="latest"></a>
+
 </body>
-
 <footer th:insert="~{fragments/footer :: footer}"></footer>
-
 </html>
