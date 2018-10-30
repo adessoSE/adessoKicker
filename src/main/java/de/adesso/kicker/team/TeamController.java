@@ -77,26 +77,35 @@ public class TeamController {
      * @param bindingResult BindingResult
      * @return ModelAndView
      */
+
+    // Validation in Services
     @PostMapping("/teams/add")
     public ModelAndView postTeam(@Valid Team team, BindingResult bindingResult) {
         modelAndView = new ModelAndView();
-        Team teamExists = teamService.findByTeamName(team.getTeamName());
-        if (teamExists != null) {
-            bindingResult.rejectValue("teamName", "error.teamName",
-                    "Teamname existiert bereits. Bitte einen anderen wählen.");
-        }
         if (bindingResult.hasErrors()) {
-        } else {
-            if (team.getPlayerA().getUserId() != team.getPlayerB().getUserId()) {
-                teamService.saveTeam(team);
-                modelAndView.addObject("successMessage", "Team wurde hinzugefügt.");
-            } else {
-                bindingResult.rejectValue("playerA", "error.playerA");
-                bindingResult.rejectValue("playerB", "error.playerB");
-                modelAndView.addObject("failMessage", "Bitte keine identischen Spieler auswählen.");
-            }
+            modelAndView.addObject("users", userService.getAllUsers());
+            modelAndView.setViewName("team/add");
+            return modelAndView;
         }
-        modelAndView.addObject("team", team);
+        try {
+            teamService.denySameTeamPlayers(team);
+        } catch (IdenticalPlayersException e) {
+            bindingResult.rejectValue("playerA", "error.playerA", "Keine identischen Teams");
+            bindingResult.rejectValue("playerB", "error.playerB", "Keine identischen Teams");
+            modelAndView.addObject("users", userService.getAllUsers());
+            modelAndView.setViewName("team/add");
+            return modelAndView;
+        }
+        try {
+            teamService.denySameTeam(team);
+        } catch (TeamNameExistingException t) {
+            bindingResult.rejectValue("teamName", "error.teamName", "Teamname existiert bereits.");
+            modelAndView.addObject("users", userService.getAllUsers());
+            modelAndView.setViewName("team/add");
+            return modelAndView;
+        }
+        teamService.saveTeam(team);
+        modelAndView.addObject("successMessage", "Team wurde erfolgreich erstellt.");
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.setViewName("team/add");
         return modelAndView;
@@ -104,7 +113,7 @@ public class TeamController {
 
     /**
      * deleteTeam() deletes an unique team identified by an index.
-     * 
+     *
      * @param id long
      */
     @RequestMapping(method = RequestMethod.DELETE, value = "/teams/delete/{id}")
@@ -114,7 +123,7 @@ public class TeamController {
 
     /**
      * getTeamsSearchbar() gets all teams from the input of the user.
-     * 
+     *
      * @param teamName
      * @return
      */

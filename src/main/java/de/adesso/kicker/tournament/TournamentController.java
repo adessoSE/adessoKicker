@@ -101,12 +101,12 @@ public class TournamentController {
             return singleEliminationController.joinTournament(tournament);
 
         case ("LASTMANSTANDING"):
-           return lastManStandingController.joinTournament(tournament);
+            return lastManStandingController.joinTournament(tournament);
 
-       default:
-           modelAndView.addObject("tournaments", tournamentService.getAllTournaments());
-           modelAndView.setViewName("tournaments");
-           return modelAndView;
+        default:
+            modelAndView.addObject("tournaments", tournamentService.getAllTournaments());
+            modelAndView.setViewName("tournaments");
+            return modelAndView;
         }
     }
 

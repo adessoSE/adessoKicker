@@ -1,30 +1,47 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Team</title>
+    <title>Create Match</title>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel='stylesheet' href='/css/login.css'>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1>Form</h1>
-<form autocomplete="off" action="#" th:action="@{/teams/add}" th:object="${team}" method="POST">
-    <p>Team Name: <input type="text" th:field="*{teamName}" placeholder="Name of your Team"/>
-<th:if="${#fields.hasErrors('teamName')}" th:errors="*{teamName}"></p>
-    <p>Spieler 1: <select class="form-control" id="playerA" name="playerA">
-        <option th:each="playerA : ${users}"
-                th:value="${playerA.userId}"
-                th:text="${playerA.userId}+': '+${playerA.firstName}+' '+${playerA.lastName}"></option>
-    </select>
-    </p>
-    <p>Spieler 2: <select class="form-control" id="playerB" name="playerB">
-        <option th:each="playerB : ${users}"
-                th:value="${playerB.userId}"
-                th:text="${playerB.userId}+': '+${playerB.firstName}+' '+${playerB.lastName}"></option>
-    </select>
-    </p>
-    <span th:utext="${successMessage}"></span>
-    <span th:utext="${failMessage}"></span>
-    <p><input type="submit" value="Team erstellen." /> <input type="reset" value="Reset" /></p>
-</form>
+<div class='row'>
+    <div class='col-lg-4'></div>
+    <div class='col-lg-4 logBox'>
+        <h1>Team Erstellung</h1>
+<br>
+        <form autocomplete="off" action="#" th:action="@{/teams/add}" th:object="${team}" method="POST">
+            <p>Teamname: <input type="text" th:field="*{teamName}" placeholder="Euer Teamname"/></p>
+            <p style="color:red;"><th:if="${#fields.hasErrors('teamName')}" th:errors="*{teamName}"></p>
+
+            <p>Spieler 1:
+            <select class="form-control" id="playerA" name="playerA">
+                <option th:each="playerA : ${users}" th:value="${playerA.userId}" th:text="${playerA.userId}+': '
+                +${playerA.firstName}+' '+${playerA.lastName}"></option>
+            </select></p>
+
+            <p>Spieler 2:
+            <select class="form-control" id="playerB" name="playerB">
+                <option th:each="playerB : ${users}"
+                        th:value="${playerB.userId}"
+                        th:text="${playerB.userId}+': '+${playerB.firstName}+' '+${playerB.lastName}"></option>
+            </select>
+            <p style="color:red;"><th:if="${#fields.hasErrors('playerB')}" th:errors="*{playerB}"></p>
+
+            </p>
+
+            <p style='color: darkgreen;'th:utext="${successMessage}"></p>
+            <p><input class='btn btn-secondary' type="reset" value="Reset" /><input class='btn btn-primary' type="submit" value="Team erstellen." /></p>
+        </form>
+    </div>
+    <div class='col-lg-4'></div>
+</div>
+
 </body>
 </html>

@@ -12,13 +12,10 @@
 	</head>
 	
 	<body>
-	
-		</br></br></br></br>
-		
 		<div class='row'>
 			<div class='col-lg-4'></div>
 			<div class='col-lg-4 logBox'>
-			<h1>Form</h1>
+			<h1>Match Erstellung</h1>
 			
 				<form autocomplete="off" action="#" th:action="@{/matches/add}" th:object="${match}" method="POST">
 
@@ -31,10 +28,10 @@
 				   
 					<p>Datum: <input type="date" th:field="*{date}"/></p>
 					<p>Uhrzeit: <input type="time" th:field="*{time}"/></p>
-					<p style='color: red;'th:utext="${dateMessage}"></p>
+					<p style="color:red;"><th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></p>
 					</br>
 					
-					Team 1:
+					<p>Team 1:
 					<select class="form-control" id="teamA" name="teamA">
 						<option th:each="teamA: ${teams}" th:value="${teamA.teamId}" th:text="${teamA.teamId}+' : '+${teamA.teamName}"></option>
 					</select>
@@ -42,10 +39,10 @@
 					<select class="form-control" id="teamB" name="teamB">
 						<option th:each="teamB: ${teams}" th:value="${teamB.teamId}" th:text="${teamB.teamId}+' : '+${teamB.teamName}"></option>
 					</select>
+                    </p>
+					<p style="color:red;"><th:if="${#fields.hasErrors('teamA')}" th:errors="*{teamA}"></p>
 					
 					<p style='color: darkgreen;'th:utext="${successMessage}"></p>
-					<p style='color: red;'th:utext="${failMessage}"></p>
-					
 					<p><input class='btn btn-secondary' type="reset" value="Reset" /><input class='btn btn-primary' type="submit" value="Match erstellen." /></p>
 					
 				</form>

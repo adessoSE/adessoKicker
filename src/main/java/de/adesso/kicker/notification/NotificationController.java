@@ -13,32 +13,32 @@ import de.adesso.kicker.user.UserService;
 
 @RestController
 public class NotificationController {
-	
-	private NotificationService notificationService;
-	private UserService userService;
-	
-	@Autowired
+
+    private NotificationService notificationService;
+    private UserService userService;
+
+    @Autowired
     public NotificationController(NotificationService notificationService, UserService userService) {
-		
-		this.notificationService = notificationService;
-		this.userService = userService;
+
+        this.notificationService = notificationService;
+        this.userService = userService;
     }
-	
-	@RequestMapping("/notifications")
-	public List<Notification> getNotifications() {
-		
-		return notificationService.getAllNotifications();
-	}
-	
-	@RequestMapping("/{userId}/notifications/send")
+
+    @RequestMapping("/notifications")
+    public List<Notification> getNotifications() {
+
+        return notificationService.getAllNotifications();
+    }
+
+    @RequestMapping("/{userId}/notifications/send")
     public List<Notification> getUserNotificationsSend(@PathVariable long userId) {
-        
+
         return notificationService.getAllNotificationsBySender(userService.getUserById(userId));
     }
-	
-	@RequestMapping("/{userId}/notifications/received")
+
+    @RequestMapping("/{userId}/notifications/received")
     public List<Notification> getUserNotificationsReceived(@PathVariable long userId) {
-        
-	    return notificationService.getAllNotificationsByReceiver(userService.getUserById(userId));
+
+        return notificationService.getAllNotificationsByReceiver(userService.getUserById(userId));
     }
 }

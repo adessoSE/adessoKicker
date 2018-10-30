@@ -31,7 +31,6 @@ public class MatchController {
     private TeamService teamService;
     private UserService userService;
     private ModelAndView modelAndView;
-    private Date time;
 
     @Autowired
     public MatchController(MatchService matchService, TeamService teamService, UserService userService) {
@@ -101,32 +100,31 @@ public class MatchController {
     @PostMapping("/matches/add")
     public ModelAndView postMatch(@Valid Match match, BindingResult bindingResult) {
         modelAndView = new ModelAndView();
-        time = new Date();
         if (bindingResult.hasErrors()) {
+            modelAndView.addObject("teams", teamService.getAllTeams());
+            modelAndView.setViewName("match/create");
+            return modelAndView;
         }
         try {
-            if (match.getTeamA().getTeamId() != match.getTeamB().getTeamId()) {
-                if (match.getDate().after(yesterday()) && (match.getTime().getHours() >= time.getHours()
-                        && match.getTime().getMinutes() >= time.getMinutes())) {
-                    matchService.saveMatch(match);
-                    teamService.addMatchIdToTeam(match, match.getTeamA().getTeamId());
-                    teamService.addMatchIdToTeam(match, match.getTeamB().getTeamId());
-                    modelAndView.addObject("successMessage", "Match wurde hinzugefügt.");
+            matchService.denyPastDate(match);
+        } catch (PasteDateException p) {
+            bindingResult.rejectValue("date", "error.date", "Kein vergangenes Datum.");
 
-                } else {
-                    modelAndView.addObject("dateMessage", "Bitte kein vergangenes Datum.");
-                }
-
-            } else {
-                bindingResult.rejectValue("teamA", "error.teamA");
-                bindingResult.rejectValue("teamB", "error.teamB");
-                modelAndView.addObject("failMessage", "Bitte keine identischen Teams auswählen.");
-            }
-
-        } catch (NullPointerException e) {
-            modelAndView.addObject("dateMessage", "Bitte ein Datum + Uhrzeit.");
+            modelAndView.addObject("teams", teamService.getAllTeams());
+            modelAndView.setViewName("match/create");
+            return modelAndView;
         }
-        modelAndView.addObject("match", new Match());
+
+        try {
+            matchService.identicalTeams(match);
+        } catch (IdenticalTeamsException i) {
+            bindingResult.rejectValue("teamA", "error.teamA", "Keine identischen Teams.");
+            modelAndView.addObject("teams", teamService.getAllTeams());
+            modelAndView.setViewName("match/create");
+            return modelAndView;
+        }
+        matchService.saveMatch(match);
+        modelAndView.addObject("successMessage", "Match wurde hinzugefügt.");
         modelAndView.addObject("teams", teamService.getAllTeams());
         modelAndView.setViewName("match/create");
         return modelAndView;
@@ -147,9 +145,5 @@ public class MatchController {
      * 
      * @return
      */
-    private Date yesterday() {
-        final Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -1);
-        return cal.getTime();
-    }
+
 }
