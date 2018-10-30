@@ -41,6 +41,18 @@ public class UserController {
         return modelAndView;
     }
 
+    //Delete a notification
+    @PostMapping(value = { "", "/", "home" })
+    public ModelAndView deleteNotification() {
+        ModelAndView modelAndView = new ModelAndView();
+        User user = userService.getLoggedInUser();
+        modelAndView.addObject("user", userService.getLoggedInUser());
+        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
+        modelAndView.addObject("notificationService", notificationService);
+        modelAndView.setViewName("user/home");
+        return modelAndView;
+    }
+    
     /**
      * getUser() gets an unique user identified by an index.
      * 

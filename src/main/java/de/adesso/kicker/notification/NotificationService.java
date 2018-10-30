@@ -54,6 +54,7 @@ public class NotificationService {
 	    notificationRepository.save(notification);
 	}
 	
+	//Removes notification from repository
 	public void removeNotificationById(long id) {
 	    
 	    notificationRepository.deleteById(id);

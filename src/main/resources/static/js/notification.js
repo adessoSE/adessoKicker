@@ -101,8 +101,32 @@ function sum(a, b){
 	alert(c);
 }
 
+function deleteNotification(notificationId){
+	
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+	if (this.readyState == 4 && this.status == 200) {
+		
+		//Remove notification on page
+		$('#notificationList').children().each(function(){
+			var value = $(this).attr("value");
+			if (value == notificationId){
+				
+				alert("Remove");
+				$(this).remove();
+			}
+		});
+	}
+	};
+	xhttp.open("DELETE", "/notifications/"+notificationId, false);
+	xhttp.send();
+	return false;
+}
+
 function declineNotification(service = "", notification = "") {
 	
+	alert(notification.getId());
+	service.removeNotificationById(notification.getId());
 	alert(service + notification);
 }
 
