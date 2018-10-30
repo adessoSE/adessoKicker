@@ -6,11 +6,15 @@
 </head>
 <body>
 <form action="#" th:action="@{/tournaments/create?LASTMANSTANDING}" th:object="${tournament}" id="lastManStanding" name="lastManStanding" method="post">
-    <p>Tournament Name: <input type="text" th:field="*{tournamentName}" /></p>
-    <p>Start Date: <input type="date" th:field="*{startDate}" /></p>
-    <p><input type="submit" value="Submit"></p>
-
-    <span th:utext="${successMessage}"></span>
+    <div class="form-group">
+        <label for="tournamentName">Tournament Name</label>
+        <input type="text" class="form-control" id="tournamentName" placeholder="Tournament name..." th:field="*{tournamentName}">
+    </div>
+    <div class="form-group">
+        <label for="startDate">Start Date</label>
+        <input type="date" class="form-control" id="startDate" th:field="*{startDate}">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </body>
 </html>

@@ -1,5 +1,5 @@
 $(document).ready(function(){
     $('select[name="tournamentFormats"]').change(function(){
-        $("#form").load('create?' + $(this).val());
+        $("#tournamentForm").load('create?' + $(this).val());
     });
 });
