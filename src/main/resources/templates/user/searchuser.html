@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spieler Suche</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+<header th:replace="~{fragments/header :: header}"></header>
+    <h2>Search for Users</h2>
+        <form th:object="${users}" th:action="@{/users/list}" method="get">
+
+            <label for="search">Name</label>
+            <input type="search" name="search" id="search" placeholder="Vorname & Name" aria-label="search"/>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Suchen</button>
+                <h2>User-List</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                        </tr>
+                    </thead>
+                    <div th:if="${not #lists.isEmpty(search)}">
+                    <tbody>
+                        <tr th:each="users: ${search}">
+                            <td><a th:href="@{'/users/'+${users.userId}}" th:text="${users.firstName}+' '+${users.lastName}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+</div>
+<footer th:insert="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

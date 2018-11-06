@@ -134,7 +134,7 @@ public class TeamController {
             modelAndView.addObject("search", teamService.getTeamByName(teamName));
         } catch (Exception i) {
         }
-        modelAndView.setViewName("user/testteamsearch");
+        modelAndView.setViewName("team/searchteam");
         return modelAndView;
     }
 }

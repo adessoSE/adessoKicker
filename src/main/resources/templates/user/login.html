@@ -3,38 +3,33 @@
 	
 	<head>
 		<meta charset='UTF-8'>
-		<meta name="viewport" content="width=device-width, initial-scale=1">	
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel='stylesheet' href='/css/login.css'>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 		<title>Login</title>
 	</head>
 
 	<body>
-		
-		</br></br></br></br>
-		
-		<div class='row'>
 
-			<div class='col-lg-4'></div>
-			<div class='col-lg-4 logBox'>
-			
+	<div class="container">
+		<div class="jumbotron">
 				<form th:action="@{/login}" method="POST" class="form-signin">
-					<h3 class="form-signin-heading" th:text="Welcome"></h3>
-					</br>
-					<input type="text" id="email" name="email"  th:placeholder="Email" class="form-control" /> <br/>
-					<input type="password"  th:placeholder="Password" id="password" name="password" class="form-control" /> <br />
-						   
+					<h3 class="form-signin-heading" th:text="Willkommen"></h3>
+					<br>
+                    <div class="form-group">
+					<label for="email">Email</label>
+                        <input type="text" id="email" name="email"  th:placeholder="Email" class="form-control"> <br>
+                        <label for="password">Passwort</label>
+					<input type="password"  th:placeholder="Password" id="password" name="password" class="form-control"> <br>
 					<a th:if="${param.error}">
-						<p style="color: red; float: right;">Email or Password invalid, please verify</p>
-					</a>
+                        <div class="alert alert-danger">Email or Password invalid, please verify</div>
+                    </a>
 					
-					<input type="checkbox" name="remember-me" /> Remember Me </br></br>
+					<input type="checkbox" name="remember-me" title="remember-me"> Daten merken<br><br>
 		
-					<div>Not registered yet?  <a href='/registration'>Sign up now!</a></div>
+					<div>Noch nicht registriert?  Registriere dich <a href='/registration'>hier!</a></div>
 					<button class='btn btn-primary' name="Submit" value="Login" type="Submit" th:text="Login"></button>
-				</form>
+                    </div>
+                </form>
 				
 			</div>
 			<div class='col-lg-4'></div>
@@ -42,7 +37,8 @@
 		
 	</body>
 	<footer>
-		<script type='text/javascript' src='/js/cookieWarning.js'></script>
+		<script type='text/javascript' src='/js/_cookieWarning.js'></script>
+        <footer th:insert="~{fragments/footer :: footer}"></footer>
 	</footer>
 	
 </html>

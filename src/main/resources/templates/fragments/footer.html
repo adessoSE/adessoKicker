@@ -3,21 +3,11 @@
 <head>
   <meta charset='utf-8' name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-
 <footer th:fragment="footer" style="background-color: lightgrey;">
-  <div class="container-fluid">
-    <div class='row'>
-      <div class="col" style="text-align: center">
-        <div>
-          <a th:href="@{/impressum}">Impressum</a>
-        </div>
-        <div>&copy Copyright adesso AG. Alle Rechte vorbehalten.</div>
-      </div>
+    <div class="card-footer text-center text-muted">
+        <a th:href="@{/impressum}">Impressum</a><br>
+        &copy Copyright adesso AG. Alle Rechte vorbehalten.
     </div>
-  </div>
-  <script src="/js/cookieWarn.js"></script>
 </footer>
 </html>
