@@ -2,100 +2,98 @@
 
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <title>Adesso-Kicker</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <!--My stylesheet-->
-    <link rel="stylesheet" href="../css/matches.css">
-    <!--JavaScript-->
-    <script language="javascript" type="text/javascript" src="../js/matches.js"></script>
+  <meta charset="utf-8" />
+  <title>Adesso-Kicker</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="../css/matches.css">
+  <script language="javascript" type="text/javascript" src="../js/matches.js"></script>
 </head>
 
 <header th:insert="~{fragments/header :: header}"></header>
 
 <body>
-    <!--Scrollbar-->
-    <div id="scrollbar" th:each="m : ${matches}">
-        <!--Open-->
-        <div class='scrollElement' th:if="${m.winner == null}">
-            <div class='well'>
-                <!--Header-->
-                <p style='font-size: 30px;' th:text="${m.getGermanDate()} + ' | ' + ${m.kicker}">Keine Zeit/Ort gefunden</p>
-                <hr class="hr">
-                <div class='containerMatch'>
-                    <div class='elementMatch'>
-                        <!--Box-->
-                        <div class='box'>
-                            
-                        </div>
-                    </div>
-                    <div class='elementMatch2'>
-                        <!--Team-->
-                        <div class='team'>
-                            <a th:href="@{/teams/{id}(id=${m.teamA.teamId})}" style="margin-bottom:-20px;" th:text="${m.teamA.teamName}">Team wurde gelöscht</a>
-                            <hr class="innerHr">
-                            <p style="margin-top:-15px;" th:text="${m.teamA.playerA.firstName} + ' ' + ${m.teamA.playerA.lastName}">ERROR</p>
-                            <p th:text="${m.teamA.playerB.firstName} + ' ' + ${m.teamA.playerB.lastName}">ERROR</p>
-                        </div>
-                    </div>
-                    <div class='elementMatch'>
-                        <!--VS.-->
-                        <p style='font-size: 80px; text-align: center;'>VS.</p>
-                    </div>
-                    <div class='elementMatch2'>
-                        <!--Team-->
-                        <div class='team'>
-                            <a th:href="@{/teams/{id}(id=${m.teamB.teamId})}" style="margin-bottom:-20px;" th:text="${m.teamB.teamName}">Team wurde gelöscht</a>
-                            <hr class="innerHr">
-                            <p style="margin-top:-15px;" th:text="${m.teamB.playerA.firstName} + ' ' + ${m.teamB.playerA.lastName}">ERROR</p>
-                            <p th:text="${m.teamB.playerB.firstName} + ' ' + ${m.teamB.playerB.lastName}">ERROR</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!--Scrollbar-->
+<div id="scrollbar" th:each="m : ${matches}">
+  <!--Open-->
+  <div class='scrollElement' th:if="${m.winner == null}">
+    <div class='well'>
+      <!--Header-->
+      <p style='font-size: 30px;' th:text="${m.getGermanDate()} + ' | ' + ${m.kicker}">Keine Zeit/Ort gefunden</p>
+      <hr class="hr">
+      <div class='containerMatch'>
+        <div class='elementMatch'>
+          <!--Box-->
+          <div class='box'>
+
+          </div>
         </div>
-        <!--Expired-->
-        <div class='scrollElement_expired' th:if="${m.winner != null}">
-            <div class='well'>
-                <!--Header-->
-                <p style='font-size: 30px;' th:text="${m.date} + ' | ' + ${m.kicker}">Keine Zeit/Ort gefunden</p>
-                <hr class="hr">
-                <div class='containerMatch'>
-                    <div class='elementMatch'>
-                        <!--Box-->
-                        <div class='box'>
-                            <span th:if="${m.winner.playerA == user OR m.winner.playerB == user}" class='glyphicon glyphicon-ok'></span>
-							<span th:if="${m.winner.playerA != user AND m.winner.playerB != user}" class='glyphicon glyphicon-remove'></span>
-                        </div>
-                    </div>
-                    <div class='elementMatch2'>
-                        <!--Team-->
-                        <div class='team'>
-                            <p style="margin-bottom:-20px;" th:text="${m.teamA.teamName}">Team wurde gelöscht</p>
-                            <hr class="innerHr">
-                            <p style="margin-top:-15px;" th:text="${m.teamA.playerA.firstName} + ' ' + ${m.teamA.playerA.lastName}">ERROR</p>
-                            <p th:text="${m.teamA.playerB.firstName} + ' ' + ${m.teamA.playerB.lastName}">ERROR</p>
-                        </div>
-                    </div>
-                    <div class='elementMatch'>
-                        <!--VS.-->
-                        <p style='font-size: 80px; text-align: center;'>VS.</p>
-                    </div>
-                    <div class='elementMatch2'>
-                        <!--Team-->
-                        <div class='team'>
-                            <p style="margin-bottom:-20px;" th:text="${m.teamB.teamName}">Team wurde gelöscht</p>
-                            <hr class="innerHr">
-                            <p style="margin-top:-15px;" th:text="${m.teamB.playerA.firstName} + ' ' + ${m.teamB.playerA.lastName}">ERROR</p>
-                            <p th:text="${m.teamB.playerB.firstName} + ' ' + ${m.teamB.playerB.lastName}">ERROR</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class='elementMatch2'>
+          <!--Team-->
+          <div class='team'>
+            <a th:href="@{/teams/{id}(id=${m.teamA.teamId})}" style="margin-bottom:-20px;" th:text="${m.teamA.teamName}">Team wurde gelöscht</a>
+            <hr class="innerHr">
+            <p style="margin-top:-15px;" th:text="${m.teamA.playerA.firstName} + ' ' + ${m.teamA.playerA.lastName}">ERROR</p>
+            <p th:text="${m.teamA.playerB.firstName} + ' ' + ${m.teamA.playerB.lastName}">ERROR</p>
+          </div>
         </div>
+        <div class='elementMatch'>
+          <!--VS.-->
+          <p style='font-size: 80px; text-align: center;'>VS.</p>
+        </div>
+        <div class='elementMatch2'>
+          <!--Team-->
+          <div class='team'>
+            <a th:href="@{/teams/{id}(id=${m.teamB.teamId})}" style="margin-bottom:-20px;" th:text="${m.teamB.teamName}">Team wurde gelöscht</a>
+            <hr class="innerHr">
+            <p style="margin-top:-15px;" th:text="${m.teamB.playerA.firstName} + ' ' + ${m.teamB.playerA.lastName}">ERROR</p>
+            <p th:text="${m.teamB.playerB.firstName} + ' ' + ${m.teamB.playerB.lastName}">ERROR</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <a id="latest"></a>
+  </div>
+  <!--Expired-->
+  <div class='scrollElement_expired' th:if="${m.winner != null}">
+    <div class='well'>
+      <!--Header-->
+      <p style='font-size: 30px;' th:text="${m.date} + ' | ' + ${m.kicker}">Keine Zeit/Ort gefunden</p>
+      <hr class="hr">
+      <div class='containerMatch'>
+        <div class='elementMatch'>
+          <!--Box-->
+          <div class='box'>
+            <span th:if="${m.winner.playerA == user OR m.winner.playerB == user}" class='glyphicon glyphicon-ok'></span>
+            <span th:if="${m.winner.playerA != user AND m.winner.playerB != user}" class='glyphicon glyphicon-remove'></span>
+          </div>
+        </div>
+        <div class='elementMatch2'>
+          <!--Team-->
+          <div class='team'>
+            <p style="margin-bottom:-20px;" th:text="${m.teamA.teamName}">Team wurde gelöscht</p>
+            <hr class="innerHr">
+            <p style="margin-top:-15px;" th:text="${m.teamA.playerA.firstName} + ' ' + ${m.teamA.playerA.lastName}">ERROR</p>
+            <p th:text="${m.teamA.playerB.firstName} + ' ' + ${m.teamA.playerB.lastName}">ERROR</p>
+          </div>
+        </div>
+        <div class='elementMatch'>
+          <!--VS.-->
+          <p style='font-size: 80px; text-align: center;'>VS.</p>
+        </div>
+        <div class='elementMatch2'>
+          <!--Team-->
+          <div class='team'>
+            <p style="margin-bottom:-20px;" th:text="${m.teamB.teamName}">Team wurde gelöscht</p>
+            <hr class="innerHr">
+            <p style="margin-top:-15px;" th:text="${m.teamB.playerA.firstName} + ' ' + ${m.teamB.playerA.lastName}">ERROR</p>
+            <p th:text="${m.teamB.playerB.firstName} + ' ' + ${m.teamB.playerB.lastName}">ERROR</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<a id="latest"></a>
 </body>
 
 <footer th:insert="~{fragments/footer :: footer}"></footer>

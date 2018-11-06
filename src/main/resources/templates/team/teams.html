@@ -1,39 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-	<head>
-		<meta charset=utf-8>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-		<link rel="stylesheet" th:href="@{/css/teamsStyle.css}"/>
-		<title>Tournaments</title>
-	</head>
-	
+<head>
+  <meta charset=utf-8>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" th:href="@{/css/teamsStyle.css}"/>
+  <title>Tournaments</title>
+</head>
 
-	
-	<body>
-	<header th:insert="~{fragments/header :: header}"></header>
-	
-		<h1>Alle Teams</h1>
-		
-		<div class='row dissize'>
-			<div class='col-lg-2 sortbtn' style='padding: 20px;' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)' onclick='sort("teamnames")'>Teamname</div>
-			<div class='col-lg-3 sortbtn' style='padding: 20px;' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)' onclick='sort("playerA")'>Spieler 1</div>
-			<div class='col-lg-3 sortbtn' style='padding: 20px;' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)' onclick='sort("playerB")'>Spieler 2</div>
-			<div class='col-lg-2 sortbtn' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)' onclick='sort("wins")'>Gewonnene Spiele</div>
-			<div class='col-lg-2 sortbtn' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)' onclick='sort("losses")'>Verlorene Spiele</div>
-		</div>
-			<div id='list' data-sorted="none">
-				<div class='row teamBox dissize' th:each="t : ${teams}">
-					<div class='col-lg-2 value' th:text="${t.teamName}">[teamName]</div>
-					<div class='col-lg-3 value' th:text="${t.playerA.firstName} + ' ' + ${t.playerA.lastName}">[playerA]</div>
-					<div class='col-lg-3 value' th:text="${t.playerB.firstName} + ' ' + ${t.playerB.lastName}">[playerB]</div>
-					<div class='col-lg-2 value' th:text="${t.teamWins}">[teamWins]</div>
-					<div class='col-lg-2 value' th:text="${t.teamLosses}">[teamsLosses]</div>
-				</div>
-			</div>
-	<footer th:insert="~{fragments/footer :: footer}"></footer>
-	</body>
-	<script  th:inline="javascript" src='/js/teams.js'></script>
-	
+
+
+<body>
+<header th:insert="~{fragments/header :: header}"></header>
+
+<h1>Alle Teams</h1>
+
+<div class='row dissize'>
+  <div class='col-lg-2 sortbtn' style='padding: 20px;' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)' onclick='sort("teamnames")'>Teamname</div>
+  <div class='col-lg-3 sortbtn' style='padding: 20px;' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)' onclick='sort("playerA")'>Spieler 1</div>
+  <div class='col-lg-3 sortbtn' style='padding: 20px;' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)' onclick='sort("playerB")'>Spieler 2</div>
+  <div class='col-lg-2 sortbtn' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)' onclick='sort("wins")'>Gewonnene Spiele</div>
+  <div class='col-lg-2 sortbtn' onmouseenter='mouseOver(this)' onmouseleave='mouseOut(this)' onclick='sort("losses")'>Verlorene Spiele</div>
+</div>
+<div id='list' data-sorted="none">
+  <div class='row teamBox dissize' th:each="t : ${teams}">
+    <div class='col-lg-2 value' th:text="${t.teamName}">[teamName]</div>
+    <div class='col-lg-3 value' th:text="${t.playerA.firstName} + ' ' + ${t.playerA.lastName}">[playerA]</div>
+    <div class='col-lg-3 value' th:text="${t.playerB.firstName} + ' ' + ${t.playerB.lastName}">[playerB]</div>
+    <div class='col-lg-2 value' th:text="${t.teamWins}">[teamWins]</div>
+    <div class='col-lg-2 value' th:text="${t.teamLosses}">[teamsLosses]</div>
+  </div>
+</div>
+<footer th:insert="~{fragments/footer :: footer}"></footer>
+</body>
+<script  th:inline="javascript" src='/js/teams.js'></script>
+
 </html>

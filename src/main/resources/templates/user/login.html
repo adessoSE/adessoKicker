@@ -1,44 +1,38 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-	
-	<head>
-		<meta charset='UTF-8'>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-		<title>Login</title>
-	</head>
 
-	<body>
+<head>
+  <meta charset='UTF-8'>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <title>Login</title>
+</head>
 
-	<div class="container">
-		<div class="jumbotron">
-				<form th:action="@{/login}" method="POST" class="form-signin">
-					<h3 class="form-signin-heading" th:text="Willkommen"></h3>
-					<br>
-                    <div class="form-group">
-					<label for="email">Email</label>
-                        <input type="text" id="email" name="email"  th:placeholder="Email" class="form-control"> <br>
-                        <label for="password">Passwort</label>
-					<input type="password"  th:placeholder="Password" id="password" name="password" class="form-control"> <br>
-					<a th:if="${param.error}">
-                        <div class="alert alert-danger">Email or Password invalid, please verify</div>
-                    </a>
-					
-					<input type="checkbox" name="remember-me" title="remember-me"> Daten merken<br><br>
-		
-					<div>Noch nicht registriert?  Registriere dich <a href='/registration'>hier!</a></div>
-					<button class='btn btn-primary' name="Submit" value="Login" type="Submit" th:text="Login"></button>
-                    </div>
-                </form>
-				
-			</div>
-			<div class='col-lg-4'></div>
-		</div>
-		
-	</body>
-	<footer>
-		<script type='text/javascript' src='/js/_cookieWarning.js'></script>
-        <footer th:insert="~{fragments/footer :: footer}"></footer>
-	</footer>
-	
+<body>
+<div class="container">
+  <div class="jumbotron">
+    <form th:action="@{/login}" method="POST" class="form-signin">
+      <h3 class="form-signin-heading" th:text="Willkommen"></h3>
+      <br>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email"  th:placeholder="Email" class="form-control"> <br>
+        <label for="password">Passwort</label>
+        <input type="password"  th:placeholder="Password" id="password" name="password" class="form-control"> <br>
+        <a th:if="${param.error}">
+          <div class="alert alert-danger">Email or Password invalid, please verify</div>
+        </a>
+        <input type="checkbox" name="remember-me" title="remember-me"> Daten merken<br><br>
+        <div>Noch nicht registriert?  Registriere dich <a href='/registration'>hier!</a></div>
+        <button class='btn btn-primary' name="Submit" value="Login" type="Submit" th:text="Login"></button>
+      </div>
+    </form>
+  </div>
+  <div class='col-lg-4'></div>
+</div>
+</body>
+<footer>
+  <script type='text/javascript' src='/js/_cookieWarning.js'></script>
+  <footer th:insert="~{fragments/footer :: footer}"></footer>
+</footer>
 </html>
