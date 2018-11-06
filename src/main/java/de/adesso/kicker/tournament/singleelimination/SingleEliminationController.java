@@ -2,6 +2,7 @@ package de.adesso.kicker.tournament.singleelimination;
 
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.team.TeamService;
+import de.adesso.kicker.tournament.TournamentControllerInterface;
 import de.adesso.kicker.tournament.Tournament;
 import de.adesso.kicker.tournament.TournamentFormats;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 @Controller
-public class SingleEliminationController {
+public class SingleEliminationController implements TournamentControllerInterface<SingleElimination> {
 
     private SingleEliminationService singleEliminationService;
     private TeamService teamService;
@@ -25,6 +26,19 @@ public class SingleEliminationController {
 
         this.singleEliminationService = singleEliminationService;
         this.teamService = teamService;
+    }
+
+    @Override
+    public Class<SingleElimination> appliesTo() {
+        return SingleElimination.class;
+    }
+
+    @Override
+    public ModelAndView getPage(SingleElimination singleElimination) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("tournament", singleElimination);
+        modelAndView.setViewName("tournament/page");
+        return modelAndView;
     }
 
     @GetMapping(value = "/tournaments/create", params = { "SINGLEELIMINATION" })
@@ -54,16 +68,8 @@ public class SingleEliminationController {
         return modelAndView;
     }
 
-    public ModelAndView getSingleEliminationPage(Tournament tournament) {
-
-        SingleElimination singleElimination = (SingleElimination) tournament;
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("tournament", singleElimination);
-        modelAndView.setViewName("tournament/page");
-        return modelAndView;
-    }
-
-    public ModelAndView joinTournament(Tournament tournament) {
+    @Override
+    public ModelAndView getJoinTournament(SingleElimination tournament) {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournament", tournament);
@@ -72,45 +78,43 @@ public class SingleEliminationController {
         return modelAndView;
     }
 
-    public ModelAndView addTeamToTournament(Tournament tournament, Team team) {
+    @Override
+    public ModelAndView postJoinTournament(SingleElimination tournament, long id) {
         ModelAndView modelAndView = new ModelAndView();
-        SingleElimination singleElimination = (SingleElimination) tournament;
+        Team team = teamService.findTeamById(id);
         try {
-            singleEliminationService.checkTeamInTournament(singleElimination, team);
+            singleEliminationService.checkTeamInTournament(tournament, team);
         } catch (TeamAlreadyInTournamentException e) {
             modelAndView.addObject("failMessage", "Team is already in tournament");
-            modelAndView.addObject("tournament", singleElimination);
+            modelAndView.addObject("tournament", tournament);
             modelAndView.addObject("teams", teamService.getAllTeams());
             modelAndView.setViewName("tournament/addteam");
             return modelAndView;
         }
-
         try {
-            singleEliminationService.checkPlayerTeamInTournament(singleElimination, team);
+            singleEliminationService.checkPlayerTeamInTournament(tournament, team);
         } catch (PlayerOfTeamAlreadyInTournamentException e) {
 
             modelAndView.addObject("failMessage", "A player of the team is already in tournament");
-            modelAndView.addObject("tournament", singleElimination);
+            modelAndView.addObject("tournament", tournament);
             modelAndView.addObject("teams", teamService.getAllTeams());
             modelAndView.setViewName("tournament/addteam");
             return modelAndView;
         }
-
-        singleEliminationService.addTeamToTournament(singleElimination, team);
-        singleEliminationService.addPlayer(singleElimination, team.getPlayerA());
-        singleEliminationService.addPlayer(singleElimination, team.getPlayerB());
-        modelAndView.addObject("tournament", singleElimination);
+        singleEliminationService.addTeamToTournament(tournament, team);
+        singleEliminationService.addPlayer(tournament, team.getPlayerA());
+        singleEliminationService.addPlayer(tournament, team.getPlayerB());
+        modelAndView.addObject("tournament", tournament);
         modelAndView.addObject("teams", teamService.getAllTeams());
         modelAndView.addObject("successMessage", "Team was added to tournament");
         modelAndView.setViewName("tournament/addteam");
         return modelAndView;
     }
 
-    public ModelAndView showTree(Tournament tournament) {
-
+    @Override
+    public ModelAndView getBracket(SingleElimination tournament) {
         ModelAndView modelAndView = new ModelAndView();
-        SingleElimination singleElimination = (SingleElimination) tournament;
-        singleEliminationService.createTournamentTree(singleElimination.getTeams(), singleElimination);
+        singleEliminationService.createTournamentTree(tournament.getTeams(), tournament);
         modelAndView.addObject("tournament", singleEliminationService.getTournamentById(tournament.getTournamentId()));
         modelAndView.setViewName("tournament/tree");
         return modelAndView;

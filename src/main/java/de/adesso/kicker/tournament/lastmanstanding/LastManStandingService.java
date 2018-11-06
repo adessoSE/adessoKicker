@@ -4,12 +4,19 @@ import de.adesso.kicker.tournament.TournamentService;
 import de.adesso.kicker.user.User;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class LastManStandingService extends TournamentService {
+
+    @Override
+    @PostConstruct
+    public void init() {
+
+    }
 
     public void createLivesMap(LastManStanding lastManStanding) {
         List<User> players = lastManStanding.getPlayers();

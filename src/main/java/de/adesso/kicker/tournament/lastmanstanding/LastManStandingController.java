@@ -1,5 +1,6 @@
 package de.adesso.kicker.tournament.lastmanstanding;
 
+import de.adesso.kicker.tournament.TournamentControllerInterface;
 import de.adesso.kicker.tournament.Tournament;
 import de.adesso.kicker.tournament.TournamentFormats;
 import de.adesso.kicker.user.User;
@@ -15,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 @Controller
-public class LastManStandingController {
+public class LastManStandingController implements TournamentControllerInterface<LastManStanding> {
 
     private LastManStandingService lastManStandingService;
     private UserService userService;
@@ -27,15 +28,21 @@ public class LastManStandingController {
         this.userService = userService;
     }
 
-    public ModelAndView getLastManStandingPage(Tournament tournament) {
+    @Override
+    public Class<LastManStanding> appliesTo() {
+        return LastManStanding.class;
+    }
+
+    @Override
+    public ModelAndView getPage(LastManStanding lastManStanding) {
         ModelAndView modelAndView = new ModelAndView();
-        LastManStanding lastManStanding = (LastManStanding) tournament;
         modelAndView.addObject("tournament", lastManStanding);
         modelAndView.setViewName("tournament/page");
         return modelAndView;
     }
 
-    public ModelAndView joinTournament(Tournament tournament) {
+    @Override
+    public ModelAndView getJoinTournament(LastManStanding tournament) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournament", tournament);
         modelAndView.addObject("users", userService.getAllUsers());
@@ -43,28 +50,29 @@ public class LastManStandingController {
         return modelAndView;
     }
 
-    public ModelAndView addPlayerToTournament(Tournament tournament, User user) {
+    @Override
+    public ModelAndView postJoinTournament(LastManStanding tournament, long id) {
         ModelAndView modelAndView = new ModelAndView();
-        LastManStanding lastManStanding = (LastManStanding) tournament;
+        User user = userService.getUserById(id);
         modelAndView.addObject("tournament", tournament);
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.setViewName("tournament/addplayer");
         try {
-            lastManStandingService.checkPlayerInTournament(lastManStanding, user);
+            lastManStandingService.checkPlayerInTournament(tournament, user);
         } catch (PlayerAlreadyInTournamentException e) {
             modelAndView.addObject("failMessage", "Player already in tournament");
             return modelAndView;
         }
-        lastManStandingService.addPlayer(lastManStanding, user);
+        lastManStandingService.addPlayer(tournament, user);
         modelAndView.addObject("successMessage", "Player added to tournament");
         return modelAndView;
     }
 
-    public ModelAndView showLivesMap(Tournament tournament) {
-        LastManStanding lastManStanding = (LastManStanding) tournament;
+    @Override
+    public ModelAndView getBracket(LastManStanding tournament) {
         ModelAndView modelAndView = new ModelAndView();
-        lastManStandingService.createLivesMap(lastManStanding);
-        modelAndView.addObject("tournament", lastManStanding);
+        lastManStandingService.createLivesMap(tournament);
+        modelAndView.addObject("tournament", tournament);
         modelAndView.setViewName("tournament/maptest");
         return modelAndView;
     }
