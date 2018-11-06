@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequest;
+import de.adesso.kicker.team.Team;
 import de.adesso.kicker.team.TeamService;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
@@ -19,12 +21,14 @@ public class NotificationController {
 	
 	private NotificationService notificationService;
 	private UserService userService;
+	private TeamService teamService;
 	
 	@Autowired
-    public NotificationController(NotificationService notificationService, UserService userService) {
+    public NotificationController(NotificationService notificationService, UserService userService, TeamService teamService) {
 		
 		this.notificationService = notificationService;
 		this.userService = userService;
+		this.teamService = teamService;
     }
 	
 	@RequestMapping("/notifications")
@@ -60,11 +64,29 @@ public class NotificationController {
 	}
 	
 	@PostMapping("/notifications/add/standard")
-    public void getAddNotifcationStandart(Long senderId, Long receiverId, String message) {
+    public void addNotifcationStandart(Long senderId, Long receiverId, String message) {
         
         User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
         Notification notification = new Notification(message, receiver, sender);
+        notificationService.saveNotification(notification);
+    }
+	
+	@RequestMapping("/notifications/add/teamjoinrequest")
+    public ModelAndView getAddNotifcationTeamJoinRequest() {
+        
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/notification/notificationAdd_teamJoinRequest");
+        return modelAndView;
+    }
+    
+    @PostMapping("/notifications/add/teamjoinrequest")
+    public void getAddNotifcationTeamJoinRequest(Long senderId, Long receiverId, Long teamId) {
+        
+        User sender = userService.getUserById(senderId);
+        User receiver = userService.getUserById(receiverId);
+        Team team = teamService.getTeamById(teamId);
+        TeamJoinRequest notification = new TeamJoinRequest(team, sender, receiver);
         notificationService.saveNotification(notification);
     }
 }

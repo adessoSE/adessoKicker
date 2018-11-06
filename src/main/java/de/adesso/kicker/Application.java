@@ -1,6 +1,7 @@
 package de.adesso.kicker;
 
 import de.adesso.kicker.notification.Notification;
+import de.adesso.kicker.notification.NotificationRepository;
 import de.adesso.kicker.notification.NotificationService;
 import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequest;
 import de.adesso.kicker.team.Team;
@@ -31,11 +32,10 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(UserRepository userRepository, LastManStandingService lastManStandingService, NotificationService notificationService) {
+    public CommandLineRunner demo(UserRepository userRepository, LastManStandingService lastManStandingService, NotificationRepository notificationRepository) {
         return (args) -> {
             
-
-            notificationService.saveNotification(new TeamJoinRequest());
+            //notificationRepository.deleteAll();
             
             log.info("Customers found with findAll():");
             log.info("-------------------------------");
