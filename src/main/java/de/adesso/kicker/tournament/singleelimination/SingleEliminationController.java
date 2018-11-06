@@ -3,7 +3,6 @@ package de.adesso.kicker.tournament.singleelimination;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.team.TeamService;
 import de.adesso.kicker.tournament.TournamentControllerInterface;
-import de.adesso.kicker.tournament.Tournament;
 import de.adesso.kicker.tournament.TournamentFormats;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

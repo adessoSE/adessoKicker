@@ -18,7 +18,7 @@ public class TournamentController {
     }
 
     @GetMapping(value = "/tournaments/create")
-    public ModelAndView chooseFormat() {
+    public ModelAndView createTournament() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournamentFormats", TournamentFormats.values());
         modelAndView.setViewName("tournament/create");

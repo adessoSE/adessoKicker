@@ -1,7 +1,6 @@
 package de.adesso.kicker.tournament.lastmanstanding;
 
 import de.adesso.kicker.tournament.TournamentControllerInterface;
-import de.adesso.kicker.tournament.Tournament;
 import de.adesso.kicker.tournament.TournamentFormats;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
