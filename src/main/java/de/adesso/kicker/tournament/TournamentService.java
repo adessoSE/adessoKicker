@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class TournamentService {
 
-    @Autowired
     private TournamentRepository tournamentRepository;
 
+    @Autowired
     public TournamentService(TournamentRepository tournamentRepository) {
 
         this.tournamentRepository = tournamentRepository;
