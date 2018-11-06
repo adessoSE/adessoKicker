@@ -43,7 +43,9 @@
 						
 						<!-- NotificationList -->
 						<div id="notificationList" th:if="${notifications} != null">
+						
 							<div class="notificationList_El" th:each="n : ${notifications}" th:attr="value = ${n.notificationId}">
+							
 								<button th:onclick="${'deleteNotification(' + n.notificationId + ');'}" class="notificationList_El_DeclineBT">X</button>
 								<div class="notificationList_El_Text" th:text="${n.message}">ERROR: Displaying Notification</div>
 								<button th:onclick="'javascript:acceptNotification(\'' + ${notificationService} +'\',\''+ ${n.notificationId} +  '\');'" class="notificationList_El_AcceptBT">Annehmen</button>

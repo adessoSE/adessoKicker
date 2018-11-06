@@ -95,12 +95,7 @@ function insertNotifications () {
 }
 */
 
-function sum(a, b){
-	
-	var c = a + b;
-	alert(c);
-}
-
+//--> Sends a XML-HTTP Request that deletes notification
 function deleteNotification(notificationId){
 	
 	var xhttp = new XMLHttpRequest();
@@ -111,8 +106,6 @@ function deleteNotification(notificationId){
 		$('#notificationList').children().each(function(){
 			var value = $(this).attr("value");
 			if (value == notificationId){
-				
-				alert("Remove");
 				$(this).remove();
 			}
 		});
@@ -123,14 +116,6 @@ function deleteNotification(notificationId){
 	return false;
 }
 
-function declineNotification(service = "", notification = "") {
-	
-	alert(notification.getId());
-	service.removeNotificationById(notification.getId());
-	alert(service + notification);
-}
-
-//--> Triggered 
 function acceptNotification(service, notification) {
 	
 	service.removeNotificationById(notification.getNotificationId());
