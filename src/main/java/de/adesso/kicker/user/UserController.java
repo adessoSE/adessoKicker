@@ -96,7 +96,7 @@ public class UserController {
             modelAndView.addObject("search", userService.getUserByNameSearchbar(firstName, lastName));
         } catch (Exception i) {
         }
-        modelAndView.setViewName("user/testsearch");
+        modelAndView.setViewName("user/searchuser");
         return modelAndView;
     }
 
