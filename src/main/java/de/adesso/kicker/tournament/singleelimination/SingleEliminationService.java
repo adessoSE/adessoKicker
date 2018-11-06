@@ -15,7 +15,6 @@ import java.util.List;
 @Service
 public class SingleEliminationService extends TournamentService {
 
-
     private TournamentRepository tournamentRepository;
 
     @Autowired
@@ -31,7 +30,7 @@ public class SingleEliminationService extends TournamentService {
 
     @Override
     @PostConstruct
-    public void init(){
+    public void init() {
     }
 
     /**

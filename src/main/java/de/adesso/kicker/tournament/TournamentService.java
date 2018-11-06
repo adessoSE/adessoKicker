@@ -35,7 +35,7 @@ public class TournamentService {
     @PostConstruct
     @SuppressWarnings("unchecked")
     public void init() {
-        for ( TournamentControllerInterface tournamentControllerInterface : tournamentControllerInterfaces) {
+        for (TournamentControllerInterface tournamentControllerInterface : tournamentControllerInterfaces) {
             controllerInterfaceMap.put(tournamentControllerInterface.appliesTo(), tournamentControllerInterface);
         }
     }
@@ -43,7 +43,7 @@ public class TournamentService {
     @SuppressWarnings("unchecked")
     @Transactional
     public ModelAndView getPage(Tournament tournament) {
-        return controllerInterfaceMap.get( tournament.getClass() ).getPage(tournament);
+        return controllerInterfaceMap.get(tournament.getClass()).getPage(tournament);
     }
 
     @SuppressWarnings("unchecked")
