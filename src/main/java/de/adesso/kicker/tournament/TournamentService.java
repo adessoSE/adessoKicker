@@ -19,7 +19,8 @@ public class TournamentService {
     private List<TournamentControllerInterface> tournamentControllerInterfaces;
 
     @Autowired
-    public TournamentService(TournamentRepository tournamentRepository, List<TournamentControllerInterface> tournamentControllerInterfaces) {
+    public TournamentService(TournamentRepository tournamentRepository,
+            List<TournamentControllerInterface> tournamentControllerInterfaces) {
 
         this.tournamentRepository = tournamentRepository;
         this.tournamentControllerInterfaces = tournamentControllerInterfaces;
