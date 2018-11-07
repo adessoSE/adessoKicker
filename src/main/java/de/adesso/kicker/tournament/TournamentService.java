@@ -1,30 +1,32 @@
 package de.adesso.kicker.tournament;
 
 import de.adesso.kicker.user.User;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class TournamentService {
 
-    @Autowired
     private TournamentRepository tournamentRepository;
     private List<TournamentControllerInterface> tournamentControllerInterfaces;
 
     @Autowired
-    public TournamentService(List<TournamentControllerInterface> tournamentControllerInterfaces) {
+    public TournamentService(TournamentRepository tournamentRepository, List<TournamentControllerInterface> tournamentControllerInterfaces) {
 
+        this.tournamentRepository = tournamentRepository;
         this.tournamentControllerInterfaces = tournamentControllerInterfaces;
+    }
+
+    public TournamentService(TournamentRepository tournamentRepository) {
+        this.tournamentRepository = tournamentRepository;
     }
 
     private Map<Class<? extends Tournament>, TournamentControllerInterface> controllerInterfaceMap = new HashMap<>();

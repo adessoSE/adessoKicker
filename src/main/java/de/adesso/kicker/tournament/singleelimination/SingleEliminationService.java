@@ -15,17 +15,14 @@ import java.util.List;
 @Service
 public class SingleEliminationService extends TournamentService {
 
-    private TournamentRepository tournamentRepository;
-
     @Autowired
     public SingleEliminationService(TournamentRepository tournamentRepository) {
-
-        this.tournamentRepository = tournamentRepository;
+        super(tournamentRepository);
     }
 
     public void addTeamToTournament(SingleElimination singleElimination, Team team) {
         singleElimination.addTeam(team);
-        tournamentRepository.save(singleElimination);
+        saveTournament(singleElimination);
     }
 
     @Override
@@ -93,7 +90,7 @@ public class SingleEliminationService extends TournamentService {
             tournamentTree.get(0).getRow().set(i, teams.get(i));
         }
 
-        tournamentRepository.save(singleElimination);
+        saveTournament(singleElimination);
     }
 
     /**
@@ -119,7 +116,7 @@ public class SingleEliminationService extends TournamentService {
                 }
             }
         }
-        tournamentRepository.save(singleElimination);
+        saveTournament(singleElimination);
     }
 
     public void checkTeamInTournament(SingleElimination singleElimination, Team team) {
