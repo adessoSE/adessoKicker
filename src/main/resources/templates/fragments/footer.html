@@ -7,17 +7,11 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
-<footer class="footer" th:fragment="footer" style="background-color: lightgrey;">
+<footer class="footer" th:fragment="footer">
   <link rel="stylesheet" href="/css/footer.css">
-  <div class="container-fluid">
-    <div class='row'>
-      <div class="col" style="text-align: center">
-        <div>
-          <a th:href="@{/impressum}">Impressum</a>
-        </div>
-        <div>&copy Copyright adesso AG. Alle Rechte vorbehalten.</div>
-      </div>
-    </div>
+  <div class="container-fluid text-center">
+    <div><a th:href="@{/impressum}">Impressum</a></div>
+    <div>&copy Copyright adesso AG. Alle Rechte vorbehalten.</div>
   </div>
   <script src="/js/cookieWarn.js"></script>
 </footer>

@@ -4,20 +4,26 @@
 <head>
   <title>Add player</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
 <body>
-<h1>Form</h1>
-<form autocomplete="off" action="#" th:action="@{/tournaments/} + ${tournamentId} + @{/join}" th:object="${tournament}" method="POST">
-  <label for="users">Users</label>
-  <select class="form-control" id="users" name="userId">
-    <option th:each="user : ${users}"
-            th:value="${user.userId}"
-            th:text="${user.firstName}+' : '+${user.lastName}">
-    </option>
-  </select>
-  <span th:utext="${successMessage}"></span>
-  <span th:utext="${failMessage}"></span>
-  <p><input type="submit" value="User hinzufuegen." /> <input type="reset" value="Reset" /></p>
-</form>
+<div class="container">
+  <h1 th:text="'Join ' + ${tournament.tournamentName} + '?'"></h1>
+  <form class="form" autocomplete="off" action="#" th:action="@{/tournaments/} + ${tournamentId} + @{/join}" th:object="${tournament}" method="POST">
+    <div class="form-group">
+      <label for="users">Player</label>
+      <select class="form-control" id="users" name="userId">
+        <option th:each="user : ${users}"
+                th:value="${user.userId}"
+                th:text="${user.firstName}+' : '+${user.lastName}">
+        </option>
+      </select>
+    </div>
+    <input type="submit" class="btn btn-primary" value="User hinzufuegen." /> <input type="reset" class="btn btn-primary" value="Reset" />
+    <span th:utext="${successMessage}"></span>
+    <span th:utext="${failMessage}"></span>
+  </form>
+</div>
 </body>
 </html>
