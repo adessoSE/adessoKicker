@@ -9,7 +9,7 @@
 <h1>Form</h1>
 <form autocomplete="off" action="#" th:action="@{/tournaments/} + ${tournamentId} + @{/join}" th:object="${tournament}" method="POST">
   <label for="users">Users</label>
-  <select class="form-control" id="users" name="userId">
+  <select class="form-control" id="users" name="id">
     <option th:each="user : ${users}"
             th:value="${user.userId}"
             th:text="${user.firstName}+' : '+${user.lastName}">
