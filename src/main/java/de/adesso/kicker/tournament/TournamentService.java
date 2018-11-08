@@ -49,11 +49,11 @@ public class TournamentService {
         return controllerInterfaceMap.get(tournament.getClass()).getPage(tournament);
     }
 
-    @SuppressWarnings("unchecked")
-    @Transactional
-    public ModelAndView getJoinTournament(Tournament tournament) {
-        return controllerInterfaceMap.get(tournament.getClass()).getJoinTournament(tournament);
-    }
+//    @SuppressWarnings("unchecked")
+//    @Transactional
+//    public ModelAndView getJoinTournament(Tournament tournament) {
+//        return controllerInterfaceMap.get(tournament.getClass()).getJoinTournament(tournament);
+//    }
 
     @SuppressWarnings("unchecked")
     @Transactional

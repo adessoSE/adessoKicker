@@ -36,7 +36,8 @@ public class SingleEliminationController implements TournamentControllerInterfac
     public ModelAndView getPage(SingleElimination singleElimination) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournament", singleElimination);
-        modelAndView.setViewName("tournament/page");
+        modelAndView.addObject("teams", teamService.getAllTeams());
+        modelAndView.setViewName("tournament/singleeliminationpage");
         return modelAndView;
     }
 
@@ -67,15 +68,15 @@ public class SingleEliminationController implements TournamentControllerInterfac
         return modelAndView;
     }
 
-    @Override
-    public ModelAndView getJoinTournament(SingleElimination tournament) {
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("tournament", tournament);
-        modelAndView.addObject("teams", teamService.getAllTeams());
-        modelAndView.setViewName("tournament/addteam");
-        return modelAndView;
-    }
+//    @Override
+//    public ModelAndView getJoinTournament(SingleElimination tournament) {
+//
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.addObject("tournament", tournament);
+//        modelAndView.addObject("teams", teamService.getAllTeams());
+//        modelAndView.setViewName("tournament/addteam");
+//        return modelAndView;
+//    }
 
     @Override
     public ModelAndView postJoinTournament(SingleElimination tournament, long id) {

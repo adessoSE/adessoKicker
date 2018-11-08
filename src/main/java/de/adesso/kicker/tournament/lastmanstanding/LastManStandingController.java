@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -36,26 +37,27 @@ public class LastManStandingController implements TournamentControllerInterface<
     public ModelAndView getPage(LastManStanding lastManStanding) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournament", lastManStanding);
-        modelAndView.setViewName("tournament/page");
+        modelAndView.addObject("user", userService.getLoggedInUser());
+        modelAndView.setViewName("tournament/lastmanstandingpage");
         return modelAndView;
     }
 
-    @Override
-    public ModelAndView getJoinTournament(LastManStanding tournament) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("tournament", tournament);
-        modelAndView.addObject("users", userService.getAllUsers());
-        modelAndView.setViewName("tournament/addplayer");
-        return modelAndView;
-    }
+//    @Override
+//    public ModelAndView getJoinTournament(LastManStanding tournament) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.addObject("tournament", tournament);
+//        modelAndView.addObject("users", userService.getAllUsers());
+//        modelAndView.setViewName("tournament/addplayer");
+//        return modelAndView;
+//    }
 
     @Override
     public ModelAndView postJoinTournament(LastManStanding tournament, long id) {
         ModelAndView modelAndView = new ModelAndView();
         User user = userService.getUserById(id);
         modelAndView.addObject("tournament", tournament);
-        modelAndView.addObject("users", userService.getAllUsers());
-        modelAndView.setViewName("tournament/addplayer");
+        modelAndView.addObject("user", userService.getLoggedInUser());
+        modelAndView.setViewName("tournament/lastmanstandingpage");
         try {
             lastManStandingService.checkPlayerInTournament(tournament, user);
         } catch (PlayerAlreadyInTournamentException e) {

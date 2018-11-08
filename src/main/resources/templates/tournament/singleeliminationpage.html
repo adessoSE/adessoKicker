@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset='utf-8'>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${tournament.tournamentName}"></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+<header th:insert="~{fragments/header :: header}"></header>
+<body>
+<div th:text="${tournament.bracket}"></div>
+<div th:each="bracket : ${tournament.bracket}" class="row">
+  <div th:each="team : ${bracket.row}" class="col">
+    <span th:text="${team.teamName}"></span>
+  </div>
+</div>
+<form autocomplete="off" action="#" th:action="@{/tournaments/} + ${tournamentId} + '?join'" th:object="${tournament}" method="POST">
+  <label for="teams">Teams</label>
+  <select class="form-control" id="teams" name="id">
+    <option th:each="team : ${teams}"
+            th:value="${team.teamId}"
+            th:text="${team.teamId}+' : '+${team.teamName}"></option>
+  </select>
+  <span th:utext="${successMessage}"></span>
+  <span th:utext="${failMessage}"></span>
+  <p><input type="submit" value="Team hinzufuegen." /> <input type="reset" value="Reset" /></p>
+</form>
+</body>
+<footer th:insert="~{fragments/footer :: footer}"></footer>
+</html>
