@@ -43,19 +43,7 @@ public class TournamentController {
     public ModelAndView tournamentPageCurrent() {
         ModelAndView modelAndView = new ModelAndView();
         Tournament tournament = tournamentService.getCurrentTournament();
-        String format = tournament.getFormat();
-        switch (format) {
-
-        case "SINGLEELIMINATION":
-            return singleEliminationController.getSingleEliminationPage(tournament);
-
-        case "LASTMANSTANDING":
-            return lastManStandingController.getLastManStandingPage(tournament);
-
-        default:
-            modelAndView.setViewName("redirect:/tournaments/list");
-            return modelAndView;
-        }
+        return tournamentService.getPage(tournament);
     }
 
     @GetMapping("tournaments/{tournamentId}/join")
