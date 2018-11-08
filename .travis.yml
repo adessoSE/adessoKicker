@@ -1,6 +1,8 @@
 language: java
 jdk:
-  - openjdk10
+  - openjdk11
 install: true
 script:
   - mvn spotless:check compile
+
+
