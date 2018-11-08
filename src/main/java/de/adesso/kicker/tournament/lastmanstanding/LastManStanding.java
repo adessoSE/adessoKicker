@@ -27,7 +27,7 @@ public class LastManStanding extends Tournament {
 
     public LastManStanding() {
 
-        this.setFormat("LASTMANSTANDING");
+        this.setFormat("Last Man Standing");
     }
 
     public User getWinner() {
