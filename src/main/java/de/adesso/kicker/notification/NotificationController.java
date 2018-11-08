@@ -1,6 +1,5 @@
 package de.adesso.kicker.notification;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,10 +66,7 @@ public class NotificationController {
 	@PostMapping("/notifications/add/notifcation")
     public ModelAndView addNotifcationStandart(Long senderId, Long receiverId, String message) {
         
-        User sender = userService.getUserById(senderId);
-        User receiver = userService.getUserById(receiverId);
-        Notification notification = new Notification(message, receiver, sender);
-        notificationService.saveNotification(notification);
+        notificationService.saveNotification(message, receiverId, senderId);
         
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/notification/add_notification");
@@ -88,6 +84,7 @@ public class NotificationController {
     @PostMapping("/notifications/add/teamjoinrequest")
     public ModelAndView getAddNotifcationTeamJoinRequest(Long senderId, Long receiverId, Long teamId){
         
+        //TO_DO LOGIC AUSLAGERN
         User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
         Team targetTeam = teamService.getTeamById(teamId);
