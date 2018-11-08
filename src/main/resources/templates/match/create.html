@@ -3,52 +3,58 @@
 	<head>
 		<title>Create Match</title>
 		<meta charset='UTF-8'>
-		<meta name="viewport" content="width=device-width, initial-scale=1">	
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel='stylesheet' href='/css/login.css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	</head>
-	
 	<body>
-		<div class='row'>
-			<div class='col-lg-4'></div>
-			<div class='col-lg-4 logBox'>
-			<h1>Match Erstellung</h1>
-			
-				<form autocomplete="off" action="#" th:action="@{/matches/add}" th:object="${match}" method="POST">
-
-					<p>Kicker:
-						<select class="form-control" id="kicker" name="kicker">
-							<option value="Gebäude 1 - Raucherlounge">Gebäude 1 - Raucherlounge</option>
-							<option value="Gebäude 2 - Raucherlounde">Gebäude 2 - Raucherlounge</option>
-					   </select>
-				   </p>
-				   
-					<p>Datum: <input type="date" th:field="*{date}"/></p>
-					<p>Uhrzeit: <input type="time" th:field="*{time}"/></p>
-					<p style="color:red;"><th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></p>
-					</br>
-					
-					<p>Team 1:
-					<select class="form-control" id="teamA" name="teamA">
-						<option th:each="teamA: ${teams}" th:value="${teamA.teamId}" th:text="${teamA.teamId}+' : '+${teamA.teamName}"></option>
-					</select>
-					Team 2:
-					<select class="form-control" id="teamB" name="teamB">
-						<option th:each="teamB: ${teams}" th:value="${teamB.teamId}" th:text="${teamB.teamId}+' : '+${teamB.teamName}"></option>
-					</select>
-                    </p>
-					<p style="color:red;"><th:if="${#fields.hasErrors('teamA')}" th:errors="*{teamA}"></p>
-					
-					<p style='color: darkgreen;'th:utext="${successMessage}"></p>
-					<p><input class='btn btn-secondary' type="reset" value="Reset" /><input class='btn btn-primary' type="submit" value="Match erstellen." /></p>
-					
-				</form>
-			</div>
-			<div class='col-lg-4'></div>
-		</div>
-		
-	</body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Match Erstellung</h1>
+            <form autocomplete="off" action="#" th:action="@{/matches/add}" th:object="${match}" method="POST">
+                <div class="form-group">
+                    <label for="kicker">Kicker:</label>
+                    <select class="form-control" id="kicker" name="kicker">
+                        <option value="Gebäude 1 - Raucherlounge">Gebäude 1 - Raucherlounge</option>
+                        <option value="Gebäude 2 - Raucherlounde">Gebäude 2 - Raucherlounge</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <label for="date">Datum:</label>
+                        <input type="date" class="form-control" id="date" th:field="*{date}"/>
+                    </div>
+                    <div class="col">
+                        <label for="time">Uhrzeit:</label>
+                        <input type="time" class="form-control" id="time" th:field="*{time}"/>
+                    </div>
+                </div>
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
+                <div class="form-group">
+                    <label for="teamA">Team 1:</label>
+                    <select class="form-control" id="teamA" name="teamA">
+                        <option th:each="teamA: ${teams}"
+                                th:value="${teamA.teamId}"
+                                th:text="${teamA.teamId}+' : '+${teamA.teamName}">
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="teamB">Team 2:</label>
+                    <select class="form-control" id="teamB" name="teamB">
+                        <option th:each="teamB: ${teams}"
+                                th:value="${teamB.teamId}"
+                                th:text="${teamB.teamId}+' : '+${teamB.teamName}">
+                        </option>
+                    </select>
+                </div>
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('teamA')}" th:errors="*{teamA}"></div>
+                <div class="alert alert-success" th:if="${successMessage!=null}" th:utext="${successMessage}"></div>
+                <button type="submit" class="btn btn-primary">Team erstellen</button>
+            </form>
+        </div>
+    </div>
+    </body>
 </html>
