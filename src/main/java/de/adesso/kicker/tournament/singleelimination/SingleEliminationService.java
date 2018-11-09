@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,7 +46,6 @@ public class SingleEliminationService extends TournamentService {
         int tournamentSize = (int) Math.pow(2, Math.ceil((Math.log(teams.size()) / Math.log(2))));
         int tournamentTreeSize = (int) (Math.log(tournamentSize) / Math.log(2) + 1);
         List<BracketRow> tournamentTree = singleElimination.getBracket();
-        Collections.shuffle(teams);
 
         /* Fills remaining slots with null to fill the tree later */
         while (teams.size() < tournamentSize) {
@@ -91,6 +91,21 @@ public class SingleEliminationService extends TournamentService {
         }
 
         saveTournament(singleElimination);
+    }
+
+    public void prepareTournamentTree(SingleElimination tournament) {
+        int tournamentSize = (int) Math.pow(2, Math.ceil((Math.log(tournament.getTeams().size()) / Math.log(2))));
+        List<BracketRow> bracketRows = tournament.getBracket();
+        for (int i = 0; i < bracketRows.size(); i++) {
+            while(bracketRows.get(i).getRow().size() < tournamentSize / Math.pow(2, i)) {
+                System.out.println(i);
+                System.out.println(tournamentSize / Math.pow(2, i));
+                bracketRows.get(i).getRow().add(null);
+            }
+        }
+        for (BracketRow bracketRow: bracketRows) {
+            System.out.println(bracketRow.getRow());
+        }
     }
 
     /**

@@ -10,23 +10,27 @@
 </head>
 <header th:insert="~{fragments/header :: header}"></header>
 <body>
-<div th:text="${tournament.bracket}"></div>
-<div th:each="bracket : ${tournament.bracket}" class="row">
-  <div th:each="team : ${bracket.row}" class="col">
-    <span th:text="${team.teamName}"></span>
+<div class="container-fluid">
+  <div th:each="bracket : ${tournament.bracket}" class="row" style="padding: 20px">
+    <div th:text="${bracketStat.index}"></div>
+    <div th:each="team : ${bracket.row}" class="col card bg-light">
+      <div th:if="${team} != null" th:text="${team.teamName}"></div>
+    </div>
   </div>
 </div>
-<form autocomplete="off" action="#" th:action="@{/tournaments/} + ${tournamentId} + '?join'" th:object="${tournament}" method="POST">
-  <label for="teams">Teams</label>
-  <select class="form-control" id="teams" name="id">
-    <option th:each="team : ${teams}"
-            th:value="${team.teamId}"
-            th:text="${team.teamId}+' : '+${team.teamName}"></option>
-  </select>
-  <span th:utext="${successMessage}"></span>
-  <span th:utext="${failMessage}"></span>
-  <p><input type="submit" value="Team hinzufuegen." /> <input type="reset" value="Reset" /></p>
-</form>
+<div class="container">
+  <form autocomplete="off" action="#" th:action="@{/tournaments/} + ${tournamentId} + '?join'" th:object="${tournament}" method="POST">
+    <label for="teams">Teams</label>
+    <select class="form-control" id="teams" name="id">
+      <option th:each="team : ${teams}"
+              th:value="${team.teamId}"
+              th:text="${team.teamId}+' : '+${team.teamName}"></option>
+    </select>
+    <span th:utext="${successMessage}"></span>
+    <span th:utext="${failMessage}"></span>
+    <p><input type="submit" value="Team hinzufuegen." /> <input type="reset" value="Reset" /></p>
+  </form>
+</div>
 </body>
 <footer th:insert="~{fragments/footer :: footer}"></footer>
 </html>

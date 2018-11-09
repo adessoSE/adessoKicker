@@ -37,6 +37,7 @@ public class SingleEliminationController implements TournamentControllerInterfac
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournament", singleElimination);
         modelAndView.addObject("teams", teamService.getAllTeams());
+        singleEliminationService.prepareTournamentTree(singleElimination);
         modelAndView.setViewName("tournament/singleeliminationpage");
         return modelAndView;
     }
