@@ -46,7 +46,8 @@ public class SingleEliminationService extends TournamentService {
     public void createTournamentTree(SingleElimination singleElimination) {
 
         List<Team> teams = singleElimination.getTeams();
-        int tournamentSize = (int) Math.pow(2, Math.ceil((Math.log(singleElimination.getTeams().size()) / Math.log(2))));
+        int tournamentSize = (int) Math.pow(2,
+                Math.ceil((Math.log(singleElimination.getTeams().size()) / Math.log(2))));
         int tournamentTreeSize = (int) (Math.log(tournamentSize) / Math.log(2) + 1);
         List<BracketRow> tournamentTree = singleElimination.getBracket();
 
@@ -70,7 +71,7 @@ public class SingleEliminationService extends TournamentService {
          * later
          */
         for (int i = 0; i < tournamentTreeSize - 1; i++) {
-            for (int k = tournamentTree.get(i).getRow().size(); k < (tournamentSize / Math.pow(2, i))/2; k++) {
+            for (int k = tournamentTree.get(i).getRow().size(); k < (tournamentSize / Math.pow(2, i)) / 2; k++) {
                 Match match = new Match();
                 matchService.saveMatch(match);
                 tournamentTree.get(i).getRow().add(match);
@@ -84,34 +85,19 @@ public class SingleEliminationService extends TournamentService {
          * there is a chance for a team to get to the finals without playing a single
          * match.
          */
-        for (int i = 0; i < tournamentSize/2; i ++) {
+        for (int i = 0; i < tournamentSize / 2; i++) {
             tournamentTree.get(0).getRow().get(i).setTeamA(teams.get(i));
-            tournamentTree.get(0).getRow().get(i).setTeamB(teams.get(i + tournamentSize/2));
+            tournamentTree.get(0).getRow().get(i).setTeamB(teams.get(i + tournamentSize / 2));
         }
 
         saveTournament(singleElimination);
-    }
-
-    public void prepareTournamentTree(SingleElimination tournament) {
-        int tournamentSize = (int) Math.pow(2, Math.ceil((Math.log(tournament.getTeams().size()) / Math.log(2))));
-        List<BracketRow> bracketRows = tournament.getBracket();
-        for (int i = 0; i < bracketRows.size(); i++) {
-            while(bracketRows.get(i).getRow().size() < tournamentSize / Math.pow(2, i)) {
-                System.out.println(i);
-                System.out.println(tournamentSize / Math.pow(2, i));
-                bracketRows.get(i).getRow().add(null);
-            }
-        }
-        for (BracketRow bracketRow: bracketRows) {
-            System.out.println(bracketRow.getRow());
-        }
     }
 
     /**
      * Advances the team that is the winner of the specified match
      *
      * @param singleElimination SingleElimination
-     * @param match Match
+     * @param match             Match
      */
 
     public void advanceWinner(SingleElimination singleElimination, Match match) {

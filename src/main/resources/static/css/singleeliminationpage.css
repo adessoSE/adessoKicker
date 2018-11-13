@@ -1,0 +1,15 @@
+.list-group-item {
+  min-width: 100%;
+  max-width: 1ch;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /*!/ This is where the magic happens*!*!*/
+}
+
+#success {
+  color: green;
+}
+
+#fail {
+  color: red;
+}
