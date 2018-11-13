@@ -15,38 +15,38 @@ public class Notification {
 
     @ManyToOne(targetEntity = User.class)
     protected User receiver;
-    
+
     @ManyToOne(targetEntity = User.class)
     protected User sender;
-    
+
     protected Date sendDate;
 
     protected String message;
 
     public Notification() {
     }
-    
-    public long getNotificationId() {
-		return notificationId;
-	}
 
-	public Notification(String message, User receiver, User sender) {
-	    this.sendDate = new Date();
+    public long getNotificationId() {
+        return notificationId;
+    }
+
+    public Notification(String message, User receiver, User sender) {
+        this.sendDate = new Date();
         this.receiver = receiver;
         this.sender = sender;
         this.message = message;
     }
 
-	public Notification(Date sendDate, String message, User receiver, User sender) {
-	    this.sendDate = sendDate;
+    public Notification(Date sendDate, String message, User receiver, User sender) {
+        this.sendDate = sendDate;
         this.receiver = receiver;
         this.sender = sender;
         this.message = message;
     }
 
     public void setNotificationId(long notificationId) {
-		this.notificationId = notificationId;
-	}
+        this.notificationId = notificationId;
+    }
 
     public User getReceiver() {
         return receiver;

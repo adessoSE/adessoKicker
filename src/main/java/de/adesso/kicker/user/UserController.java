@@ -41,7 +41,7 @@ public class UserController {
         return modelAndView;
     }
 
-    //Delete a notification
+    // Delete a notification
     @PostMapping(value = { "", "/", "home" })
     public ModelAndView deleteNotification() {
         ModelAndView modelAndView = new ModelAndView();
