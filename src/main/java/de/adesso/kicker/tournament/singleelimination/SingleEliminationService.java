@@ -8,23 +8,26 @@ import de.adesso.kicker.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Collections;
 import java.util.List;
 
 @Service
 public class SingleEliminationService extends TournamentService {
 
-    private TournamentRepository tournamentRepository;
-
     @Autowired
     public SingleEliminationService(TournamentRepository tournamentRepository) {
-
-        this.tournamentRepository = tournamentRepository;
+        super(tournamentRepository);
     }
 
     public void addTeamToTournament(SingleElimination singleElimination, Team team) {
         singleElimination.addTeam(team);
-        tournamentRepository.save(singleElimination);
+        saveTournament(singleElimination);
+    }
+
+    @Override
+    @PostConstruct
+    public void init() {
     }
 
     /**
@@ -113,7 +116,6 @@ public class SingleEliminationService extends TournamentService {
                 }
             }
         }
-
         saveTournament(singleElimination);
     }
 
