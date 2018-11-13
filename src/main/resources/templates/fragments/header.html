@@ -49,11 +49,9 @@
                   <button th:onclick="'javascript:deleteNotification(\'' + ${n.notificationId} +  '\');'" class="notificationList_El_DeclineBT">X</button>
 								<div class="notificationList_El_Text" th:text="${n.message}">ERROR: Displaying Notification</div>
                   <!--"'javascript:acceptNotification(\'' + ${notificationService} +'\',\''+ ${n.notificationId} +  '\');'" -->
-								<button th:onclick="'javascript:accceptNotification(\'' + ${n.notificationId} +  '\');'" class="notificationList_El_AcceptBT">Annehmen</button>
+								<button th:onclick="'javascript:acceptNotification(\'' + ${n.notificationId} +  '\');'" class="notificationList_El_AcceptBT">Annehmen</button>
 							  </div>
 						</div>
-
-
 					</div>
 				</div>
 			</div>

@@ -131,7 +131,7 @@ function acceptNotification(notificationId) {
 		});
 	}
 	};
-	xhttp.open("DELETE", "/notifications/"+notificationId, false);
+	xhttp.open("DELETE", "/notifications/accept/"+notificationId, false);
 	xhttp.send();
 	return false;
 }

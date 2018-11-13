@@ -2,6 +2,7 @@ package de.adesso.kicker.notification;
 
 import java.util.List;
 
+import javassist.expr.Instanceof;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,21 @@ public class NotificationController {
     public List<Notification> getUserNotificationsReceived(@PathVariable long userId) {
 
         return notificationService.getAllNotificationsByReceiver(userService.getUserById(userId));
+    }
+
+    @DeleteMapping("/notifications/accept/{id}")
+    public void acceptNotificationById(@PathVariable long id) {
+
+        Notification n = notificationService.getNotificationById(id);
+        if (n instanceof TeamJoinRequest){
+
+            System.out.println("TeamJoinRequest " + id + " accepted!");
+        }
+        else if (n instanceof Notification){
+
+            System.out.println("Notification " + id + " accepted!");
+        }
+        notificationService.removeNotificationById(id);
     }
 
     @DeleteMapping("/notifications/{id}")
