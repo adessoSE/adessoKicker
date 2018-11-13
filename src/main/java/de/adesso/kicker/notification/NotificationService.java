@@ -61,6 +61,7 @@ public class NotificationService {
 	//!!!!!! NO VALIDATION YET !!!!!!!
 	public Notification saveNotification(String message, long receiverId, long senderId) {
 	    
+	    System.out.println(senderId);
 	    User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
         Notification notification = new Notification(message, receiver, sender);

@@ -116,9 +116,24 @@ function deleteNotification(notificationId){
 	return false;
 }
 
-function acceptNotification(service, notification) {
+function acceptNotification(notificationId) {
 	
-	service.removeNotificationById(notification.getNotificationId());
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+	if (this.readyState == 4 && this.status == 200) {
+		
+		//Remove notification on page
+		$('#notificationList').children().each(function(){
+			var value = $(this).attr("value");
+			if (value == notificationId){
+				$(this).remove();
+			}
+		});
+	}
+	};
+	xhttp.open("DELETE", "/notifications/"+notificationId, false);
+	xhttp.send();
+	return false;
 }
 
 //--> Triggered on Notification Button click

@@ -56,7 +56,7 @@ public class NotificationController {
 	}
 	
 	@RequestMapping("/notifications/add/notification")
-	public ModelAndView getAddNotifcationStandart() {
+	public ModelAndView getAddNotifcationStandard() {
 	    
 	    ModelAndView modelAndView = new ModelAndView();
 	    modelAndView.setViewName("/notification/add_notification");
@@ -64,9 +64,18 @@ public class NotificationController {
 	}
 	
 	@PostMapping("/notifications/add/notifcation")
-    public ModelAndView addNotifcationStandart(Long senderId, Long receiverId, String message) {
+    public ModelAndView addNotifcationStandard(Long senderId, Long receiverId, String message) {
         
-        notificationService.saveNotification(message, receiverId, senderId);
+	    System.out.println("Hallo");
+	    System.out.println(senderId);
+	    
+	    System.out.println(senderId);
+        User sender = userService.getUserById(senderId);
+        User receiver = userService.getUserById(receiverId);
+        Notification notification = new Notification(message, receiver, sender);
+        notificationService.saveNotification(notification);
+	    
+        //notificationService.saveNotification(message, receiverId, senderId);
         
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/notification/add_notification");
@@ -84,6 +93,7 @@ public class NotificationController {
     @PostMapping("/notifications/add/teamjoinrequest")
     public ModelAndView getAddNotifcationTeamJoinRequest(Long senderId, Long receiverId, Long teamId){
         
+        System.out.println("Hallo");
         //TO_DO LOGIC AUSLAGERN
         User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
