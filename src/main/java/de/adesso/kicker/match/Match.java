@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import de.adesso.kicker.team.Team;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,10 +17,12 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long matchId;
 
+    @NotNull(message = "Bitte ein Datum wählen.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date date;
 
+    @NotNull(message = "Bitte eine Uhrzeit wählen.")
     @DateTimeFormat(pattern = "HH:mm")
     @Temporal(TemporalType.TIME)
     private Date time;

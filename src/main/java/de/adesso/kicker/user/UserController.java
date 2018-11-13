@@ -52,7 +52,14 @@ public class UserController {
         modelAndView.setViewName("user/home");
         return modelAndView;
     }
-    
+
+    @GetMapping(value = "/impressum")
+    public ModelAndView impressum() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("./impressum");
+        return modelAndView;
+    }
+
     /**
      * getUser() gets an unique user identified by an index.
      * 

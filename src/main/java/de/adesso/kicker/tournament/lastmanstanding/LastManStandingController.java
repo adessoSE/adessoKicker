@@ -1,9 +1,7 @@
 package de.adesso.kicker.tournament.lastmanstanding;
 
 import de.adesso.kicker.tournament.Tournament;
-import de.adesso.kicker.tournament.TournamentController;
 import de.adesso.kicker.tournament.TournamentFormats;
-import de.adesso.kicker.tournament.singleelimination.SingleElimination;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,16 +78,16 @@ public class LastManStandingController {
     }
 
     @PostMapping(value = "/tournaments/create", params = { "LASTMANSTANDING" })
-    public ModelAndView createSingleElimination(@Valid SingleElimination singleElimination, BindingResult bindingResult,
+    public ModelAndView createLastManStanding(@Valid LastManStanding lastManStanding, BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
 
             modelAndView.addObject("tournament", new LastManStanding());
-            modelAndView.setViewName("tournament/createsingleelimination");
+            modelAndView.setViewName("tournament/createlastmanstanding");
         } else {
 
-            lastManStandingService.saveTournament(singleElimination);
+            lastManStandingService.saveTournament(lastManStanding);
             redirectAttributes.addFlashAttribute("successMessage", "Tournament has been created");
             redirectAttributes.addFlashAttribute("tournamentFormats", TournamentFormats.values());
             modelAndView.setViewName("redirect:/tournaments/create");

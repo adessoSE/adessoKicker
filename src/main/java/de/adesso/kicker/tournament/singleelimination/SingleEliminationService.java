@@ -119,14 +119,14 @@ public class SingleEliminationService extends TournamentService {
 
     public void checkTeamInTournament(SingleElimination singleElimination, Team team) {
 
-        if(singleElimination.getTeams().contains(team)) {
+        if (singleElimination.getTeams().contains(team)) {
             throw new TeamAlreadyInTournamentException();
         }
     }
 
     public void checkPlayerTeamInTournament(SingleElimination singleElimination, Team team) {
         List<User> players = singleElimination.getPlayers();
-        if(players.contains(team.getPlayerA()) || players.contains(team.getPlayerB())) {
+        if (players.contains(team.getPlayerA()) || players.contains(team.getPlayerB())) {
             throw new PlayerOfTeamAlreadyInTournamentException();
         }
     }

@@ -17,7 +17,7 @@ public class NotificationService {
 
     @Autowired
     public NotificationService(NotificationRepository notificationRepository, UserService userService) {
-        
+
         this.notificationRepository = notificationRepository;
         this.userService = userService;
     }
@@ -56,11 +56,11 @@ public class NotificationService {
 	public void saveNotification(Notification notification) {
 	    notificationRepository.save(notification);
 	}
-	
+
 	//Create a notification and save notification in repository
 	//!!!!!! NO VALIDATION YET !!!!!!!
 	public Notification saveNotification(String message, long receiverId, long senderId) {
-	    
+
 	    System.out.println(senderId);
 	    User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
@@ -68,10 +68,10 @@ public class NotificationService {
         saveNotification(notification);
         return notification;
 	}
-	
+
 	//Removes notification from repository
 	public void removeNotificationById(long id) {
-	    
+
 	    notificationRepository.deleteById(id);
 	}
 }

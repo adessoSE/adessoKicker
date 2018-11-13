@@ -36,7 +36,7 @@ public class Notification {
         this.sender = sender;
         this.message = message;
     }
-	
+
 	public Notification(Date sendDate, String message, User receiver, User sender) {
 	    this.sendDate = sendDate;
         this.receiver = receiver;
@@ -48,42 +48,42 @@ public class Notification {
 		this.notificationId = notificationId;
 	}
 
-	public User getReceiver() {
-		return receiver;
-	}
+    public User getReceiver() {
+        return receiver;
+    }
 
-	public void setReceiver(User receiver) {
-		this.receiver = receiver;
-	}
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
+    }
 
-	public User getSender() {
-		return sender;
-	}
+    public User getSender() {
+        return sender;
+    }
 
-	public void setSender(User sender) {
-		this.sender = sender;
-	}
+    public void setSender(User sender) {
+        this.sender = sender;
+    }
 
-	public Date getSendDate() {
-		return sendDate;
-	}
+    public Date getSendDate() {
+        return sendDate;
+    }
 
-	public void setSendDate(Date sendDate) {
-		this.sendDate = sendDate;
-	}
+    public void setSendDate(Date sendDate) {
+        this.sendDate = sendDate;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     @Override
     public String toString() {
-        return "Notification{" + "notificationId=" + notificationId + ", notificationType=" +
-        		", receiver=" + receiver + ", sender=" + sender + ", sendDate=" + sendDate + ", message=" + message;
-                
+        return "Notification{" + "notificationId=" + notificationId + ", notificationType=" + ", receiver=" + receiver
+                + ", sender=" + sender + ", sendDate=" + sendDate + ", message=" + message;
+
     }
 }
