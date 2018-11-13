@@ -90,8 +90,8 @@ public class TeamController {
         try {
             teamService.denySameTeamPlayers(team);
         } catch (IdenticalPlayersException e) {
-            bindingResult.rejectValue("playerA", "error.playerA", "Keine identischen Teams");
-            bindingResult.rejectValue("playerB", "error.playerB", "Keine identischen Teams");
+            bindingResult.rejectValue("playerA", "error.playerA", "Keine identischen Spieler.");
+            bindingResult.rejectValue("playerB", "error.playerB", "Keine identischen Spieler.");
             modelAndView.addObject("users", userService.getAllUsers());
             modelAndView.setViewName("team/add");
             return modelAndView;
