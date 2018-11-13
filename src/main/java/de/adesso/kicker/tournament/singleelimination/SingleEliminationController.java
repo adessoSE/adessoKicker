@@ -115,7 +115,7 @@ public class SingleEliminationController implements TournamentControllerInterfac
     @Override
     public ModelAndView getBracket(SingleElimination tournament) {
         ModelAndView modelAndView = new ModelAndView();
-        singleEliminationService.createTournamentTree(tournament.getTeams(), tournament);
+        singleEliminationService.createTournamentTree(tournament);
         modelAndView.addObject("tournament", singleEliminationService.getTournamentById(tournament.getTournamentId()));
         modelAndView.setViewName("tournament/tree");
         return modelAndView;
