@@ -8,24 +8,26 @@ import de.adesso.kicker.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Collections;
 import java.util.List;
 
 @Service
 public class SingleEliminationService extends TournamentService {
 
-    private TournamentRepository tournamentRepository;
-
     @Autowired
     public SingleEliminationService(TournamentRepository tournamentRepository) {
-        this.tournamentRepository = tournamentRepository;
+        super(tournamentRepository);
     }
 
     public void addTeamToTournament(SingleElimination singleElimination, Team team) {
         singleElimination.addTeam(team);
-        singleElimination.getPlayers().add(team.getPlayerA());
-        singleElimination.getPlayers().add(team.getPlayerB());
-        tournamentRepository.save(singleElimination);
+        saveTournament(singleElimination);
+    }
+
+    @Override
+    @PostConstruct
+    public void init() {
     }
 
     /**
@@ -88,7 +90,7 @@ public class SingleEliminationService extends TournamentService {
             tournamentTree.get(0).getRow().set(i, teams.get(i));
         }
 
-        tournamentRepository.save(singleElimination);
+        saveTournament(singleElimination);
     }
 
     /**
@@ -114,8 +116,7 @@ public class SingleEliminationService extends TournamentService {
                 }
             }
         }
-
-        tournamentRepository.save(singleElimination);
+        saveTournament(singleElimination);
     }
 
     public void checkTeamInTournament(SingleElimination singleElimination, Team team) {

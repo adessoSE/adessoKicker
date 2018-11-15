@@ -13,38 +13,8 @@
 	<body>
 	
 		<header th:insert="~{fragments/header :: header}"></header>
-		<div class='row dissize'>
-			<div class='col-lg-4'></div>
-			<div class='col-lg-4'>
-				<h1 class='heading' style='font-size: 50px; font-weight: bold;'>Adesso - Kicker</h1>
-				<h3 class='heading'>Kicker Turnier- und Ranking Tool</h3>
-			</div>
-
-			<div class='col-lg-4'>
-				<div class='row dissize'>
-					<div class='col-lg-3'></div>
-					<div class='col-lg-8' style='margin-top: 20px; margin-bottom: 20px;'>
-						<h3 th:if="${user != null}" th:text="${user.firstName} + ' ' + ${user.lastName}">Please login</h3>
-						<h3 th:if="${user == null}"><a href="/login">Please login</a></h3>
-					</div>
-				</div>
-				<div class='rowdissize'>
-					<div class='col-lg-2'></div>
-					<a href="/logout">
-					<div class='col-lg-5 container' style='border-style: groove; margin-top: 10px; box-shadow: 4px 4px black;' onmouseover='this.style.backgroundColor = "lightgrey"; this.style.boxShadow = "8px 8px black";' onmouseout='this.style.backgroundColor = "white"; this.style.boxShadow = "4px 4px black";'>
-						<h3 style='text-align: center; margin: 10px;'>Abmelden</h3>
-					</div>
-					</a>
-					<div class='col-lg-1'></div>
-					<div class='col-lg-2 container' style='padding: 10px; border-radius: 10px; width: 90px; height: 85px' onclick='toggleNotificationList()' onmouseover=' this.style.boxShadow = "5px 5px 2px grey"; this.style.borderStyle = "groove";' onmouseout=' this.style.boxShadow = "none"; this.style.borderStyle = "none";'>
-						<span id='notificationIcon' class='glyphicon glyphicon-envelope' style='font-size: 60px; text-align: left;'></span>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		</br></br>
-
+		</br>
+		</br>
 		<div class='row dissize'>
 			<div class='col-lg-6'>
 				<div class='row dissize'>
@@ -102,7 +72,7 @@
 					<div class='col-lg-11 container homeDiv' style='float: right;' onmouseover='onMouseInteractDiv(this)' onmouseout='outMouseInteractDiv(this)' onclick='javacript:location.href="/tournaments#latest"'>
 						<div class='row dissize'>
 							<div class='col-lg-3'>
-								<span class='iconBig glyphicon glyphicon-calendar'>
+								<span class='iconBig glyphicon glyphicon-calendar'></span>
 							</div>
 							<div class='col-lg-9'>
 								<h2 class='heading'>Turnierliste</h2>

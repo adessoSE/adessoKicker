@@ -21,7 +21,7 @@ public class SingleElimination extends Tournament {
 
     public SingleElimination() {
 
-        this.setFormat("SINGLEELIMINATION");
+        this.setFormat("Single Elimination");
     }
 
     public SingleElimination(String tournamentName) {
