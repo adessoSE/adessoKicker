@@ -110,8 +110,8 @@ public class SingleEliminationController implements TournamentControllerInterfac
             return modelAndView;
         }
         try {
-            singleEliminationService.checkPlayerInTournament(tournament, loggedInUser);
-        } catch (PlayerInTournamentException e) {
+            singleEliminationService.checkPlayerOfTeamInTournamen(tournament, team);
+        } catch (PlayerOfTeamInTournamentException e) {
 
             modelAndView.addObject("failMessage", "A player of the team is already in tournament");
             modelAndView.addObject("tournament", tournament);

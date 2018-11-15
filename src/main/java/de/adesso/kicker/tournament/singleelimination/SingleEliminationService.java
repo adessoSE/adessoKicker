@@ -135,4 +135,11 @@ public class SingleEliminationService extends TournamentService {
             throw new PlayerInTournamentException();
         }
     }
+
+    public void checkPlayerOfTeamInTournamen(SingleElimination singleElimination, Team team) {
+        List<User> players = singleElimination.getPlayers();
+        if (players.contains(team.getPlayerA()) || players.contains(team.getPlayerB())) {
+            throw new PlayerOfTeamInTournamentException();
+        }
+    }
 }

@@ -1,9 +1,30 @@
 .list-group-item {
+  display: flex;
   min-width: 100%;
   max-width: 1ch;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; /*!/ This is where the magic happens*!*!*/
+}
+
+.d-flex.p-1 {
+  min-width: 100%;
+  max-width: 1ch;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.col {
+  max-width: 230px;
+  /*align-self: center;*/
+}
+
+.row {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
 }
 
 #success {
