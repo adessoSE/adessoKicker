@@ -19,6 +19,7 @@ function deleteNotification(notificationId){
 	return false;
 }
 
+//Sends a DELETE Request to "notification/accept
 function acceptNotification(notificationId) {
 	
 	var xhttp = new XMLHttpRequest();
