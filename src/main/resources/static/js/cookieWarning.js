@@ -33,7 +33,6 @@ function checkCookie() {
     if (hadWarn == "" || hadWarn == false) {
 		
         popWarning();
-		setCookie("hasCook", true, 14);
     }
 } 
 
@@ -50,6 +49,7 @@ function popWarning (){
 //removes the warning box
 function removeWarning () {
 	
+	setCookie("hasCook", true, 14);
 	document.body.removeChild(document.getElementById('cook'));
 }
 

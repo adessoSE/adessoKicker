@@ -38,6 +38,13 @@ public class TournamentController {
         Tournament tournament = tournamentService.getTournamentById(id);
         return tournamentService.getPage(tournament);
     }
+    
+    @GetMapping("/tournaments/current")
+    public ModelAndView tournamentPageCurrent() {
+        ModelAndView modelAndView = new ModelAndView();
+        Tournament tournament = tournamentService.getCurrentTournament();
+        return tournamentService.getPage(tournament);
+    }
 
     @GetMapping("tournaments/{tournamentId}/join")
     public ModelAndView getJoinTournament(@PathVariable("tournamentId") long id) {

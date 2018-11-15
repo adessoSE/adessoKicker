@@ -5,7 +5,7 @@
 		<meta charset='utf-8'>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
 		<link rel="stylesheet" href="/css/homeStyle.css">
@@ -13,7 +13,7 @@
 	
 	<header th:fragment="header" style="background-color: lightgrey;">
 	
-		<style>#navbar{overflow: hidden; background-color: #333; z-index: 1000;}.sticky{position: fixed;top: 0;width: 100%;}.sticky + .content {padding-top: 60px;}#navbar a {float: left; display: block ;color: #f2f2f2; text-align: center; padding: 14px; text-decoration: none;}</style>
+		<style>#navbar{overflow: hidden; background-color: #333; z-index: 1000; margin: 0px}.sticky{position: fixed;top: 0;width: 100%;}.sticky + .content {padding-top: 60px;}#navbar a {float: left; display: block ;color: #f2f2f2; text-align: center; padding: 14px; text-decoration: none;}</style>
 	
 		<div class='row dissize'>
 			<div class='col-lg-4'></div>			
@@ -33,12 +33,12 @@
 				<div class='rowdissize'>
 					<div class='col-lg-2'></div>
 					<a href="/logout">
-					<div class='col-lg-5 container' style='border-style: groove; margin-top: 10px; box-shadow: 4px 4px black;' onmouseover='this.style.backgroundColor = "lightgrey"; this.style.boxShadow = "8px 8px black";' onmouseout='this.style.backgroundColor = "white"; this.style.boxShadow = "4px 4px black";'>						
+					<div class='col-lg-5 container' style='border-style: groove; margin-top: 10px; box-shadow: 4px 4px black;' onmouseover='this.style.backgroundColor = "white"; this.style.boxShadow = "8px 8px black";' onmouseout='this.style.backgroundColor = "inherit"; this.style.boxShadow = "4px 4px black";'>						
 						<h3 style='text-align: center; margin: 10px;'>Abmelden</h3>
 					</div>
 					</a>
 					<div class='col-lg-1'></div>
-					<div class='col-lg-2 container' style='padding: 10px; border-radius: 10px; width: 90px; height: 85px' onclick='toggleNotificationList()' onmouseover=' this.style.boxShadow = "5px 5px 2px grey"; this.style.borderStyle = "groove";' onmouseout=' this.style.boxShadow = "none"; this.style.borderStyle = "none";'>
+					<div class='col-lg-2 container' style='padding: 10px; border-radius: 10px; width: 90px; height: 85px' onclick='toggleNotificationList()' onmouseover='this.style.backgroundColor = "white"; this.style.boxShadow = "5px 5px 2px grey"; this.style.borderStyle = "groove";' onmouseout='this.style.backgroundColor = "inherit"; this.style.boxShadow = "none"; this.style.borderStyle = "none";'>
 						<span id='notificationIcon' class='glyphicon glyphicon-envelope' style='font-size: 60px; text-align: left;'></span>
 					</div>
 				</div>
@@ -54,16 +54,16 @@
 		  <div class="container-fluid">
   
 			<div class="navbar-header">
-			  <a class="navbar-brand" href="#">Adesso Kicker</a>
+			  <a class="navbar-brand" th:href="@{/home}">Adesso Kicker</a>
 			</div>
 			
 			<ul class="nav sticky-top navbar-nav">
 			
-				<li class="active"><a href="#">Home</a></li>
-				<li><a th:href="@{/tournaments}">Turniere</a></li>
-				<li><a th:href="@{/users}">Users</a></li>  
-				<li><a th:href="@{/teams}">Teams</a></li>
-				<li><a th:href="@{/matches}">Matches</a></li>
+				<li id="tabHome"><a th:href="@{/home}">Home</a></li>
+				<li id="tabTournaments"><a th:href="@{/tournaments}">Turniere</a></li>
+				<li id="tabUsers"><a th:href="@{/users}">Users</a></li>  
+				<li id="tabTeams"><a th:href="@{/teams}">Teams</a></li>
+				<li id="tabMatches"><a th:href="@{/matches}">Matches</a></li>
 			  
 			</ul>
 		  </div>  
