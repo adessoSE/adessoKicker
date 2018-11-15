@@ -8,12 +8,13 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
-		<link rel="stylesheet" href="/css/homeStyle.css">
-    <script type='text/javascript' th:src='@{/js/notification.js}'></script>
-    <!--<script type='text/javascript' th:src='@{/js/notification.js}'></script>-->
+    	<!--<script type='text/javascript' th:src='@{/js/notification.js}'></script>-->
 	</head>
 	
 	<header th:fragment="header" style="background-color: lightgrey;">
+	
+	<link rel="stylesheet" href="/css/notification.css">
+	<script type='text/javascript' th:src='@{/js/notification.js}'></script>
 
     <script type='text/javascript' th:src='@{/js/notification.js}'></script>
 		<style>#navbar{overflow: hidden; background-color: #333; z-index: 1000; margin: 0px}.sticky{position: fixed;top: 0;width: 100%;}.sticky + .content {padding-top: 60px;}#navbar a {float: left; display: block ;color: #f2f2f2; text-align: center; padding: 14px; text-decoration: none;}</style>
@@ -46,7 +47,7 @@
 						<div id="notificationList" th:if="${notifications} != null">
 
 						  	<div class="notificationList_El" th:each="n : ${notifications}" th:attr="value = ${n.notificationId}">
-                  <button th:onclick="'javascript:deleteNotification(\'' + ${n.notificationId} +  '\');'" class="notificationList_El_DeclineBT">X</button>
+                  				<button th:onclick="'javascript:deleteNotification(\'' + ${n.notificationId} +  '\');'" class="notificationList_El_DeclineBT">X</button>
 								<div class="notificationList_El_Text" th:text="${n.message}">ERROR: Displaying Notification</div>
                   <!--"'javascript:acceptNotification(\'' + ${notificationService} +'\',\''+ ${n.notificationId} +  '\');'" -->
 								<button th:onclick="'javascript:acceptNotification(\'' + ${n.notificationId} +  '\');'" class="notificationList_El_AcceptBT">Annehmen</button>

@@ -1,5 +1,7 @@
 package de.adesso.kicker.team;
 
+import de.adesso.kicker.notification.NotificationService;
+import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +19,15 @@ public class TeamController {
 
     private TeamService teamService;
     private UserService userService;
+    private NotificationService notificationService;
     private ModelAndView modelAndView;
 
     @Autowired
-    public TeamController(TeamService teamService, UserService userService) {
+    public TeamController(TeamService teamService, UserService userService, NotificationService notificationService) {
 
         this.teamService = teamService;
         this.userService = userService;
+        this.notificationService = notificationService;
     }
 
     /**
@@ -34,6 +38,9 @@ public class TeamController {
     @GetMapping("/teams")
     public ModelAndView getAllTeams() {
         modelAndView = new ModelAndView();
+        User user = userService.getLoggedInUser();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
         modelAndView.addObject("teams", teamService.getAllTeams());
         modelAndView.setViewName("team/teams");
         return modelAndView;
@@ -49,6 +56,9 @@ public class TeamController {
     public ModelAndView getTeam(@PathVariable("teamId") long id) {
 
         modelAndView = new ModelAndView();
+        User user = userService.getLoggedInUser();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
         modelAndView.addObject(teamService.getTeamById(id));
         modelAndView.setViewName("team/page");
         return modelAndView;

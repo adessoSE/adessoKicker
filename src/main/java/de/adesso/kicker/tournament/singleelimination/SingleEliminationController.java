@@ -1,9 +1,13 @@
 package de.adesso.kicker.tournament.singleelimination;
 
+import de.adesso.kicker.notification.NotificationService;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.team.TeamService;
 import de.adesso.kicker.tournament.TournamentControllerInterface;
 import de.adesso.kicker.tournament.TournamentFormats;
+import de.adesso.kicker.user.User;
+import de.adesso.kicker.user.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -19,12 +23,16 @@ public class SingleEliminationController implements TournamentControllerInterfac
 
     private SingleEliminationService singleEliminationService;
     private TeamService teamService;
+    private UserService userService;
+    private NotificationService notificationService;
 
     @Autowired
-    public SingleEliminationController(SingleEliminationService singleEliminationService, TeamService teamService) {
+    public SingleEliminationController(SingleEliminationService singleEliminationService, TeamService teamService, NotificationService notificationService, UserService userService) {
 
         this.singleEliminationService = singleEliminationService;
         this.teamService = teamService;
+        this.notificationService = notificationService;
+        this.userService = userService;
     }
 
     @Override
@@ -35,6 +43,9 @@ public class SingleEliminationController implements TournamentControllerInterfac
     @Override
     public ModelAndView getPage(SingleElimination singleElimination) {
         ModelAndView modelAndView = new ModelAndView();
+        User user = userService.getLoggedInUser();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
         modelAndView.addObject("tournament", singleElimination);
         modelAndView.setViewName("tournament/page");
         return modelAndView;
