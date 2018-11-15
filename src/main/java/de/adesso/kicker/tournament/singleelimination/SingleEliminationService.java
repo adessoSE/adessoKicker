@@ -1,6 +1,7 @@
 package de.adesso.kicker.tournament.singleelimination;
 
 import de.adesso.kicker.match.Match;
+import de.adesso.kicker.match.MatchService;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.tournament.TournamentRepository;
 import de.adesso.kicker.tournament.TournamentService;
@@ -16,9 +17,12 @@ import java.util.List;
 @Service
 public class SingleEliminationService extends TournamentService {
 
+    private MatchService matchService;
+
     @Autowired
-    public SingleEliminationService(TournamentRepository tournamentRepository) {
+    public SingleEliminationService(TournamentRepository tournamentRepository, MatchService matchService) {
         super(tournamentRepository);
+        this.matchService = matchService;
     }
 
     public void addTeamToTournament(SingleElimination singleElimination, Team team) {
@@ -37,13 +41,13 @@ public class SingleEliminationService extends TournamentService {
      * power of two will be filled with null. Also fills all of the other levels
      * with null so setting players will be easier later
      *
-     * @param teams             List<Team>
      * @param singleElimination SingleElimination
      */
+    public void createTournamentTree(SingleElimination singleElimination) {
 
-    public void createTournamentTree(List<Team> teams, SingleElimination singleElimination) {
-
-        int tournamentSize = (int) Math.pow(2, Math.ceil((Math.log(teams.size()) / Math.log(2))));
+        List<Team> teams = singleElimination.getTeams();
+        int tournamentSize = (int) Math.pow(2,
+                Math.ceil((Math.log(singleElimination.getTeams().size()) / Math.log(2))));
         int tournamentTreeSize = (int) (Math.log(tournamentSize) / Math.log(2) + 1);
         List<BracketRow> tournamentTree = singleElimination.getBracket();
 
@@ -54,22 +58,23 @@ public class SingleEliminationService extends TournamentService {
         }
 
         /*
-         * Initializes the tournament tree with the right amount of levels so players
+         * Initializes the tournament tree with the right amount of levels so matches
          * can be added easily later
          */
-        while (tournamentTree.size() < tournamentTreeSize) {
+        while (tournamentTree.size() < tournamentTreeSize - 1) {
 
             tournamentTree.add(new BracketRow());
         }
 
         /*
-         * Initializes all places in the List with null to make it easier to set players
+         * Initializes all places in the List with null to make it easier to set matches
          * later
          */
-        for (int i = 0; i < tournamentTreeSize; i++) {
-            for (int k = tournamentTree.get(i).getRow().size(); k < tournamentSize / Math.pow(2, i); k++) {
-
-                tournamentTree.get(i).getRow().add(null);
+        for (int i = 0; i < tournamentTreeSize - 1; i++) {
+            for (int k = tournamentTree.get(i).getRow().size(); k < (tournamentSize / Math.pow(2, i)) / 2; k++) {
+                Match match = new Match();
+                matchService.saveMatch(match);
+                tournamentTree.get(i).getRow().add(match);
             }
         }
 
@@ -80,32 +85,12 @@ public class SingleEliminationService extends TournamentService {
          * there is a chance for a team to get to the finals without playing a single
          * match.
          */
-        for (int i = 0; i < tournamentSize; i += 2) {
-
-            tournamentTree.get(0).getRow().set(i, teams.get(i));
-        }
-
-        for (int i = 1; i < tournamentSize; i += 2) {
-
-            tournamentTree.get(0).getRow().set(i, teams.get(i));
+        for (int i = 0; i < tournamentSize / 2; i++) {
+            tournamentTree.get(0).getRow().get(i).setTeamA(teams.get(i));
+            tournamentTree.get(0).getRow().get(i).setTeamB(teams.get(i + tournamentSize / 2));
         }
 
         saveTournament(singleElimination);
-    }
-
-    public void prepareTournamentTree(SingleElimination tournament) {
-        int tournamentSize = (int) Math.pow(2, Math.ceil((Math.log(tournament.getTeams().size()) / Math.log(2))));
-        List<BracketRow> bracketRows = tournament.getBracket();
-        for (int i = 0; i < bracketRows.size(); i++) {
-            while(bracketRows.get(i).getRow().size() < tournamentSize / Math.pow(2, i)) {
-                System.out.println(i);
-                System.out.println(tournamentSize / Math.pow(2, i));
-                bracketRows.get(i).getRow().add(null);
-            }
-        }
-        for (BracketRow bracketRow: bracketRows) {
-            System.out.println(bracketRow.getRow());
-        }
     }
 
     /**
@@ -124,9 +109,14 @@ public class SingleEliminationService extends TournamentService {
 
         for (int i = 0; i < treeSize - 1 && !winnerSet; i++) {
             for (int k = 0; k < tournamentTree.get(i).getRow().size() && !winnerSet; k++) {
-                if (tournamentTree.get(i).getRow().get(k) == winner
-                        && !(tournamentTree.get(i + 1).getRow().get(k / 2) == winner)) {
-                    tournamentTree.get(i + 1).getRow().set(k / 2, winner);
+                if (tournamentTree.get(i).getRow().get(k).getWinner() == winner
+                        && !(tournamentTree.get(i + 1).getRow().get(k / 2).getWinner() == winner)) {
+
+                    if (tournamentTree.get(i + 1).getRow().get(k / 2).getTeamA() == null) {
+                        tournamentTree.get(i + 1).getRow().get(k / 2).setTeamA(winner);
+                    } else {
+                        tournamentTree.get(i + 1).getRow().get(k / 2).setTeamB(winner);
+                    }
                     winnerSet = true;
                 }
             }

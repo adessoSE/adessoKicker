@@ -1,5 +1,6 @@
 package de.adesso.kicker.tournament.singleelimination;
 
+import de.adesso.kicker.match.Match;
 import de.adesso.kicker.team.Team;
 
 import javax.persistence.*;
@@ -14,7 +15,7 @@ public class BracketRow {
     private long id;
 
     @ManyToMany
-    private List<Team> row = new ArrayList<>();
+    private List<Match> row = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -24,11 +25,11 @@ public class BracketRow {
         this.id = id;
     }
 
-    public List<Team> getRow() {
+    public List<Match> getRow() {
         return row;
     }
 
-    public void setRow(List<Team> row) {
+    public void setRow(List<Match> row) {
         this.row = row;
     }
 }
