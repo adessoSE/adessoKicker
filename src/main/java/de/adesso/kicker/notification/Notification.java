@@ -26,10 +26,6 @@ public class Notification {
     public Notification() {
     }
 
-    public long getNotificationId() {
-        return notificationId;
-    }
-
     public Notification(String message, User receiver, User sender) {
         this.sendDate = new Date();
         this.receiver = receiver;
@@ -42,6 +38,10 @@ public class Notification {
         this.receiver = receiver;
         this.sender = sender;
         this.message = message;
+    }
+
+    public long getNotificationId() {
+        return notificationId;
     }
 
     public void setNotificationId(long notificationId) {
