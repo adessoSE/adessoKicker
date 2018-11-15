@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -131,10 +129,10 @@ public class SingleEliminationService extends TournamentService {
         }
     }
 
-    public void checkPlayerTeamInTournament(SingleElimination singleElimination, Team team) {
+    public void checkPlayerInTournament(SingleElimination singleElimination, User player) {
         List<User> players = singleElimination.getPlayers();
-        if (players.contains(team.getPlayerA()) || players.contains(team.getPlayerB())) {
-            throw new PlayerOfTeamAlreadyInTournamentException();
+        if (players.contains(player)) {
+            throw new PlayerInTournamentException();
         }
     }
 }

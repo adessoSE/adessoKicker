@@ -12,7 +12,7 @@
 <header th:insert="~{fragments/header :: header}"></header>
 <body>
 <div class="container-fluid">
-  <div th:each="bracket : ${tournament.bracket}" class="row flex-row flex-nowrap" style="padding: 10px">
+  <div th:each="bracket : ${tournament.bracket}" class="row" style="padding: 10px">
     <div th:each="match : ${bracket.row}" class="col">
       <ul class="list-group text-center">
         <li class="list-group-item bg-light" th:if="${match.teamA} != null" th:text="${match.teamA.teamName}"></li>
@@ -23,23 +23,27 @@
     </div>
   </div>
 </div>
-<div class="container" th:if="${user} != null">
-  <form class="form" autocomplete="off" action="#" th:action="@{/tournaments/} + ${tournamentId} + '?join'" th:object="${tournament}" method="POST">
-    <div class="form-group form">
-      <label for="teams"></label>
-      <select class="form-control" id="teams" name="id">
-        <option value="" disabled selected hidden>Wähle dein Team</option>
-        <option th:each="team : ${teams}"
-                th:value="${team.teamId}"
-                th:text="${team.teamId}+' : '+${team.teamName}">
-        </option>
-      </select>
-    </div>
-    <button type="submit" class="btn btn-primary btn-block" name="id">Turnier beitreten</button>
-    <span id="success" th:utext="${successMessage}"></span>
-    <span id="fail" th:utext="${failMessage}"></span>
-  </form>
-</div>
+  <div class="container" th:if="${user} != null">
+    <form class="form" autocomplete="off" action="#" th:action="@{/tournaments/} + ${tournamentId} + '?join'" th:object="${tournament}" method="POST">
+      <div class="form-group form">
+        <label for="teams"></label>
+        <select class="form-control" id="teams" name="id">
+          <option value="" disabled selected hidden>Wähle dein Team</option>
+          <option th:if="${teams} != null"
+                  th:each="team : ${teams}"
+                  th:value="${team.teamId}"
+                  th:text="${team.teamId}+' : '+${team.teamName}">
+          </option>
+        </select>
+      </div>
+      <button th:if="${teams} != null and ${!teams.empty}" type="submit" class="btn btn-primary btn-block" name="id">Turnier beitreten</button>
+      <button th:if="${teams == null}" type="button" class="btn btn-primary btn-block disabled" name="id">Du bist bereits in diesem Turnier</button>
+      <button th:if="${teams.empty}" type="button" class="btn btn-primary btn-block disabled" name="id">Du bist in keinem Team</button>
+      <span id="success" th:utext="${successMessage}"></span>
+      <span id="fail" th:utext="${failMessage}"></span>
+    </form>
+
+  </div>
 </body>
 <footer th:insert="~{fragments/footer :: footer}"></footer>
 </html>
