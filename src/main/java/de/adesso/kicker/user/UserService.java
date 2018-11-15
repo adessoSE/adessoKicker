@@ -25,7 +25,7 @@ public class UserService {
 
     /**
      * getAllUsers() returns a list of all users.
-     * 
+     *
      * @return
      */
     public List<User> getAllUsers() {

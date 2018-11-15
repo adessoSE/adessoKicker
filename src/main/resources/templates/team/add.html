@@ -23,7 +23,7 @@
           <div class="col">
             <label for="playerA">Spieler 1 </label>
             <select class="form-control" id="playerA" name="playerA">
-              <option th:each="playerA:${users}" th:value="${playerA.userId}" th:text="${playerA.userId}+':'+${playerA.firstName}+' '+${playerA.lastName}"></option>
+              <option th:each="playerA:${users}" th:value="${playerA.userId}" th:text="${playerA.userId}+': '+${playerA.firstName}+' '+${playerA.lastName}"></option>
             </select>
           </div>
           <div class="col">
@@ -39,7 +39,7 @@
       </div>
       <div class="alert alert-danger" th:if="${#fields.hasErrors('playerB')}" th:errors="*{playerB}"></div>
       <div class="alert alert-success" th:if="${successMessage!=null}" th:utext="${successMessage}"></div>
-      <button type="submit" class="btn btn-primary">Match erstellen</button>
+      <button type="submit" class="btn btn-primary">Team gründen</button>
     </form>
   </div>
 </div>

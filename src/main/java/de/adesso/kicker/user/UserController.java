@@ -51,19 +51,8 @@ public class UserController {
     public ModelAndView getUser(@PathVariable long id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getUserById(id));
-        modelAndView.addObject("allUsers", userService.getAllUsers());
         modelAndView.setViewName("user/_profile");
         return modelAndView;
-    }
-
-    /**
-     * getAllUsers() gets all users that are in the database.
-     * 
-     * @return ModelAndView
-     */
-    @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
     }
 
     /**
@@ -74,8 +63,7 @@ public class UserController {
     @GetMapping("/users/you")
     public ModelAndView getUserYourself() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", userService.getLoggedInUser());
-        modelAndView.addObject("allUsers", userService.getAllUsers());
+        modelAndView.addObject("user", userService.getLoggedInUser());;
         modelAndView.setViewName("user/_profile");
         return modelAndView;
     }
@@ -88,7 +76,7 @@ public class UserController {
      * @param lastName
      * @return
      */
-    @GetMapping(value = "users/list")
+    @GetMapping(value = "/users/list")
     public ModelAndView showUsersSearchbar(@RequestParam(value = "search", required = false) String firstName,
             @RequestParam(value = "search", required = false) String lastName) {
         ModelAndView modelAndView = new ModelAndView();
@@ -98,16 +86,5 @@ public class UserController {
         }
         modelAndView.setViewName("user/searchuser");
         return modelAndView;
-    }
-
-    /**
-     * deleteUser() deletes an unique user identified by an index.
-     * 
-     * @param id long
-     */
-    @DeleteMapping("users/delete/{id}")
-    public void deleteUser(@RequestBody User user, @PathVariable long id) {
-
-        userService.deleteUser(id);
     }
 }

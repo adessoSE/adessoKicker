@@ -110,31 +110,4 @@ public class TeamController {
         modelAndView.setViewName("team/add");
         return modelAndView;
     }
-
-    /**
-     * deleteTeam() deletes an unique team identified by an index.
-     *
-     * @param id long
-     */
-    @RequestMapping(method = RequestMethod.DELETE, value = "/teams/delete/{id}")
-    public void deleteTeam(@PathVariable long id) {
-        teamService.deleteTeamById(id);
-    }
-
-    /**
-     * getTeamsSearchbar() gets all teams from the input of the user.
-     *
-     * @param teamName
-     * @return
-     */
-    @GetMapping(value = "teams/list")
-    public ModelAndView getTeamsSearchbar(@RequestParam(value = "search", required = false) String teamName) {
-        modelAndView = new ModelAndView();
-        try {
-            modelAndView.addObject("search", teamService.getTeamByName(teamName));
-        } catch (Exception i) {
-        }
-        modelAndView.setViewName("team/searchteam");
-        return modelAndView;
-    }
 }
