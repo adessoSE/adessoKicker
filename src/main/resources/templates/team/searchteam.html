@@ -25,13 +25,15 @@
       </tr>
       </thead>
       <div th:if="${not #lists.isEmpty(search)}">
-        <tbody>
-        <tr th:each="teams: ${search}">
-          <td><a th:href="@{'/teams/'+${teams.teamId}}" th:text="${teams.teamName}"></a></td>
-          <td><a th:href="@{'/users/'+${teams.playerA.userId}}" th:text="${teams.playerA.firstName}+' '+${teams.playerA.lastName}"></a></td>
-          <td><a th:href="@{'/users/'+${teams.playerB.userId}}" th:text="${teams.playerB.firstName}+' '+${teams.playerB.lastName}"></a></td>
-        </tr>
-        </tbody>
+        <table>
+          <tbody>
+          <tr th:each="teams: ${search}">
+            <td><a th:href="@{'/teams/'+${teams.teamId}}" th:text="${teams.teamName}"></a></td>
+            <td><a th:href="@{'/users/'+${teams.playerA.userId}}" th:text="${teams.playerA.firstName}+' '+${teams.playerA.lastName}"></a></td>
+            <td><a th:href="@{'/users/'+${teams.playerB.userId}}" th:text="${teams.playerB.firstName}+' '+${teams.playerB.lastName}"></a></td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </table>
   </form>

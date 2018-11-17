@@ -8,11 +8,13 @@ import de.adesso.kicker.tournament.TournamentService;
 import de.adesso.kicker.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
+@Transactional
 public class SingleEliminationService extends TournamentService {
 
     private MatchService matchService;
@@ -91,13 +93,27 @@ public class SingleEliminationService extends TournamentService {
         saveTournament(singleElimination);
     }
 
+    public void createSingleEliminationTournament(SingleElimination singleElimination) {
+        saveTournament(singleElimination);
+    }
+
+    @Transactional
+    public void joinTournament(SingleElimination singleElimination, Team team) {
+        checkTeamInTournament(singleElimination, team);
+        checkPlayerOfTeamInTournament(singleElimination, team);
+        saveTournament(singleElimination);
+    }
+
+    public void getTournamentPage(SingleElimination singleElimination, User loggedInUser) {
+        checkPlayerInTournament(singleElimination, loggedInUser);
+    }
+
     /**
      * Advances the team that is the winner of the specified match
      *
      * @param singleElimination SingleElimination
      * @param match             Match
      */
-
     public void advanceWinner(SingleElimination singleElimination, Match match) {
 
         Team winner = match.getWinner();
@@ -122,21 +138,21 @@ public class SingleEliminationService extends TournamentService {
         saveTournament(singleElimination);
     }
 
-    public void checkTeamInTournament(SingleElimination singleElimination, Team team) {
+    private void checkTeamInTournament(SingleElimination singleElimination, Team team) {
 
         if (singleElimination.getTeams().contains(team)) {
             throw new TeamAlreadyInTournamentException();
         }
     }
 
-    public void checkPlayerInTournament(SingleElimination singleElimination, User player) {
+    private void checkPlayerInTournament(SingleElimination singleElimination, User player) {
         List<User> players = singleElimination.getPlayers();
         if (players.contains(player)) {
             throw new PlayerInTournamentException();
         }
     }
 
-    public void checkPlayerOfTeamInTournamen(SingleElimination singleElimination, Team team) {
+    private void checkPlayerOfTeamInTournament(SingleElimination singleElimination, Team team) {
         List<User> players = singleElimination.getPlayers();
         if (players.contains(team.getPlayerA()) || players.contains(team.getPlayerB())) {
             throw new PlayerOfTeamInTournamentException();

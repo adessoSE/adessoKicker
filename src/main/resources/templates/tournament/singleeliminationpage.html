@@ -14,7 +14,7 @@
 <div class="container-fluid">
   <div th:each="bracket : ${tournament.bracket}" class="row" style="padding: 10px">
     <div th:each="match : ${bracket.row}" class="col">
-      <ul class="list-group text-center">
+      <ul class="list-group rounded-0 text-center">
         <li class="list-group-item bg-light" th:if="${match.teamA} != null" th:text="${match.teamA.teamName}"></li>
         <li class="list-group-item bg-light" th:if="${match.teamB} != null" th:text="${match.teamB.teamName}"></li>
         <li class="list-group-item bg-light" th:if="${match.teamA} == null" th:text="TBD"></li>
