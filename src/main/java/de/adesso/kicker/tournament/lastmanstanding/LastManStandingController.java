@@ -1,9 +1,7 @@
 package de.adesso.kicker.tournament.lastmanstanding;
 
-import de.adesso.kicker.tournament.TournamentControllerInterface;
-import de.adesso.kicker.tournament.TournamentFormats;
-import de.adesso.kicker.user.User;
-import de.adesso.kicker.user.UserService;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -12,7 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
+import de.adesso.kicker.tournament.TournamentControllerInterface;
+import de.adesso.kicker.tournament.TournamentFormats;
+import de.adesso.kicker.user.User;
+import de.adesso.kicker.user.UserService;
 
 @Controller
 public class LastManStandingController implements TournamentControllerInterface<LastManStanding> {
@@ -36,33 +37,35 @@ public class LastManStandingController implements TournamentControllerInterface<
     public ModelAndView getPage(LastManStanding lastManStanding) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("tournament", lastManStanding);
-        modelAndView.setViewName("tournament/page");
+        modelAndView.addObject("user", userService.getLoggedInUser());
+        modelAndView.setViewName("tournament/lastmanstandingpage");
         return modelAndView;
     }
 
-    @Override
-    public ModelAndView getJoinTournament(LastManStanding tournament) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("tournament", tournament);
-        modelAndView.addObject("users", userService.getAllUsers());
-        modelAndView.setViewName("tournament/addplayer");
-        return modelAndView;
-    }
+//    @Override
+//    public ModelAndView getJoinTournament(LastManStanding tournament) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.addObject("tournament", tournament);
+//        modelAndView.addObject("users", userService.getAllUsers());
+//        modelAndView.setViewName("tournament/addplayer");
+//        return modelAndView;
+//    }
 
     @Override
     public ModelAndView postJoinTournament(LastManStanding tournament, long id) {
         ModelAndView modelAndView = new ModelAndView();
         User user = userService.getUserById(id);
-        modelAndView.addObject("tournament", tournament);
-        modelAndView.addObject("users", userService.getAllUsers());
-        modelAndView.setViewName("tournament/addplayer");
+        modelAndView.setViewName("tournament/lastmanstandingpage");
         try {
-            lastManStandingService.checkPlayerInTournament(tournament, user);
+            lastManStandingService.joinLastManStanding(tournament, user);
         } catch (PlayerAlreadyInTournamentException e) {
+            modelAndView.addObject("tournament", tournament);
+            modelAndView.addObject("user", userService.getLoggedInUser());
             modelAndView.addObject("failMessage", "Player already in tournament");
             return modelAndView;
         }
-        lastManStandingService.addPlayer(tournament, user);
+        modelAndView.addObject("tournament", tournament);
+        modelAndView.addObject("user", userService.getLoggedInUser());
         modelAndView.addObject("successMessage", "Player added to tournament");
         return modelAndView;
     }
@@ -93,13 +96,11 @@ public class LastManStandingController implements TournamentControllerInterface<
             modelAndView.addObject("tournament", new LastManStanding());
             modelAndView.setViewName("tournament/createlastmanstanding");
         } else {
-
             lastManStandingService.saveTournament(lastManStanding);
             redirectAttributes.addFlashAttribute("successMessage", "Tournament has been created");
             redirectAttributes.addFlashAttribute("tournamentFormats", TournamentFormats.values());
             modelAndView.setViewName("redirect:/tournaments/create");
         }
-
         return modelAndView;
     }
 }

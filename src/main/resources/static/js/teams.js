@@ -1,4 +1,3 @@
-
 // highlights sort button
 function mouseOver(div) {
 	

@@ -138,21 +138,4 @@ public class MatchController {
         modelAndView.setViewName("match/create");
         return modelAndView;
     }
-
-    /**
-     * deleteMatch() deletes an unique match identified by an index.
-     * 
-     * @param id long
-     */
-    @RequestMapping(method = RequestMethod.DELETE, value = "matches/delete/{id}")
-    public void deleteMatch(@PathVariable long id) {
-        matchService.deleteMatch(id);
-    }
-
-    /**
-     * yesterDay() used for time comparison.
-     * 
-     * @return
-     */
-
 }

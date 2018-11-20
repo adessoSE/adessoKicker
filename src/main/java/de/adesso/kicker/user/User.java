@@ -1,13 +1,14 @@
 package de.adesso.kicker.user;
 
-import de.adesso.kicker.role.Role;
-
 import java.util.Set;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import de.adesso.kicker.role.Role;
 
 @Entity
 @Table(name = "user")
