@@ -110,6 +110,13 @@ public class TournamentService {
 
         return tournamentRepository.findByTournamentId(id);
     }
+    
+    public Tournament getCurrentTournament() {
+        
+        List<Tournament> tournaments = new ArrayList<>();
+        tournamentRepository.findByFinishedFalseOrderByStartDateAsc().forEach(tournaments::add);
+        return tournaments.get(0);
+    }
 
     /**
      * Saves a Tournament in the Tournament table
