@@ -19,7 +19,7 @@ public class LoginService {
 
     @Autowired
     public LoginService(UserRepository userRepository, RoleRepository roleRepository,
-                        BCryptPasswordEncoder bCryptPasswordEncoder) {
+            BCryptPasswordEncoder bCryptPasswordEncoder) {
 
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;

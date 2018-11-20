@@ -35,7 +35,9 @@ public class SingleEliminationController implements TournamentControllerInterfac
     }
 
     @Override
-    public Class<SingleElimination> appliesTo() { return SingleElimination.class; }
+    public Class<SingleElimination> appliesTo() {
+        return SingleElimination.class;
+    }
 
     @Override
     @Transactional
