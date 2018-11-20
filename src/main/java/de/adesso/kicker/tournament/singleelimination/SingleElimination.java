@@ -1,11 +1,15 @@
 package de.adesso.kicker.tournament.singleelimination;
 
-import de.adesso.kicker.team.Team;
-import de.adesso.kicker.tournament.Tournament;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import de.adesso.kicker.team.Team;
+import de.adesso.kicker.tournament.Tournament;
 
 @Entity
 public class SingleElimination extends Tournament {

@@ -1,20 +1,21 @@
 package de.adesso.kicker.tournament.singleelimination;
 
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import de.adesso.kicker.match.Match;
 import de.adesso.kicker.match.MatchService;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.tournament.TournamentRepository;
 import de.adesso.kicker.tournament.TournamentService;
 import de.adesso.kicker.user.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.PostConstruct;
-import java.util.List;
 
 @Service
-@Transactional
 public class SingleEliminationService extends TournamentService {
 
     private MatchService matchService;
@@ -43,6 +44,7 @@ public class SingleEliminationService extends TournamentService {
      *
      * @param singleElimination SingleElimination
      */
+    @Transactional
     public void createTournamentTree(SingleElimination singleElimination) {
 
         List<Team> teams = singleElimination.getTeams();
@@ -101,6 +103,9 @@ public class SingleEliminationService extends TournamentService {
     public void joinTournament(SingleElimination singleElimination, Team team) {
         checkTeamInTournament(singleElimination, team);
         checkPlayerOfTeamInTournament(singleElimination, team);
+        addTeamToTournament(singleElimination, team);
+        addPlayer(singleElimination, team.getPlayerA());
+        addPlayer(singleElimination, team.getPlayerB());
         saveTournament(singleElimination);
     }
 

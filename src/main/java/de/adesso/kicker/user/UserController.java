@@ -1,8 +1,10 @@
 package de.adesso.kicker.user;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -23,13 +25,14 @@ public class UserController {
 
     /**
      * getLoggedInUser() gets the current user.
-     * 
+     *
      * @return ModelAndView
      */
     @GetMapping(value = { "", "/", "home" })
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", userService.getLoggedInUser());
+        User user = userService.getLoggedInUser();
+        modelAndView.addObject("user", user);
         modelAndView.setViewName("user/home");
         return modelAndView;
     }
@@ -43,7 +46,7 @@ public class UserController {
 
     /**
      * getUser() gets an unique user identified by an index.
-     * 
+     *
      * @param id long
      * @return ModelAndView
      */
@@ -57,13 +60,14 @@ public class UserController {
 
     /**
      * getUserYourself() gets the logged in user.
-     * 
+     *
      * @return ModelAndView
      */
     @GetMapping("/users/you")
     public ModelAndView getUserYourself() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", userService.getLoggedInUser());;
+        User user = userService.getLoggedInUser();
+        modelAndView.addObject("user", user);
         modelAndView.setViewName("user/_profile");
         return modelAndView;
     }
@@ -71,7 +75,7 @@ public class UserController {
     /**
      * showUsersSearchbar() finds teams by the same teamName ignoring the case or
      * something similar to it.
-     * 
+     *
      * @param firstName
      * @param lastName
      * @return

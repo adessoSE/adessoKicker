@@ -1,11 +1,12 @@
 package de.adesso.kicker.tournament.lastmanstanding;
 
-import de.adesso.kicker.tournament.Tournament;
-import de.adesso.kicker.user.User;
-
-import javax.persistence.*;
 import java.util.List;
 import java.util.Map;
+
+import javax.persistence.*;
+
+import de.adesso.kicker.tournament.Tournament;
+import de.adesso.kicker.user.User;
 
 @Entity
 public class LastManStanding extends Tournament {
@@ -20,10 +21,6 @@ public class LastManStanding extends Tournament {
 
     @ElementCollection
     private Map<User, Integer> livesMap;
-
-    public LastManStanding(String tournamentName) {
-
-    }
 
     public LastManStanding() {
 

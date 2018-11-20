@@ -1,11 +1,11 @@
 package de.adesso.kicker.tournament.singleelimination;
 
-import de.adesso.kicker.match.Match;
-import de.adesso.kicker.team.Team;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.*;
+
+import de.adesso.kicker.match.Match;
 
 @Entity
 public class BracketRow {

@@ -5,13 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import de.adesso.kicker.match.Match;
 import de.adesso.kicker.user.User;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
