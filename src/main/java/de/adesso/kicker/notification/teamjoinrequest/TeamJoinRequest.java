@@ -13,16 +13,15 @@ import de.adesso.kicker.user.User;
 @Entity
 public class TeamJoinRequest extends Notification {
 
-    @ManyToOne(targetEntity = Team.class)
-    private Team targetTeam;
+    private String teamName;
 
     public TeamJoinRequest() {
 
         super();
     }
 
-    public TeamJoinRequest(Team targetTeam, User sender, User receiver) {
-        this.targetTeam = targetTeam;
+    public TeamJoinRequest(String teamName, User sender, User receiver) {
+        this.teamName = teamName;
         this.sender = sender;
         this.receiver = receiver;
         this.sendDate = new Date();
@@ -30,16 +29,10 @@ public class TeamJoinRequest extends Notification {
     }
 
     public String generateMessage() {
-        return sender.getFirstName() + " " + sender.getLastName() + " has invited you to join team: "
-                + targetTeam.getTeamName();
+        return sender.getFirstName() + " " + sender.getLastName() + " has invited you to join team: " + teamName;
     }
 
-    public Team getTargetTeam() {
-        return targetTeam;
+    public String getTeamName() {
+        return this.teamName;
     }
-
-    public void setTargetTeam(Team targetTeam) {
-        this.targetTeam = targetTeam;
-    }
-
 }

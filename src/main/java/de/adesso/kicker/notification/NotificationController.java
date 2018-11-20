@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequest;
+import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequestService;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.team.TeamService;
 import de.adesso.kicker.user.User;
@@ -18,16 +19,17 @@ import de.adesso.kicker.user.UserService;
 public class NotificationController {
 
     private NotificationService notificationService;
+    private TeamJoinRequestService teamJoinRequestService;
     private UserService userService;
     private TeamService teamService;
 
     @Autowired
-    public NotificationController(NotificationService notificationService, UserService userService,
-            TeamService teamService) {
+    public NotificationController(NotificationService notificationService, UserService userService, TeamService teamService, TeamJoinRequestService teamJoinRequestService) {
 
         this.notificationService = notificationService;
         this.userService = userService;
         this.teamService = teamService;
+        this.teamJoinRequestService = teamJoinRequestService;
     }
 
     @RequestMapping("/notifications")
@@ -55,6 +57,7 @@ public class NotificationController {
         if (n instanceof TeamJoinRequest){
 
             System.out.println("TeamJoinRequest " + id + " accepted!");
+            teamJoinRequestService.acceptTeamJoinRequest(id);
         }
         else if (n instanceof Notification){
 
@@ -105,15 +108,14 @@ public class NotificationController {
     }
 
     @PostMapping("/notifications/add/teamjoinrequest")
-    public ModelAndView getAddNotifcationTeamJoinRequest(Long senderId, Long receiverId, Long teamId) {
+    public ModelAndView getAddNotifcationTeamJoinRequest(Long senderId, Long receiverId, String teamName) {
 
         System.out.println("Hallo");
         // TO_DO LOGIC AUSLAGERN
         User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
-        Team targetTeam = teamService.getTeamById(teamId);
 
-        TeamJoinRequest notification = new TeamJoinRequest(targetTeam, sender, receiver);
+        TeamJoinRequest notification = new TeamJoinRequest(teamName, sender, receiver);
         notificationService.saveNotification(notification);
 
         ModelAndView modelAndView = new ModelAndView();

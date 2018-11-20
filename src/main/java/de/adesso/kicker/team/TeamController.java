@@ -1,6 +1,7 @@
 package de.adesso.kicker.team;
 
 import de.adesso.kicker.notification.NotificationService;
+import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequestService;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
 import javax.validation.Valid;
@@ -18,14 +19,16 @@ import org.springframework.web.servlet.ModelAndView;
 public class TeamController {
 
     private TeamService teamService;
+    private TeamJoinRequestService teamJoinRequestService;
     private UserService userService;
     private NotificationService notificationService;
     private ModelAndView modelAndView;
 
     @Autowired
-    public TeamController(TeamService teamService, UserService userService, NotificationService notificationService) {
+    public TeamController(TeamService teamService, UserService userService, NotificationService notificationService, TeamJoinRequestService teamJoinRequestService) {
 
         this.teamService = teamService;
+        this.teamJoinRequestService = teamJoinRequestService;
         this.userService = userService;
         this.notificationService = notificationService;
     }
@@ -114,7 +117,7 @@ public class TeamController {
             modelAndView.setViewName("team/add");
             return modelAndView;
         }
-        teamService.saveTeam(team);
+        teamJoinRequestService.saveTeamJoinRequest(team.getTeamName(), team.getPlayerB().getUserId(), team.getPlayerA().getUserId());
         modelAndView.addObject("successMessage", "Team wurde erfolgreich erstellt.");
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.setViewName("team/add");
