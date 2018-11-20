@@ -1,10 +1,12 @@
 package de.adesso.kicker.match;
 
+import de.adesso.kicker.notification.NotificationService;
 import de.adesso.kicker.team.TeamService;
 import java.util.Calendar;
 import java.util.Date;
 import javax.validation.Valid;
 
+import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -30,14 +32,16 @@ public class MatchController {
     private MatchService matchService;
     private TeamService teamService;
     private UserService userService;
+    private NotificationService notificationService;
     private ModelAndView modelAndView;
 
     @Autowired
-    public MatchController(MatchService matchService, TeamService teamService, UserService userService) {
+    public MatchController(MatchService matchService, TeamService teamService, UserService userService, NotificationService notificationService) {
 
         this.matchService = matchService;
         this.teamService = teamService;
         this.userService = userService;
+        this.notificationService = notificationService;
     }
 
     /**
@@ -48,9 +52,11 @@ public class MatchController {
     @GetMapping("/matches")
     public ModelAndView getAllMatches() {
         modelAndView = new ModelAndView();
+        User user = userService.getLoggedInUser();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
         if (matchService.getAllMatches().size() > 0) {
             modelAndView.addObject("matches", matchService.getAllMatches());
-            modelAndView.addObject("user", userService.getLoggedInUser());
         } else {
             modelAndView.addObject("noMatchesMessage", "Es gibt keine Matches.");
         }
@@ -68,6 +74,9 @@ public class MatchController {
     @GetMapping("/matches/{id}")
     public ModelAndView getMatch(@PathVariable long id) {
         modelAndView = new ModelAndView();
+        User user = userService.getLoggedInUser();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
         modelAndView.addObject("match", matchService.getMatchById(id));
         modelAndView.setViewName("match/page");
         return modelAndView;

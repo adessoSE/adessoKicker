@@ -13,10 +13,13 @@ import de.adesso.kicker.user.UserService;
 public class NotificationService {
 
     private NotificationRepository notificationRepository;
+    private UserService userService;
 
     @Autowired
-    public NotificationService(NotificationRepository notificationRepository) {
+    public NotificationService(NotificationRepository notificationRepository, UserService userService) {
+
         this.notificationRepository = notificationRepository;
+        this.userService = userService;
     }
 
     // Gets a notification by id
@@ -49,8 +52,26 @@ public class NotificationService {
         return notifications;
     }
 
-    // Save notification in repo
+    // Save notification in repository
     public void saveNotification(Notification notification) {
         notificationRepository.save(notification);
+    }
+
+    // Create a notification and save notification in repository
+    // !!!!!! NO VALIDATION YET !!!!!!!
+    public Notification saveNotification(String message, long receiverId, long senderId) {
+
+        System.out.println(senderId);
+        User sender = userService.getUserById(senderId);
+        User receiver = userService.getUserById(receiverId);
+        Notification notification = new Notification(message, receiver, sender);
+        saveNotification(notification);
+        return notification;
+    }
+
+    // Removes notification from repository
+    public void removeNotificationById(long id) {
+
+        notificationRepository.deleteById(id);
     }
 }
