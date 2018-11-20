@@ -1,6 +1,10 @@
 package de.adesso.kicker.user;
 
+import java.security.Principal;
+
+import org.keycloak.KeycloakPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,8 +35,8 @@ public class UserController {
     @GetMapping(value = { "", "/", "home" })
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
-        User user = userService.getLoggedInUser();
-        modelAndView.addObject("user", user);
+//        User user = userService.getLoggedInUser();
+//        modelAndView.addObject("user", user);
         modelAndView.setViewName("user/home");
         return modelAndView;
     }
@@ -40,7 +44,7 @@ public class UserController {
     @GetMapping(value = "/impressum")
     public ModelAndView impressum() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("./impressum");
+        modelAndView.setViewName("/impressum");
         return modelAndView;
     }
 
@@ -51,7 +55,7 @@ public class UserController {
      * @return ModelAndView
      */
     @GetMapping("/users/{id}")
-    public ModelAndView getUser(@PathVariable long id) {
+    public ModelAndView getUser(@PathVariable String id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getUserById(id));
         modelAndView.setViewName("user/_profile");
@@ -64,10 +68,10 @@ public class UserController {
      * @return ModelAndView
      */
     @GetMapping("/users/you")
-    public ModelAndView getUserYourself() {
+    public ModelAndView getUserYourself(Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
-        User user = userService.getLoggedInUser();
-        modelAndView.addObject("user", user);
+        userService.getLoggedInUser();
+        modelAndView.addObject("user", principal);
         modelAndView.setViewName("user/_profile");
         return modelAndView;
     }
@@ -80,15 +84,15 @@ public class UserController {
      * @param lastName
      * @return
      */
-    @GetMapping(value = "/users/list")
-    public ModelAndView showUsersSearchbar(@RequestParam(value = "search", required = false) String firstName,
-            @RequestParam(value = "search", required = false) String lastName) {
-        ModelAndView modelAndView = new ModelAndView();
-        try {
-            modelAndView.addObject("search", userService.getUserByNameSearchbar(firstName, lastName));
-        } catch (Exception i) {
-        }
-        modelAndView.setViewName("user/searchuser");
-        return modelAndView;
-    }
+//    @GetMapping(value = "/users/list")
+//    public ModelAndView showUsersSearchbar(@RequestParam(value = "search", required = false) String firstName,
+//            @RequestParam(value = "search", required = false) String lastName) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        try {
+//            modelAndView.addObject("search", userService.getUserByNameSearchbar(firstName, lastName));
+//        } catch (Exception i) {
+//        }
+//        modelAndView.setViewName("user/searchuser");
+//        return modelAndView;
+//    }
 }

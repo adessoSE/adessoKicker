@@ -31,13 +31,13 @@ public class NotificationController {
     }
 
     @RequestMapping("/{userId}/notifications/send")
-    public List<Notification> getUserNotificationsSend(@PathVariable long userId) {
+    public List<Notification> getUserNotificationsSend(@PathVariable String userId) {
 
         return notificationService.getAllNotificationsBySender(userService.getUserById(userId));
     }
 
     @RequestMapping("/{userId}/notifications/received")
-    public List<Notification> getUserNotificationsReceived(@PathVariable long userId) {
+    public List<Notification> getUserNotificationsReceived(@PathVariable String userId) {
 
         return notificationService.getAllNotificationsByReceiver(userService.getUserById(userId));
     }

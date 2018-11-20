@@ -20,7 +20,7 @@ public interface TeamRepository extends CrudRepository<Team, Long> {
      * @param id Id
      * @return Team
      */
-    Team findByTeamId(Long id);
+    Team findByTeamId(String id);
 
     /**
      * findByTeamNameContainingIgnoreCase() finds teams by the same teamName

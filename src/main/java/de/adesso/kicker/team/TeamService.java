@@ -42,7 +42,7 @@ public class TeamService {
      * @param id
      * @return
      */
-    public Team getTeamById(long id) {
+    public Team getTeamById(String id) {
 
         return teamRepository.findByTeamId(id);
     }
@@ -99,7 +99,7 @@ public class TeamService {
      * @param id
      * @return
      */
-    public Team findTeamById(long id) {
+    public Team findTeamById(String id) {
 
         return teamRepository.findByTeamId(id);
     }

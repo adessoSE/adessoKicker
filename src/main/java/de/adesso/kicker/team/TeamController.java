@@ -46,7 +46,7 @@ public class TeamController {
      * @return ModelAndView
      */
     @GetMapping("/teams/{teamId}")
-    public ModelAndView getTeam(@PathVariable("teamId") long id) {
+    public ModelAndView getTeam(@PathVariable("teamId") String id) {
 
         modelAndView = new ModelAndView();
         modelAndView.addObject(teamService.getTeamById(id));

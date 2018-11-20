@@ -48,7 +48,7 @@ public class TournamentController {
 
     @PostMapping(value = "tournaments/{tournamentId}", params = "join")
     @ResponseBody
-    public ModelAndView postJoinTournament(@PathVariable("tournamentId") long tournamentId, long id) {
+    public ModelAndView postJoinTournament(@PathVariable("tournamentId") long tournamentId, String id) {
         Tournament tournament = tournamentService.getTournamentById(tournamentId);
         return tournamentService.postJoinTournament(tournament, id);
     }

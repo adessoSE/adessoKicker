@@ -59,7 +59,7 @@ public class TournamentService {
 
     @SuppressWarnings("unchecked")
     @Transactional
-    public ModelAndView postJoinTournament(Tournament tournament, long id) {
+    public ModelAndView postJoinTournament(Tournament tournament, String id) {
         return controllerInterfaceMap.get(tournament.getClass()).postJoinTournament(tournament, id);
     }
 

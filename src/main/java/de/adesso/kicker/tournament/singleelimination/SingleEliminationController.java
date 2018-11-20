@@ -86,7 +86,7 @@ public class SingleEliminationController implements TournamentControllerInterfac
     }
 
     @Override
-    public ModelAndView postJoinTournament(SingleElimination tournament, long id) {
+    public ModelAndView postJoinTournament(SingleElimination tournament, String id) {
         ModelAndView modelAndView = new ModelAndView();
         Team team = teamService.findTeamById(id);
         User loggedInUser = userService.getLoggedInUser();
