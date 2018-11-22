@@ -1,11 +1,12 @@
 package de.adesso.kicker.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Service that handles "UserService" used in "UserController".
@@ -15,7 +16,6 @@ import java.util.List;
 public class UserService {
 
     private UserRepository userRepository;
-    List<User> users;
 
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -25,11 +25,11 @@ public class UserService {
 
     /**
      * getAllUsers() returns a list of all users.
-     * 
+     *
      * @return
      */
     public List<User> getAllUsers() {
-
+        List<User> users;
         users = new ArrayList<>();
         userRepository.findAll().forEach(users::add);
         return users;
@@ -37,7 +37,7 @@ public class UserService {
 
     /**
      * getUserById() returns an unique user identified by it's id.
-     * 
+     *
      * @param id
      * @return
      */
@@ -48,7 +48,7 @@ public class UserService {
 
     /**
      * getUserByEmail() returns an unique user identified by it's email.
-     * 
+     *
      * @param email
      */
     public User getUserByEmail(String email) {
@@ -58,19 +58,21 @@ public class UserService {
 
     /**
      * getLoggedInUser() returns the current user.
-     * 
+     *
      * @return
      */
-    public User getLoggedInUser() {
 
+    public User getLoggedInUser() {
+        User user;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
-        return getUserByEmail(email);
+        user = getUserByEmail(email);
+        return user;
     }
 
     /**
      * saveUser() saves an user object.
-     * 
+     *
      * @param user
      */
     public void saveUser(User user) {
@@ -80,7 +82,7 @@ public class UserService {
 
     /**
      * deleteUser() deletes an unique user identified by it's id.
-     * 
+     *
      * @param id
      */
     public void deleteUser(long id) {
@@ -92,12 +94,13 @@ public class UserService {
      * getUserByNameSearchbar is used for the searchbar, accepts a string and it
      * will be validated by this method into two separate strings if there's a space
      * inbetween.
-     * 
+     *
      * @param firstName
      * @param lastName
      * @return
      */
     public List<User> getUserByNameSearchbar(String firstName, String lastName) {
+        List<User> users;
         users = new ArrayList<>();
         try {
             if (firstName.contains(" ")) {

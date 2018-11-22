@@ -1,42 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset='utf-8'>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <title>Impressum</title>
+  <meta charset='utf-8'>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
 
 <body>
 <header th:replace="~{fragments/header :: header}"></header>
-
 <!-- Impressum
 ================================================== -->
-<div class="bs-docs-section">
-    <h1 id="kontakt">Kontaktinformationen</h1>
-    <address>
-        <strong>adesso AG</strong><br>
-        Stockholmer Allee 20<br>
-        44269 Dortmund<br>
-        <abbr title="Telefonnummer">T:</abbr> +49 231 7000-7000<br>
-        <abbr title="Telefax">F:</abbr> +49 231 7000-1000<br>
-        <abbr title="Email-Adresse">E:</abbr> <a href="mailto:info@adesso.de">info@adesso.de</a>
-    </address>
+<div class="container">
+  <p>
+  <h1>Kontaktinformationen</h1>
+  <address>
+    <strong>adesso AG</strong><br>
+    Stockholmer Allee 20<br>
+    44269 Dortmund<br>
+    <abbr title="Telefonnummer">T:</abbr> +49 231 7000-7000<br>
+    <abbr title="Telefax">F:</abbr> +49 231 7000-1000<br>
+    <abbr title="Email-Adresse">E:</abbr> <a href="mailto:info@adesso.de">info@adesso.de</a>
+  </address>
+  </p>
+  <!-- Haftungsausschluss
+  ================================================== -->
+  <h1 id="disclaimer">Haftungsausschluss (Disclaimer)</h1>
+  <p>Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p>
+  <p class="text-muted">Quelle: <a href="http://www.e-recht24.de/impressum-generator.html">www.e-recht24.de</a></p>
 </div>
-
-<!-- Haftungsausschluss
-================================================== -->
-<div class="bs-docs-section">
-    <h1 id="disclaimer">Haftungsausschluss (Disclaimer)</h1>
-    <p>Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p>
-</div>
-
-<p class="text-muted">Quelle: <a href="http://www.e-recht24.de/impressum-generator.html">www.e-recht24.de</a></p>
-
-</body>
-
 <footer th:insert="~{fragments/footer :: footer}"></footer>
-
+</body>
 </html>

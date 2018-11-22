@@ -1,92 +1,91 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:fragment="tree">
+<html xmlns:th="http://www.thymeleaf.org">
 
-	<head>
-		<meta charset=utf-8>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+	<meta charset=utf-8>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
-		<link rel="stylesheet" href="/css/tournamentTreeStyle.css">
-	</head>
-	
-	<header th:insert="~{fragments/header :: header}"></header>
-	
-	<body>
-		
-		<img src='/img/tablefootball.jpg'></img>
-		
-		<canvas id='canvas' width="1400" height='600'style=' position: absolute; z-index: -1;'></canvas>
-	
-		<div class="row">
-			<div class='col-lg-12' id='headline'>
-				<h1 th:text="${tournament.tournamentName} + ' - ' + ${tournament.startDate}" id ='heading' style='text-align: center; font-weight: bold;'>[Turniername] - [Turnierstart]</h1>
-			</div>
-		</div>
-		
-		<br><br>
-		
-		<div id='tree'>
-		</div>
-		
-		<br><br><br>
-		
-		<div class='row'>
-			<div class='col-lg-1'></div>
-			<div class='col-lg-2' style='text-align: center;'>
-				<h1 style='font-weight: bold;'>Teampartner:</h1>
-			</div>
-			<div class='col-lg-4'>
-				<input type='text' onchange='checkName()' class='txtIn' id='inputPartner'></input>
-			</div>
-			<div class='col-lg-1'></div>
-			<div class='col-lg-3'>
-				<button onclick='joinTournament()' onmouseout='this.style.backgroundColor = "white"; this.style.boxShadow = "6px 6px 1px black"' onmouseenter='this.style.backgroundColor = "lightgrey"; this.style.boxShadow = "12px 12px 1px black";'>Turnier beitreten</button>
-			</div>
-		</div>
-	
-	</body>
-	
-	</br></br>
-	
-	<footer th:insert="~{fragments/footer :: footer}"></footer>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/css/tournamentTreeStyle.css">
+</head>
 
-	<script th:inline='javascript'>
-		
-	var rows = [];
-	var numRows = 0;
-		
-		/*<![CDATA[*/
-			
-		var tournamentName = /*[[${tournament.tournamentName}]]*/;
-		var tournamentStartDate = /*[[${tournament.startDate}]]*/;
-		tournamentStartDate = tournamentStartDate.slice(0, 10);
-			
-			/*[# th:each="row : ${tournament.getBracket()}"]*/
-				
-				var teams = [];
-				numRows++;
-				
-				/*[# th:each="team : ${row.row}"]*/
-				
-					if(/*[[${team}]]*/ != null) 
-					{
-						teams.push(/*[[${team}]]*/);
-					}
-				 
-				/*[/]*/
-					
-				rows.push(teams);
-					
-			/*[/]*/
-				
-		/*]]>*/
-			
-	</script>
-		
-	<script type='text/javascript' src='/js/buildTournamentTree.js'></script>
-	<script type='text/javascript' src='/js/treeUiHandle.js'></script>
+<header th:insert="~{fragments/header :: header}"></header>
 
-		
+<body>
+
+<img src='/img/tablefootball.jpg'></img>
+
+<canvas id='canvas' width="1400" height='600'style=' position: absolute; z-index: -1;'></canvas>
+
+<div class="row">
+	<div class='col-lg-12' id='headline'>
+		<h1 id ='heading' style='text-align: center; font-weight: bold;'>[Turniername] - [Turnierstart]</h1>
+	</div>
+</div>
+
+<br><br>
+
+<div id='tree'>
+</div>
+
+<br><br><br>
+
+<div class='row'>
+	<div class='col-lg-1'></div>
+	<div class='col-lg-2' style='text-align: center;'>
+		<h1 style='font-weight: bold;'>Teampartner:</h1>
+	</div>
+	<div class='col-lg-4'>
+		<input type='text' onchange='checkName()' class='txtIn' id='inputPartner'></input>
+	</div>
+	<div class='col-lg-1'></div>
+	<div class='col-lg-3'>
+		<button onclick='joinTournament()' onmouseout='this.style.backgroundColor = "white"; this.style.boxShadow = "6px 6px 1px black"' onmouseenter='this.style.backgroundColor = "lightgrey"; this.style.boxShadow = "12px 12px 1px black";'>Turnier beitreten</button>
+	</div>
+</div>
+
+</body>
+
+
+<footer th:insert="~{fragments/footer :: footer}"></footer>
+
+<script th:inline='javascript'>
+
+    var rows = [];
+    var numRows = 0;
+
+    /*<![CDATA[*/
+
+    var tournamentName = /*[[${tournament.tournamentName}]]*/;
+    var tournamentStartDate = /*[[${tournament.startDate}]]*/;
+    tournamentStartDate = tournamentStartDate.slice(0, 10);
+
+    /*[# th:each="row : ${tournament.getBracket()}"]*/
+
+    var teams = [];
+    numRows++;
+
+    /*[# th:each="team : ${row.row}"]*/
+
+    if(/*[[${team}]]*/ != null)
+    {
+        teams.push(/*[[${team}]]*/);
+    }
+
+    /*[/]*/
+
+    rows.push(teams);
+
+    /*[/]*/
+
+    /*]]>*/
+
+</script>
+
+<script type='text/javascript' src='/js/buildTournamentTree.js'></script>
+<script type='text/javascript' src='/js/treeUiHandle.js'></script>
+
+
 </html>
