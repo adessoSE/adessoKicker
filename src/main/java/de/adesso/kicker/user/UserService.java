@@ -76,7 +76,7 @@ public class UserService {
         return user;
     }
 
-    private void createUser() {
+    private User createUser() {
         SimpleKeycloakAccount simpleKeycloakAccount = (SimpleKeycloakAccount) SecurityContextHolder.getContext()
                 .getAuthentication().getDetails();
         AccessToken userAccessToken = simpleKeycloakAccount.getKeycloakSecurityContext().getToken();
@@ -85,7 +85,7 @@ public class UserService {
         String lastName = userAccessToken.getFamilyName();
         String email = userAccessToken.getEmail();
         User user = new User(userId, firstName, lastName, email);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     /**
