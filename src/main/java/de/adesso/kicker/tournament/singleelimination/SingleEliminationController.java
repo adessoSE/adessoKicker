@@ -2,6 +2,8 @@ package de.adesso.kicker.tournament.singleelimination;
 
 import javax.validation.Valid;
 
+import de.adesso.kicker.notification.tournamentjoinrequest.TournamentJoinRequestService;
+import de.adesso.kicker.tournament.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;

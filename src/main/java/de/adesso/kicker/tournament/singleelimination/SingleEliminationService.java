@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import de.adesso.kicker.notification.tournamentjoinrequest.TournamentJoinRequestService;
+import de.adesso.kicker.tournament.Tournament;
+import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,11 +22,15 @@ import de.adesso.kicker.user.User;
 public class SingleEliminationService extends TournamentService {
 
     private MatchService matchService;
+    private TournamentJoinRequestService tournamentJoinRequestService;
+    private UserService userService;
 
     @Autowired
-    public SingleEliminationService(TournamentRepository tournamentRepository, MatchService matchService) {
+    public SingleEliminationService(TournamentRepository tournamentRepository, MatchService matchService, TournamentJoinRequestService tournamentJoinRequestService, UserService userService) {
         super(tournamentRepository);
         this.matchService = matchService;
+        this.userService = userService;
+        this.tournamentJoinRequestService = tournamentJoinRequestService;
     }
 
     public void addTeamToTournament(SingleElimination singleElimination, Team team) {
@@ -103,10 +110,7 @@ public class SingleEliminationService extends TournamentService {
     public void joinTournament(SingleElimination singleElimination, Team team) {
         checkTeamInTournament(singleElimination, team);
         checkPlayerOfTeamInTournament(singleElimination, team);
-        addTeamToTournament(singleElimination, team);
-        addPlayer(singleElimination, team.getPlayerA());
-        addPlayer(singleElimination, team.getPlayerB());
-        saveTournament(singleElimination);
+        tournamentJoinRequestService.saveTournamentJoinRequest((Tournament) singleElimination, userService.getLoggedInUser().getUserId(), team);
     }
 
     public void getTournamentPage(SingleElimination singleElimination, User loggedInUser) {
