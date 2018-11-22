@@ -16,7 +16,7 @@ public interface UserRepository extends CrudRepository<User, String> {
      * @param lastName
      * @return
      */
-//    List<User> findByLastName(String lastName);
+    List<User> findByLastName(String lastName);
 
     /**
      * findByTeamMail finds a user by it's email.
@@ -24,15 +24,7 @@ public interface UserRepository extends CrudRepository<User, String> {
      * @param email
      * @return
      */
-//    User findByEmail(String email);
-
-    /**
-     * findByUserId() finds a user by it's id.
-     * 
-     * @param id
-     * @return
-     */
-//    User findByUserId(Long id);
+    User findByEmail(String email);
 
     /**
      * findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase() finds
@@ -43,5 +35,5 @@ public interface UserRepository extends CrudRepository<User, String> {
      * @param lastName
      * @return
      */
-//    List<User> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String firstName, String lastName);
+    List<User> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String firstName, String lastName);
 }

@@ -40,15 +40,10 @@ public class TournamentController {
         return tournamentService.getPage(tournament);
     }
 
-//    @GetMapping("tournaments/{tournamentId}/join")
-//    public ModelAndView getJoinTournament(@PathVariable("tournamentId") long id) {
-//        Tournament tournament = tournamentService.getTournamentById(id);
-//        return tournamentService.getJoinTournament(tournament);
-//    }
-
     @PostMapping(value = "tournaments/{tournamentId}", params = "join")
     @ResponseBody
     public ModelAndView postJoinTournament(@PathVariable("tournamentId") long tournamentId, String id) {
+        System.out.println(id);
         Tournament tournament = tournamentService.getTournamentById(tournamentId);
         return tournamentService.postJoinTournament(tournament, id);
     }

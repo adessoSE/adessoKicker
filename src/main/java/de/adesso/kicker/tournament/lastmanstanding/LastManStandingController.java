@@ -42,18 +42,10 @@ public class LastManStandingController implements TournamentControllerInterface<
         return modelAndView;
     }
 
-//    @Override
-//    public ModelAndView getJoinTournament(LastManStanding tournament) {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.addObject("tournament", tournament);
-//        modelAndView.addObject("users", userService.getAllUsers());
-//        modelAndView.setViewName("tournament/addplayer");
-//        return modelAndView;
-//    }
-
     @Override
     public ModelAndView postJoinTournament(LastManStanding tournament, String id) {
         ModelAndView modelAndView = new ModelAndView();
+        System.out.println(id);
         User user = userService.getUserById(id);
         modelAndView.setViewName("tournament/lastmanstandingpage");
         try {

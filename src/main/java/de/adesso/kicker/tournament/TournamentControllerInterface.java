@@ -8,8 +8,6 @@ public interface TournamentControllerInterface<T> {
 
     ModelAndView getPage(T tournament);
 
-//    ModelAndView getJoinTournament(T tournament);
-
     ModelAndView postJoinTournament(T tournament, String id);
 
     ModelAndView getBracket(T tournament);

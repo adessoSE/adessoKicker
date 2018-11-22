@@ -22,7 +22,6 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item" th:each="m: ${matches}">
                     <a th:href="@{/teams/{id}(id=${m.teamA.teamId})}" th:text="${m.teamA.teamName}"></a>gegen<a th:href="@{/teams/{id}(id=${m.teamB.teamId})}" th:text="${m.teamB.teamName}">Error</a>
-                </p>
                 <a class="btn btn-primary" th:href="@{/matches/{id}(id=${m.matchId})}">Details</a>
             </li>
         </ul>

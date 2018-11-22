@@ -1,13 +1,12 @@
 package de.adesso.kicker.team;
 
-import de.adesso.kicker.match.Match;
-import de.adesso.kicker.user.User;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Null;
-import java.util.ArrayList;
-import java.util.List;
+import de.adesso.kicker.user.User;
 
 /**
  * Service that handles "TeamService" used in "TeamController".
@@ -22,15 +21,13 @@ public class TeamService {
         this.teamRepository = teamRepository;
     }
 
-    private List<Team> teams;
-
     /**
      * getAllTeams() returns a list of all teams.
      *
      * @return
      */
     public List<Team> getAllTeams() {
-
+        List<Team> teams;
         teams = new ArrayList<>();
         teamRepository.findAll().forEach(teams::add);
         return teams;
@@ -108,20 +105,9 @@ public class TeamService {
         return teamRepository.findByPlayerAOrPlayerB(player, player);
     }
 
-    /*
-     * public Team createMatch(Match match) { denySameTeam(match.getTeamA(),
-     * match.getTeamB());
-     * 
-     * return null; }
-     */
-
     public void denySameTeam(Team team) {
-        try {
-            if (team.getTeamName() == teamRepository.findByTeamName(team.getTeamName()).getTeamName()) {
-                throw new TeamNameExistingException();
-            }
-        } catch (NullPointerException e) {
-
+        if (team.getTeamName().equals(teamRepository.findByTeamName(team.getTeamName()).getTeamName())) {
+            throw new TeamNameExistingException();
         }
     }
 

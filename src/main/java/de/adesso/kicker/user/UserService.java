@@ -1,12 +1,12 @@
 package de.adesso.kicker.user;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.keycloak.KeycloakPrincipal;
+import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
+import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -53,10 +53,10 @@ public class UserService {
      *
      * @param email
      */
-//    public User getUserByEmail(String email) {
-//
-//        return userRepository.findByEmail(email);
-//    }
+    public User getUserByEmail(String email) {
+
+        return userRepository.findByEmail(email);
+    }
 
     /**
      * getLoggedInUser() returns the current user.
@@ -65,15 +65,27 @@ public class UserService {
      */
 
     public User getLoggedInUser() {
-        KeycloakPrincipal principal = (KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        KeycloakPrincipal principal = (KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
         User user = userRepository.findByUserId(principal.getName());
         try {
             checkUserExists(user);
         } catch (UserDoesNotExistException e) {
-            user = new User(principal.getName());
-            userRepository.save(user);
+            createUser();
         }
         return user;
+    }
+
+    private void createUser() {
+        SimpleKeycloakAccount simpleKeycloakAccount = (SimpleKeycloakAccount) SecurityContextHolder.getContext()
+                .getAuthentication().getDetails();
+        AccessToken userAccessToken = simpleKeycloakAccount.getKeycloakSecurityContext().getToken();
+        String userId = userAccessToken.getPreferredUsername();
+        String firstName = userAccessToken.getGivenName();
+        String lastName = userAccessToken.getFamilyName();
+        String email = userAccessToken.getEmail();
+        User user = new User(userId, firstName, lastName, email);
+        userRepository.save(user);
     }
 
     /**
@@ -105,22 +117,22 @@ public class UserService {
      * @param lastName
      * @return
      */
-//    public List<User> getUserByNameSearchbar(String firstName, String lastName) {
-//        List<User> users;
-//        users = new ArrayList<>();
-//        try {
-//            if (firstName.contains(" ")) {
-//                String[] name = firstName.split("\\s+", 2);
-//                firstName = name[0];
-//                lastName = name[1];
-//
-//            }
-//        } catch (NullPointerException n) {
-//        }
-//        userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(firstName, lastName)
-//                .forEach(users::add);
-//        return users;
-//    }
+    public List<User> getUserByNameSearchbar(String firstName, String lastName) {
+        List<User> users;
+        users = new ArrayList<>();
+        try {
+            if (firstName.contains(" ")) {
+                String[] name = firstName.split("\\s+", 2);
+                firstName = name[0];
+                lastName = name[1];
+
+            }
+        } catch (NullPointerException n) {
+        }
+        userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(firstName, lastName)
+                .forEach(users::add);
+        return users;
+    }
 
     private void checkUserExists(User user) {
         if (user == null) {

@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import de.adesso.kicker.notification.Notification;
 import de.adesso.kicker.team.Team;
@@ -29,13 +28,8 @@ public class TeamJoinRequest extends Notification {
         this.message = generateMessage();
     }
 
-//    public String generateMessage() {
-//        return sender.getFirstName() + " " + sender.getLastName() + " has invited you to join team: "
-//                + targetTeam.getTeamName();
-//    }
-
     public String generateMessage() {
-        return "NOT AVAILABLE has invited you to join team: "
+        return sender.getFirstName() + " " + sender.getLastName() + " has invited you to join team: "
                 + targetTeam.getTeamName();
     }
 
