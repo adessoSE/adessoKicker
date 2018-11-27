@@ -45,13 +45,21 @@
       <ul class="navbar-nav ml-auto">
 
         <!-- Notifications -->
-        <li class="nav-item" id="notificationList" th:if="${user != null}">
-          <a class="nav-link">Notifications</a>
-          <div class="notificationList_El" th:if="${notifications} != null" th:each="n : ${notifications}" th:attr="value = ${n.notificationId}">
-            <button th:onclick="'javascript:deleteNotification(\'' + ${n.notificationId} +  '\');'" class="notificationList_El_DeclineBT">Decline</button>
-            <div class="notificationList_El_Text" th:text="${n.message}">ERROR: Displaying Notification</div>
-            <!--"'javascript:acceptNotification(\'' + ${notificationService} +'\',\''+ ${n.notificationId} +  '\');'" -->
-            <button th:onclick="'javascript:acceptNotification(\'' + ${n.notificationId} +  '\');'" class="notificationList_El_AcceptBT">Accept</button>
+        <li class="nav-item dropdown" th:if="${user != null}">
+
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            Notifications
+          </a>
+
+          <div class="dropdown-menu" id="notificationList">
+
+            <!--<div class="dropdown-item" th:if="${notifications} != null"><a>You dont have any notifications</a></div>-->
+
+            <div class="notificationList_El dropdown-item" th:if="${notifications} != null" th:each="n : ${notifications}" th:attr="value = ${n.notificationId}">
+              <button th:onclick="'javascript:deleteNotification(\'' + ${n.notificationId} +  '\');'" class="notificationList_El_DeclineBT">Decline</button>
+              <div class="notificationList_El_Text" th:text="${n.message}">ERROR: Displaying Notification</div>
+              <button th:onclick="'javascript:acceptNotification(\'' + ${n.notificationId} +  '\');'" class="notificationList_El_AcceptBT">Accept</button>
+            </div>
           </div>
         </li>
 
