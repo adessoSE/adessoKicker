@@ -17,7 +17,8 @@ public interface TournamentRepository extends CrudRepository<Tournament, Long> {
 
     /** Returns a single Tournament found with id */
     Tournament findByTournamentId(Long id);
-    
-    //Returns a list o Tournaments that are not finished tan ordered by start date ascending
+
+    // Returns a list o Tournaments that are not finished tan ordered by start date
+    // ascending
     List<Tournament> findByFinishedFalseOrderByStartDateAsc();
 }

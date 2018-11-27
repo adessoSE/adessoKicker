@@ -52,11 +52,10 @@ public class NotificationController {
     public void acceptNotificationById(@PathVariable long id) {
 
         Notification n = notificationService.getNotificationById(id);
-        if (n instanceof TeamJoinRequest){
+        if (n instanceof TeamJoinRequest) {
 
             System.out.println("TeamJoinRequest " + id + " accepted!");
-        }
-        else if (n instanceof Notification){
+        } else if (n == null) {
 
             System.out.println("Notification " + id + " accepted!");
         }

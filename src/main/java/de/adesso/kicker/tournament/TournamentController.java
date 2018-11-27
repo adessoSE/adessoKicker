@@ -19,7 +19,8 @@ public class TournamentController {
     private NotificationService notificationService;
 
     @Autowired
-    public TournamentController(TournamentService tournamentService, NotificationService notificationService, UserService userService) {
+    public TournamentController(TournamentService tournamentService, NotificationService notificationService,
+            UserService userService) {
         this.tournamentService = tournamentService;
         this.notificationService = notificationService;
         this.userService = userService;
@@ -49,7 +50,7 @@ public class TournamentController {
         Tournament tournament = tournamentService.getTournamentById(id);
         return tournamentService.getPage(tournament);
     }
-    
+
     @GetMapping("/tournaments/current")
     public ModelAndView tournamentPageCurrent() {
         ModelAndView modelAndView = new ModelAndView();

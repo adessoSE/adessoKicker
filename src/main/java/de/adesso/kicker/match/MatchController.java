@@ -36,7 +36,8 @@ public class MatchController {
     private ModelAndView modelAndView;
 
     @Autowired
-    public MatchController(MatchService matchService, TeamService teamService, UserService userService, NotificationService notificationService) {
+    public MatchController(MatchService matchService, TeamService teamService, UserService userService,
+            NotificationService notificationService) {
 
         this.matchService = matchService;
         this.teamService = teamService;
