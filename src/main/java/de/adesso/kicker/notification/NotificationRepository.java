@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
+import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequest;
 import de.adesso.kicker.user.User;
 
 public interface NotificationRepository extends CrudRepository<Notification, Long> {

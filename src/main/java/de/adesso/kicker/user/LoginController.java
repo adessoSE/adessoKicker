@@ -1,6 +1,7 @@
 package de.adesso.kicker.user;
 
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -61,7 +62,7 @@ public class LoginController {
             return modelAndView;
         }
 
-        loginService.saveUser(user);
+        loginService.registerUser(user);
         modelAndView.addObject("successMessage", "User has been registered successfully");
         modelAndView.addObject("user", new User());
         modelAndView.setViewName("user/login");

@@ -1,5 +1,6 @@
 package de.adesso.kicker.team;
 
+import de.adesso.kicker.user.User;
 import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
@@ -16,8 +17,8 @@ public interface TeamRepository extends CrudRepository<Team, Long> {
     /**
      * findByTeamId() finds a team by it's id.
      * 
-     * @param id
-     * @return
+     * @param id Id
+     * @return Team
      */
     Team findByTeamId(Long id);
 
@@ -29,4 +30,6 @@ public interface TeamRepository extends CrudRepository<Team, Long> {
      * @return
      */
     List<Team> findByTeamNameContainingIgnoreCase(String teamName);
+
+    List<Team> findByPlayerAOrPlayerB(User playerA, User playerB);
 }

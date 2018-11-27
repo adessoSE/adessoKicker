@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import de.adesso.kicker.notification.NotificationService;
@@ -58,13 +59,14 @@ public class TournamentController {
         return tournamentService.getPage(tournament);
     }
 
-    @GetMapping("tournaments/{tournamentId}/join")
-    public ModelAndView getJoinTournament(@PathVariable("tournamentId") long id) {
-        Tournament tournament = tournamentService.getTournamentById(id);
-        return tournamentService.getJoinTournament(tournament);
-    }
+//    @GetMapping("tournaments/{tournamentId}/join")
+//    public ModelAndView getJoinTournament(@PathVariable("tournamentId") long id) {
+//        Tournament tournament = tournamentService.getTournamentById(id);
+//        return tournamentService.getJoinTournament(tournament);
+//    }
 
-    @PostMapping("tournaments/{tournamentId}/join")
+    @PostMapping(value = "tournaments/{tournamentId}", params = "join")
+    @ResponseBody
     public ModelAndView postJoinTournament(@PathVariable("tournamentId") long tournamentId, long id) {
         Tournament tournament = tournamentService.getTournamentById(tournamentId);
         return tournamentService.postJoinTournament(tournament, id);

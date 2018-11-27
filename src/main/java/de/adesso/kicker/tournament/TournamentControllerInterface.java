@@ -8,7 +8,7 @@ public interface TournamentControllerInterface<T> {
 
     ModelAndView getPage(T tournament);
 
-    ModelAndView getJoinTournament(T tournament);
+//    ModelAndView getJoinTournament(T tournament);
 
     ModelAndView postJoinTournament(T tournament, long id);
 

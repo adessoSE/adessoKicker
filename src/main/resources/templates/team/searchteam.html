@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Team Suche</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<div class="container">
+  <h2>Search for Teams</h2>
+  <form th:object="${teams}" th:action="@{/teams/list}" method="get">
+    <label for="search">Teamname</label>
+    <input type="search" name="search" id="search" placeholder="Teamname" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+    <h2 class="text-center">User-List</h2>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Teamname</th>
+        <th scope="col">Spieler 1</th>
+        <th scope="col">Spieler 2</th>
+      </tr>
+      </thead>
+      <div th:if="${not #lists.isEmpty(search)}">
+        <table>
+          <tbody>
+          <tr th:each="teams: ${search}">
+            <td><a th:href="@{'/teams/'+${teams.teamId}}" th:text="${teams.teamName}"></a></td>
+            <td><a th:href="@{'/users/'+${teams.playerA.userId}}" th:text="${teams.playerA.firstName}+' '+${teams.playerA.lastName}"></a></td>
+            <td><a th:href="@{'/users/'+${teams.playerB.userId}}" th:text="${teams.playerB.firstName}+' '+${teams.playerB.lastName}"></a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </table>
+  </form>
+</div>
+<footer th:insert="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

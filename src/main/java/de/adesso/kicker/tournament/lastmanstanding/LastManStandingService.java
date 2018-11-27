@@ -1,15 +1,17 @@
 package de.adesso.kicker.tournament.lastmanstanding;
 
-import de.adesso.kicker.tournament.TournamentRepository;
-import de.adesso.kicker.tournament.TournamentService;
-import de.adesso.kicker.user.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import de.adesso.kicker.tournament.TournamentRepository;
+import de.adesso.kicker.tournament.TournamentService;
+import de.adesso.kicker.user.User;
 
 @Service
 public class LastManStandingService extends TournamentService {
@@ -50,7 +52,13 @@ public class LastManStandingService extends TournamentService {
 
     }
 
-    public void checkForWinner(LastManStanding lastManStanding) {
+    public void joinLastManStanding(LastManStanding lastManStanding, User user) {
+        checkForWinner(lastManStanding);
+        checkPlayerInTournament(lastManStanding, user);
+        addPlayer(lastManStanding, user);
+    }
+
+    private void checkForWinner(LastManStanding lastManStanding) {
 
         List<User> remainingPlayers = lastManStanding.getRemainingPlayers();
         if (remainingPlayers.size() == 1) {
@@ -59,7 +67,7 @@ public class LastManStandingService extends TournamentService {
         }
     }
 
-    public void checkPlayerInTournament(LastManStanding lastManStanding, User user) {
+    private void checkPlayerInTournament(LastManStanding lastManStanding, User user) {
         if (lastManStanding.getPlayers().contains(user)) {
             throw new PlayerAlreadyInTournamentException();
         }
