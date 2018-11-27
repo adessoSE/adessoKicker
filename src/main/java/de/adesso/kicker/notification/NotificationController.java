@@ -112,7 +112,7 @@ public class NotificationController {
         User receiver = userService.getUserById(receiverId);
         Team targetTeam = teamService.getTeamById(teamId);
 
-        TeamJoinRequest notification = new TeamJoinRequest(targetTeam, sender, receiver);
+        TeamJoinRequest notification = new TeamJoinRequest(targetTeam.getTeamName(), sender, receiver);
         notificationService.saveNotification(notification);
 
         ModelAndView modelAndView = new ModelAndView();

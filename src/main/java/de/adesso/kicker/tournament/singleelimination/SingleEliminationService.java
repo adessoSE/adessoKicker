@@ -22,15 +22,15 @@ import de.adesso.kicker.user.User;
 public class SingleEliminationService extends TournamentService {
 
     private MatchService matchService;
-    private TournamentJoinRequestService tournamentJoinRequestService;
+    //private TournamentJoinRequestService tournamentJoinRequestService;
     private UserService userService;
 
     @Autowired
-    public SingleEliminationService(TournamentRepository tournamentRepository, MatchService matchService, TournamentJoinRequestService tournamentJoinRequestService, UserService userService) {
+    public SingleEliminationService(TournamentRepository tournamentRepository, MatchService matchService, UserService userService) {
         super(tournamentRepository);
         this.matchService = matchService;
         this.userService = userService;
-        this.tournamentJoinRequestService = tournamentJoinRequestService;
+        //this.tournamentJoinRequestService = tournamentJoinRequestService;
     }
 
     public void addTeamToTournament(SingleElimination singleElimination, Team team) {
@@ -110,7 +110,7 @@ public class SingleEliminationService extends TournamentService {
     public void joinTournament(SingleElimination singleElimination, Team team) {
         checkTeamInTournament(singleElimination, team);
         checkPlayerOfTeamInTournament(singleElimination, team);
-        tournamentJoinRequestService.saveTournamentJoinRequest((Tournament) singleElimination, userService.getLoggedInUser().getUserId(), team);
+        //tournamentJoinRequestService.saveTournamentJoinRequest((Tournament) singleElimination, userService.getLoggedInUser().getUserId(), team);
     }
 
     public void getTournamentPage(SingleElimination singleElimination, User loggedInUser) {
