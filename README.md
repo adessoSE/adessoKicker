@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/Plotogandr/AdessoKicker.svg?branch=master)](https://travis-ci.com/Plotogandr/AdessoKicker)
+[![Build Status](https://travis-ci.org/adessoAG/adessoKicker.svg?branch=master)](https://travis-ci.com/adessoAG/adessoKicker)
 
-# AdessoKicker
+# adessoKicker
 Program to organize foosball tournaments and teams.

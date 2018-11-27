@@ -1,16 +1,18 @@
 package de.adesso.kicker.tournament;
 
-import de.adesso.kicker.user.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
+
+import de.adesso.kicker.user.User;
 
 @Service
 public class TournamentService {
@@ -49,11 +51,11 @@ public class TournamentService {
         return controllerInterfaceMap.get(tournament.getClass()).getPage(tournament);
     }
 
-    @SuppressWarnings("unchecked")
-    @Transactional
-    public ModelAndView getJoinTournament(Tournament tournament) {
-        return controllerInterfaceMap.get(tournament.getClass()).getJoinTournament(tournament);
-    }
+//    @SuppressWarnings("unchecked")
+//    @Transactional
+//    public ModelAndView getJoinTournament(Tournament tournament) {
+//        return controllerInterfaceMap.get(tournament.getClass()).getJoinTournament(tournament);
+//    }
 
     @SuppressWarnings("unchecked")
     @Transactional

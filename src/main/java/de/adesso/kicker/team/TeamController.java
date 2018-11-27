@@ -90,8 +90,8 @@ public class TeamController {
         try {
             teamService.denySameTeamPlayers(team);
         } catch (IdenticalPlayersException e) {
-            bindingResult.rejectValue("playerA", "error.playerA", "Keine identischen Teams");
-            bindingResult.rejectValue("playerB", "error.playerB", "Keine identischen Teams");
+            bindingResult.rejectValue("playerA", "error.playerA", "Keine identischen Spieler.");
+            bindingResult.rejectValue("playerB", "error.playerB", "Keine identischen Spieler.");
             modelAndView.addObject("users", userService.getAllUsers());
             modelAndView.setViewName("team/add");
             return modelAndView;
@@ -108,33 +108,6 @@ public class TeamController {
         modelAndView.addObject("successMessage", "Team wurde erfolgreich erstellt.");
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.setViewName("team/add");
-        return modelAndView;
-    }
-
-    /**
-     * deleteTeam() deletes an unique team identified by an index.
-     *
-     * @param id long
-     */
-    @RequestMapping(method = RequestMethod.DELETE, value = "/teams/delete/{id}")
-    public void deleteTeam(@PathVariable long id) {
-        teamService.deleteTeamById(id);
-    }
-
-    /**
-     * getTeamsSearchbar() gets all teams from the input of the user.
-     *
-     * @param teamName
-     * @return
-     */
-    @GetMapping(value = "teams/list")
-    public ModelAndView getTeamsSearchbar(@RequestParam(value = "search", required = false) String teamName) {
-        modelAndView = new ModelAndView();
-        try {
-            modelAndView.addObject("search", teamService.getTeamByName(teamName));
-        } catch (Exception i) {
-        }
-        modelAndView.setViewName("user/testteamsearch");
         return modelAndView;
     }
 }

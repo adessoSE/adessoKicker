@@ -1,6 +1,7 @@
 package de.adesso.kicker.team;
 
 import de.adesso.kicker.match.Match;
+import de.adesso.kicker.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -101,6 +102,10 @@ public class TeamService {
     public Team findTeamById(long id) {
 
         return teamRepository.findByTeamId(id);
+    }
+
+    public List<Team> findTeamsByPlayer(User player) {
+        return teamRepository.findByPlayerAOrPlayerB(player, player);
     }
 
     /*
