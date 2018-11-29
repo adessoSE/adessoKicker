@@ -83,7 +83,7 @@ public class UserService {
         String userId = userAccessToken.getPreferredUsername();
         String firstName = userAccessToken.getGivenName();
         String lastName = userAccessToken.getFamilyName();
-        String email = userAccessToken.getEmail();
+        String email = String.valueOf(userAccessToken.getOtherClaims().get("mail"));
         User user = new User(userId, firstName, lastName, email);
         return userRepository.save(user);
     }
