@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import de.adesso.kicker.tournament.TournamentControllerInterface;
-import de.adesso.kicker.tournament.TournamentFormats;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
 
@@ -83,16 +82,19 @@ public class LastManStandingController implements TournamentControllerInterface<
     public ModelAndView createLastManStanding(@Valid LastManStanding lastManStanding, BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
-        if (bindingResult.hasErrors()) {
-
-            modelAndView.addObject("tournament", new LastManStanding());
-            modelAndView.setViewName("tournament/createlastmanstanding");
-        } else {
-            lastManStandingService.saveTournament(lastManStanding);
-            redirectAttributes.addFlashAttribute("successMessage", "Tournament has been created");
-            redirectAttributes.addFlashAttribute("tournamentFormats", TournamentFormats.values());
+        if (bindingResult.hasFieldErrors("tournamentName")) {
+            redirectAttributes.addFlashAttribute("failMessage", "Invalid tournament name");
             modelAndView.setViewName("redirect:/tournaments/create");
+            return modelAndView;
         }
+        if (bindingResult.hasFieldErrors("startDate")) {
+            redirectAttributes.addFlashAttribute("failMessage", "Invalid start date");
+            modelAndView.setViewName("redirect:/tournaments/create");
+            return modelAndView;
+        }
+        lastManStandingService.saveTournament(lastManStanding);
+        redirectAttributes.addFlashAttribute("successMessage", "Tournament has been created");
+        modelAndView.setViewName("redirect:/tournaments/create");
         return modelAndView;
     }
 }
