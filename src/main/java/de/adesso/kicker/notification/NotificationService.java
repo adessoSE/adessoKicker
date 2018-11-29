@@ -52,6 +52,27 @@ public class NotificationService {
         return notifications;
     }
 
+    //Accepts a notification passed on type (enum)
+    public void acceptNotificationById(long id){
+
+        Notification n = getNotificationById(id);
+        switch (n.getType()){
+            case Notification:
+                System.out.println("Notification with id: " + id);
+                break;
+            case TeamJoinRequest:
+                System.out.println("TeamJoinRequest with id: " + id);
+                break;
+            case MatchCreationRequest:
+                System.out.println("MatchCreationRequest with id: " + id);
+                break;
+            case TournamentJoinRequest:
+                System.out.println("TournamentJoinRequest with id: " + id);
+                break;
+        }
+        removeNotificationById(id);
+    }
+
     // Save notification in repository
     public void saveNotification(Notification notification) {
         notificationRepository.save(notification);
@@ -61,7 +82,6 @@ public class NotificationService {
     // !!!!!! NO VALIDATION YET !!!!!!!
     public Notification saveNotification(String message, long receiverId, long senderId) {
 
-        System.out.println(senderId);
         User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
         Notification notification = new Notification(message, receiver, sender);

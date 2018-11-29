@@ -51,23 +51,7 @@ public class NotificationController {
     @DeleteMapping("/notifications/accept/{id}")
     public void acceptNotificationById(@PathVariable long id) {
 
-        Notification n = notificationService.getNotificationById(id);
-        switch (n.getType()){
-
-            case Notification:
-                System.out.println("Notification with id: " + id);
-                break;
-            case TeamJoinRequest:
-                System.out.println("TeamJoinRequest with id: " + id);
-                break;
-            case MatchCreationRequest:
-                System.out.println("MatchCreationRequest with id: " + id);
-                break;
-            case TournamentJoinRequest:
-                System.out.println("TournamentJoinRequest with id: " + id);
-                break;
-        }
-        notificationService.removeNotificationById(id);
+        acceptNotificationById(id);
     }
 
     @DeleteMapping("/notifications/{id}")
@@ -87,10 +71,6 @@ public class NotificationController {
     @PostMapping("/notifications/add/notification")
     public ModelAndView addNotifcationStandard(Long senderId, Long receiverId, String message) {
 
-        System.out.println("Hallo");
-        System.out.println(senderId);
-
-        System.out.println(senderId);
         User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
         Notification notification = new Notification(message, receiver, sender);
