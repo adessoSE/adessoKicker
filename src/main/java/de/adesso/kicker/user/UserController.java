@@ -23,12 +23,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    /**
-     * getLoggedInUser() gets the current user.
-     *
-     * @return ModelAndView
-     */
-    @GetMapping(value = { "home" })
+    @GetMapping("/home")
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getLoggedInUser());
@@ -36,7 +31,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/impressum")
+    @GetMapping("/impressum")
     public ModelAndView impressum() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/impressum");

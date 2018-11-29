@@ -71,7 +71,7 @@ public class UserService {
         try {
             checkUserExists(user);
         } catch (UserDoesNotExistException e) {
-            createUser();
+            user = createUser();
         }
         return user;
     }
@@ -119,7 +119,6 @@ public class UserService {
      */
     public List<User> getUserByNameSearchbar(String firstName, String lastName) {
         List<User> users;
-        users = new ArrayList<>();
         try {
             if (firstName.contains(" ")) {
                 String[] name = firstName.split("\\s+", 2);
@@ -129,8 +128,7 @@ public class UserService {
             }
         } catch (NullPointerException n) {
         }
-        userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(firstName, lastName)
-                .forEach(users::add);
+        users = new ArrayList<>(userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(firstName, lastName));
         return users;
     }
 
