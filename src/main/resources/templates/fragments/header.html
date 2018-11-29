@@ -53,7 +53,7 @@
           <a th:if="${notifications.size() <= 0}" class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Notifications</a>
           <!-- Notification-List -->
           <div class="dropdown-menu" id="notificationList">
-            <div style="background-color: lightgray" class="dropdown-item" th:if="${notifications.isEmpty()}"><a>You dont have notifications</a></div>
+            <div class="dropdown-item" th:if="${notifications.isEmpty()}"><a>You dont have notifications</a></div>
             <!-- th:each (notification) -->
             <div class="notificationList_El dropdown-item" th:each="n : ${notifications}" th:attr="value = ${n.notificationId}">
               <div style="width: 150px; white-space: normal; padding-bottom: 10px" class="notificationList_El_Text font-weight-bold" th:text="${n.sendDate}">ERROR: Displaying Notification</div>

@@ -52,12 +52,20 @@ public class NotificationController {
     public void acceptNotificationById(@PathVariable long id) {
 
         Notification n = notificationService.getNotificationById(id);
-        if (n instanceof TeamJoinRequest) {
+        switch (n.getType()){
 
-            System.out.println("TeamJoinRequest " + id + " accepted!");
-        } else if (n == null) {
-
-            System.out.println("Notification " + id + " accepted!");
+            case Notification:
+                System.out.println("Notification with id: " + id);
+                break;
+            case TeamJoinRequest:
+                System.out.println("TeamJoinRequest with id: " + id);
+                break;
+            case MatchCreationRequest:
+                System.out.println("MatchCreationRequest with id: " + id);
+                break;
+            case TournamentJoinRequest:
+                System.out.println("TournamentJoinRequest with id: " + id);
+                break;
         }
         notificationService.removeNotificationById(id);
     }

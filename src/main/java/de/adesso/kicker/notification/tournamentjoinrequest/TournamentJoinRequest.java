@@ -13,10 +13,11 @@ public class TournamentJoinRequest extends Notification {
 
     public TournamentJoinRequest() {
 
-        super();
+        type = NotificationType.TournamentJoinRequest;
     }
 
     public TournamentJoinRequest(Tournament tournament, User sender, User receiver, Team team) {
+        this();
         this.targetTournament = tournament;
         this.targetTeam = team;
         this.sender = sender;

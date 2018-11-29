@@ -28,10 +28,11 @@ public class MatchCreationRequest extends Notification {
 
     public MatchCreationRequest() {
 
-        super();
+        type = NotificationType.MatchCreationRequest;
     }
 
     public MatchCreationRequest(Team teamA, Team teamB, User sender, User receiver, Date date, Date time, String kicker, MatchCreationValidation matchCreationValidation) {
+        this();
         this.teamA = teamA;
         this.teamB = teamB;
         this.date = date;

@@ -9,6 +9,13 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Notification {
 
+    public enum NotificationType {
+        Notification,
+        TeamJoinRequest,
+        TournamentJoinRequest,
+        MatchCreationRequest
+    };
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long notificationId;
@@ -19,14 +26,18 @@ public class Notification {
     @ManyToOne(targetEntity = User.class)
     protected User sender;
 
+    protected NotificationType type;
+
     protected Date sendDate;
 
     protected String message;
 
     public Notification() {
+        type = NotificationType.Notification;
     }
 
     public Notification(String message, User receiver, User sender) {
+        this();
         this.sendDate = new Date();
         this.receiver = receiver;
         this.sender = sender;
@@ -34,6 +45,7 @@ public class Notification {
     }
 
     public Notification(Date sendDate, String message, User receiver, User sender) {
+        this();
         this.sendDate = sendDate;
         this.receiver = receiver;
         this.sender = sender;
@@ -78,6 +90,14 @@ public class Notification {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public NotificationType getType() {
+        return type;
+    }
+
+    public void setType(NotificationType type) {
+        this.type = type;
     }
 
     @Override
