@@ -40,8 +40,9 @@ function acceptNotification(notificationId) {
 	return false;
 }
 
+/*
 //--> Triggered on Notification Button click
 function toggleNotificationList() {
 	
 	$('#notificationList').toggle();
-}
+}*/
