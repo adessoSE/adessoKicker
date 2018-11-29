@@ -128,7 +128,8 @@ public class UserService {
             }
         } catch (NullPointerException n) {
         }
-        users = new ArrayList<>(userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(firstName, lastName));
+        users = new ArrayList<>(
+                userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(firstName, lastName));
         return users;
     }
 
