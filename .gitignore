@@ -1,5 +1,6 @@
-# Created by https://www.gitignore.io/api/git,linux,windows,eclipse,intellij,database
-# Edit at https://www.gitignore.io/?templates=git,linux,windows,eclipse,intellij,database
+
+# Created by https://www.gitignore.io/api/git,java,maven,linux,windows,eclipse,intellij,database
+# Edit at https://www.gitignore.io/?templates=git,java,maven,linux,windows,eclipse,intellij,database
 
 ### Database ###
 *.accdb
@@ -7,7 +8,6 @@
 *.dbf
 *.mdb
 *.pdb
-*.sql
 *.sqlite3
 
 ### Eclipse ###
@@ -174,6 +174,31 @@ fabric.properties
 # Sonarlint plugin
 .idea/sonarlint
 
+### Java ###
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
 ### Linux ###
 *~
 
@@ -188,6 +213,18 @@ fabric.properties
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
+
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
 
 ### Windows ###
 # Windows thumbnail cache files
@@ -214,4 +251,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.gitignore.io/api/git,linux,windows,eclipse,intellij,database
+# End of https://www.gitignore.io/api/git,java,maven,linux,windows,eclipse,intellij,database
