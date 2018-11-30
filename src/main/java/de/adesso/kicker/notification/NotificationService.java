@@ -37,16 +37,18 @@ public class NotificationService {
     }
 
     // Get all notifications that were send by a specific user
-    public List<Notification> getAllNotificationsBySender(User sender) {
+    public List<Notification> getAllNotificationsBySender(long senderId) {
 
+        User sender = userService.getUserById(senderId);
         List<Notification> notifications = new ArrayList<>();
         notificationRepository.findBySender(sender).forEach(notifications::add);
         return notifications;
     }
 
     // Get all notifications that were received by a specific user
-    public List<Notification> getAllNotificationsByReceiver(User receiver) {
+    public List<Notification> getAllNotificationsByReceiver(long receiverId) {
 
+        User receiver = userService.getUserById(receiverId);
         List<Notification> notifications = new ArrayList<>();
         notificationRepository.findByReceiver(receiver).forEach(notifications::add);
         return notifications;
@@ -75,18 +77,37 @@ public class NotificationService {
 
     // Save notification in repository
     public void saveNotification(Notification notification) {
+
+        if (notification == null) {
+            System.err.println("ERROR at 'NotificationService' --> 'saveNotification()' : Given Notification is null");
+            return;
+        }
         notificationRepository.save(notification);
     }
 
-    // Create a notification and save notification in repository
-    // !!!!!! NO VALIDATION YET !!!!!!!
-    public Notification saveNotification(String message, long receiverId, long senderId) {
+    // Try to create a notification
+    public Notification createNotification(String message, long receiverId, long senderId) {
 
         User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
+
+        //Validation
+        if (sender == null) {
+            System.err.println("ERROR at 'NotificationService' --> 'createNotification()' : Cannot find sender with id " + senderId);
+            return null;
+        }
+        if (receiver == null) {
+            System.err.println("ERROR at 'NotificationService' --> 'createNotification()' : Cannot find receiver with id " + receiverId);
+            return null;
+        }
+
         Notification notification = new Notification(message, receiver, sender);
-        saveNotification(notification);
         return notification;
+    }
+
+    public void saveNotification(String message, long receiverId, long senderId) {
+
+        saveNotification(createNotification(message,receiverId,senderId));
     }
 
     // Removes notification from repository

@@ -55,7 +55,7 @@ public class MatchController {
         modelAndView = new ModelAndView();
         User user = userService.getLoggedInUser();
         modelAndView.addObject("user", user);
-        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
+        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user.getUserId()));
         if (matchService.getAllMatches().size() > 0) {
             modelAndView.addObject("matches", matchService.getAllMatches());
         } else {
@@ -77,7 +77,7 @@ public class MatchController {
         modelAndView = new ModelAndView();
         User user = userService.getLoggedInUser();
         modelAndView.addObject("user", user);
-        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
+        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user.getUserId()));
         modelAndView.addObject("match", matchService.getMatchById(id));
         modelAndView.setViewName("match/page");
         return modelAndView;

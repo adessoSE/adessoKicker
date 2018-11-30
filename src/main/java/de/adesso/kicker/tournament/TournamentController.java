@@ -41,7 +41,7 @@ public class TournamentController {
         User user = userService.getLoggedInUser();
         modelAndView.addObject("tournaments", tournamentService.getAllTournaments());
         modelAndView.addObject("user", user);
-        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
+        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user.getUserId()));
         modelAndView.setViewName("tournament/list");
         return modelAndView;
     }

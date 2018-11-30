@@ -2,6 +2,7 @@ package de.adesso.kicker.notification;
 
 import java.util.List;
 
+import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequestService;
 import javassist.expr.Instanceof;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,16 +19,18 @@ import de.adesso.kicker.user.UserService;
 public class NotificationController {
 
     private NotificationService notificationService;
+    private  TeamJoinRequestService teamJoinRequestService;
     private UserService userService;
     private TeamService teamService;
 
     @Autowired
     public NotificationController(NotificationService notificationService, UserService userService,
-            TeamService teamService) {
+            TeamService teamService, TeamJoinRequestService teamJoinRequestService) {
 
         this.notificationService = notificationService;
         this.userService = userService;
         this.teamService = teamService;
+        this.teamJoinRequestService = teamJoinRequestService;
     }
 
     @RequestMapping("/notifications")
@@ -39,13 +42,13 @@ public class NotificationController {
     @RequestMapping("/{userId}/notifications/send")
     public List<Notification> getUserNotificationsSend(@PathVariable long userId) {
 
-        return notificationService.getAllNotificationsBySender(userService.getUserById(userId));
+        return notificationService.getAllNotificationsBySender(userId);
     }
 
     @RequestMapping("/{userId}/notifications/received")
     public List<Notification> getUserNotificationsReceived(@PathVariable long userId) {
 
-        return notificationService.getAllNotificationsByReceiver(userService.getUserById(userId));
+        return notificationService.getAllNotificationsByReceiver(userId);
     }
 
     @DeleteMapping("/notifications/accept/{id}")
@@ -71,12 +74,7 @@ public class NotificationController {
     @PostMapping("/notifications/add/notification")
     public ModelAndView addNotifcationStandard(Long senderId, Long receiverId, String message) {
 
-        User sender = userService.getUserById(senderId);
-        User receiver = userService.getUserById(receiverId);
-        Notification notification = new Notification(message, receiver, sender);
-        notificationService.saveNotification(notification);
-
-        // notificationService.saveNotification(message, receiverId, senderId);
+        notificationService.saveNotification(message, receiverId, senderId);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/notification/add_notification");
@@ -92,16 +90,9 @@ public class NotificationController {
     }
 
     @PostMapping("/notifications/add/teamjoinrequest")
-    public ModelAndView getAddNotifcationTeamJoinRequest(Long senderId, Long receiverId, Long teamId) {
+    public ModelAndView getAddNotifcationTeamJoinRequest(String teamName, Long receiverId, Long senderId) {
 
-        System.out.println("Hallo");
-        // TO_DO LOGIC AUSLAGERN
-        User sender = userService.getUserById(senderId);
-        User receiver = userService.getUserById(receiverId);
-        Team targetTeam = teamService.getTeamById(teamId);
-
-        TeamJoinRequest notification = new TeamJoinRequest(targetTeam.getTeamName(), sender, receiver);
-        notificationService.saveNotification(notification);
+        teamJoinRequestService.saveTeamJoinRequest(teamName, receiverId, senderId);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/notification/add_teamjoinrequest");

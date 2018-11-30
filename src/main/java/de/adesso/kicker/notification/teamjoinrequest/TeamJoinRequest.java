@@ -20,7 +20,7 @@ public class TeamJoinRequest extends Notification {
         type = NotificationType.TeamJoinRequest;
     }
 
-    public TeamJoinRequest(String teamName, User sender, User receiver) {
+    public TeamJoinRequest(String teamName, User receiver, User sender) {
         this();
         this.teamName = teamName;
         this.sender = sender;

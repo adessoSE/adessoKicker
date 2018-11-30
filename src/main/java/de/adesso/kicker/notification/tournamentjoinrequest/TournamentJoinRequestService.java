@@ -1,10 +1,13 @@
 package de.adesso.kicker.notification.tournamentjoinrequest;
 
+import de.adesso.kicker.notification.Notification;
 import de.adesso.kicker.notification.NotificationRepository;
 import de.adesso.kicker.notification.NotificationService;
+import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequest;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.team.TeamService;
 import de.adesso.kicker.tournament.Tournament;
+import de.adesso.kicker.tournament.TournamentService;
 import de.adesso.kicker.tournament.singleelimination.SingleElimination;
 import de.adesso.kicker.tournament.singleelimination.SingleEliminationService;
 import de.adesso.kicker.user.User;
@@ -17,18 +20,21 @@ public class TournamentJoinRequestService {
 
     private NotificationRepository notificationRepository;
     private NotificationService notificationService;
+    private TournamentService tournamentService;
     private UserService userService;
     private SingleEliminationService singleEliminationService;
 
     @Autowired
-    public TournamentJoinRequestService(NotificationRepository notificationRepository, UserService userService, NotificationService notificationService, SingleEliminationService singleEliminationService) {
+    public TournamentJoinRequestService(NotificationRepository notificationRepository, TeamService teamService, TournamentService tournamentService,
+                                        UserService userService, NotificationService notificationService, SingleEliminationService singleEliminationService) {
 
         this.notificationRepository = notificationRepository;
         this.userService = userService;
         this.notificationService = notificationService;
         this.singleEliminationService = singleEliminationService;
+        this.tournamentService = tournamentService;
     }
-    
+
     public void saveTournamentJoinRequest(Tournament tournament, long senderId, Team team) {
         
         User sender = userService.getUserById(senderId);
