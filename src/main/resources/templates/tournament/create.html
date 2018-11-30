@@ -23,6 +23,8 @@
       </select>
     </div>
     <div id="tournamentForm"></div>
+    <div class="alert alert-success" th:if="${successMessage!=null}" th:text="${successMessage}"></div>
+    <div class="alert alert-danger" th:if="${failMessage!=null}" th:text="${failMessage}"></div>
   </div>
 </div>
 </body>
