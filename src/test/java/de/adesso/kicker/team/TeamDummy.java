@@ -18,4 +18,8 @@ public class TeamDummy {
         return new Team("Team3", userDummy.alternateUser3(), userDummy.alternateUser4());
     }
 
+    public Team alternateTeam3() {
+        return new Team("Team4", userDummy.alternateUser3(), userDummy.alternateUser4());
+    }
+
 }

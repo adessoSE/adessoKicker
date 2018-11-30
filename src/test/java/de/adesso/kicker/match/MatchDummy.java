@@ -13,7 +13,15 @@ public class MatchDummy {
     private Team team3 = teamDummy.alternateTeam2();
 
     public Match defaultMatch() {
-        return new Match(new Date(), new Date(), "Kicker1", team1, team2);
+        return new Match(null, null, null, team1, team2);
+    }
+
+    public Match matchTeam1Team3() {
+        return new Match(null, null, null, team1, team3);
+    }
+
+    public Match matchTeam2Null() {
+        return new Match(null, null, null, team2, null);
     }
 
     public Match matchWithNull() {

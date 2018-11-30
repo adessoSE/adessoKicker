@@ -2,6 +2,7 @@ package de.adesso.kicker.tournament.singleelimination;
 
 import de.adesso.kicker.match.Match;
 import de.adesso.kicker.match.MatchDummy;
+import de.adesso.kicker.match.MatchService;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.team.TeamDummy;
 import de.adesso.kicker.tournament.Tournament;
@@ -15,9 +16,11 @@ import org.mockito.stubbing.Answer;
 import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -27,6 +30,9 @@ class SingleEliminationServiceTest {
 
     @Mock
     TournamentRepository tournamentRepository;
+
+    @Mock
+    MatchService matchService;
 
     @InjectMocks
     SingleEliminationService singleEliminationService;
@@ -40,20 +46,17 @@ class SingleEliminationServiceTest {
     private Team team1 = teamDummy.defaultTeam();
     private Team team2 = teamDummy.alternateTeam();
     private Team team3 = teamDummy.alternateTeam2();
-    private ArrayList<Team> teamsMultiple = new ArrayList<>(Arrays.asList(team1, team2));
-    private ArrayList<Team> teamsOdd = new ArrayList<>(Arrays.asList(team1, team2, team3));
+    private Team team4 = teamDummy.alternateTeam3();
+    private List<Team> teamsMultiple = new ArrayList<>(Arrays.asList(team1, team2, team3, team4));
+    private List<Team> teamsOdd = new ArrayList<>(Arrays.asList(team1, team2, team3));
+    private List<Match> bracketEven = new ArrayList<>(Arrays.asList(matchDummy.matchTeam1Team3(), new Match(null, null, null, team2, team4)));
+    private List<Match> bracketOdd = Arrays.asList(matchDummy.matchTeam1Team3(), matchDummy.matchTeam2Null());
+    private List<Match> bracketAdvancedEven = Collections.singletonList(new Match(null, null, null, team1, team2));
 
-    private Match match = matchDummy.defaultMatch();
-    private Match matchWithNull = matchDummy.matchWithNull();
 
     @BeforeAll
     void setUpAll() {
         MockitoAnnotations.initMocks(this);
-    }
-
-    @BeforeEach
-    void setUp() {
-
         when(tournamentRepository.save(any(SingleElimination.class)))
                 .thenAnswer((Answer<SingleElimination>) invocation -> {
                     Object[] args = invocation.getArguments();
@@ -65,75 +68,84 @@ class SingleEliminationServiceTest {
             return (Tournament) args[0];
         });
 
+        when(matchService.saveMatch(any(Match.class))).thenAnswer((Answer<Match>) invocation -> {
+            Object[] args = invocation.getArguments();
+            return (Match) args[0];
+        });
     }
 
-    @Test
-    void testAddTeamToTournament() {
-        singleEliminationService.addTeamToTournament(singleElim, team1);
-        List<Team> tournamentTeams = singleElim.getTeams();
-        assertTrue(tournamentTeams.contains(team1));
+    @BeforeEach
+    void setUp() {
+        singleElim = singleElimDummy.defaultSingleElim();
     }
 
     @Test
     void testCreateTournamentTree_MultipleTwo() {
-        ArrayList<Team> treeTeamsEven = new ArrayList<>(teamsMultiple);
-        singleEliminationService.createTournamentTree(treeTeamsEven, singleElim);
-        for (int i = 0; i < treeTeamsEven.size(); i++) {
-            assertTrue(treeTeamsEven.contains(teamsMultiple.get(i)));
-        }
+        List<Team> treeTeamsEven = new ArrayList<>(teamsMultiple);
+        singleElim.setTeams(treeTeamsEven);
+        singleEliminationService.createTournamentTree(singleElim);
+        List<Match> bracket = singleElim.getBracket().get(0).getRow();
+        assertEquals(bracket , bracketEven);
     }
 
     @Test
     void testCreateTournamentTree_Odd() {
         ArrayList<Team> treeTeamsOdd = new ArrayList<>(teamsOdd);
-        int nullSpots = 0;
-        int treeSize = (int) Math.pow(2, Math.ceil((Math.log(treeTeamsOdd.size()) / Math.log(2))));
-        int nullSpotSize = treeSize - treeTeamsOdd.size();
-        ArrayList<Team> afterTeams = new ArrayList<>();
-        singleEliminationService.createTournamentTree(treeTeamsOdd, singleElim);
-        for (int i = 0; i < treeTeamsOdd.size(); i++) {
-            if (treeTeamsOdd.get(i) == null) {
-                nullSpots++;
-            } else {
-                afterTeams.add(treeTeamsOdd.get(i));
-            }
-        }
-        for (int i = 0; i < teamsOdd.size(); i++) {
-            assertTrue(afterTeams.contains(treeTeamsOdd.get(i)));
-        }
-        assertEquals(nullSpots, nullSpotSize);
+        singleElim.setTeams(treeTeamsOdd);
+        singleEliminationService.createTournamentTree(singleElim);
+        List<Match> bracket = singleElim.getBracket().get(0).getRow();
+        assertEquals(bracket, bracketOdd);
     }
 
     @Test
     void testAdvanceWinner_Multiple() {
+        List<Team> treeTeamsEven = new ArrayList<>(teamsMultiple);
+        singleElim.setTeams(treeTeamsEven);
+        singleEliminationService.createTournamentTree(singleElim);
+        Match match = singleElim.getBracket().get(0).getRow().get(0);
+        Match match2 = singleElim.getBracket().get(0).getRow().get(1);
         match.setWinner(team1);
-        testCreateTournamentTree_MultipleTwo();
         singleEliminationService.advanceWinner(singleElim, match);
-        assertTrue(singleElim.getBracket().get(1).getRow().contains(team1));
+        match2.setWinner(team2);
+        singleEliminationService.advanceWinner(singleElim, match2);
+        List<Match> bracket = singleElim.getBracket().get(1).getRow();
+        assertEquals(bracket, bracketAdvancedEven);
     }
 
     @Test
     void testAdvanceWinner_Odd() {
-        match.setWinner(team2);
-        testCreateTournamentTree_Odd();
+        List<Team> treeTeamsOdd = new ArrayList<>(teamsOdd);
+        singleElim.setTeams(treeTeamsOdd);
+        singleEliminationService.createTournamentTree(singleElim);
+        Match match = singleElim.getBracket().get(0).getRow().get(0);
+        Match match2 = singleElim.getBracket().get(0).getRow().get(1);
+        match.setWinner(team1);
+        match2.setWinner(team2);
         singleEliminationService.advanceWinner(singleElim, match);
-        assertTrue(singleElim.getBracket().get(1).getRow().contains(team2));
-        singleEliminationService.advanceWinner(singleElim, match);
-        assertTrue(singleElim.getBracket().get(2).getRow().contains(team2));
+        singleEliminationService.advanceWinner(singleElim, match2);
+        List<Match> bracket = singleElim.getBracket().get(1).getRow();
+        assertEquals(bracket, bracketAdvancedEven);
 
     }
 
     @Test
-    void testCheckTeamInTournament() {
-        singleEliminationService.addTeamToTournament(singleElim, team1);
+    void testAddTeamToTournament() {
+        singleEliminationService.joinTournament(singleElim, team1);
+        List<Team> tournamentTeams = singleElim.getTeams();
+        assertTrue(tournamentTeams.contains(team1));
+    }
+
+    @Test
+    void testJoinTournament_AlreadyInTournamentException() {
+        singleEliminationService.joinTournament(singleElim, team1);
         Assertions.assertThrows(TeamAlreadyInTournamentException.class,
-                () -> singleEliminationService.checkTeamInTournament(singleElim, team1));
+                () -> singleEliminationService.joinTournament(singleElim, team1));
     }
 
     @Test
-    void testCheckPlayerTeamInTournament() {
-        singleEliminationService.addTeamToTournament(singleElim, team1);
-        Assertions.assertThrows(PlayerOfTeamAlreadyInTournamentException.class,
-                () -> singleEliminationService.checkPlayerTeamInTournament(singleElim, team1));
+    void testJoinTournament_PlayerOfTeamAlreadyInTournamentException() {
+        singleEliminationService.joinTournament(singleElim, team3);
+        Assertions.assertThrows(PlayerOfTeamInTournamentException.class,
+                () -> singleEliminationService.joinTournament(singleElim, team4));
     }
 }

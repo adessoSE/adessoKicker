@@ -1,5 +1,6 @@
 package de.adesso.kicker.user;
 
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -147,5 +148,26 @@ public class User {
         return "User{" + "userId=" + userId + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\''
                 + ", password='" + password + '\'' + ", email='" + email + '\'' + ", active=" + active + ", wins="
                 + wins + ", losses=" + losses + ", roles=" + roles + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userId == user.userId &&
+                active == user.active &&
+                wins == user.wins &&
+                losses == user.losses &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(roles, user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, firstName, lastName, password, email, active, wins, losses, roles);
     }
 }
