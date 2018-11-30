@@ -65,9 +65,9 @@ public class MatchService {
      * 
      * @param match
      */
-    public void saveMatch(Match match) {
+    public Match saveMatch(Match match) {
 
-        matchRepository.save(match);
+        return matchRepository.save(match);
     }
 
     /**
