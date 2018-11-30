@@ -19,17 +19,12 @@ import de.adesso.kicker.user.UserService;
 public class NotificationController {
 
     private NotificationService notificationService;
-    private  TeamJoinRequestService teamJoinRequestService;
-    private UserService userService;
-    private TeamService teamService;
+    private TeamJoinRequestService teamJoinRequestService;
 
     @Autowired
-    public NotificationController(NotificationService notificationService, UserService userService,
-            TeamService teamService, TeamJoinRequestService teamJoinRequestService) {
+    public NotificationController(NotificationService notificationService, TeamJoinRequestService teamJoinRequestService) {
 
         this.notificationService = notificationService;
-        this.userService = userService;
-        this.teamService = teamService;
         this.teamJoinRequestService = teamJoinRequestService;
     }
 
