@@ -3,6 +3,7 @@ package de.adesso.kicker.notification;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ public class NotificationService {
 
     private NotificationRepository notificationRepository;
     private UserService userService;
+    private TeamJoinRequestService teamJoinRequestService;
 
     @Autowired
     public NotificationService(NotificationRepository notificationRepository, UserService userService) {
