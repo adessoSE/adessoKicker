@@ -51,15 +51,15 @@ public class MatchCreationRequestService {
         notificationRepository.save(matchCreationRequest);
     }
 
-    public void acceptTeamJoinRequest(long notificationId) {
+    public void acceptMatchJoinRequest(long notificationId) {
 
-        MatchCreationRequest request = (MatchCreationRequest) notificationRepository.findByNotificationId(notificationId);
+        /*MatchCreationRequest request = (MatchCreationRequest) notificationRepository.findByNotificationId(notificationId);
         MatchCreationValidation matchCreationValidation = request.getMatchCreationValidation();
         if(matchCreationValidation.getNumVerified() < 2){
             matchCreationValidation.increaseNumVerified();
         } else {
             Match match = new Match(request.getDate(), request.getTime(), request.getKicker(), request.getTeamA(), request.getTeamB());
             matchService.saveMatch(match);
-        }
+        }*/
     }
 }
