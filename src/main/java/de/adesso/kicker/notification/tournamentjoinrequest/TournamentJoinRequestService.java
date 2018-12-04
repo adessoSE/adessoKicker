@@ -1,9 +1,7 @@
 package de.adesso.kicker.notification.tournamentjoinrequest;
 
 import de.adesso.kicker.notification.NotificationRepository;
-import de.adesso.kicker.notification.NotificationService;
 import de.adesso.kicker.team.Team;
-import de.adesso.kicker.team.TeamService;
 import de.adesso.kicker.tournament.Tournament;
 import de.adesso.kicker.tournament.singleelimination.SingleElimination;
 import de.adesso.kicker.tournament.singleelimination.SingleEliminationService;
@@ -16,33 +14,56 @@ import org.springframework.stereotype.Service;
 public class TournamentJoinRequestService {
 
     private NotificationRepository notificationRepository;
-    private NotificationService notificationService;
     private UserService userService;
     private SingleEliminationService singleEliminationService;
 
     @Autowired
-    public TournamentJoinRequestService(NotificationRepository notificationRepository, UserService userService, NotificationService notificationService, SingleEliminationService singleEliminationService) {
+    public TournamentJoinRequestService(NotificationRepository notificationRepository, UserService userService, SingleEliminationService singleEliminationService) {
 
         this.notificationRepository = notificationRepository;
         this.userService = userService;
-        this.notificationService = notificationService;
         this.singleEliminationService = singleEliminationService;
     }
 
-    public void saveTournamentJoinRequest(Tournament tournament, long senderId, Team team) {
+    public TournamentJoinRequest createTournamentJoinRequest(Tournament tournament, long senderId, Team team) {
 
         User sender = userService.getUserById(senderId);
         User receiver;
+
+        //Validation
+        if (sender == null) {
+            System.err.println("ERROR at 'TournamentJoinRequestService' --> 'createTournamentJoinRequest()' : Cannot find sender with id " + senderId);
+            return null;
+        }
+        if (team == null) {
+            System.err.println("ERROR at 'TournamentJoinRequestService' --> 'createTournamentJoinRequest()' : Team is NULL ");
+            return null;
+        }
+        if (tournament == null) {
+            System.err.println("ERROR at 'TournamentJoinRequestService' --> 'createTournamentJoinRequest()' : Tournament is NULL ");
+            return null;
+        }
+
         if(team.getPlayerA() == userService.getUserById(senderId)) {
             receiver = team.getPlayerB();
         } else {
             receiver = team.getPlayerA();
         }
         TournamentJoinRequest request = new TournamentJoinRequest(tournament, sender, receiver, team);
-        saveTournamentJoinRequest(request);
+        return request;
+    }
+
+    public void saveTournamentJoinRequest(Tournament tournament, long senderId, Team team) {
+
+        saveTournamentJoinRequest(createTournamentJoinRequest(tournament, senderId, team));
     }
 
     public void acceptTournamentJoinRequest(long notificationId) {
+
+        if(!notificationRepository.existsById(notificationId)){
+            System.err.println("ERROR at 'TournamentJoinRequestService' --> 'acceptTournamentJoinRequest()' : Cannot find TournamentJoinRequest with id " + notificationId);
+            return;
+        }
 
         TournamentJoinRequest request = (TournamentJoinRequest)notificationRepository.findByNotificationId(notificationId);
         singleEliminationService.addTeamToTournament((SingleElimination) request.getTargetTournament(), request.getTargetTeam());

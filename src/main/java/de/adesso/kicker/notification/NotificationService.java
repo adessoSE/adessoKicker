@@ -1,14 +1,13 @@
 package de.adesso.kicker.notification;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequestService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import de.adesso.kicker.notification.tournamentjoinrequest.TournamentJoinRequestService;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class NotificationService {
@@ -16,12 +15,15 @@ public class NotificationService {
     private NotificationRepository notificationRepository;
     private UserService userService;
     private TeamJoinRequestService teamJoinRequestService;
+    private TournamentJoinRequestService tournamentJoinRequestService;
 
     @Autowired
-    public NotificationService(NotificationRepository notificationRepository, UserService userService) {
+    public NotificationService(NotificationRepository notificationRepository, UserService userService, TeamJoinRequestService teamJoinRequestService, TournamentJoinRequestService tournamentJoinRequestService) {
 
         this.notificationRepository = notificationRepository;
         this.userService = userService;
+        this.teamJoinRequestService = teamJoinRequestService;
+        this.tournamentJoinRequestService = tournamentJoinRequestService;
     }
 
     // Gets a notification by id
@@ -65,12 +67,14 @@ public class NotificationService {
                 System.out.println("Notification with id: " + id);
                 break;
             case TeamJoinRequest:
+                teamJoinRequestService.acceptTeamJoinRequest(id);
                 System.out.println("TeamJoinRequest with id: " + id);
                 break;
             case MatchCreationRequest:
                 System.out.println("MatchCreationRequest with id: " + id);
                 break;
             case TournamentJoinRequest:
+                tournamentJoinRequestService.acceptTournamentJoinRequest(id);
                 System.out.println("TournamentJoinRequest with id: " + id);
                 break;
         }

@@ -1,33 +1,26 @@
 package de.adesso.kicker.notification.teamjoinrequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import de.adesso.kicker.notification.Notification;
 import de.adesso.kicker.notification.NotificationRepository;
-import de.adesso.kicker.notification.NotificationService;
-import de.adesso.kicker.team.IdenticalPlayersException;
 import de.adesso.kicker.team.Team;
-import de.adesso.kicker.team.TeamNameExistingException;
 import de.adesso.kicker.team.TeamService;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class TeamJoinRequestService {
 
     private NotificationRepository notificationRepository;
-    private NotificationService notificationService;
     private UserService userService;
     private TeamService teamService;
 
     @Autowired
-    public TeamJoinRequestService(NotificationRepository notificationRepository, UserService userService, TeamService teamService, NotificationService notificationService) {
+    public TeamJoinRequestService(NotificationRepository notificationRepository, UserService userService, TeamService teamService) {
 
         this.notificationRepository = notificationRepository;
         this.userService = userService;
         this.teamService = teamService;
-        this.notificationService = notificationService;
     }
 
     // Try to create a notification
