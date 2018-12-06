@@ -13,8 +13,11 @@
   <div class="form-group">
     <label for="startDate">Start Date</label>
     <input type="date" class="form-control" id="startDate" th:field="*{startDate}">
+    <div class="alert alert-danger" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
 </form>
 </body>
 </html>
