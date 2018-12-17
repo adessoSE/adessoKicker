@@ -1,5 +1,7 @@
 package de.adesso.kicker.notification;
 
+import de.adesso.kicker.notification.matchcreationrequest.MatchCreationRequest;
+import de.adesso.kicker.notification.matchcreationrequest.MatchCreationRequestService;
 import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequestService;
 import de.adesso.kicker.notification.tournamentjoinrequest.TournamentJoinRequestService;
 import de.adesso.kicker.user.User;
@@ -16,14 +18,16 @@ public class NotificationService {
     private UserService userService;
     private TeamJoinRequestService teamJoinRequestService;
     private TournamentJoinRequestService tournamentJoinRequestService;
+    private MatchCreationRequestService matchCreationRequestService;
 
     @Autowired
-    public NotificationService(NotificationRepository notificationRepository, UserService userService, TeamJoinRequestService teamJoinRequestService, TournamentJoinRequestService tournamentJoinRequestService) {
+    public NotificationService(NotificationRepository notificationRepository, UserService userService, TeamJoinRequestService teamJoinRequestService, TournamentJoinRequestService tournamentJoinRequestService, MatchCreationRequestService matchCreationRequestService) {
 
         this.notificationRepository = notificationRepository;
         this.userService = userService;
         this.teamJoinRequestService = teamJoinRequestService;
         this.tournamentJoinRequestService = tournamentJoinRequestService;
+        this.matchCreationRequestService = matchCreationRequestService;
     }
 
     public Notification getNotificationById(long id) {
@@ -67,6 +71,7 @@ public class NotificationService {
                 System.out.println("TeamJoinRequest with id: " + id);
                 break;
             case MatchCreationRequest:
+                matchCreationRequestService.acceptMatchJoinRequest(id);
                 System.out.println("MatchCreationRequest with id: " + id);
                 break;
             case TournamentJoinRequest:
@@ -113,6 +118,24 @@ public class NotificationService {
 
     public void removeNotificationById(long id) {
 
-        notificationRepository.deleteById(id);
+        Notification n = getNotificationById(id);
+        switch (n.getType()) {
+            case MatchCreationRequest:
+
+            default:
+                notificationRepository.delete(n);
+        }
+    }
+
+    public void declineNotificationById(long id) {
+
+        Notification n = getNotificationById(id);
+        switch (n.getType()) {
+            case MatchCreationRequest:
+                matchCreationRequestService.declineMatchJoinRequest(id);
+                break;
+            default:
+                removeNotificationById(id);
+        }
     }
 }
