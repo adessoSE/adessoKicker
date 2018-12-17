@@ -82,8 +82,7 @@ public class MatchService {
 
     public void denyPastDate(Match match) {
         Date currentDate = new Date();
-        if (match.getDate().after(yesterday()) && (match.getTime().getHours() >= currentDate.getHours()
-                && match.getTime().getMinutes() >= currentDate.getMinutes())) {
+        if (match.getDate().after(currentDate)) {
         } else {
             throw new PasteDateException();
         }

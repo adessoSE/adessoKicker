@@ -4,24 +4,23 @@ import de.adesso.kicker.notification.Notification;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.user.User;
 
-import javax.persistence.CascadeType;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Entity
 public class MatchCreationRequest extends Notification {
 
+    @OneToOne(targetEntity = Team.class, cascade = CascadeType.ALL)
     private Team teamA;
+    @OneToOne(targetEntity = Team.class, cascade = CascadeType.ALL)
     private Team teamB;
     @Temporal(TemporalType.DATE)
     private Date date;
     @Temporal(TemporalType.TIME)
     private Date time;
     private String kicker;
-
     @ManyToOne(targetEntity = MatchCreationValidation.class, cascade = CascadeType.ALL)
     MatchCreationValidation matchCreationValidation;
 
@@ -42,6 +41,10 @@ public class MatchCreationRequest extends Notification {
         this.receiver = receiver;
         this.sendDate = new Date();
         this.message = generateMessage();
+    }
+
+    public void setValidationNull(){
+        this.matchCreationValidation = null;
     }
 
     public String generateMessage() {

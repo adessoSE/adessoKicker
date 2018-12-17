@@ -1,6 +1,8 @@
 package de.adesso.kicker.match;
 
 import de.adesso.kicker.notification.NotificationService;
+import de.adesso.kicker.notification.matchcreationrequest.MatchCreationRequestService;
+import de.adesso.kicker.notification.matchcreationrequest.MatchCreationValidationRepository;
 import de.adesso.kicker.team.TeamService;
 import java.util.Calendar;
 import java.util.Date;
@@ -33,12 +35,14 @@ public class MatchController {
     private UserService userService;
     private NotificationService notificationService;
     private ModelAndView modelAndView;
+    private MatchCreationRequestService matchCreationRequestService;
 
     @Autowired
     public MatchController(MatchService matchService, TeamService teamService, UserService userService,
-            NotificationService notificationService) {
+            NotificationService notificationService, MatchCreationRequestService matchCreationRequestService) {
 
         this.matchService = matchService;
+        this.matchCreationRequestService = matchCreationRequestService;
         this.teamService = teamService;
         this.userService = userService;
         this.notificationService = notificationService;
@@ -132,7 +136,7 @@ public class MatchController {
             modelAndView.setViewName("match/create");
             return modelAndView;
         }
-        matchService.saveMatch(match);
+        matchCreationRequestService.generateMatchCreationRequests(match);
         modelAndView.addObject("successMessage", "Match wurde hinzugefügt.");
         modelAndView.addObject("teams", teamService.getAllTeams());
         modelAndView.setViewName("match/create");

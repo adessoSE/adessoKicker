@@ -47,7 +47,7 @@ public class NotificationController {
     @DeleteMapping("/notifications/{id}")
     public void deleteNotificationById(@PathVariable long id) {
 
-        notificationService.removeNotificationById(id);
+        notificationService.declineNotificationById(id);
     }
 
     @GetMapping("/notifications/add/notification")
