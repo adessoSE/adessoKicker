@@ -25,7 +25,8 @@ public class TournamentJoinRequest extends Notification {
         type = NotificationType.TournamentJoinRequest;
     }
 
-    public TournamentJoinRequest(Tournament tournament, User sender, User receiver, Team team) {
+    public TournamentJoinRequest(User sender, User receiver, Team team, Tournament tournament) {
+
         this();
         this.targetTournament = tournament;
         this.targetTeam = team;

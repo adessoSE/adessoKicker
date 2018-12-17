@@ -49,7 +49,7 @@ public class TournamentJoinRequestService {
         } else {
             receiver = team.getPlayerA();
         }
-        TournamentJoinRequest request = new TournamentJoinRequest(tournament, sender, receiver, team);
+        TournamentJoinRequest request = new TournamentJoinRequest(sender, receiver, team, tournament);
         return request;
     }
 

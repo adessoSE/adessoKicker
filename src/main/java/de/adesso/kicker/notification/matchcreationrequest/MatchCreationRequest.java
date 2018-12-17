@@ -2,7 +2,6 @@ package de.adesso.kicker.notification.matchcreationrequest;
 
 import de.adesso.kicker.notification.Notification;
 import de.adesso.kicker.team.Team;
-import de.adesso.kicker.tournament.Tournament;
 import de.adesso.kicker.user.User;
 
 import javax.persistence.CascadeType;
@@ -31,7 +30,7 @@ public class MatchCreationRequest extends Notification {
         type = NotificationType.MatchCreationRequest;
     }
 
-    public MatchCreationRequest(Team teamA, Team teamB, User sender, User receiver, Date date, Date time, String kicker, MatchCreationValidation matchCreationValidation) {
+    public MatchCreationRequest(User sender, User receiver, Team teamA, Team teamB, Date date, Date time, String kicker, MatchCreationValidation matchCreationValidation) {
         this();
         this.teamA = teamA;
         this.teamB = teamB;

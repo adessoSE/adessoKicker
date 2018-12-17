@@ -39,7 +39,7 @@ public class TeamJoinRequestService {
             return null;
         }
 
-        TeamJoinRequest teamJoinRequest = new TeamJoinRequest(teamName, sender, receiver);
+        TeamJoinRequest teamJoinRequest = new TeamJoinRequest(receiver, sender, teamName);
         return teamJoinRequest;
     }
 

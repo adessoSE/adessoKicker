@@ -1,9 +1,7 @@
 package de.adesso.kicker.notification.matchcreationrequest;
 
-import de.adesso.kicker.match.Match;
 import de.adesso.kicker.match.MatchService;
 import de.adesso.kicker.notification.NotificationRepository;
-import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequest;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
@@ -42,7 +40,7 @@ public class MatchCreationRequestService {
 
     public MatchCreationRequest saveMatchCreationRequest(Team teamA, Team teamB, User receiver, User sender, Date date, Date time, String kicker, MatchCreationValidation matchCreationValidation) {
 
-        MatchCreationRequest request = new MatchCreationRequest(teamA, teamB, sender, receiver, date, time, kicker, matchCreationValidation);
+        MatchCreationRequest request = new MatchCreationRequest(sender, receiver, teamA, teamB, date, time, kicker, matchCreationValidation);
         saveMatchCreationRequest(request);
         return request;
     }

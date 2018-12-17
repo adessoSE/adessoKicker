@@ -3,11 +3,8 @@ package de.adesso.kicker.notification.teamjoinrequest;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import de.adesso.kicker.notification.Notification;
-import de.adesso.kicker.team.Team;
 import de.adesso.kicker.user.User;
 
 @Entity
@@ -20,7 +17,7 @@ public class TeamJoinRequest extends Notification {
         type = NotificationType.TeamJoinRequest;
     }
 
-    public TeamJoinRequest(String teamName, User receiver, User sender) {
+    public TeamJoinRequest(User sender, User receiver, String teamName) {
         this();
         this.teamName = teamName;
         this.sender = sender;

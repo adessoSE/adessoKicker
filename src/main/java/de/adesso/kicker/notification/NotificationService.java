@@ -107,7 +107,7 @@ public class NotificationService {
             return null;
         }
 
-        Notification notification = new Notification(message, receiver, sender);
+        Notification notification = new Notification(sender, receiver, message);
         return notification;
     }
 

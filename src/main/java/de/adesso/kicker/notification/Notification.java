@@ -33,10 +33,12 @@ public class Notification {
     protected String message;
 
     public Notification() {
+
         type = NotificationType.Notification;
     }
 
-    public Notification(String message, User receiver, User sender) {
+    public Notification(User sender, User receiver, String message) {
+
         this();
         this.sendDate = new Date();
         this.receiver = receiver;
@@ -44,12 +46,10 @@ public class Notification {
         this.message = message;
     }
 
-    public Notification(Date sendDate, String message, User receiver, User sender) {
-        this();
+    public Notification(User sender, User receiver, String message, Date sendDate){
+
+        this(sender, receiver, message);
         this.sendDate = sendDate;
-        this.receiver = receiver;
-        this.sender = sender;
-        this.message = message;
     }
 
     public long getNotificationId() {
