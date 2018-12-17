@@ -24,7 +24,7 @@ public class TeamJoinRequestService {
     }
 
     // Try to create a notification
-    public TeamJoinRequest createTeamJoinRequest(String teamName, long receiverId, long senderId) {
+    public TeamJoinRequest createTeamJoinRequest(long senderId, long receiverId, String teamName) {
 
         User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
@@ -43,9 +43,9 @@ public class TeamJoinRequestService {
         return teamJoinRequest;
     }
 
-    public void saveTeamJoinRequest(String teamName, long receiverId, long senderId) {
+    public void saveTeamJoinRequest(long senderId, long receiverId, String teamName) {
 
-        saveTeamJoinRequest(createTeamJoinRequest(teamName, receiverId, senderId));
+        saveTeamJoinRequest(createTeamJoinRequest(senderId, receiverId, teamName));
     }
     
     public void acceptTeamJoinRequest(long notificationId) {

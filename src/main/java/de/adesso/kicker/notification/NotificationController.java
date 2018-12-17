@@ -3,17 +3,9 @@ package de.adesso.kicker.notification;
 import java.util.List;
 
 import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequestService;
-import javassist.expr.Instanceof;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequest;
-import de.adesso.kicker.team.Team;
-import de.adesso.kicker.team.TeamService;
-import de.adesso.kicker.user.User;
-import de.adesso.kicker.user.UserService;
 
 @RestController
 public class NotificationController {
@@ -69,7 +61,7 @@ public class NotificationController {
     @PostMapping("/notifications/add/notification")
     public ModelAndView addNotifcationStandard(Long senderId, Long receiverId, String message) {
 
-        notificationService.saveNotification(message, receiverId, senderId);
+        notificationService.saveNotification(senderId, receiverId, message);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/notification/add_notification");
@@ -85,9 +77,9 @@ public class NotificationController {
     }
 
     @PostMapping("/notifications/add/teamjoinrequest")
-    public ModelAndView getAddNotifcationTeamJoinRequest(String teamName, Long receiverId, Long senderId) {
+    public ModelAndView getAddNotifcationTeamJoinRequest(Long senderId, Long receiverId, String teamName) {
 
-        teamJoinRequestService.saveTeamJoinRequest(teamName, receiverId, senderId);
+        teamJoinRequestService.saveTeamJoinRequest(senderId, receiverId, teamName);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/notification/add_teamjoinrequest");

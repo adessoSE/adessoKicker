@@ -25,7 +25,7 @@ public class TournamentJoinRequestService {
         this.singleEliminationService = singleEliminationService;
     }
 
-    public TournamentJoinRequest createTournamentJoinRequest(Tournament tournament, long senderId, Team team) {
+    public TournamentJoinRequest createTournamentJoinRequest(long senderId, Team team, Tournament tournament) {
 
         User sender = userService.getUserById(senderId);
         User receiver;
@@ -53,9 +53,9 @@ public class TournamentJoinRequestService {
         return request;
     }
 
-    public void saveTournamentJoinRequest(Tournament tournament, long senderId, Team team) {
+    public void saveTournamentJoinRequest(long senderId, Team team, Tournament tournament) {
 
-        saveTournamentJoinRequest(createTournamentJoinRequest(tournament, senderId, team));
+        saveTournamentJoinRequest(createTournamentJoinRequest(senderId, team, tournament));
     }
 
     public void acceptTournamentJoinRequest(long notificationId) {

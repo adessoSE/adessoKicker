@@ -117,7 +117,7 @@ public class TeamController {
             modelAndView.setViewName("team/add");
             return modelAndView;
         }
-        teamJoinRequestService.saveTeamJoinRequest(team.getTeamName(), team.getPlayerB().getUserId(), team.getPlayerA().getUserId());
+        teamJoinRequestService.saveTeamJoinRequest(team.getPlayerA().getUserId(), team.getPlayerB().getUserId(), team.getTeamName());
         modelAndView.addObject("successMessage", "Team wurde erfolgreich erstellt.");
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.setViewName("team/add");

@@ -30,15 +30,15 @@ public class MatchCreationRequestService {
         User sender = userService.getLoggedInUser();
         MatchCreationValidation matchCreationValidation = new MatchCreationValidation();
         if(teamA.getPlayerA() == sender) {
-            saveMatchCreationRequest(teamA, teamB, teamA.getPlayerB(), sender, date, time, kicker, matchCreationValidation);
+            saveMatchCreationRequest(sender, teamA.getPlayerB(), teamA, teamB, date, time, kicker, matchCreationValidation);
         } else {
-            saveMatchCreationRequest(teamA, teamB, teamA.getPlayerA(), sender, date, time, kicker, matchCreationValidation);
+            saveMatchCreationRequest(sender, teamA.getPlayerA(), teamA, teamB, date, time, kicker, matchCreationValidation);
         }
-        saveMatchCreationRequest(teamA, teamB, teamB.getPlayerA(), sender, date, time, kicker, matchCreationValidation);
-        saveMatchCreationRequest(teamA, teamB, teamB.getPlayerB(), sender, date, time, kicker, matchCreationValidation);
+        saveMatchCreationRequest(sender, teamB.getPlayerA(), teamA, teamB, date, time, kicker, matchCreationValidation);
+        saveMatchCreationRequest(sender, teamB.getPlayerB(), teamA, teamB, date, time, kicker, matchCreationValidation);
     }
 
-    public MatchCreationRequest saveMatchCreationRequest(Team teamA, Team teamB, User receiver, User sender, Date date, Date time, String kicker, MatchCreationValidation matchCreationValidation) {
+    public MatchCreationRequest saveMatchCreationRequest(User sender, User receiver, Team teamA, Team teamB, Date date, Date time, String kicker, MatchCreationValidation matchCreationValidation) {
 
         MatchCreationRequest request = new MatchCreationRequest(sender, receiver, teamA, teamB, date, time, kicker, matchCreationValidation);
         saveMatchCreationRequest(request);

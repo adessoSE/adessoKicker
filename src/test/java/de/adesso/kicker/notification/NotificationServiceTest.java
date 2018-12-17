@@ -57,27 +57,27 @@ public class NotificationServiceTest {
     @Test
     public void saveNotification_ValidInput(){
 
-        notificationService.saveNotification(anyString(), user.getUserId(), otherUser.getUserId());
+        notificationService.saveNotification(otherUser.getUserId(), user.getUserId(), anyString());
     }
     @Test
     public void saveNotification_NullMessage(){
 
-        notificationService.saveNotification(null, user.getUserId(), otherUser.getUserId());
+        notificationService.saveNotification(otherUser.getUserId(), user.getUserId(), null);
     }
     @Test
     public void saveNotification_NullSender(){
 
-        notificationService.saveNotification(anyString(), -1L, otherUser.getUserId());
+        notificationService.saveNotification(otherUser.getUserId(), -1L, anyString());
     }
     @Test
     public void saveNotification_NullReceiver(){
 
-        notificationService.saveNotification(anyString(), user.getUserId(), -1L);
+        notificationService.saveNotification(-1L, user.getUserId(), anyString());
     }
     @Test
     public void saveNotification_NullSenderAndReceiver(){
 
-        notificationService.saveNotification(anyString(), -1L, -1L);
+        notificationService.saveNotification(-1L, -1L, anyString());
     }
     @Test
     public void saveNotification_Object(){

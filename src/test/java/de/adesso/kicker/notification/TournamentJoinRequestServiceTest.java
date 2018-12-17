@@ -6,7 +6,6 @@ import de.adesso.kicker.team.Team;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.team.TeamDummy;
 import de.adesso.kicker.tournament.Tournament;
-import de.adesso.kicker.tournament.lastmanstanding.LastManDummy;
 import de.adesso.kicker.tournament.singleelimination.SingleElimDummy;
 import de.adesso.kicker.tournament.singleelimination.SingleEliminationService;
 import de.adesso.kicker.user.UserDummy;
@@ -51,7 +50,7 @@ public class TournamentJoinRequestServiceTest {
     @Test
     public void saveTournamentJoinRequest_SingleElimination() {
 
-        tournamentJoinRequestService.saveTournamentJoinRequest((Tournament)singleElimination, team.getPlayerA().getUserId(), team);
+        tournamentJoinRequestService.saveTournamentJoinRequest(team.getPlayerA().getUserId(), team, (Tournament)singleElimination);
     }
 
     @Test
@@ -63,13 +62,13 @@ public class TournamentJoinRequestServiceTest {
     @Test
     public void createTournamentJoinRequest_SingleElimination_Valid(){
 
-        tournamentJoinRequestService.createTournamentJoinRequest((Tournament)singleElimination, user.getUserId(), team);
+        tournamentJoinRequestService.createTournamentJoinRequest(user.getUserId(), team, (Tournament)singleElimination);
     }
 
     @Test
     public void createTournamentJoinRequest_SingleElimination_Null(){
 
-        tournamentJoinRequestService.createTournamentJoinRequest(null, anyLong(), null);
+        tournamentJoinRequestService.createTournamentJoinRequest(anyLong(), null, null);
     }
 
     @Test

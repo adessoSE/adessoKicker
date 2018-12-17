@@ -69,7 +69,7 @@ public class TournamentService {
     @SuppressWarnings("unchecked")
     @Transactional
     public ModelAndView postJoinTournament(Tournament tournament, long id) {
-        tournamentJoinRequestService.saveTournamentJoinRequest(tournament, userService.getLoggedInUser().getUserId(), teamService.getTeamById(id));
+        tournamentJoinRequestService.saveTournamentJoinRequest(userService.getLoggedInUser().getUserId(), teamService.getTeamById(id), tournament);
         return controllerInterfaceMap.get(tournament.getClass()).postJoinTournament(tournament, id);
     }
 

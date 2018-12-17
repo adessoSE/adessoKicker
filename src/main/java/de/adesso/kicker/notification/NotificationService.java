@@ -26,13 +26,11 @@ public class NotificationService {
         this.tournamentJoinRequestService = tournamentJoinRequestService;
     }
 
-    // Gets a notification by id
     public Notification getNotificationById(long id) {
 
         return notificationRepository.findByNotificationId(id);
     }
 
-    // Get all notifications
     public List<Notification> getAllNotifications() {
 
         List<Notification> notifications = new ArrayList<>();
@@ -40,7 +38,6 @@ public class NotificationService {
         return notifications;
     }
 
-    // Get all notifications that were send by a specific user
     public List<Notification> getAllNotificationsBySender(long senderId) {
 
         User sender = userService.getUserById(senderId);
@@ -49,7 +46,6 @@ public class NotificationService {
         return notifications;
     }
 
-    // Get all notifications that were received by a specific user
     public List<Notification> getAllNotificationsByReceiver(long receiverId) {
 
         User receiver = userService.getUserById(receiverId);
@@ -81,7 +77,6 @@ public class NotificationService {
         removeNotificationById(id);
     }
 
-    // Save notification in repository
     public void saveNotification(Notification notification) {
 
         if (notification == null) {
@@ -92,7 +87,7 @@ public class NotificationService {
     }
 
     // Try to create a notification
-    public Notification createNotification(String message, long receiverId, long senderId) {
+    public Notification createNotification(long senderId, long receiverId, String message) {
 
         User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
@@ -111,12 +106,11 @@ public class NotificationService {
         return notification;
     }
 
-    public void saveNotification(String message, long receiverId, long senderId) {
+    public void saveNotification(long senderId, long receiverId, String message) {
 
-        saveNotification(createNotification(message,receiverId,senderId));
+        saveNotification(createNotification(senderId, receiverId, message));
     }
 
-    // Removes notification from repository
     public void removeNotificationById(long id) {
 
         notificationRepository.deleteById(id);
