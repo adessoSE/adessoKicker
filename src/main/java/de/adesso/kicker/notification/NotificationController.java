@@ -49,7 +49,7 @@ public class NotificationController {
     @DeleteMapping("/notifications/accept/{id}")
     public void acceptNotificationById(@PathVariable long id) {
 
-        acceptNotificationById(id);
+        notificationService.acceptNotificationById(id);
     }
 
     @DeleteMapping("/notifications/{id}")

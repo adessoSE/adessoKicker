@@ -1,6 +1,6 @@
 //--> Sends a XML-HTTP Request that deletes notification
 function deleteNotification(notificationId){
-	
+
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
@@ -21,7 +21,7 @@ function deleteNotification(notificationId){
 
 //Sends a DELETE Request to "notification/accept
 function acceptNotification(notificationId) {
-	
+
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
@@ -39,10 +39,3 @@ function acceptNotification(notificationId) {
 	xhttp.send();
 	return false;
 }
-
-/*
-//--> Triggered on Notification Button click
-function toggleNotificationList() {
-	
-	$('#notificationList').toggle();
-}*/
