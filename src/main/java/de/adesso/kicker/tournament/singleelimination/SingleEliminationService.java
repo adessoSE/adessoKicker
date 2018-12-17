@@ -22,7 +22,6 @@ import de.adesso.kicker.user.User;
 public class SingleEliminationService extends TournamentService {
 
     private MatchService matchService;
-    //private TournamentJoinRequestService tournamentJoinRequestService;
     private UserService userService;
 
     @Autowired
@@ -30,7 +29,6 @@ public class SingleEliminationService extends TournamentService {
         super(tournamentRepository);
         this.matchService = matchService;
         this.userService = userService;
-        //this.tournamentJoinRequestService = tournamentJoinRequestService;
     }
 
     public void addTeamToTournament(SingleElimination singleElimination, Team team) {

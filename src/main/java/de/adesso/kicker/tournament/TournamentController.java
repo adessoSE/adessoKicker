@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import de.adesso.kicker.notification.NotificationService;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
