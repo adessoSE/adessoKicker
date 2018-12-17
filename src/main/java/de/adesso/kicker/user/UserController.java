@@ -39,7 +39,7 @@ public class UserController {
         modelAndView.addObject("user", user);
         long userId = -1;
         if (user != null) {
-            user.getUserId();
+            userId = user.getUserId();
         }
         modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(userId));
         modelAndView.setViewName("user/home");
