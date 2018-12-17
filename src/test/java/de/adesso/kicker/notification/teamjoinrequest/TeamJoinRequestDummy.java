@@ -1,4 +1,4 @@
-package de.adesso.kicker.notification;
+package de.adesso.kicker.notification.teamjoinrequest;
 
 import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequest;
 

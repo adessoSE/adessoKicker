@@ -9,7 +9,7 @@ function deleteNotification(notificationId){
 		$('#notificationList').children().each(function(){
 			var value = $(this).attr("value");
 			if (value == notificationId){
-				$(this).remove();
+			+	$(this).remove();
 			}
 		});
 	}
