@@ -21,7 +21,7 @@ public class MatchCreationRequest extends Notification {
     @Temporal(TemporalType.TIME)
     private Date time;
     private String kicker;
-    @ManyToOne(targetEntity = MatchCreationValidation.class, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = MatchCreationValidation.class, optional = true, cascade = CascadeType.ALL)
     MatchCreationValidation matchCreationValidation;
 
     public MatchCreationRequest() {

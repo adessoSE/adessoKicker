@@ -61,6 +61,7 @@ public class MatchCreationRequestService {
         MatchCreationValidation matchCreationValidation = request.getMatchCreationValidation();
         if(matchCreationValidation.getNumVerified() < 2){
             matchCreationValidation.increaseNumVerified();
+            matchCreationRequestRepository.delete(request);
         } else {
             Match match = new Match(request.getDate(), request.getTime(), request.getKicker(), request.getTeamA(), request.getTeamB());
             matchService.saveMatch(match);
@@ -70,7 +71,7 @@ public class MatchCreationRequestService {
 
     public void declineMatchJoinRequest(long notificationID){
 
-        MatchCreationRequest matchCreationRequest = (MatchCreationRequest) notificationRepository.findByNotificationId(notificationID);
+        MatchCreationRequest matchCreationRequest = matchCreationRequestRepository.findByNotificationId(notificationID);
         MatchCreationValidation matchCreationValidation = matchCreationRequest.getMatchCreationValidation();
         List<MatchCreationRequest> requests = matchCreationRequestRepository.getAllByMatchCreationValidation(matchCreationValidation);
         for (MatchCreationRequest req: requests) {
