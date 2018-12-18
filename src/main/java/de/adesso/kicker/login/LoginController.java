@@ -1,7 +1,10 @@
-package de.adesso.kicker.user;
+package de.adesso.kicker.login;
 
 import javax.validation.Valid;
 
+import de.adesso.kicker.login.LoginService;
+import de.adesso.kicker.user.User;
+import de.adesso.kicker.user.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
