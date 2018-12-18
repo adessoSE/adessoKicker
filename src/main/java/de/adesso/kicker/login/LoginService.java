@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 import de.adesso.kicker.user.User;
-import de.adesso.kicker.user.UserAlreadyExistsException;
+import de.adesso.kicker.user.exception.UserAlreadyExistsException;
 import de.adesso.kicker.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
