@@ -84,7 +84,7 @@ public class MatchService {
         Date currentDate = new Date();
         if (match.getDate().after(currentDate)) {
         } else {
-            throw new PasteDateException();
+            throw new PastDateException();
         }
 
     }

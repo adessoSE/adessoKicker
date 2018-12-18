@@ -2,10 +2,8 @@ package de.adesso.kicker.match;
 
 import de.adesso.kicker.notification.NotificationService;
 import de.adesso.kicker.notification.matchcreationrequest.MatchCreationRequestService;
-import de.adesso.kicker.notification.matchcreationrequest.MatchCreationValidationRepository;
 import de.adesso.kicker.team.TeamService;
-import java.util.Calendar;
-import java.util.Date;
+
 import javax.validation.Valid;
 
 import de.adesso.kicker.user.User;
@@ -15,8 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -120,7 +116,7 @@ public class MatchController {
         }
         try {
             matchService.denyPastDate(match);
-        } catch (PasteDateException p) {
+        } catch (PastDateException p) {
             bindingResult.rejectValue("date", "error.date", "Kein vergangenes Datum.");
 
             modelAndView.addObject("teams", teamService.getAllTeams());

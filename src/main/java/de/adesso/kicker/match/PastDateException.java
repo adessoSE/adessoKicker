@@ -1,7 +1,7 @@
 package de.adesso.kicker.match;
 
-public class PasteDateException extends RuntimeException {
-    PasteDateException() {
+public class PastDateException extends RuntimeException {
+    PastDateException() {
         super("Date has already passed through.");
     }
 }
