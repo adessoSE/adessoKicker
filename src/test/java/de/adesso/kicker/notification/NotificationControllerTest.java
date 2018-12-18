@@ -27,26 +27,26 @@ public class NotificationControllerTest{
     @Test
     public void addNotification_Valid_Input_Should_Work(){
 
-        notificationController.addNotifcationStandard(1L, 1L, "message");
+        notificationController.addNotifcation(1L, 1L, "message");
     }
     @Test
     public void addNotification_Message_Null_Should_Work(){
 
-        notificationController.addNotifcationStandard(1L, 1L, null);
+        notificationController.addNotifcation(1L, 1L, null);
     }
     @Test(expected=NullPointerException.class)
     public void addNotification_Sender_Null_Should_Not_Work(){
 
-        notificationController.addNotifcationStandard(null, 1L, "message");
+        notificationController.addNotifcation(null, 1L, "message");
     }
     @Test(expected=NullPointerException.class)
     public void addNotification_Receiver_Null_Should_Not_Work(){
 
-        notificationController.addNotifcationStandard(1L, null, "message");
+        notificationController.addNotifcation(1L, null, "message");
     }
     @Test(expected=NullPointerException.class)
     public void addNotification_Receiver_And_Sender_Null_Should_Not_Work(){
 
-        notificationController.addNotifcationStandard(null, null, "message");
+        notificationController.addNotifcation(null, null, "message");
     }
 }

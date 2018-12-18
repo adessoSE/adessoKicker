@@ -43,7 +43,7 @@ public class TeamController {
         modelAndView = new ModelAndView();
         User user = userService.getLoggedInUser();
         modelAndView.addObject("user", user);
-        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user.getUserId()));
+        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
         modelAndView.addObject("teams", teamService.getAllTeams());
         modelAndView.setViewName("team/teams");
         return modelAndView;
@@ -61,7 +61,7 @@ public class TeamController {
         modelAndView = new ModelAndView();
         User user = userService.getLoggedInUser();
         modelAndView.addObject("user", user);
-        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user.getUserId()));
+        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
         modelAndView.addObject(teamService.getTeamById(id));
         modelAndView.setViewName("team/page");
         return modelAndView;

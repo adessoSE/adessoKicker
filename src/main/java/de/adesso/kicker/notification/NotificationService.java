@@ -42,6 +42,24 @@ public class NotificationService {
         return notifications;
     }
 
+    public List<Notification> getAllNotificationsBySender(User sender){
+
+        List<Notification> notifications = new ArrayList<>();
+        if (sender != null){
+            notifications = getAllNotificationsBySender(sender.getUserId());
+        }
+        return notifications;
+    }
+
+    public List<Notification> getAllNotificationsByReceiver(User receiver){
+
+        List<Notification> notifications = new ArrayList<>();
+        if (receiver != null){
+            notifications = getAllNotificationsByReceiver(receiver.getUserId());
+        }
+        return notifications;
+    }
+
     public List<Notification> getAllNotificationsBySender(long senderId) {
 
         User sender = userService.getUserById(senderId);

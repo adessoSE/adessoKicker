@@ -50,16 +50,16 @@ public class NotificationController {
         notificationService.declineNotificationById(id);
     }
 
-    @GetMapping("/notifications/add/notification")
-    public ModelAndView getAddNotifcationStandard() {
+    @GetMapping("/notifications/add")
+    public ModelAndView getAddNotifcation() {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/notification/add_notification");
         return modelAndView;
     }
 
-    @PostMapping("/notifications/add/notification")
-    public ModelAndView addNotifcationStandard(Long senderId, Long receiverId, String message) {
+    @PostMapping("/notifications/add")
+    public ModelAndView addNotifcation(Long senderId, Long receiverId, String message) {
 
         notificationService.saveNotification(senderId, receiverId, message);
 
