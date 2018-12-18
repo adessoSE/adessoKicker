@@ -1,13 +1,14 @@
 package de.adesso.kicker.notification.matchcreationrequest;
 
+import de.adesso.kicker.match.Match;
 import de.adesso.kicker.match.MatchService;
 import de.adesso.kicker.notification.NotificationRepository;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
-import de.adesso.kicker.match.Match;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class MatchCreationRequestService {
     private MatchCreationRequestRepository matchCreationRequestRepository;
 
     @Autowired
-    public MatchCreationRequestService(NotificationRepository notificationRepository, UserService userService, MatchCreationValidationRepository matchCreationValidationRepository, MatchCreationRequestRepository matchCreationRequestRepository) {
+    public MatchCreationRequestService(NotificationRepository notificationRepository, UserService userService, MatchCreationValidationRepository matchCreationValidationRepository, MatchCreationRequestRepository matchCreationRequestRepository, MatchService matchService) {
 
         this.notificationRepository = notificationRepository;
         this.matchService = matchService;
@@ -35,16 +36,49 @@ public class MatchCreationRequestService {
         User sender = userService.getLoggedInUser();
         MatchCreationValidation matchCreationValidation = new MatchCreationValidation();
 
+        if (match == null) {
+            System.err.println("ERROR at 'MatchCreationRequestService' --> 'generateMatchCreationRequests()' : Match is NULL");
+            return;
+        }
+
+        matchCreationValidationRepository.save(matchCreationValidation);
+
         if(match.getTeamA().getPlayerA() == sender) {
             saveMatchCreationRequest(sender, match.getTeamA().getPlayerB(), match.getTeamA(), match.getTeamB(), match.getDate(), match.getTime(), match.getKicker(), matchCreationValidation);
         } else if(match.getTeamA().getPlayerB() == sender) {
             saveMatchCreationRequest(sender, match.getTeamA().getPlayerA(), match.getTeamA(), match.getTeamB(), match.getDate(), match.getTime(), match.getKicker(), matchCreationValidation);
-        } else { return;}
+        } else {
+            System.err.println("ERROR at 'MatchCreationRequestService' --> 'generateMatchCreationRequests()' : logged in User is not in Team A");
+            return;
+        }
         saveMatchCreationRequest(sender, match.getTeamB().getPlayerA(), match.getTeamA(), match.getTeamB(), match.getDate(), match.getTime(), match.getKicker(), matchCreationValidation);
         saveMatchCreationRequest(sender, match.getTeamB().getPlayerB(), match.getTeamA(), match.getTeamB(), match.getDate(), match.getTime(), match.getKicker(), matchCreationValidation);
     }
 
     public MatchCreationRequest saveMatchCreationRequest(User sender, User receiver, Team teamA, Team teamB, Date date, Date time, String kicker, MatchCreationValidation matchCreationValidation) {
+
+        if (sender == null) {
+            System.err.println("ERROR at 'MatchCreationRequestService' --> 'saveMatchCreationRequest()' : sender is NULL");
+            return null;
+        } if (receiver == null) {
+            System.err.println("ERROR at 'MatchCreationRequestService' --> 'saveMatchCreationRequest()' : receiver is NULL");
+            return null;
+        } if (teamA == null) {
+            System.err.println("ERROR at 'MatchCreationRequestService' --> 'saveMatchCreationRequest()' : Team A is NULL");
+            return null;
+        } if (teamB == null) {
+            System.err.println("ERROR at 'MatchCreationRequestService' --> 'saveMatchCreationRequest()' : TeamB is NULL");
+            return null;
+        } if (date == null || time == null) {
+            System.err.println("ERROR at 'MatchCreationRequestService' --> 'saveMatchCreationRequest()' : date or time is NULL");
+            return null;
+        } if (kicker == null || kicker.equals("")) {
+            System.err.println("ERROR at 'MatchCreationRequestService' --> 'saveMatchCreationRequest()' : Kicker is NULL");
+            return null;
+        } if (matchCreationValidation == null) {
+            System.err.println("ERROR at 'MatchCreationRequestService' --> 'saveMatchCreationRequest()' : validation object is NULL");
+            return null;
+        }
 
         MatchCreationRequest request = new MatchCreationRequest(sender, receiver, teamA, teamB, date, time, kicker, matchCreationValidation);
         saveMatchCreationRequest(request);
@@ -52,29 +86,44 @@ public class MatchCreationRequestService {
     }
 
     public void saveMatchCreationRequest(MatchCreationRequest matchCreationRequest) {
+
+        if (matchCreationRequest == null) {
+            System.err.println("ERROR at 'MatchCreationRequestService' --> 'saveMatchCreationRequest()' : matchCreationRequest is NULL");
+            return;
+        }
         notificationRepository.save(matchCreationRequest);
     }
 
     public void acceptMatchJoinRequest(long notificationId) {
 
-        MatchCreationRequest request = (MatchCreationRequest) notificationRepository.findByNotificationId(notificationId);
-        MatchCreationValidation matchCreationValidation = request.getMatchCreationValidation();
+        MatchCreationRequest matchCreationRequest = (MatchCreationRequest) matchCreationRequestRepository.findByNotificationId(notificationId);
+        if (matchCreationRequest == null) {
+            System.err.println("ERROR at 'MatchCreationRequestService' --> 'acceptMatchJoinRequest()' : cannot find MatchCreationRequest with id: " + notificationId);
+            return;
+        }
+        MatchCreationValidation matchCreationValidation = matchCreationRequest.getMatchCreationValidation();
         if(matchCreationValidation.getNumVerified() < 2){
             matchCreationValidation.increaseNumVerified();
+            notificationRepository.delete(matchCreationRequest);
         } else {
-            Match match = new Match(request.getDate(), request.getTime(), request.getKicker(), request.getTeamA(), request.getTeamB());
+            Match match = new Match(matchCreationRequest.getDate(), matchCreationRequest.getTime(), matchCreationRequest.getKicker(), matchCreationRequest.getTeamA(), matchCreationRequest.getTeamB());
             matchService.saveMatch(match);
+            notificationRepository.delete(matchCreationRequest);
             matchCreationValidationRepository.delete(matchCreationValidation);
         }
     }
 
-    public void declineMatchJoinRequest(long notificationID){
+    public void declineMatchJoinRequest(long notificationId){
 
-        MatchCreationRequest matchCreationRequest = (MatchCreationRequest) notificationRepository.findByNotificationId(notificationID);
+        MatchCreationRequest matchCreationRequest = matchCreationRequestRepository.findByNotificationId(notificationId);
+        if (matchCreationRequest == null) {
+            System.err.println("ERROR at 'MatchCreationRequestService' --> 'acceptMatchJoinRequest()' : cannot find MatchCreationRequest with id: " + notificationId);
+            return;
+        }
         MatchCreationValidation matchCreationValidation = matchCreationRequest.getMatchCreationValidation();
         List<MatchCreationRequest> requests = matchCreationRequestRepository.getAllByMatchCreationValidation(matchCreationValidation);
         for (MatchCreationRequest req: requests) {
-            req.setValidationNull();
+
             notificationRepository.delete(req);
         }
         matchCreationValidationRepository.delete(matchCreationValidation);

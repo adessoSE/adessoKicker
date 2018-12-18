@@ -12,16 +12,16 @@ import java.util.Date;
 @Entity
 public class MatchCreationRequest extends Notification {
 
-    @OneToOne(targetEntity = Team.class, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = Team.class)
     private Team teamA;
-    @OneToOne(targetEntity = Team.class, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = Team.class)
     private Team teamB;
     @Temporal(TemporalType.DATE)
     private Date date;
     @Temporal(TemporalType.TIME)
     private Date time;
     private String kicker;
-    @ManyToOne(targetEntity = MatchCreationValidation.class, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = MatchCreationValidation.class)
     MatchCreationValidation matchCreationValidation;
 
     public MatchCreationRequest() {
@@ -43,9 +43,6 @@ public class MatchCreationRequest extends Notification {
         this.message = generateMessage();
     }
 
-    public void setValidationNull(){
-        this.matchCreationValidation = null;
-    }
 
     public String generateMessage() {
         return sender.getFirstName() + " " + sender.getLastName() + " asked you to play a match: "

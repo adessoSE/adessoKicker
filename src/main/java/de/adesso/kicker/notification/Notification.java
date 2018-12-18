@@ -2,8 +2,8 @@ package de.adesso.kicker.notification;
 
 import de.adesso.kicker.user.User;
 
-import java.util.Date;
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
