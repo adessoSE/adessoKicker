@@ -21,7 +21,7 @@ public class MatchCreationRequestService {
     private MatchCreationRequestRepository matchCreationRequestRepository;
 
     @Autowired
-    public MatchCreationRequestService(NotificationRepository notificationRepository, UserService userService, MatchCreationValidationRepository matchCreationValidationRepository, MatchCreationRequestRepository matchCreationRequestRepository) {
+    public MatchCreationRequestService(NotificationRepository notificationRepository, UserService userService, MatchCreationValidationRepository matchCreationValidationRepository, MatchCreationRequestRepository matchCreationRequestRepository, MatchService matchService) {
 
         this.notificationRepository = notificationRepository;
         this.matchService = matchService;
@@ -34,6 +34,7 @@ public class MatchCreationRequestService {
 
         User sender = userService.getLoggedInUser();
         MatchCreationValidation matchCreationValidation = new MatchCreationValidation();
+        matchCreationValidationRepository.save(matchCreationValidation);
 
         if(match.getTeamA().getPlayerA() == sender) {
             saveMatchCreationRequest(sender, match.getTeamA().getPlayerB(), match.getTeamA(), match.getTeamB(), match.getDate(), match.getTime(), match.getKicker(), matchCreationValidation);
@@ -61,10 +62,11 @@ public class MatchCreationRequestService {
         MatchCreationValidation matchCreationValidation = request.getMatchCreationValidation();
         if(matchCreationValidation.getNumVerified() < 2){
             matchCreationValidation.increaseNumVerified();
-            matchCreationRequestRepository.delete(request);
+            notificationRepository.delete(request);
         } else {
             Match match = new Match(request.getDate(), request.getTime(), request.getKicker(), request.getTeamA(), request.getTeamB());
             matchService.saveMatch(match);
+            notificationRepository.delete(request);
             matchCreationValidationRepository.delete(matchCreationValidation);
         }
     }

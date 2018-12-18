@@ -65,10 +65,12 @@ public class NotificationService {
         switch (n.getType()){
             case Notification:
                 System.out.println("Notification with id: " + id);
+                removeNotificationById(id);
                 break;
             case TeamJoinRequest:
                 teamJoinRequestService.acceptTeamJoinRequest(id);
                 System.out.println("TeamJoinRequest with id: " + id);
+                removeNotificationById(id);
                 break;
             case MatchCreationRequest:
                 matchCreationRequestService.acceptMatchJoinRequest(id);
@@ -77,9 +79,9 @@ public class NotificationService {
             case TournamentJoinRequest:
                 tournamentJoinRequestService.acceptTournamentJoinRequest(id);
                 System.out.println("TournamentJoinRequest with id: " + id);
+                removeNotificationById(id);
                 break;
         }
-        removeNotificationById(id);
     }
 
     public void saveNotification(Notification notification) {
@@ -118,13 +120,8 @@ public class NotificationService {
 
     public void removeNotificationById(long id) {
 
-        Notification n = getNotificationById(id);
-        switch (n.getType()) {
-            case MatchCreationRequest:
-
-            default:
-                notificationRepository.delete(n);
-        }
+        Notification n = notificationRepository.findByNotificationId(id);
+        notificationRepository.delete(n);
     }
 
     public void declineNotificationById(long id) {
