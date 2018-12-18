@@ -43,9 +43,6 @@ public class MatchCreationRequest extends Notification {
         this.message = generateMessage();
     }
 
-    public void setValidationNull(){
-        this.matchCreationValidation = null;
-    }
 
     public String generateMessage() {
         return sender.getFirstName() + " " + sender.getLastName() + " asked you to play a match: "

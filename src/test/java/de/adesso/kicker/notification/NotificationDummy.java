@@ -1,5 +1,4 @@
 package de.adesso.kicker.notification;
-
 import de.adesso.kicker.user.UserDummy;
 
 public class NotificationDummy {
