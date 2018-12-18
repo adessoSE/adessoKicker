@@ -99,6 +99,8 @@ public class NotificationService {
                 System.out.println("TournamentJoinRequest with id: " + id);
                 removeNotificationById(id);
                 break;
+            default:
+                removeNotificationById(id);
         }
     }
 
@@ -109,6 +111,11 @@ public class NotificationService {
             return;
         }
         notificationRepository.save(notification);
+    }
+
+    public void saveNotification(long senderId, long receiverId, String message) {
+
+        saveNotification(createNotification(senderId, receiverId, message));
     }
 
     // Try to create a notification
@@ -131,15 +138,9 @@ public class NotificationService {
         return notification;
     }
 
-    public void saveNotification(long senderId, long receiverId, String message) {
-
-        saveNotification(createNotification(senderId, receiverId, message));
-    }
-
     public void removeNotificationById(long id) {
 
-        Notification n = notificationRepository.findByNotificationId(id);
-        notificationRepository.delete(n);
+        notificationRepository.deleteById(id);
     }
 
     public void declineNotificationById(long id) {

@@ -23,6 +23,18 @@ public class TeamJoinRequestService {
         this.teamService = teamService;
     }
 
+    public void acceptTeamJoinRequest(long notificationId) {
+        
+        TeamJoinRequest request = (TeamJoinRequest)notificationRepository.findByNotificationId(notificationId);
+        if (request == null){
+
+            System.err.println("ERROR at 'TeamJoinRequestService' --> 'acceptTeamJoinRequest()' : Cannot find TeamJoinRequest with id " + notificationId);
+            return;
+        }
+        Team team = new Team(request.getTeamName(), request.getSender(), request.getReceiver());
+        teamService.saveTeam(team);
+    }
+
     // Try to create a notification
     public TeamJoinRequest createTeamJoinRequest(long senderId, long receiverId, String teamName) {
 
@@ -47,19 +59,7 @@ public class TeamJoinRequestService {
 
         saveTeamJoinRequest(createTeamJoinRequest(senderId, receiverId, teamName));
     }
-    
-    public void acceptTeamJoinRequest(long notificationId) {
-        
-        TeamJoinRequest request = (TeamJoinRequest)notificationRepository.findByNotificationId(notificationId);
-        if (request == null){
 
-            System.err.println("ERROR at 'TeamJoinRequestService' --> 'acceptTeamJoinRequest()' : Cannot find TeamJoinRequest with id " + notificationId);
-            return;
-        }
-        Team team = new Team(request.getTeamName(), request.getSender(), request.getReceiver());
-        teamService.saveTeam(team);
-    }
-    
     public void saveTeamJoinRequest(TeamJoinRequest teamJoinRequest) {
 
         if (teamJoinRequest == null ) {
