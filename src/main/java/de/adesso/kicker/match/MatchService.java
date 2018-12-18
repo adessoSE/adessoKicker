@@ -1,5 +1,7 @@
 package de.adesso.kicker.match;
 
+import de.adesso.kicker.match.exception.IdenticalTeamsException;
+import de.adesso.kicker.match.exception.PastDateException;
 import de.adesso.kicker.user.User;
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -1,11 +1,11 @@
 package de.adesso.kicker.team;
 
-import de.adesso.kicker.match.Match;
+import de.adesso.kicker.team.exception.IdenticalPlayersException;
+import de.adesso.kicker.team.exception.TeamNameExistingException;
 import de.adesso.kicker.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 

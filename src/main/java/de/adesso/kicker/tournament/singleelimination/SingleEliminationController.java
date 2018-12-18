@@ -4,6 +4,9 @@ import javax.validation.Valid;
 
 
 import de.adesso.kicker.notification.NotificationService;
+import de.adesso.kicker.tournament.singleelimination.exception.PlayerInTournamentException;
+import de.adesso.kicker.tournament.singleelimination.exception.PlayerOfTeamInTournamentException;
+import de.adesso.kicker.tournament.singleelimination.exception.TeamAlreadyInTournamentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;

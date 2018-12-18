@@ -1,4 +1,4 @@
-package de.adesso.kicker.match;
+package de.adesso.kicker.match.exception;
 
 public class PastDateException extends RuntimeException {
     PastDateException() {

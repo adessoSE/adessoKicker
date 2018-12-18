@@ -4,8 +4,9 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import de.adesso.kicker.notification.tournamentjoinrequest.TournamentJoinRequestService;
-import de.adesso.kicker.tournament.Tournament;
+import de.adesso.kicker.tournament.singleelimination.exception.PlayerInTournamentException;
+import de.adesso.kicker.tournament.singleelimination.exception.PlayerOfTeamInTournamentException;
+import de.adesso.kicker.tournament.singleelimination.exception.TeamAlreadyInTournamentException;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
