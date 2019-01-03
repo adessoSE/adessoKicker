@@ -1,7 +1,6 @@
-package de.adesso.kicker.notification;
+package de.adesso.kicker.notification.tournamentjoinrequest;
 
-import de.adesso.kicker.notification.tournamentjoinrequest.TournamentJoinRequest;
-import de.adesso.kicker.notification.tournamentjoinrequest.TournamentJoinRequestService;
+import de.adesso.kicker.notification.NotificationRepository;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.team.TeamDummy;
@@ -15,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -44,7 +42,7 @@ public class TournamentJoinRequestServiceTest {
         team.getPlayerB().setUserId(1);
         when(userService.getUserById(team.getPlayerA().getUserId())).thenReturn(team.getPlayerA());
         when((TournamentJoinRequest)notificationRepository.findByNotificationId(anyLong())).thenReturn(tournamentJoinRequest);
-        when(!notificationRepository.existsById(tournamentJoinRequest.notificationId)).thenReturn(true);
+        when(!notificationRepository.existsById(anyLong())).thenReturn(true);
     }
 
     @Test

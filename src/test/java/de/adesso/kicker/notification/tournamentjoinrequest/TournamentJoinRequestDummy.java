@@ -1,4 +1,4 @@
-package de.adesso.kicker.notification;
+package de.adesso.kicker.notification.tournamentjoinrequest;
 
 import de.adesso.kicker.notification.tournamentjoinrequest.TournamentJoinRequest;
 import de.adesso.kicker.team.TeamDummy;

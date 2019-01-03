@@ -45,6 +45,10 @@ public class TeamJoinRequestService {
 
     public void saveTeamJoinRequest(long senderId, long receiverId, String teamName) {
 
+        if(senderId < 0 || receiverId < 0 || teamName == ""){
+            System.err.println("ERROR at 'TeamJoinRequestService' --> 'saveTeamJoinRequest()' : Invalid argument");
+            return;
+        }
         saveTeamJoinRequest(createTeamJoinRequest(senderId, receiverId, teamName));
     }
     
