@@ -1,4 +1,4 @@
-package de.adesso.kicker.team;
+package de.adesso.kicker.team.exception;
 
 public class IdenticalPlayersException extends RuntimeException {
 

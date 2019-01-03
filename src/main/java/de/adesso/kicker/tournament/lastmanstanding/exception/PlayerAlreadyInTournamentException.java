@@ -1,4 +1,4 @@
-package de.adesso.kicker.tournament.lastmanstanding;
+package de.adesso.kicker.tournament.lastmanstanding.exception;
 
 public class PlayerAlreadyInTournamentException extends RuntimeException {
 

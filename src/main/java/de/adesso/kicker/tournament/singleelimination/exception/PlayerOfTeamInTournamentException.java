@@ -1,4 +1,4 @@
-package de.adesso.kicker.tournament.singleelimination;
+package de.adesso.kicker.tournament.singleelimination.exception;
 
 public class PlayerOfTeamInTournamentException extends RuntimeException {
 

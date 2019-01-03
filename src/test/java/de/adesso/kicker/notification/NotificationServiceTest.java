@@ -30,10 +30,11 @@ public class NotificationServiceTest {
     User user = new UserDummy().alternateUser();
     User otherUser = new UserDummy().alternateUser2();
 
-    Notification notification = new NotificationDummy().defaultNotification();
-    Notification otherNotification = new NotificationDummy().alternateNotification();
-    Notification altNotification1 = new NotificationDummy().alternateNotification1();
-    Notification altNotification2 = new NotificationDummy().alternateNotification2();
+    NotificationDummy notificationDummy = new NotificationDummy();
+    Notification notification = notificationDummy.defaultNotification();
+    Notification otherNotification = notificationDummy.alternateNotification();
+    Notification altNotification1 = notificationDummy.alternateNotification1();
+    Notification altNotification2 = notificationDummy.alternateNotification2();
 
     @BeforeEach
     public void setUp(){
@@ -54,6 +55,11 @@ public class NotificationServiceTest {
     }
 
     //Test --> Try adding a notification (type = Notification)
+    @Test
+    public void saveNotification_NullNotification(){
+
+        notificationService.saveNotification(notificationDummy.nullNotification());
+    }
     @Test
     public void saveNotification_ValidInput(){
 

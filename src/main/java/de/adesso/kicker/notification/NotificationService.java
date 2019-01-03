@@ -42,6 +42,24 @@ public class NotificationService {
         return notifications;
     }
 
+    public List<Notification> getAllNotificationsBySender(User sender){
+
+        List<Notification> notifications = new ArrayList<>();
+        if (sender != null){
+            notifications = getAllNotificationsBySender(sender.getUserId());
+        }
+        return notifications;
+    }
+
+    public List<Notification> getAllNotificationsByReceiver(User receiver){
+
+        List<Notification> notifications = new ArrayList<>();
+        if (receiver != null){
+            notifications = getAllNotificationsByReceiver(receiver.getUserId());
+        }
+        return notifications;
+    }
+
     public List<Notification> getAllNotificationsBySender(long senderId) {
 
         User sender = userService.getUserById(senderId);
@@ -81,6 +99,8 @@ public class NotificationService {
                 System.out.println("TournamentJoinRequest with id: " + id);
                 removeNotificationById(id);
                 break;
+            default:
+                removeNotificationById(id);
         }
     }
 
@@ -91,6 +111,11 @@ public class NotificationService {
             return;
         }
         notificationRepository.save(notification);
+    }
+
+    public void saveNotification(long senderId, long receiverId, String message) {
+
+        saveNotification(createNotification(senderId, receiverId, message));
     }
 
     // Try to create a notification
@@ -113,15 +138,9 @@ public class NotificationService {
         return notification;
     }
 
-    public void saveNotification(long senderId, long receiverId, String message) {
-
-        saveNotification(createNotification(senderId, receiverId, message));
-    }
-
     public void removeNotificationById(long id) {
 
-        Notification n = notificationRepository.findByNotificationId(id);
-        notificationRepository.delete(n);
+        notificationRepository.deleteById(id);
     }
 
     public void declineNotificationById(long id) {

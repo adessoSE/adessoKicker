@@ -14,7 +14,7 @@ function deleteNotification(notificationId){
 		});
 	}
 	};
-	xhttp.open("DELETE", "/notifications/"+notificationId, false);
+	xhttp.open("DELETE", "/notifications/decline/"+notificationId, false);
 	xhttp.send();
 	return false;
 }

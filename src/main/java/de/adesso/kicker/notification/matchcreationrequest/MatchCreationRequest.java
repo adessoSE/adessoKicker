@@ -79,4 +79,15 @@ public class MatchCreationRequest extends Notification {
         return matchCreationValidation;
     }
 
+    @Override
+    public String toString() {
+        return "MatchCreationRequest{" +
+                "teamA=" + teamA +
+                ", teamB=" + teamB +
+                ", date=" + date +
+                ", time=" + time +
+                ", kicker='" + kicker + '\'' +
+                ", matchCreationValidation=" + matchCreationValidation +
+                "} " + super.toString();
+    }
 }

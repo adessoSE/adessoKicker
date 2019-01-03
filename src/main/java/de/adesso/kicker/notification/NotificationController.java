@@ -21,7 +21,7 @@ public class NotificationController {
     }
 
     @RequestMapping("/notifications")
-    public List<Notification> getNotifications() {
+    public List<Notification> getAllNotifications() {
 
         return notificationService.getAllNotifications();
     }
@@ -44,45 +44,27 @@ public class NotificationController {
         notificationService.acceptNotificationById(id);
     }
 
-    @DeleteMapping("/notifications/{id}")
-    public void deleteNotificationById(@PathVariable long id) {
+    @DeleteMapping("/notifications/decline/{id}")
+    public void declineNotificationById(@PathVariable long id) {
 
         notificationService.declineNotificationById(id);
     }
 
-    @GetMapping("/notifications/add/notification")
-    public ModelAndView getAddNotifcationStandard() {
+    @GetMapping("/notifications/add")
+    public ModelAndView getNotificationAddPage() {
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/notification/add_notification");
+        modelAndView.setViewName("/notification/add");
         return modelAndView;
     }
 
-    @PostMapping("/notifications/add/notification")
-    public ModelAndView addNotifcationStandard(Long senderId, Long receiverId, String message) {
+    @PostMapping("/notifications/add")
+    public ModelAndView addNotificationAddPage(Long senderId, Long receiverId, String message) {
 
         notificationService.saveNotification(senderId, receiverId, message);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/notification/add_notification");
-        return modelAndView;
-    }
-
-    @RequestMapping("/notifications/add/teamjoinrequest")
-    public ModelAndView getAddNotifcationTeamJoinRequest() {
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/notification/add_teamjoinrequest");
-        return modelAndView;
-    }
-
-    @PostMapping("/notifications/add/teamjoinrequest")
-    public ModelAndView getAddNotifcationTeamJoinRequest(Long senderId, Long receiverId, String teamName) {
-
-        teamJoinRequestService.saveTeamJoinRequest(senderId, receiverId, teamName);
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/notification/add_teamjoinrequest");
+        modelAndView.setViewName("/notification/add");
         return modelAndView;
     }
 }

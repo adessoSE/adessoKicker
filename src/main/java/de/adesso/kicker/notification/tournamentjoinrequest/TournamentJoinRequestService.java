@@ -25,6 +25,20 @@ public class TournamentJoinRequestService {
         this.singleEliminationService = singleEliminationService;
     }
 
+    public void acceptTournamentJoinRequest(long notificationId) {
+
+        if(!notificationRepository.existsById(notificationId)){
+            System.err.println("ERROR at 'TournamentJoinRequestService' --> 'acceptTournamentJoinRequest()' : Cannot find TournamentJoinRequest with id " + notificationId);
+            return;
+        }
+        TournamentJoinRequest request = (TournamentJoinRequest)notificationRepository.findByNotificationId(notificationId);
+        //Can only be done here! Otherwise it would cause a circular dependency (SingularEliminationService <--> TournamentJoinRequestService)
+        singleEliminationService.addTeamToTournament((SingleElimination) request.getTargetTournament(), request.getTargetTeam());
+        singleEliminationService.addPlayer((SingleElimination) request.getTargetTournament(), request.getTargetTeam().getPlayerA());
+        singleEliminationService.addPlayer((SingleElimination) request.getTargetTournament(), request.getTargetTeam().getPlayerB());
+        singleEliminationService.saveTournament((SingleElimination) request.getTargetTournament());
+    }
+
     public TournamentJoinRequest createTournamentJoinRequest(long senderId, Team team, Tournament tournament) {
 
         User sender = userService.getUserById(senderId);
@@ -53,27 +67,17 @@ public class TournamentJoinRequestService {
         return request;
     }
 
+    public void saveTournamentJoinRequest(TournamentJoinRequest tournamentJoinRequest){
+
+        if (tournamentJoinRequest == null) {
+            System.err.println("ERROR at 'TournamentService' --> 'saveTournamentJoinRequest' : Given TournamentJoinRequest is null");
+            return;
+        }
+        notificationRepository.save(tournamentJoinRequest);
+    }
+
     public void saveTournamentJoinRequest(long senderId, Team team, Tournament tournament) {
 
         saveTournamentJoinRequest(createTournamentJoinRequest(senderId, team, tournament));
     }
-
-    public void acceptTournamentJoinRequest(long notificationId) {
-
-        if(!notificationRepository.existsById(notificationId)){
-            System.err.println("ERROR at 'TournamentJoinRequestService' --> 'acceptTournamentJoinRequest()' : Cannot find TournamentJoinRequest with id " + notificationId);
-            return;
-        }
-
-        TournamentJoinRequest request = (TournamentJoinRequest)notificationRepository.findByNotificationId(notificationId);
-        singleEliminationService.addTeamToTournament((SingleElimination) request.getTargetTournament(), request.getTargetTeam());
-        singleEliminationService.addPlayer((SingleElimination) request.getTargetTournament(), request.getTargetTeam().getPlayerA());
-        singleEliminationService.addPlayer((SingleElimination) request.getTargetTournament(), request.getTargetTeam().getPlayerB());
-        singleEliminationService.saveTournament((SingleElimination) request.getTargetTournament());
-    }
-
-    public void saveTournamentJoinRequest(TournamentJoinRequest tournamentJoinRequest) {
-        notificationRepository.save(tournamentJoinRequest);
-    }
-
 }
