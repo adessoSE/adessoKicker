@@ -1,5 +1,6 @@
 package de.adesso.kicker.notification;
 
+import de.adesso.kicker.notification.matchverificationrequest.MatchVerificationRequest;
 import de.adesso.kicker.user.User;
 
 import javax.persistence.*;
@@ -13,7 +14,8 @@ public class Notification {
         Notification,
         TeamJoinRequest,
         TournamentJoinRequest,
-        MatchCreationRequest
+        MatchCreationRequest,
+        MatchVerificationRequest
     };
 
     @Id

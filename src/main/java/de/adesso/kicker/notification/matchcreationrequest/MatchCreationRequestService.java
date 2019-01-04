@@ -117,7 +117,7 @@ public class MatchCreationRequestService {
 
         MatchCreationRequest matchCreationRequest = matchCreationRequestRepository.findByNotificationId(notificationId);
         if (matchCreationRequest == null) {
-            System.err.println("ERROR at 'MatchCreationRequestService' --> 'acceptMatchJoinRequest()' : cannot find MatchCreationRequest with id: " + notificationId);
+            System.err.println("ERROR at 'MatchCreationRequestService' --> 'declineMatchJoinRequest()' : cannot find MatchCreationRequest with id: " + notificationId);
             return;
         }
         MatchCreationValidation matchCreationValidation = matchCreationRequest.getMatchCreationValidation();

@@ -1,9 +1,7 @@
 package de.adesso.kicker.tournament.singleelimination;
 
 import java.util.List;
-
 import javax.annotation.PostConstruct;
-
 import de.adesso.kicker.tournament.singleelimination.exception.PlayerInTournamentException;
 import de.adesso.kicker.tournament.singleelimination.exception.PlayerOfTeamInTournamentException;
 import de.adesso.kicker.tournament.singleelimination.exception.TeamAlreadyInTournamentException;
@@ -11,7 +9,6 @@ import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import de.adesso.kicker.match.Match;
 import de.adesso.kicker.match.MatchService;
 import de.adesso.kicker.team.Team;

@@ -2,6 +2,7 @@ package de.adesso.kicker.notification;
 
 import de.adesso.kicker.notification.matchcreationrequest.MatchCreationRequest;
 import de.adesso.kicker.notification.matchcreationrequest.MatchCreationRequestService;
+import de.adesso.kicker.notification.matchverificationrequest.MatchVerificationRequestService;
 import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequestService;
 import de.adesso.kicker.notification.tournamentjoinrequest.TournamentJoinRequestService;
 import de.adesso.kicker.user.User;
@@ -19,14 +20,16 @@ public class NotificationService {
     private TeamJoinRequestService teamJoinRequestService;
     private TournamentJoinRequestService tournamentJoinRequestService;
     private MatchCreationRequestService matchCreationRequestService;
+    private MatchVerificationRequestService matchVerificationRequestService;
 
     @Autowired
-    public NotificationService(NotificationRepository notificationRepository, UserService userService, TeamJoinRequestService teamJoinRequestService, TournamentJoinRequestService tournamentJoinRequestService, MatchCreationRequestService matchCreationRequestService) {
+    public NotificationService(NotificationRepository notificationRepository, UserService userService, TeamJoinRequestService teamJoinRequestService, TournamentJoinRequestService tournamentJoinRequestService, MatchCreationRequestService matchCreationRequestService, MatchVerificationRequestService matchVerificationRequestService) {
 
         this.notificationRepository = notificationRepository;
         this.userService = userService;
         this.teamJoinRequestService = teamJoinRequestService;
         this.tournamentJoinRequestService = tournamentJoinRequestService;
+        this.matchCreationRequestService = matchCreationRequestService;
         this.matchCreationRequestService = matchCreationRequestService;
     }
 
@@ -82,21 +85,21 @@ public class NotificationService {
         Notification n = getNotificationById(id);
         switch (n.getType()){
             case Notification:
-                System.out.println("Notification with id: " + id);
                 removeNotificationById(id);
                 break;
             case TeamJoinRequest:
                 teamJoinRequestService.acceptTeamJoinRequest(id);
-                System.out.println("TeamJoinRequest with id: " + id);
                 removeNotificationById(id);
                 break;
             case MatchCreationRequest:
                 matchCreationRequestService.acceptMatchJoinRequest(id);
-                System.out.println("MatchCreationRequest with id: " + id);
                 break;
             case TournamentJoinRequest:
                 tournamentJoinRequestService.acceptTournamentJoinRequest(id);
-                System.out.println("TournamentJoinRequest with id: " + id);
+                removeNotificationById(id);
+                break;
+            case MatchVerificationRequest:
+                matchVerificationRequestService.acceptMatchVerificationRequest(id);
                 removeNotificationById(id);
                 break;
             default:
@@ -149,6 +152,9 @@ public class NotificationService {
         switch (n.getType()) {
             case MatchCreationRequest:
                 matchCreationRequestService.declineMatchJoinRequest(id);
+                break;
+            case MatchVerificationRequest:
+                matchVerificationRequestService.declineMatchVerificationRequest(id);
                 break;
             default:
                 removeNotificationById(id);
