@@ -1,6 +1,5 @@
 package de.adesso.kicker.notification;
 
-import de.adesso.kicker.notification.matchcreationrequest.MatchCreationRequest;
 import de.adesso.kicker.notification.matchcreationrequest.MatchCreationRequestService;
 import de.adesso.kicker.notification.matchverificationrequest.MatchVerificationRequestService;
 import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequestService;
@@ -9,6 +8,7 @@ import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 

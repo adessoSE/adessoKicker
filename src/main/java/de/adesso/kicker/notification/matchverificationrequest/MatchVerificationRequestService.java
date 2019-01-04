@@ -54,7 +54,9 @@ public class MatchVerificationRequestService {
         }
         User decliner = userService.getLoggedInUser();
         matchVerificationRequestRepository.deleteByMatch(matchVerificationRequest.getMatch());
-        notificationService.createNotification(decliner.getUserId(), matchVerificationRequest.getSender().getUserId(), decliner.getFirstName() + " " + decliner.getLastName() + " declined your request to set team " + matchVerificationRequest.getWinner().getTeamName() + " as the winner of the match from " + matchVerificationRequest.getMatch().getGermanDate());
+        //  Circular dependency :(
+        //        notificationService.createNotification(decliner.getUserId(), matchVerificationRequest.getSender().getUserId(), decliner.getFirstName() + " " + decliner.getLastName() + " declined your request to set team " + matchVerificationRequest.getWinner().getTeamName() + " as the winner of the match from " + matchVerificationRequest.getMatch().getGermanDate());
+
     }
 
     public void generateMatchVerificationRequests(Match match, Team winner, Tournament tournament){
