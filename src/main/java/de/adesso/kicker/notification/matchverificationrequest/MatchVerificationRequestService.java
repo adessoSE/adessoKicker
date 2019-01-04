@@ -17,15 +17,14 @@ public class MatchVerificationRequestService {
     private UserService userService;
     private MatchVerificationRequestRepository matchVerificationRequestRepository;
     private SingleEliminationService singleEliminationService;
-    private NotificationService notificationService;
+
 
     @Autowired
-    public MatchVerificationRequestService(UserService userService, MatchVerificationRequestRepository matchVerificationRequestRepository, SingleEliminationService singleEliminationService, NotificationService notificationService){
+    public MatchVerificationRequestService(UserService userService, MatchVerificationRequestRepository matchVerificationRequestRepository, SingleEliminationService singleEliminationService){
 
         this.userService = userService;
         this.matchVerificationRequestRepository = matchVerificationRequestRepository;
         this.singleEliminationService = singleEliminationService;
-        this.notificationService = notificationService;
     }
 
     public void acceptMatchVerificationRequest(long notificationId){
