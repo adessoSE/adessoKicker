@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
-public class NotificationServiceTest {
+class NotificationServiceTest {
 
     @InjectMocks
     NotificationService notificationService;
@@ -27,17 +27,17 @@ public class NotificationServiceTest {
     UserService userService;
 
     // Dummies
-    User user = new UserDummy().alternateUser();
-    User otherUser = new UserDummy().alternateUser2();
+    private User user = new UserDummy().alternateUser();
+    private User otherUser = new UserDummy().alternateUser2();
 
-    NotificationDummy notificationDummy = new NotificationDummy();
-    Notification notification = notificationDummy.defaultNotification();
-    Notification otherNotification = notificationDummy.alternateNotification();
-    Notification altNotification1 = notificationDummy.alternateNotification1();
-    Notification altNotification2 = notificationDummy.alternateNotification2();
+    private NotificationDummy notificationDummy = new NotificationDummy();
+    private Notification notification = notificationDummy.defaultNotification();
+    private Notification otherNotification = notificationDummy.alternateNotification();
+    private Notification altNotification1 = notificationDummy.alternateNotification1();
+    private Notification altNotification2 = notificationDummy.alternateNotification2();
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
 
         MockitoAnnotations.initMocks(this);
 
@@ -58,77 +58,77 @@ public class NotificationServiceTest {
 
     // Test --> Try adding a notification (type = Notification)
     @Test
-    public void saveNotification_NullNotification() {
+    void saveNotification_NullNotification() {
 
         notificationService.saveNotification(notificationDummy.nullNotification());
     }
 
     @Test
-    public void saveNotification_ValidInput() {
+    void saveNotification_ValidInput() {
 
         notificationService.saveNotification(otherUser.getUserId(), user.getUserId(), anyString());
     }
 
     @Test
-    public void saveNotification_NullMessage() {
+    void saveNotification_NullMessage() {
 
         notificationService.saveNotification(otherUser.getUserId(), user.getUserId(), null);
     }
 
     @Test
-    public void saveNotification_NullSender() {
+    void saveNotification_NullSender() {
 
         notificationService.saveNotification(otherUser.getUserId(), -1L, anyString());
     }
 
     @Test
-    public void saveNotification_NullReceiver() {
+    void saveNotification_NullReceiver() {
 
         notificationService.saveNotification(-1L, user.getUserId(), anyString());
     }
 
     @Test
-    public void saveNotification_NullSenderAndReceiver() {
+    void saveNotification_NullSenderAndReceiver() {
 
         notificationService.saveNotification(-1L, -1L, anyString());
     }
 
     @Test
-    public void saveNotification_Object() {
+    void saveNotification_Object() {
 
         notificationService.saveNotification(notification);
     }
 
     @Test
-    public void getNotificationById_ValidInput() {
+    void getNotificationById_ValidInput() {
 
         Notification n = notificationService.getNotificationById(notification.getNotificationId());
         assertEquals(notification, n);
     }
 
     @Test
-    public void getNotificationById_Null() {
+    void getNotificationById_Null() {
 
         Notification n = notificationService.getNotificationById(-1L);
         assertEquals(null, n);
     }
 
     @Test
-    public void getAllNotification() {
+    void getAllNotification() {
 
         List<Notification> notifications = notificationService.getAllNotifications();
         assertTrue(notifications.contains(notification));
     }
 
     @Test
-    public void getAllNotificationByReceiver() {
+    void getAllNotificationByReceiver() {
 
         List<Notification> notifications = notificationService.getAllNotificationsByReceiver(user.getUserId());
         assertTrue(notifications.contains(otherNotification));
     }
 
     @Test
-    public void getAllNotificationBySender() {
+    void getAllNotificationBySender() {
 
         List<Notification> notifications = notificationService.getAllNotificationsBySender(user.getUserId());
         assertTrue(notifications.contains(notification));

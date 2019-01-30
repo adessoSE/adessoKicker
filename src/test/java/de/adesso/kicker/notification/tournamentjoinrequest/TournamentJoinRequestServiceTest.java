@@ -18,7 +18,7 @@ import org.mockito.MockitoAnnotations;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
-public class TournamentJoinRequestServiceTest {
+class TournamentJoinRequestServiceTest {
 
     @InjectMocks
     TournamentJoinRequestService tournamentJoinRequestService;
@@ -31,13 +31,13 @@ public class TournamentJoinRequestServiceTest {
     private NotificationRepository notificationRepository;
 
     // Dummys
-    Tournament singleElimination = new SingleElimDummy().defaultSingleElim();
-    Team team = new TeamDummy().defaultTeam();
-    User user = new UserDummy().defaultUser();
-    TournamentJoinRequest tournamentJoinRequest = new TournamentJoinRequestDummy().defaultTournamentJoinRequest;
+    private Tournament singleElimination = new SingleElimDummy().defaultSingleElim();
+    private Team team = new TeamDummy().defaultTeam();
+    private User user = new UserDummy().defaultUser();
+    private TournamentJoinRequest tournamentJoinRequest = new TournamentJoinRequestDummy().defaultTournamentJoinRequest;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
 
         team.getPlayerB().setUserId(1);
@@ -48,39 +48,39 @@ public class TournamentJoinRequestServiceTest {
     }
 
     @Test
-    public void saveTournamentJoinRequest_SingleElimination() {
+    void saveTournamentJoinRequest_SingleElimination() {
 
         tournamentJoinRequestService.saveTournamentJoinRequest(team.getPlayerA().getUserId(), team,
                 (Tournament) singleElimination);
     }
 
     @Test
-    public void saveTournamentJoinRequest_TournamentJoinRequest() {
+    void saveTournamentJoinRequest_TournamentJoinRequest() {
 
         tournamentJoinRequestService.saveTournamentJoinRequest(tournamentJoinRequest);
     }
 
     @Test
-    public void createTournamentJoinRequest_SingleElimination_Valid() {
+    void createTournamentJoinRequest_SingleElimination_Valid() {
 
         tournamentJoinRequestService.createTournamentJoinRequest(user.getUserId(), team,
                 (Tournament) singleElimination);
     }
 
     @Test
-    public void createTournamentJoinRequest_SingleElimination_Null() {
+    void createTournamentJoinRequest_SingleElimination_Null() {
 
         tournamentJoinRequestService.createTournamentJoinRequest(anyLong(), null, null);
     }
 
     @Test
-    public void acceptTournamentJoinRequest_SingleElimination_Valid() {
+    void acceptTournamentJoinRequest_SingleElimination_Valid() {
 
         tournamentJoinRequestService.acceptTournamentJoinRequest(tournamentJoinRequest.getNotificationId());
     }
 
     @Test
-    public void acceptTournamentJoinRequest_SingleElimination_Null() {
+    void acceptTournamentJoinRequest_SingleElimination_Null() {
 
         tournamentJoinRequestService.acceptTournamentJoinRequest(-1);
     }

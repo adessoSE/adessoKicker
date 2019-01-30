@@ -7,19 +7,19 @@ import de.adesso.kicker.user.UserDummy;
 
 import java.util.Date;
 
-public class MatchCreationRequestDummy {
+class MatchCreationRequestDummy {
 
     private TeamDummy teamDummy = new TeamDummy();
     private UserDummy userDummy = new UserDummy();
     private String kicker = "der Kicker";
     private MatchCreationValidation matchCreationValidation = new MatchCreationValidation();
 
-    public MatchCreationRequest defaultMatchCreationRequest() {
+    MatchCreationRequest defaultMatchCreationRequest() {
         return new MatchCreationRequest(userDummy.defaultUser(), userDummy.alternateUser(), teamDummy.defaultTeam(),
                 teamDummy.alternateTeam(), new Date(), new Date(), kicker, matchCreationValidation);
     }
 
-    public MatchCreationRequest alternateMatchCreationRequest() {
+    MatchCreationRequest alternateMatchCreationRequest() {
         return new MatchCreationRequest(userDummy.alternateUser1(), userDummy.alternateUser2(),
                 teamDummy.alternateTeam2(), teamDummy.alternateTeam3(), new Date(), new Date(), kicker,
                 matchCreationValidation);
