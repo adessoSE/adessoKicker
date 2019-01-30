@@ -20,20 +20,12 @@ public class TournamentJoinRequest extends Notification {
     @OneToOne(targetEntity = Team.class)
     private Team targetTeam;
 
-    public TournamentJoinRequest() {
-
-        type = NotificationType.TournamentJoinRequest;
-    }
-
     public TournamentJoinRequest(User sender, User receiver, Team team, Tournament tournament) {
-
-        this();
+        super(sender, receiver, "");
         this.targetTournament = tournament;
         this.targetTeam = team;
-        this.sender = sender;
-        this.receiver = receiver;
-        this.sendDate = new Date();
-        this.message = generateMessage();
+        super.message = generateMessage();
+        type = NotificationType.TournamentJoinRequest;
     }
 
     public String generateMessage() {
