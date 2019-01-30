@@ -31,17 +31,14 @@ public class MatchCreationRequest extends Notification {
 
     public MatchCreationRequest(User sender, User receiver, Team teamA, Team teamB, Date date, Date time, String kicker,
             MatchCreationValidation matchCreationValidation) {
-        this();
+        super(sender, receiver, "");
         this.teamA = teamA;
         this.teamB = teamB;
         this.date = date;
         this.time = time;
         this.kicker = kicker;
-        this.sender = sender;
         this.matchCreationValidation = matchCreationValidation;
-        this.receiver = receiver;
-        this.sendDate = new Date();
-        this.message = generateMessage();
+        super.message = generateMessage();
     }
 
     public String generateMessage() {
