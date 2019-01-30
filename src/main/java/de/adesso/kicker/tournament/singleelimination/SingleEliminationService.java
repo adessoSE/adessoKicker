@@ -23,7 +23,8 @@ public class SingleEliminationService extends TournamentService {
     private UserService userService;
 
     @Autowired
-    public SingleEliminationService(TournamentRepository tournamentRepository, MatchService matchService, UserService userService) {
+    public SingleEliminationService(TournamentRepository tournamentRepository, MatchService matchService,
+            UserService userService) {
         super(tournamentRepository);
         this.matchService = matchService;
         this.userService = userService;
@@ -106,7 +107,8 @@ public class SingleEliminationService extends TournamentService {
     public void joinTournament(SingleElimination singleElimination, Team team) {
         checkTeamInTournament(singleElimination, team);
         checkPlayerOfTeamInTournament(singleElimination, team);
-        //tournamentJoinRequestService.saveTournamentJoinRequest((Tournament) singleElimination, userService.getLoggedInUser().getUserId(), team);
+        // tournamentJoinRequestService.saveTournamentJoinRequest((Tournament)
+        // singleElimination, userService.getLoggedInUser().getUserId(), team);
     }
 
     public void getTournamentPage(SingleElimination singleElimination, User loggedInUser) {

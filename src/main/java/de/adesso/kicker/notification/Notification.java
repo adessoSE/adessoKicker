@@ -48,7 +48,7 @@ public class Notification {
         this.message = message;
     }
 
-    public Notification(User sender, User receiver, String message, Date sendDate){
+    public Notification(User sender, User receiver, String message, Date sendDate) {
 
         this(sender, receiver, message);
         this.sendDate = sendDate;

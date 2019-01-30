@@ -45,13 +45,13 @@ public class TournamentJoinRequest extends Notification {
         return targetTeam;
     }
 
-    public Tournament getTargetTournament () { return targetTournament; }
+    public Tournament getTargetTournament() {
+        return targetTournament;
+    }
 
     @Override
     public String toString() {
-        return "TournamentJoinRequest{" +
-                "targetTournament=" + targetTournament +
-                ", targetTeam=" + targetTeam +
-                "} " + super.toString();
+        return "TournamentJoinRequest{" + "targetTournament=" + targetTournament + ", targetTeam=" + targetTeam + "} "
+                + super.toString();
     }
 }

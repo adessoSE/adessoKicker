@@ -6,7 +6,8 @@ public class TeamJoinRequestDummy {
 
     private UserDummy userDummy = new UserDummy();
 
-    public TeamJoinRequest defaultTeamJoinRequest() { return new TeamJoinRequest(userDummy.alternateUser(), userDummy.defaultUser(), "Test-Message 1");
+    public TeamJoinRequest defaultTeamJoinRequest() {
+        return new TeamJoinRequest(userDummy.alternateUser(), userDummy.defaultUser(), "Test-Message 1");
     }
 
     public TeamJoinRequest alternateTeamJoinRequest() {

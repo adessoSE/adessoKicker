@@ -91,12 +91,13 @@ public class MatchVerificationRequestService {
         return request;
     }
 
-    public void saveMatchVerificationRequest(User sender, User receiver, Match match, Team winner, Tournament tournament){
+    public void saveMatchVerificationRequest(User sender, User receiver, Match match, Team winner,
+            Tournament tournament) {
 
         saveMatchVerificationRequest(createMatchVerificationRequest(sender, receiver, match, winner, tournament));
     }
 
-    public void saveMatchVerificationRequest(MatchVerificationRequest matchVerificationRequest){
+    public void saveMatchVerificationRequest(MatchVerificationRequest matchVerificationRequest) {
 
         matchVerificationRequestRepository.save(matchVerificationRequest);
     }

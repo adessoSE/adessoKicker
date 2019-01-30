@@ -49,10 +49,10 @@ class SingleEliminationServiceTest {
     private Team team4 = teamDummy.alternateTeam3();
     private List<Team> teamsMultiple = new ArrayList<>(Arrays.asList(team1, team2, team3, team4));
     private List<Team> teamsOdd = new ArrayList<>(Arrays.asList(team1, team2, team3));
-    private List<Match> bracketEven = new ArrayList<>(Arrays.asList(matchDummy.matchTeam1Team3(), new Match(null, null, null, team2, team4)));
+    private List<Match> bracketEven = new ArrayList<>(
+            Arrays.asList(matchDummy.matchTeam1Team3(), new Match(null, null, null, team2, team4)));
     private List<Match> bracketOdd = Arrays.asList(matchDummy.matchTeam1Team3(), matchDummy.matchTeam2Null());
     private List<Match> bracketAdvancedEven = Collections.singletonList(new Match(null, null, null, team1, team2));
-
 
     @BeforeAll
     void setUpAll() {

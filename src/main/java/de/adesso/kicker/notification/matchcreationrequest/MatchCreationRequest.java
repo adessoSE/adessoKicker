@@ -29,7 +29,8 @@ public class MatchCreationRequest extends Notification {
         type = NotificationType.MatchCreationRequest;
     }
 
-    public MatchCreationRequest(User sender, User receiver, Team teamA, Team teamB, Date date, Date time, String kicker, MatchCreationValidation matchCreationValidation) {
+    public MatchCreationRequest(User sender, User receiver, Team teamA, Team teamB, Date date, Date time, String kicker,
+            MatchCreationValidation matchCreationValidation) {
         this();
         this.teamA = teamA;
         this.teamB = teamB;
@@ -43,10 +44,9 @@ public class MatchCreationRequest extends Notification {
         this.message = generateMessage();
     }
 
-
     public String generateMessage() {
-        return sender.getFirstName() + " " + sender.getLastName() + " asked you to play a match: "
-                + getGermanDate() + " " + time + " " + teamA.getTeamName() + " vs. " + teamB.getTeamName() + " at " + kicker;
+        return sender.getFirstName() + " " + sender.getLastName() + " asked you to play a match: " + getGermanDate()
+                + " " + time + " " + teamA.getTeamName() + " vs. " + teamB.getTeamName() + " at " + kicker;
     }
 
     public String getGermanDate() {
@@ -81,13 +81,8 @@ public class MatchCreationRequest extends Notification {
 
     @Override
     public String toString() {
-        return "MatchCreationRequest{" +
-                "teamA=" + teamA +
-                ", teamB=" + teamB +
-                ", date=" + date +
-                ", time=" + time +
-                ", kicker='" + kicker + '\'' +
-                ", matchCreationValidation=" + matchCreationValidation +
-                "} " + super.toString();
+        return "MatchCreationRequest{" + "teamA=" + teamA + ", teamB=" + teamB + ", date=" + date + ", time=" + time
+                + ", kicker='" + kicker + '\'' + ", matchCreationValidation=" + matchCreationValidation + "} "
+                + super.toString();
     }
 }

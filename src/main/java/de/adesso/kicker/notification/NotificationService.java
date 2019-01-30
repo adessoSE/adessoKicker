@@ -23,7 +23,10 @@ public class NotificationService {
     private MatchVerificationRequestService matchVerificationRequestService;
 
     @Autowired
-    public NotificationService(NotificationRepository notificationRepository, UserService userService, TeamJoinRequestService teamJoinRequestService, TournamentJoinRequestService tournamentJoinRequestService, MatchCreationRequestService matchCreationRequestService, MatchVerificationRequestService matchVerificationRequestService) {
+    public NotificationService(NotificationRepository notificationRepository, UserService userService,
+            TeamJoinRequestService teamJoinRequestService, TournamentJoinRequestService tournamentJoinRequestService,
+            MatchCreationRequestService matchCreationRequestService,
+            MatchVerificationRequestService matchVerificationRequestService) {
 
         this.notificationRepository = notificationRepository;
         this.userService = userService;
@@ -45,19 +48,19 @@ public class NotificationService {
         return notifications;
     }
 
-    public List<Notification> getAllNotificationsBySender(User sender){
+    public List<Notification> getAllNotificationsBySender(User sender) {
 
         List<Notification> notifications = new ArrayList<>();
-        if (sender != null){
+        if (sender != null) {
             notifications = getAllNotificationsBySender(sender.getUserId());
         }
         return notifications;
     }
 
-    public List<Notification> getAllNotificationsByReceiver(User receiver){
+    public List<Notification> getAllNotificationsByReceiver(User receiver) {
 
         List<Notification> notifications = new ArrayList<>();
-        if (receiver != null){
+        if (receiver != null) {
             notifications = getAllNotificationsByReceiver(receiver.getUserId());
         }
         return notifications;
@@ -79,31 +82,31 @@ public class NotificationService {
         return notifications;
     }
 
-    //Accepts a notification passed on type (enum)
-    public void acceptNotificationById(long id){
+    // Accepts a notification passed on type (enum)
+    public void acceptNotificationById(long id) {
 
         Notification n = getNotificationById(id);
-        switch (n.getType()){
-            case Notification:
-                removeNotificationById(id);
-                break;
-            case TeamJoinRequest:
-                teamJoinRequestService.acceptTeamJoinRequest(id);
-                removeNotificationById(id);
-                break;
-            case MatchCreationRequest:
-                matchCreationRequestService.acceptMatchJoinRequest(id);
-                break;
-            case TournamentJoinRequest:
-                tournamentJoinRequestService.acceptTournamentJoinRequest(id);
-                removeNotificationById(id);
-                break;
-            case MatchVerificationRequest:
-                matchVerificationRequestService.acceptMatchVerificationRequest(id);
-                removeNotificationById(id);
-                break;
-            default:
-                removeNotificationById(id);
+        switch (n.getType()) {
+        case Notification:
+            removeNotificationById(id);
+            break;
+        case TeamJoinRequest:
+            teamJoinRequestService.acceptTeamJoinRequest(id);
+            removeNotificationById(id);
+            break;
+        case MatchCreationRequest:
+            matchCreationRequestService.acceptMatchJoinRequest(id);
+            break;
+        case TournamentJoinRequest:
+            tournamentJoinRequestService.acceptTournamentJoinRequest(id);
+            removeNotificationById(id);
+            break;
+        case MatchVerificationRequest:
+            matchVerificationRequestService.acceptMatchVerificationRequest(id);
+            removeNotificationById(id);
+            break;
+        default:
+            removeNotificationById(id);
         }
     }
 
@@ -127,13 +130,16 @@ public class NotificationService {
         User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
 
-        //Validation
+        // Validation
         if (sender == null) {
-            System.err.println("ERROR at 'NotificationService' --> 'createNotification()' : Cannot find sender with id " + senderId);
+            System.err.println("ERROR at 'NotificationService' --> 'createNotification()' : Cannot find sender with id "
+                    + senderId);
             return null;
         }
         if (receiver == null) {
-            System.err.println("ERROR at 'NotificationService' --> 'createNotification()' : Cannot find receiver with id " + receiverId);
+            System.err
+                    .println("ERROR at 'NotificationService' --> 'createNotification()' : Cannot find receiver with id "
+                            + receiverId);
             return null;
         }
 
@@ -150,14 +156,14 @@ public class NotificationService {
 
         Notification n = getNotificationById(id);
         switch (n.getType()) {
-            case MatchCreationRequest:
-                matchCreationRequestService.declineMatchJoinRequest(id);
-                break;
-            case MatchVerificationRequest:
-                matchVerificationRequestService.declineMatchVerificationRequest(id);
-                break;
-            default:
-                removeNotificationById(id);
+        case MatchCreationRequest:
+            matchCreationRequestService.declineMatchJoinRequest(id);
+            break;
+        case MatchVerificationRequest:
+            matchVerificationRequestService.declineMatchVerificationRequest(id);
+            break;
+        default:
+            removeNotificationById(id);
         }
     }
 }

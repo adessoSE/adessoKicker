@@ -36,8 +36,6 @@ public class TeamJoinRequest extends Notification {
 
     @Override
     public String toString() {
-        return "TeamJoinRequest{" +
-                "teamName='" + teamName + '\'' +
-                "} " + super.toString();
+        return "TeamJoinRequest{" + "teamName='" + teamName + '\'' + "} " + super.toString();
     }
 }

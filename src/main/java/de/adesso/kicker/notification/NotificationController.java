@@ -14,7 +14,8 @@ public class NotificationController {
     private TeamJoinRequestService teamJoinRequestService;
 
     @Autowired
-    public NotificationController(NotificationService notificationService, TeamJoinRequestService teamJoinRequestService) {
+    public NotificationController(NotificationService notificationService,
+            TeamJoinRequestService teamJoinRequestService) {
 
         this.notificationService = notificationService;
         this.teamJoinRequestService = teamJoinRequestService;

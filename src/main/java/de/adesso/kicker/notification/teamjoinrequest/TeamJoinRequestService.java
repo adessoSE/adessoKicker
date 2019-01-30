@@ -16,7 +16,8 @@ public class TeamJoinRequestService {
     private TeamService teamService;
 
     @Autowired
-    public TeamJoinRequestService(NotificationRepository notificationRepository, UserService userService, TeamService teamService) {
+    public TeamJoinRequestService(NotificationRepository notificationRepository, UserService userService,
+            TeamService teamService) {
 
         this.notificationRepository = notificationRepository;
         this.userService = userService;
@@ -24,11 +25,13 @@ public class TeamJoinRequestService {
     }
 
     public void acceptTeamJoinRequest(long notificationId) {
-        
-        TeamJoinRequest request = (TeamJoinRequest)notificationRepository.findByNotificationId(notificationId);
-        if (request == null){
 
-            System.err.println("ERROR at 'TeamJoinRequestService' --> 'acceptTeamJoinRequest()' : Cannot find TeamJoinRequest with id " + notificationId);
+        TeamJoinRequest request = (TeamJoinRequest) notificationRepository.findByNotificationId(notificationId);
+        if (request == null) {
+
+            System.err.println(
+                    "ERROR at 'TeamJoinRequestService' --> 'acceptTeamJoinRequest()' : Cannot find TeamJoinRequest with id "
+                            + notificationId);
             return;
         }
         Team team = new Team(request.getTeamName(), request.getSender(), request.getReceiver());
@@ -41,13 +44,17 @@ public class TeamJoinRequestService {
         User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
 
-        //Validation
+        // Validation
         if (sender == null) {
-            System.err.println("ERROR at 'TeamJoinRequestService' --> 'createTeamJoinRequest()' : Cannot find sender with id " + senderId);
+            System.err.println(
+                    "ERROR at 'TeamJoinRequestService' --> 'createTeamJoinRequest()' : Cannot find sender with id "
+                            + senderId);
             return null;
         }
         if (receiver == null) {
-            System.err.println("ERROR at 'TeamJoinRequestService' --> 'createTeamJoinRequest()' : Cannot find receiver with id " + receiverId);
+            System.err.println(
+                    "ERROR at 'TeamJoinRequestService' --> 'createTeamJoinRequest()' : Cannot find receiver with id "
+                            + receiverId);
             return null;
         }
 
@@ -57,7 +64,7 @@ public class TeamJoinRequestService {
 
     public void saveTeamJoinRequest(long senderId, long receiverId, String teamName) {
 
-        if(senderId < 0 || receiverId < 0 || teamName == ""){
+        if (senderId < 0 || receiverId < 0 || teamName == "") {
             System.err.println("ERROR at 'TeamJoinRequestService' --> 'saveTeamJoinRequest()' : Invalid argument");
             return;
         }
@@ -66,11 +73,12 @@ public class TeamJoinRequestService {
 
     public void saveTeamJoinRequest(TeamJoinRequest teamJoinRequest) {
 
-        if (teamJoinRequest == null ) {
-            System.err.println("ERROR at 'TeamJoinRequestService' --> 'saveTeamJoinRequest()' : Given TeamJoinRequest is null");
+        if (teamJoinRequest == null) {
+            System.err.println(
+                    "ERROR at 'TeamJoinRequestService' --> 'saveTeamJoinRequest()' : Given TeamJoinRequest is null");
             return;
         }
         notificationRepository.save(teamJoinRequest);
     }
-    
+
 }

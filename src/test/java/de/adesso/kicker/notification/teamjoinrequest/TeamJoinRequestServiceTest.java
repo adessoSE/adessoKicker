@@ -31,18 +31,18 @@ public class TeamJoinRequestServiceTest {
     @Mock
     TeamService teamService;
 
-    //Dummy User
+    // Dummy User
     UserDummy userDummy = new UserDummy();
     User user = userDummy.defaultUser();
     User otherUser = userDummy.alternateUser1();
 
-    //Dummy TeamJoinRequest
+    // Dummy TeamJoinRequest
     TeamJoinRequestDummy teamJoinRequestDummy = new TeamJoinRequestDummy();
     TeamJoinRequest teamJoinRequest = teamJoinRequestDummy.defaultTeamJoinRequest();
     TeamJoinRequest otherTeamJoinRequest = teamJoinRequestDummy.alternateTeamJoinRequest();
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
 
         MockitoAnnotations.initMocks(this);
 
@@ -56,37 +56,37 @@ public class TeamJoinRequestServiceTest {
     }
 
     @Test
-    public void saveTeamJoinRequest(){
+    public void saveTeamJoinRequest() {
 
         teamJoinRequestService.saveTeamJoinRequest(otherUser.getUserId(), user.getUserId(), anyString());
     }
 
     @Test
-    public void saveTeamJoinRequest_TeamJoinRequest(){
+    public void saveTeamJoinRequest_TeamJoinRequest() {
 
         teamJoinRequestService.saveTeamJoinRequest(teamJoinRequest);
     }
 
     @Test
-    public void createTeamJoinRequest_Valid(){
+    public void createTeamJoinRequest_Valid() {
 
         teamJoinRequestService.createTeamJoinRequest(otherUser.getUserId(), user.getUserId(), anyString());
     }
 
     @Test
-    public void createTeamJoinRequest_Null(){
+    public void createTeamJoinRequest_Null() {
 
         teamJoinRequestService.createTeamJoinRequest(-1L, -1l, anyString());
     }
 
     @Test
-    public void acceptTeamJoinRequest_Valid(){
+    public void acceptTeamJoinRequest_Valid() {
 
         teamJoinRequestService.acceptTeamJoinRequest(teamJoinRequest.getNotificationId());
     }
 
     @Test
-    public void acceptTeamJoinRequest_Null(){
+    public void acceptTeamJoinRequest_Null() {
 
         teamJoinRequestService.acceptTeamJoinRequest(-1L);
     }
