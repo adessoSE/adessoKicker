@@ -27,8 +27,9 @@ public class TournamentService {
     private List<TournamentControllerInterface> tournamentControllerInterfaces;
 
     @Autowired
-    public TournamentService(TournamentRepository tournamentRepository, UserService userService, TeamService teamService,
-            List<TournamentControllerInterface> tournamentControllerInterfaces, TournamentJoinRequestService tournamentJoinRequestService) {
+    public TournamentService(TournamentRepository tournamentRepository, UserService userService,
+            TeamService teamService, List<TournamentControllerInterface> tournamentControllerInterfaces,
+            TournamentJoinRequestService tournamentJoinRequestService) {
 
         this.tournamentJoinRequestService = tournamentJoinRequestService;
         this.tournamentRepository = tournamentRepository;
@@ -69,7 +70,8 @@ public class TournamentService {
     @SuppressWarnings("unchecked")
     @Transactional
     public ModelAndView postJoinTournament(Tournament tournament, long id) {
-        tournamentJoinRequestService.saveTournamentJoinRequest(userService.getLoggedInUser().getUserId(), teamService.getTeamById(id), tournament);
+        tournamentJoinRequestService.saveTournamentJoinRequest(userService.getLoggedInUser().getUserId(),
+                teamService.getTeamById(id), tournament);
         return controllerInterfaceMap.get(tournament.getClass()).postJoinTournament(tournament, id);
     }
 

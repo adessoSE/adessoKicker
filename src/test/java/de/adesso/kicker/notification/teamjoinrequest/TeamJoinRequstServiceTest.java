@@ -27,59 +27,67 @@ public class TeamJoinRequstServiceTest {
     @Mock
     TeamService teamService;
 
-    //Dumies
+    // Dumies
     TeamDummy teamDumy = new TeamDummy();
     UserDummy userDummy = new UserDummy();
     TeamJoinRequestDummy teamJoinRequestDummy = new TeamJoinRequestDummy();
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
 
         when(userService.getUserById(1)).thenReturn(userDummy.defaultUser());
         when(userService.getUserById(2)).thenReturn(userDummy.defaultUser());
-        when((TeamJoinRequest)notificationRepository.findByNotificationId(anyLong())).thenReturn(teamJoinRequestDummy.defaultTeamJoinRequest());
+        when((TeamJoinRequest) notificationRepository.findByNotificationId(anyLong()))
+                .thenReturn(teamJoinRequestDummy.defaultTeamJoinRequest());
     }
 
     @Test
-    public void createTeamJoinRequest_Valid(){
+    public void createTeamJoinRequest_Valid() {
 
-        teamJoinRequestService.createTeamJoinRequest(1,2, "testTeam");
+        teamJoinRequestService.createTeamJoinRequest(1, 2, "testTeam");
     }
+
     @Test
-    public void createTeamJoinRequest_Invalid(){
+    public void createTeamJoinRequest_Invalid() {
 
         when(userService.getUserById(anyLong())).thenReturn(null);
-        teamJoinRequestService.createTeamJoinRequest(1,2, "testTeam");
+        teamJoinRequestService.createTeamJoinRequest(1, 2, "testTeam");
     }
+
     @Test
-    public void acceptTeamJoinRequst_Valid(){
+    public void acceptTeamJoinRequst_Valid() {
 
         teamJoinRequestService.acceptTeamJoinRequest(anyLong());
     }
-    @Test
-    public void acceptTeamJoinRequst_Invalid(){
 
-        when((TeamJoinRequest)notificationRepository.findByNotificationId(anyLong())).thenReturn(null);
+    @Test
+    public void acceptTeamJoinRequst_Invalid() {
+
+        when((TeamJoinRequest) notificationRepository.findByNotificationId(anyLong())).thenReturn(null);
         teamJoinRequestService.acceptTeamJoinRequest(anyLong());
     }
+
     @Test
-    public void  saveTeamJoinRequest_Valid(){
+    public void saveTeamJoinRequest_Valid() {
 
         teamJoinRequestService.saveTeamJoinRequest(1, 2, "testTeam");
     }
+
     @Test
-    public void  saveTeamJoinRequest_Invalid(){
+    public void saveTeamJoinRequest_Invalid() {
 
         teamJoinRequestService.saveTeamJoinRequest(-2, -1, "");
     }
+
     @Test
-    public void  saveTeamJoinRequest_Repo_Valid(){
+    public void saveTeamJoinRequest_Repo_Valid() {
 
         teamJoinRequestService.saveTeamJoinRequest(teamJoinRequestDummy.defaultTeamJoinRequest());
     }
+
     @Test
-    public void  saveTeamJoinRequest_Repo_Invalid(){
+    public void saveTeamJoinRequest_Repo_Invalid() {
 
         teamJoinRequestService.saveTeamJoinRequest(null);
     }

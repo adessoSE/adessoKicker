@@ -124,16 +124,14 @@ public class Match {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Match match = (Match) o;
-        return matchId == match.matchId &&
-                Objects.equals(date, match.date) &&
-                Objects.equals(time, match.time) &&
-                Objects.equals(winner, match.winner) &&
-                Objects.equals(kicker, match.kicker) &&
-                Objects.equals(teamA, match.teamA) &&
-                Objects.equals(teamB, match.teamB);
+        return matchId == match.matchId && Objects.equals(date, match.date) && Objects.equals(time, match.time)
+                && Objects.equals(winner, match.winner) && Objects.equals(kicker, match.kicker)
+                && Objects.equals(teamA, match.teamA) && Objects.equals(teamB, match.teamB);
     }
 
     @Override

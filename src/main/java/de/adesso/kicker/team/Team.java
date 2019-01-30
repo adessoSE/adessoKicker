@@ -97,15 +97,14 @@ public class Team {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Team team = (Team) o;
-        return teamId == team.teamId &&
-                teamWins == team.teamWins &&
-                teamLosses == team.teamLosses &&
-                Objects.equals(teamName, team.teamName) &&
-                Objects.equals(playerA, team.playerA) &&
-                Objects.equals(playerB, team.playerB);
+        return teamId == team.teamId && teamWins == team.teamWins && teamLosses == team.teamLosses
+                && Objects.equals(teamName, team.teamName) && Objects.equals(playerA, team.playerA)
+                && Objects.equals(playerB, team.playerB);
     }
 
     @Override

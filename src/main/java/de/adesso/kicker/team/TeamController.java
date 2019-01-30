@@ -27,7 +27,8 @@ public class TeamController {
     private ModelAndView modelAndView;
 
     @Autowired
-    public TeamController(TeamService teamService, UserService userService, NotificationService notificationService, TeamJoinRequestService teamJoinRequestService) {
+    public TeamController(TeamService teamService, UserService userService, NotificationService notificationService,
+            TeamJoinRequestService teamJoinRequestService) {
 
         this.teamService = teamService;
         this.teamJoinRequestService = teamJoinRequestService;
@@ -119,7 +120,8 @@ public class TeamController {
             modelAndView.setViewName("team/add");
             return modelAndView;
         }
-        teamJoinRequestService.saveTeamJoinRequest(team.getPlayerA().getUserId(), team.getPlayerB().getUserId(), team.getTeamName());
+        teamJoinRequestService.saveTeamJoinRequest(team.getPlayerA().getUserId(), team.getPlayerB().getUserId(),
+                team.getTeamName());
         modelAndView.addObject("successMessage", "Team wurde erfolgreich erstellt.");
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.setViewName("team/add");

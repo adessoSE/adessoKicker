@@ -30,7 +30,7 @@ public class TournamentJoinRequestServiceTest {
     @Mock
     private NotificationRepository notificationRepository;
 
-    //Dummys
+    // Dummys
     Tournament singleElimination = new SingleElimDummy().defaultSingleElim();
     Team team = new TeamDummy().defaultTeam();
     User user = new UserDummy().defaultUser();
@@ -42,14 +42,16 @@ public class TournamentJoinRequestServiceTest {
 
         team.getPlayerB().setUserId(1);
         when(userService.getUserById(team.getPlayerA().getUserId())).thenReturn(team.getPlayerA());
-        when((TournamentJoinRequest) notificationRepository.findByNotificationId(anyLong())).thenReturn(tournamentJoinRequest);
+        when((TournamentJoinRequest) notificationRepository.findByNotificationId(anyLong()))
+                .thenReturn(tournamentJoinRequest);
         when(!notificationRepository.existsById(anyLong())).thenReturn(true);
     }
 
     @Test
     public void saveTournamentJoinRequest_SingleElimination() {
 
-        tournamentJoinRequestService.saveTournamentJoinRequest(team.getPlayerA().getUserId(), team, (Tournament) singleElimination);
+        tournamentJoinRequestService.saveTournamentJoinRequest(team.getPlayerA().getUserId(), team,
+                (Tournament) singleElimination);
     }
 
     @Test
@@ -61,7 +63,8 @@ public class TournamentJoinRequestServiceTest {
     @Test
     public void createTournamentJoinRequest_SingleElimination_Valid() {
 
-        tournamentJoinRequestService.createTournamentJoinRequest(user.getUserId(), team, (Tournament) singleElimination);
+        tournamentJoinRequestService.createTournamentJoinRequest(user.getUserId(), team,
+                (Tournament) singleElimination);
     }
 
     @Test

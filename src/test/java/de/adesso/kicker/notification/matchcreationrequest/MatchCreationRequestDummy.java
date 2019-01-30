@@ -1,4 +1,5 @@
 package de.adesso.kicker.notification.matchcreationrequest;
+
 import de.adesso.kicker.notification.matchcreationrequest.MatchCreationRequest;
 import de.adesso.kicker.notification.matchcreationrequest.MatchCreationValidation;
 import de.adesso.kicker.team.TeamDummy;
@@ -13,6 +14,14 @@ public class MatchCreationRequestDummy {
     private String kicker = "der Kicker";
     private MatchCreationValidation matchCreationValidation = new MatchCreationValidation();
 
-    public MatchCreationRequest defaultMatchCreationRequest(){ return new MatchCreationRequest(userDummy.defaultUser(), userDummy.alternateUser(), teamDummy.defaultTeam(), teamDummy.alternateTeam(), new Date(), new Date(), kicker, matchCreationValidation);}
-    public MatchCreationRequest alternateMatchCreationRequest(){return new MatchCreationRequest(userDummy.alternateUser1(), userDummy.alternateUser2(), teamDummy.alternateTeam2(), teamDummy.alternateTeam3(), new Date(), new Date(), kicker, matchCreationValidation);}
+    public MatchCreationRequest defaultMatchCreationRequest() {
+        return new MatchCreationRequest(userDummy.defaultUser(), userDummy.alternateUser(), teamDummy.defaultTeam(),
+                teamDummy.alternateTeam(), new Date(), new Date(), kicker, matchCreationValidation);
+    }
+
+    public MatchCreationRequest alternateMatchCreationRequest() {
+        return new MatchCreationRequest(userDummy.alternateUser1(), userDummy.alternateUser2(),
+                teamDummy.alternateTeam2(), teamDummy.alternateTeam3(), new Date(), new Date(), kicker,
+                matchCreationValidation);
+    }
 }

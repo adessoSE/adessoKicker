@@ -34,7 +34,7 @@ public class MatchCreationRequestServiceTest {
     @Mock
     MatchCreationRequestRepository matchCreationRequestRepository;
 
-    //dummies
+    // dummies
     User user = new UserDummy().alternateUser();
     User otherUser = new UserDummy().alternateUser2();
     Team team = new TeamDummy().defaultTeam();
@@ -43,7 +43,7 @@ public class MatchCreationRequestServiceTest {
     MatchCreationRequest defaultMatchCreationRequest = new MatchCreationRequestDummy().defaultMatchCreationRequest();
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
 
         MockitoAnnotations.initMocks(this);
 
@@ -56,81 +56,89 @@ public class MatchCreationRequestServiceTest {
     }
 
     @Test
-    public void generateRequests_ValidInput(){
+    public void generateRequests_ValidInput() {
 
         match.setTeamA(new Team("test", user, match.getTeamA().getPlayerB()));
         matchCreationRequestService.generateMatchCreationRequests(match);
     }
 
     @Test
-    public void generateRequests_NullMatch(){
+    public void generateRequests_NullMatch() {
 
         matchCreationRequestService.generateMatchCreationRequests(null);
     }
 
     @Test
-    public void generateRequests_UserNotInTeamA(){
+    public void generateRequests_UserNotInTeamA() {
 
         match.setTeamB(new Team("test", user, match.getTeamB().getPlayerB()));
         matchCreationRequestService.generateMatchCreationRequests(match);
     }
 
     @Test
-    public void saveMatchCreationRequest_ValidInput(){
+    public void saveMatchCreationRequest_ValidInput() {
 
-        matchCreationRequestService.saveMatchCreationRequest(user, otherUser, team, otherTeam, new Date(), new Date(), "der Kicker", new MatchCreationValidation());
+        matchCreationRequestService.saveMatchCreationRequest(user, otherUser, team, otherTeam, new Date(), new Date(),
+                "der Kicker", new MatchCreationValidation());
     }
 
     @Test
-    public void saveMatchCreationRequest_SenderNull(){
+    public void saveMatchCreationRequest_SenderNull() {
 
-        matchCreationRequestService.saveMatchCreationRequest(null, otherUser, team, otherTeam, new Date(), new Date(), "der Kicker", new MatchCreationValidation());
+        matchCreationRequestService.saveMatchCreationRequest(null, otherUser, team, otherTeam, new Date(), new Date(),
+                "der Kicker", new MatchCreationValidation());
     }
 
     @Test
-    public void saveMatchCreationRequest_ReceiverNull(){
+    public void saveMatchCreationRequest_ReceiverNull() {
 
-        matchCreationRequestService.saveMatchCreationRequest(user, null, team, otherTeam, new Date(), new Date(), "der Kicker", new MatchCreationValidation());
+        matchCreationRequestService.saveMatchCreationRequest(user, null, team, otherTeam, new Date(), new Date(),
+                "der Kicker", new MatchCreationValidation());
     }
 
     @Test
-    public void saveMatchCreationRequest_TeamANull(){
+    public void saveMatchCreationRequest_TeamANull() {
 
-        matchCreationRequestService.saveMatchCreationRequest(user, otherUser, null, otherTeam, new Date(), new Date(), "der Kicker", new MatchCreationValidation());
+        matchCreationRequestService.saveMatchCreationRequest(user, otherUser, null, otherTeam, new Date(), new Date(),
+                "der Kicker", new MatchCreationValidation());
     }
 
     @Test
-    public void saveMatchCreationRequest_TeamBNull(){
+    public void saveMatchCreationRequest_TeamBNull() {
 
-        matchCreationRequestService.saveMatchCreationRequest(user, otherUser, team, null, new Date(), new Date(), "der Kicker", new MatchCreationValidation());
+        matchCreationRequestService.saveMatchCreationRequest(user, otherUser, team, null, new Date(), new Date(),
+                "der Kicker", new MatchCreationValidation());
     }
 
     @Test
-    public void saveMatchCreationRequest_DateTimeNull(){
+    public void saveMatchCreationRequest_DateTimeNull() {
 
-        matchCreationRequestService.saveMatchCreationRequest(user, otherUser, team, otherTeam, null, null, "der Kicker", new MatchCreationValidation());
+        matchCreationRequestService.saveMatchCreationRequest(user, otherUser, team, otherTeam, null, null, "der Kicker",
+                new MatchCreationValidation());
     }
 
     @Test
-    public void saveMatchCreationRequest_KickerNull(){
+    public void saveMatchCreationRequest_KickerNull() {
 
-        matchCreationRequestService.saveMatchCreationRequest(user, otherUser, team, otherTeam, new Date(), new Date(), "", new MatchCreationValidation());
+        matchCreationRequestService.saveMatchCreationRequest(user, otherUser, team, otherTeam, new Date(), new Date(),
+                "", new MatchCreationValidation());
     }
 
     @Test
-    public void saveMatchCreationRequest_ValidationNull(){
+    public void saveMatchCreationRequest_ValidationNull() {
 
-        matchCreationRequestService.saveMatchCreationRequest(user, otherUser, team, otherTeam, new Date(), new Date(), "der Kicker", new MatchCreationValidation());
+        matchCreationRequestService.saveMatchCreationRequest(user, otherUser, team, otherTeam, new Date(), new Date(),
+                "der Kicker", new MatchCreationValidation());
     }
 
     @Test
-    public void saveMatchCreationRequest_Repo_ValidInput(){
+    public void saveMatchCreationRequest_Repo_ValidInput() {
 
         matchCreationRequestService.saveMatchCreationRequest(defaultMatchCreationRequest);
     }
 
     @Test
-    public void saveMatchCreationRequest_Repo_InputNull(){
+    public void saveMatchCreationRequest_Repo_InputNull() {
 
         matchCreationRequestService.saveMatchCreationRequest(null);
     }
@@ -150,19 +158,19 @@ public class MatchCreationRequestServiceTest {
     }
 
     @Test
-    public void acceptMatchJoinRequest_NullInput(){
+    public void acceptMatchJoinRequest_NullInput() {
 
         matchCreationRequestService.acceptMatchJoinRequest(-1);
     }
 
     @Test
-    public void declineMatchJoinRequest_ValidInput(){
+    public void declineMatchJoinRequest_ValidInput() {
 
         matchCreationRequestService.declineMatchJoinRequest(anyLong());
     }
 
     @Test
-    public void declineMatchJoinRequest_NullInput(){
+    public void declineMatchJoinRequest_NullInput() {
 
         matchCreationRequestService.declineMatchJoinRequest(-1);
     }

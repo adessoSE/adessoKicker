@@ -12,5 +12,6 @@ public class TournamentJoinRequestDummy {
     private TeamDummy teamDummy = new TeamDummy();
     private SingleElimDummy singleElimDummy = new SingleElimDummy();
 
-    public TournamentJoinRequest defaultTournamentJoinRequest = new TournamentJoinRequest(userDummy.defaultUser(), userDummy.alternateUser(), teamDummy.defaultTeam(), (Tournament) singleElimDummy.defaultSingleElim());
+    public TournamentJoinRequest defaultTournamentJoinRequest = new TournamentJoinRequest(userDummy.defaultUser(),
+            userDummy.alternateUser(), teamDummy.defaultTeam(), (Tournament) singleElimDummy.defaultSingleElim());
 }
