@@ -40,7 +40,8 @@ class MatchCreationRequestServiceTest {
     private Team team = new TeamDummy().defaultTeam();
     private Team otherTeam = new TeamDummy().alternateTeam();
     private Match match = new MatchDummy().defaultMatch();
-    private MatchCreationRequest defaultMatchCreationRequest = new MatchCreationRequestDummy().defaultMatchCreationRequest();
+    private MatchCreationRequest defaultMatchCreationRequest = new MatchCreationRequestDummy()
+            .defaultMatchCreationRequest();
 
     @BeforeEach
     void setUp() {
@@ -51,7 +52,7 @@ class MatchCreationRequestServiceTest {
         match.setTime(new Date());
 
         when(userService.getLoggedInUser()).thenReturn(user);
-        when(notificationRepository.findByNotificationId(-1l)).thenReturn(null);
+        when(notificationRepository.findByNotificationId(-1L)).thenReturn(null);
         when(matchCreationRequestRepository.findByNotificationId(anyLong())).thenReturn(defaultMatchCreationRequest);
     }
 

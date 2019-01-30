@@ -1,7 +1,5 @@
 package de.adesso.kicker.notification.matchcreationrequest;
 
-import de.adesso.kicker.notification.matchcreationrequest.MatchCreationRequest;
-import de.adesso.kicker.notification.matchcreationrequest.MatchCreationValidation;
 import de.adesso.kicker.team.TeamDummy;
 import de.adesso.kicker.user.UserDummy;
 

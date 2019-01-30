@@ -50,8 +50,7 @@ class TournamentJoinRequestServiceTest {
     @Test
     void saveTournamentJoinRequest_SingleElimination() {
 
-        tournamentJoinRequestService.saveTournamentJoinRequest(team.getPlayerA().getUserId(), team,
-                (Tournament) singleElimination);
+        tournamentJoinRequestService.saveTournamentJoinRequest(team.getPlayerA().getUserId(), team, singleElimination);
     }
 
     @Test
@@ -63,8 +62,7 @@ class TournamentJoinRequestServiceTest {
     @Test
     void createTournamentJoinRequest_SingleElimination_Valid() {
 
-        tournamentJoinRequestService.createTournamentJoinRequest(user.getUserId(), team,
-                (Tournament) singleElimination);
+        tournamentJoinRequestService.createTournamentJoinRequest(user.getUserId(), team, singleElimination);
     }
 
     @Test
