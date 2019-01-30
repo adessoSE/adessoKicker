@@ -19,7 +19,7 @@ public class MatchVerificationRequest extends Notification {
     @ManyToOne(targetEntity = Team.class)
     private Team winner;
 
-    public MatchVerificationRequest(User sender, User receiver, Match match, Team winner, Tournament tournament){
+    public MatchVerificationRequest(User sender, User receiver, Match match, Team winner, Tournament tournament) {
 
         this.type = NotificationType.MatchVerificationRequest;
         this.sender = sender;
@@ -31,28 +31,26 @@ public class MatchVerificationRequest extends Notification {
         this.sendDate = new Date();
     }
 
-    public Team getWinner(){
+    public Team getWinner() {
         return this.winner;
     }
 
-    public Match getMatch (){
+    public Match getMatch() {
         return this.match;
     }
 
-    public Tournament getTournament(){
+    public Tournament getTournament() {
         return this.tournament;
     }
 
-    public String generateMessage(){
-        return "Please verify if team " + this.winner.getTeamName() + " has won the match on " + match.getKicker() + " at " + match.getGermanDate();
+    public String generateMessage() {
+        return "Please verify if team " + this.winner.getTeamName() + " has won the match on " + match.getKicker()
+                + " at " + match.getGermanDate();
     }
 
     @Override
-    public String toString(){
-        return "MatchVerificationRequest{" +
-                "match=" + this.match +
-                ", winner=" + this.winner +
-                ", tournament=" + this.tournament +
-                "} " + super.toString();
+    public String toString() {
+        return "MatchVerificationRequest{" + "match=" + this.match + ", winner=" + this.winner + ", tournament="
+                + this.tournament + "} " + super.toString();
     }
 }
