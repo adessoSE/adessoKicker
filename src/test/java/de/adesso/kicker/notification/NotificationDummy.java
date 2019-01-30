@@ -1,11 +1,13 @@
 package de.adesso.kicker.notification;
+
 import de.adesso.kicker.user.UserDummy;
 
 public class NotificationDummy {
 
     private UserDummy userDummy = new UserDummy();
 
-    public Notification defaultNotification() { return new Notification(userDummy.alternateUser(), userDummy.defaultUser(), "Test-Message 1");
+    public Notification defaultNotification() {
+        return new Notification(userDummy.alternateUser(), userDummy.defaultUser(), "Test-Message 1");
     }
 
     public Notification alternateNotification() {

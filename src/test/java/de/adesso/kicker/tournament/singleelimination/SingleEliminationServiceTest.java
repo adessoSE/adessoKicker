@@ -85,7 +85,7 @@ class SingleEliminationServiceTest {
         singleElim.setTeams(treeTeamsEven);
         singleEliminationService.createTournamentTree(singleElim);
         List<Match> bracket = singleElim.getBracket().get(0).getRow();
-        assertEquals(bracket , bracketEven);
+        assertEquals(bracket, bracketEven);
     }
 
     @Test
