@@ -22,14 +22,12 @@ public class MatchVerificationRequest extends Notification {
 
     public MatchVerificationRequest(User sender, User receiver, Match match, Team winner, Tournament tournament) {
 
-        setType(NotificationType.MatchVerificationRequest);
-        setSender(sender);
-        setSender(receiver);
+        super(sender, receiver);
         this.match = match;
         this.winner = winner;
         this.tournament = tournament;
         setMessage(generateMessage());
-        setSendDate(new Date());
+        setType(NotificationType.MatchVerificationRequest);
     }
 
     public Team getWinner() {

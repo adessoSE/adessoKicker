@@ -13,18 +13,12 @@ public class TeamJoinRequest extends Notification {
 
     private String teamName;
 
-    public TeamJoinRequest() {
-
-        setType(NotificationType.TeamJoinRequest);
-    }
-
     public TeamJoinRequest(User sender, User receiver, String teamName) {
-        this();
+
+        super(sender, receiver);
         this.teamName = teamName;
-        setSender(sender);
-        setReceiver(receiver);
-        setSendDate(new Date());
         setMessage(generateMessage());
+        setType(NotificationType.TeamJoinRequest);
     }
 
     public String generateMessage() {

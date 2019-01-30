@@ -25,14 +25,9 @@ public class MatchCreationRequest extends Notification {
     @ManyToOne(targetEntity = MatchCreationValidation.class)
     MatchCreationValidation matchCreationValidation;
 
-    public MatchCreationRequest() {
-
-        setType(NotificationType.MatchCreationRequest);
-    }
-
     public MatchCreationRequest(User sender, User receiver, Team teamA, Team teamB, Date date, Date time, String kicker,
             MatchCreationValidation matchCreationValidation) {
-        super(sender, receiver, "");
+        super(sender, receiver);
         this.teamA = teamA;
         this.teamB = teamB;
         this.date = date;
@@ -40,6 +35,7 @@ public class MatchCreationRequest extends Notification {
         this.kicker = kicker;
         this.matchCreationValidation = matchCreationValidation;
         setMessage(generateMessage());
+        setType(NotificationType.MatchCreationRequest);
     }
 
     public String generateMessage() {

@@ -28,15 +28,20 @@ public class Notification {
 
     public Notification() {
 
-        type = NotificationType.Notification;
+        this.type = NotificationType.Notification;
+    }
+
+    public Notification(User sender, User receiver) {
+
+        this();
+        this.receiver = receiver;
+        this.sender = sender;
+        this.sendDate = new Date();
     }
 
     public Notification(User sender, User receiver, String message) {
 
-        this();
-        this.sendDate = new Date();
-        this.receiver = receiver;
-        this.sender = sender;
+        this(sender, receiver);
         this.message = message;
     }
 

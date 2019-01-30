@@ -22,7 +22,7 @@ public class TournamentJoinRequest extends Notification {
     private Team targetTeam;
 
     public TournamentJoinRequest(User sender, User receiver, Team team, Tournament tournament) {
-        super(sender, receiver, "");
+        super(sender, receiver);
         this.targetTournament = tournament;
         this.targetTeam = team;
         setMessage(generateMessage());
