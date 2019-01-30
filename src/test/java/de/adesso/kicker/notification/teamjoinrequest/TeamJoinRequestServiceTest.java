@@ -17,7 +17,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
-public class TeamJoinRequestServiceTest {
+class TeamJoinRequestServiceTest {
 
     @InjectMocks
     TeamJoinRequestService teamJoinRequestService;
@@ -32,17 +32,17 @@ public class TeamJoinRequestServiceTest {
     TeamService teamService;
 
     // Dummy User
-    UserDummy userDummy = new UserDummy();
-    User user = userDummy.defaultUser();
-    User otherUser = userDummy.alternateUser1();
+    private UserDummy userDummy = new UserDummy();
+    private User user = userDummy.defaultUser();
+    private User otherUser = userDummy.alternateUser1();
 
     // Dummy TeamJoinRequest
-    TeamJoinRequestDummy teamJoinRequestDummy = new TeamJoinRequestDummy();
-    TeamJoinRequest teamJoinRequest = teamJoinRequestDummy.defaultTeamJoinRequest();
+    private TeamJoinRequestDummy teamJoinRequestDummy = new TeamJoinRequestDummy();
+    private TeamJoinRequest teamJoinRequest = teamJoinRequestDummy.defaultTeamJoinRequest();
     TeamJoinRequest otherTeamJoinRequest = teamJoinRequestDummy.alternateTeamJoinRequest();
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
 
         MockitoAnnotations.initMocks(this);
 
@@ -56,37 +56,37 @@ public class TeamJoinRequestServiceTest {
     }
 
     @Test
-    public void saveTeamJoinRequest() {
+    void saveTeamJoinRequest() {
 
         teamJoinRequestService.saveTeamJoinRequest(otherUser.getUserId(), user.getUserId(), anyString());
     }
 
     @Test
-    public void saveTeamJoinRequest_TeamJoinRequest() {
+    void saveTeamJoinRequest_TeamJoinRequest() {
 
         teamJoinRequestService.saveTeamJoinRequest(teamJoinRequest);
     }
 
     @Test
-    public void createTeamJoinRequest_Valid() {
+    void createTeamJoinRequest_Valid() {
 
         teamJoinRequestService.createTeamJoinRequest(otherUser.getUserId(), user.getUserId(), anyString());
     }
 
     @Test
-    public void createTeamJoinRequest_Null() {
+    void createTeamJoinRequest_Null() {
 
-        teamJoinRequestService.createTeamJoinRequest(-1L, -1l, anyString());
+        teamJoinRequestService.createTeamJoinRequest(-1L, -1L, anyString());
     }
 
     @Test
-    public void acceptTeamJoinRequest_Valid() {
+    void acceptTeamJoinRequest_Valid() {
 
         teamJoinRequestService.acceptTeamJoinRequest(teamJoinRequest.getNotificationId());
     }
 
     @Test
-    public void acceptTeamJoinRequest_Null() {
+    void acceptTeamJoinRequest_Null() {
 
         teamJoinRequestService.acceptTeamJoinRequest(-1L);
     }
