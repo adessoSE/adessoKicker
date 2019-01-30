@@ -2,6 +2,7 @@ package de.adesso.kicker.notification.matchverificationrequest;
 
 import de.adesso.kicker.match.Match;
 import de.adesso.kicker.notification.Notification;
+import de.adesso.kicker.notification.NotificationType;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.tournament.Tournament;
 import de.adesso.kicker.user.User;
@@ -21,14 +22,14 @@ public class MatchVerificationRequest extends Notification {
 
     public MatchVerificationRequest(User sender, User receiver, Match match, Team winner, Tournament tournament) {
 
-        this.type = NotificationType.MatchVerificationRequest;
-        this.sender = sender;
-        this.receiver = receiver;
+        setType(NotificationType.MatchVerificationRequest);
+        setSender(sender);
+        setSender(receiver);
         this.match = match;
         this.winner = winner;
         this.tournament = tournament;
-        this.message = generateMessage();
-        this.sendDate = new Date();
+        setMessage(generateMessage());
+        setSendDate(new Date());
     }
 
     public Team getWinner() {

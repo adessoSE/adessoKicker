@@ -1,6 +1,7 @@
 package de.adesso.kicker.notification.tournamentjoinrequest;
 
 import de.adesso.kicker.notification.Notification;
+import de.adesso.kicker.notification.NotificationType;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.tournament.Tournament;
 import de.adesso.kicker.tournament.singleelimination.SingleElimination;
@@ -24,12 +25,12 @@ public class TournamentJoinRequest extends Notification {
         super(sender, receiver, "");
         this.targetTournament = tournament;
         this.targetTeam = team;
-        super.message = generateMessage();
-        type = NotificationType.TournamentJoinRequest;
+        setMessage(generateMessage());
+        setType(NotificationType.TournamentJoinRequest);
     }
 
     public String generateMessage() {
-        return sender.getFirstName() + " " + sender.getLastName() + " asked you to join tournament: "
+        return getSender().getFirstName() + " " + getSender().getLastName() + " asked you to join tournament: "
                 + targetTournament.getTournamentName() + " with your team: " + targetTeam.getTeamName();
     }
 

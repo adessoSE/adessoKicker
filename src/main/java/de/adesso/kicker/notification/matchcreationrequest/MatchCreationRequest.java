@@ -1,6 +1,7 @@
 package de.adesso.kicker.notification.matchcreationrequest;
 
 import de.adesso.kicker.notification.Notification;
+import de.adesso.kicker.notification.NotificationType;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.user.User;
 
@@ -26,7 +27,7 @@ public class MatchCreationRequest extends Notification {
 
     public MatchCreationRequest() {
 
-        type = NotificationType.MatchCreationRequest;
+        setType(NotificationType.MatchCreationRequest);
     }
 
     public MatchCreationRequest(User sender, User receiver, Team teamA, Team teamB, Date date, Date time, String kicker,
@@ -38,18 +39,18 @@ public class MatchCreationRequest extends Notification {
         this.time = time;
         this.kicker = kicker;
         this.matchCreationValidation = matchCreationValidation;
-        super.message = generateMessage();
+        setMessage(generateMessage());
     }
 
     public String generateMessage() {
-        return sender.getFirstName() + " " + sender.getLastName() + " asked you to play a match: " + getGermanDate()
-                + " " + time + " " + teamA.getTeamName() + " vs. " + teamB.getTeamName() + " at " + kicker;
+        return getSender().getFirstName() + " " + getSender().getLastName() + " asked you to play a match: "
+                + getGermanDate() + " " + time + " " + teamA.getTeamName() + " vs. " + teamB.getTeamName() + " at "
+                + kicker;
     }
 
     public String getGermanDate() {
         DateFormat df = new SimpleDateFormat("EEEEE, dd. MMMMM yyyy");
-        String germanDate = df.format(date);
-        return germanDate;
+        return df.format(date);
     }
 
     public Team getTeamA() {

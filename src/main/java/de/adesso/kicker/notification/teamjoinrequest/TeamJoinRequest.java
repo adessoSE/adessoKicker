@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import de.adesso.kicker.notification.Notification;
+import de.adesso.kicker.notification.NotificationType;
 import de.adesso.kicker.user.User;
 
 @Entity
@@ -14,20 +15,21 @@ public class TeamJoinRequest extends Notification {
 
     public TeamJoinRequest() {
 
-        type = NotificationType.TeamJoinRequest;
+        setType(NotificationType.TeamJoinRequest);
     }
 
     public TeamJoinRequest(User sender, User receiver, String teamName) {
         this();
         this.teamName = teamName;
-        this.sender = sender;
-        this.receiver = receiver;
-        this.sendDate = new Date();
-        this.message = generateMessage();
+        setSender(sender);
+        setReceiver(receiver);
+        setSendDate(new Date());
+        setMessage(generateMessage());
     }
 
     public String generateMessage() {
-        return sender.getFirstName() + " " + sender.getLastName() + " has invited you to join team: " + teamName;
+        return getSender().getFirstName() + " " + getSender().getLastName() + " has invited you to join team: "
+                + teamName;
     }
 
     public String getTeamName() {
