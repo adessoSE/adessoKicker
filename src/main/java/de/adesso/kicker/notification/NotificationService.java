@@ -33,7 +33,6 @@ public class NotificationService {
         this.teamJoinRequestService = teamJoinRequestService;
         this.tournamentJoinRequestService = tournamentJoinRequestService;
         this.matchCreationRequestService = matchCreationRequestService;
-        this.matchCreationRequestService = matchCreationRequestService;
     }
 
     public Notification getNotificationById(long id) {
@@ -43,6 +42,7 @@ public class NotificationService {
 
     public List<Notification> getAllNotifications() {
 
+        Notification n = new Notification();
         List<Notification> notifications = new ArrayList<>();
         notificationRepository.findAll().forEach(notifications::add);
         return notifications;
@@ -143,8 +143,7 @@ public class NotificationService {
             return null;
         }
 
-        Notification notification = new Notification(sender, receiver, message);
-        return notification;
+        return new Notification(sender, receiver, message);
     }
 
     public void removeNotificationById(long id) {
@@ -154,8 +153,8 @@ public class NotificationService {
 
     public void declineNotificationById(long id) {
 
-        Notification n = getNotificationById(id);
-        switch (n.getType()) {
+        Notification notification = getNotificationById(id);
+        switch (notification.getType()) {
         case MatchCreationRequest:
             matchCreationRequestService.declineMatchJoinRequest(id);
             break;

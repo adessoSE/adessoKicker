@@ -75,8 +75,7 @@ public class TournamentJoinRequestService {
         } else {
             receiver = team.getPlayerA();
         }
-        TournamentJoinRequest request = new TournamentJoinRequest(sender, receiver, team, tournament);
-        return request;
+        return new TournamentJoinRequest(sender, receiver, team, tournament);
     }
 
     public void saveTournamentJoinRequest(TournamentJoinRequest tournamentJoinRequest) {

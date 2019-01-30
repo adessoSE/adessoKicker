@@ -21,19 +21,19 @@ public class NotificationController {
         this.teamJoinRequestService = teamJoinRequestService;
     }
 
-    @RequestMapping("/notifications")
+    @GetMapping("/notifications")
     public List<Notification> getAllNotifications() {
 
         return notificationService.getAllNotifications();
     }
 
-    @RequestMapping("/{userId}/notifications/send")
+    @GetMapping("/{userId}/notifications/send")
     public List<Notification> getUserNotificationsSend(@PathVariable long userId) {
 
         return notificationService.getAllNotificationsBySender(userId);
     }
 
-    @RequestMapping("/{userId}/notifications/received")
+    @GetMapping("/{userId}/notifications/received")
     public List<Notification> getUserNotificationsReceived(@PathVariable long userId) {
 
         return notificationService.getAllNotificationsByReceiver(userId);

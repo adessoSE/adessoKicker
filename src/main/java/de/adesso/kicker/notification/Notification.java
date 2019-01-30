@@ -10,29 +10,21 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Notification {
 
-    public enum NotificationType {
-        Notification,
-        TeamJoinRequest,
-        TournamentJoinRequest,
-        MatchCreationRequest,
-        MatchVerificationRequest
-    };
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long notificationId;
+    private long notificationId;
 
     @ManyToOne(targetEntity = User.class)
-    protected User receiver;
+    private User receiver;
 
     @ManyToOne(targetEntity = User.class)
-    protected User sender;
+    private User sender;
 
-    protected NotificationType type;
+    private NotificationType type;
 
-    protected Date sendDate;
+    private Date sendDate;
 
-    protected String message;
+    private String message;
 
     public Notification() {
 
@@ -46,12 +38,6 @@ public class Notification {
         this.receiver = receiver;
         this.sender = sender;
         this.message = message;
-    }
-
-    public Notification(User sender, User receiver, String message, Date sendDate) {
-
-        this(sender, receiver, message);
-        this.sendDate = sendDate;
     }
 
     public long getNotificationId() {
