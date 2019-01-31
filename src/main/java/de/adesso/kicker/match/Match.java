@@ -3,11 +3,13 @@ package de.adesso.kicker.match;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import de.adesso.kicker.team.Team;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "match")
@@ -25,6 +27,7 @@ public class Match {
     @NotNull(message = "Bitte eine Uhrzeit wählen.")
     @DateTimeFormat(pattern = "HH:mm")
     @Temporal(TemporalType.TIME)
+    @Nullable
     private Date time;
 
     @OneToOne(targetEntity = Team.class)
@@ -39,9 +42,6 @@ public class Match {
     private Team teamB;
 
     public Match() {
-        date = new Date();
-        time = new Date();
-
     }
 
     public String getGermanDate() {
@@ -120,5 +120,22 @@ public class Match {
     public String toString() {
         return "Match{" + "matchId=" + matchId + ", date=" + date + ", winner=" + winner + ", kicker='" + kicker + '\''
                 + ", teamA=" + teamA + ", teamB=" + teamB + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Match match = (Match) o;
+        return matchId == match.matchId && Objects.equals(date, match.date) && Objects.equals(time, match.time)
+                && Objects.equals(winner, match.winner) && Objects.equals(kicker, match.kicker)
+                && Objects.equals(teamA, match.teamA) && Objects.equals(teamB, match.teamB);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(matchId, date, time, winner, kicker, teamA, teamB);
     }
 }

@@ -1,5 +1,10 @@
 package de.adesso.kicker.team;
 
+import de.adesso.kicker.notification.NotificationService;
+import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequestService;
+import de.adesso.kicker.team.exception.IdenticalPlayersException;
+import de.adesso.kicker.team.exception.TeamNameExistingException;
+import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +21,19 @@ import org.springframework.web.servlet.ModelAndView;
 public class TeamController {
 
     private TeamService teamService;
+    private TeamJoinRequestService teamJoinRequestService;
     private UserService userService;
+    private NotificationService notificationService;
     private ModelAndView modelAndView;
 
     @Autowired
-    public TeamController(TeamService teamService, UserService userService) {
+    public TeamController(TeamService teamService, UserService userService, NotificationService notificationService,
+            TeamJoinRequestService teamJoinRequestService) {
 
         this.teamService = teamService;
+        this.teamJoinRequestService = teamJoinRequestService;
         this.userService = userService;
+        this.notificationService = notificationService;
     }
 
     /**
@@ -34,6 +44,9 @@ public class TeamController {
     @GetMapping("/teams")
     public ModelAndView getAllTeams() {
         modelAndView = new ModelAndView();
+        User user = userService.getLoggedInUser();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
         modelAndView.addObject("teams", teamService.getAllTeams());
         modelAndView.setViewName("team/teams");
         return modelAndView;
@@ -49,6 +62,9 @@ public class TeamController {
     public ModelAndView getTeam(@PathVariable("teamId") long id) {
 
         modelAndView = new ModelAndView();
+        User user = userService.getLoggedInUser();
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
         modelAndView.addObject(teamService.getTeamById(id));
         modelAndView.setViewName("team/page");
         return modelAndView;
@@ -104,7 +120,8 @@ public class TeamController {
             modelAndView.setViewName("team/add");
             return modelAndView;
         }
-        teamService.saveTeam(team);
+        teamJoinRequestService.saveTeamJoinRequest(team.getPlayerA().getUserId(), team.getPlayerB().getUserId(),
+                team.getTeamName());
         modelAndView.addObject("successMessage", "Team wurde erfolgreich erstellt.");
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.setViewName("team/add");

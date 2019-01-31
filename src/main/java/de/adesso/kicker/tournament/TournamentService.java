@@ -8,6 +8,9 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
+import de.adesso.kicker.notification.tournamentjoinrequest.TournamentJoinRequestService;
+import de.adesso.kicker.team.TeamService;
+import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,15 +20,22 @@ import de.adesso.kicker.user.User;
 @Service
 public class TournamentService {
 
+    private TournamentJoinRequestService tournamentJoinRequestService;
+    private UserService userService;
+    private TeamService teamService;
     private TournamentRepository tournamentRepository;
     private List<TournamentControllerInterface> tournamentControllerInterfaces;
 
     @Autowired
-    public TournamentService(TournamentRepository tournamentRepository,
-            List<TournamentControllerInterface> tournamentControllerInterfaces) {
+    public TournamentService(TournamentRepository tournamentRepository, UserService userService,
+            TeamService teamService, List<TournamentControllerInterface> tournamentControllerInterfaces,
+            TournamentJoinRequestService tournamentJoinRequestService) {
 
+        this.tournamentJoinRequestService = tournamentJoinRequestService;
         this.tournamentRepository = tournamentRepository;
         this.tournamentControllerInterfaces = tournamentControllerInterfaces;
+        this.userService = userService;
+        this.teamService = teamService;
     }
 
     public TournamentService(TournamentRepository tournamentRepository) {
@@ -60,6 +70,8 @@ public class TournamentService {
     @SuppressWarnings("unchecked")
     @Transactional
     public ModelAndView postJoinTournament(Tournament tournament, long id) {
+        tournamentJoinRequestService.saveTournamentJoinRequest(userService.getLoggedInUser().getUserId(),
+                teamService.getTeamById(id), tournament);
         return controllerInterfaceMap.get(tournament.getClass()).postJoinTournament(tournament, id);
     }
 
@@ -111,6 +123,13 @@ public class TournamentService {
     public Tournament getTournamentById(Long id) {
 
         return tournamentRepository.findByTournamentId(id);
+    }
+
+    public Tournament getCurrentTournament() {
+
+        List<Tournament> tournaments = new ArrayList<>();
+        tournamentRepository.findByFinishedFalseOrderByStartDateAsc().forEach(tournaments::add);
+        return tournaments.get(0);
     }
 
     /**

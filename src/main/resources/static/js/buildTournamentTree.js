@@ -21,6 +21,30 @@ function setNumBoxes () {
 	numBoxes = num;
 }
 
+//finds out how many rows have to be created
+function setCurrentLevel () {
+	
+	currentLevel = 0;
+	var rowHasTeam = true;
+	var i;
+	var j;
+	
+	//ilterates through each row of teams
+	for(i = 1; i < numRows; i++){
+			
+		//check if row has any team 
+		if(rows[i].length != 0){
+				
+			currentLevel ++;
+		}
+		
+		else {
+			
+			break;
+		}
+	}
+}
+
 //creates and attaches teamboxes with teamnames to the page
 function printTree (){
 	
@@ -34,7 +58,7 @@ function printTree (){
 	var divEvents = "onmouseover='onMouseInteractDiv(this)' onmouseout='outMouseInteractDiv(this)'";
 	
 	//ilterates through each row of teams
-	for(i = 0; i < numRows; i ++){
+	for(i = 0; i <= currentLevel; i ++){
 		
 		
 		level = '<div class="container" id="level' + i + '" style="display: flex; flex-flow: row nowrap; justify-content: space-between; z-index: 5;">'
@@ -49,12 +73,12 @@ function printTree (){
 				//if box is not in the first row its x-position is set between the two parent boxes
 				if(i > 0) {
 				
-					posx = ((returnCenter(document.getElementById('level' + (i - 1) + 'team' + (j * 2))) + returnCenter(document.getElementById('level' + (i - 1) + 'team' + ((j * 2) + 1)))) / 2);
-					teamBoxes += '<div class="" id="level' + i + 'team' + j +'" ' + divEvents + ' style="left: ' + posx + 'px; ' + boxStyle + ' position: absolute;" >' + rows[i][j].teamName + '</div>';
+					posx = (returnCenter(document.getElementById('level' + (i - 1) + 'team' + (j * 2))) + returnCenter(document.getElementById('level' + (i - 1) + 'team' + ((j * 2) + 1)))) / 2;
+					teamBoxes += '<div class="" id="level' + i + 'team' + j +'" ' + divEvents + 'onclick="javacript:location.href=\'/teams/' + rows[i][j].teamId + '\' style="left: ' + posx + 'px; ' + boxStyle + ' position: absolute;" >' + rows[i][j].teamName + '</div>';
 				}
 				//box position is set automatically
 				else {
-					teamBoxes += '<div class="" id="level' + i + 'team' + j +'" ' + divEvents + ' style="' + boxStyle + '" >' + rows[i][j].teamName + '</div>';
+					teamBoxes += '<div class="" id="level' + i + 'team' + j +'" ' + divEvents + ' onclick="javacript:location.href="/teams/' + rows[i][j].teamId + '"  style="' + boxStyle + '" >' + rows[i][j].teamName + '</div>';
 				}
 			}
 			
@@ -93,36 +117,59 @@ function printLines () {
 	var fixry; 
 	var i;
 	var j;
-	var yOffset = 181;
+	var yOffset = 234;
+	var centerSpacing = 180;
 	
-	//ilterates through each row of teams
-	for(i = 1; i < numRows; i ++){
+	canvas = document.getElementById('canvas');
+	ctx = canvas.getContext("2d");
+	
+	//draw line to display a match pair
+	for(i = 0; i <= currentLevel; i++) {
 		
-		//ilterates through each team in a row
-		for(j = 0; j < (numBoxes / Math.pow(2, i)); j++) {
-	
-			//get elements from the page and sets cursor up to draw
-			canvas = document.getElementById('canvas');
-			ctx = canvas.getContext("2d");
-			team1 = document.getElementById('level' + (i - 1) + 'team' + (j * 2));
-			team2 = document.getElementById('level' + (i - 1) + 'team' + ((j * 2) + 1));
-			target = document.getElementById('level' + i + 'team' + j);
+		for(j = 0; j < rows[i].length / 2; j++) {
+		
+			team1 = document.getElementById('level' + i + 'team' + (j * 2));
+			team2 = document.getElementById('level' + i + 'team' + ((j * 2) + 1));
 			
 			//get position of first team
 			fixlx = returnCenter(team1);
-			fixly = team1.getBoundingClientRect().bottom - 130;
-			
+			fixly = team1.getBoundingClientRect().bottom - centerSpacing;
+					
 			//get position of second team
 			fixrx = returnCenter(team2);
-			fixry = team2.getBoundingClientRect().bottom - 130;
+			fixry = team2.getBoundingClientRect().bottom - centerSpacing;
 			
-			//draw lines to target team in next row
 			ctx.moveTo(fixlx, team1.getBoundingClientRect().bottom - yOffset);
 			ctx.lineTo(fixlx, fixly);
 			ctx.moveTo(fixrx, team2.getBoundingClientRect().bottom - yOffset);
 			ctx.lineTo(fixrx, fixry);
 			ctx.moveTo(fixlx, fixly);
 			ctx.lineTo(fixrx, fixry);
+			
+			ctx.stroke();
+		}
+	}
+	
+	//ilterates through each row of teams
+	for(i = 0; i < currentLevel; i ++){
+		
+		//ilterates through each team in a row
+		for(j = 0; j < (numBoxes / Math.pow(2, i)); j++) {
+	
+			//get elements from the page and sets cursor up to draw
+			team1 = document.getElementById('level' + i + 'team' + (j * 2));
+			team2 = document.getElementById('level' + i + 'team' + ((j * 2) + 1));
+			target = document.getElementById('level' + (i + 1) + 'team' + j);
+			
+			//get position of first team
+			fixlx = returnCenter(team1);
+			fixly = team1.getBoundingClientRect().bottom - centerSpacing;
+			
+			//get position of second team
+			fixrx = returnCenter(team2);
+			fixry = team2.getBoundingClientRect().bottom - centerSpacing;
+			
+			//draw lines to target team in next row
 			ctx.moveTo(returnCenter(target), fixly);
 			ctx.lineTo(returnCenter(target), target.getBoundingClientRect().top - yOffset);
 			ctx.stroke();
@@ -138,6 +185,7 @@ function returnCenter (element) {
 }
 
 setNumBoxes();
+setCurrentLevel();
 setHeadline();
 printTree();
 printLines();

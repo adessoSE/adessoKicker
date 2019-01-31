@@ -1,0 +1,34 @@
+/*HEADER-NOTIFICATION*/
+
+#notificationList{
+	
+	display: none;
+	overflow-y: scroll;
+	z-index: 1200;
+	position: absolute;
+}
+
+.notificationList_El{
+	
+	background-color: white;
+	height:175px;
+	width: 200px;
+	border: 1px solid black;
+}
+
+.notificationList_El_DeclineBT{
+	
+	margin-left: 167px;
+}
+
+.notificationList_El_AcceptBT{
+	
+	margin-left: 110px;
+}
+
+.notificationList_El_Text{
+	
+	width: 198px;
+	height: 122px;
+	border: none;
+}

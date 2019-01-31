@@ -7,15 +7,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import de.adesso.kicker.notification.NotificationService;
+import de.adesso.kicker.user.User;
+import de.adesso.kicker.user.UserService;
 
 @Controller
 public class TournamentController {
 
     private TournamentService tournamentService;
+    private UserService userService;
+    private NotificationService notificationService;
 
     @Autowired
-    public TournamentController(TournamentService tournamentService) {
+    public TournamentController(TournamentService tournamentService, NotificationService notificationService,
+            UserService userService) {
         this.tournamentService = tournamentService;
+        this.notificationService = notificationService;
+        this.userService = userService;
     }
 
     @GetMapping(value = "/tournaments/create")
@@ -29,7 +37,10 @@ public class TournamentController {
     @GetMapping("/tournaments")
     public ModelAndView showTournamentList() {
         ModelAndView modelAndView = new ModelAndView();
+        User user = userService.getLoggedInUser();
         modelAndView.addObject("tournaments", tournamentService.getAllTournaments());
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
         modelAndView.setViewName("tournament/list");
         return modelAndView;
     }
@@ -37,6 +48,13 @@ public class TournamentController {
     @GetMapping("/tournaments/{tournamentId}")
     public ModelAndView getTournamentPage(@PathVariable("tournamentId") long id) {
         Tournament tournament = tournamentService.getTournamentById(id);
+        return tournamentService.getPage(tournament);
+    }
+
+    @GetMapping("/tournaments/current")
+    public ModelAndView tournamentPageCurrent() {
+        ModelAndView modelAndView = new ModelAndView();
+        Tournament tournament = tournamentService.getCurrentTournament();
         return tournamentService.getPage(tournament);
     }
 

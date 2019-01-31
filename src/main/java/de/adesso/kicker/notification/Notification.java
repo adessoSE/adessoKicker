@@ -1,29 +1,42 @@
 package de.adesso.kicker.notification;
 
+import de.adesso.kicker.notification.matchverificationrequest.MatchVerificationRequest;
 import de.adesso.kicker.user.User;
 
-import java.util.Date;
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Notification {
+public class Notification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long notificationId;
+    private long notificationId;
 
     @ManyToOne(targetEntity = User.class)
-    protected User receiver;
+    private User receiver;
 
     @ManyToOne(targetEntity = User.class)
-    protected User sender;
+    private User sender;
 
-    protected Date sendDate;
+    private NotificationType type;
 
-    protected String message;
+    private Date sendDate;
 
     public Notification() {
+
+    }
+
+    public Notification(User sender, User receiver) {
+        this.type = NotificationType.NOTIFICATION;
+        this.receiver = receiver;
+        this.sender = sender;
+        this.sendDate = new Date();
+    }
+
+    public String generateMessage() {
+        return "";
     }
 
     public long getNotificationId() {
@@ -58,18 +71,18 @@ public abstract class Notification {
         this.sendDate = sendDate;
     }
 
-    public String getMessage() {
-        return message;
+    public NotificationType getType() {
+        return type;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setType(NotificationType type) {
+        this.type = type;
     }
 
     @Override
     public String toString() {
         return "Notification{" + "notificationId=" + notificationId + ", notificationType=" + ", receiver=" + receiver
-                + ", sender=" + sender + ", sendDate=" + sendDate + ", message=" + message;
+                + ", sender=" + sender + ", sendDate=" + sendDate;
 
     }
 }

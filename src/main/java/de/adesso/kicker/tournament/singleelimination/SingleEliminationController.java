@@ -2,6 +2,10 @@ package de.adesso.kicker.tournament.singleelimination;
 
 import javax.validation.Valid;
 
+import de.adesso.kicker.notification.NotificationService;
+import de.adesso.kicker.tournament.singleelimination.exception.PlayerInTournamentException;
+import de.adesso.kicker.tournament.singleelimination.exception.PlayerOfTeamInTournamentException;
+import de.adesso.kicker.tournament.singleelimination.exception.TeamAlreadyInTournamentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.team.TeamService;
 import de.adesso.kicker.tournament.TournamentControllerInterface;
@@ -24,14 +27,16 @@ public class SingleEliminationController implements TournamentControllerInterfac
     private SingleEliminationService singleEliminationService;
     private TeamService teamService;
     private UserService userService;
+    private NotificationService notificationService;
 
     @Autowired
     public SingleEliminationController(SingleEliminationService singleEliminationService, TeamService teamService,
-            UserService userService) {
+            UserService userService, NotificationService notificationService) {
 
         this.singleEliminationService = singleEliminationService;
         this.teamService = teamService;
         this.userService = userService;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -50,12 +55,16 @@ public class SingleEliminationController implements TournamentControllerInterfac
             modelAndView.addObject("tournament", singleElimination);
             modelAndView.addObject("teams", null);
             modelAndView.addObject("user", loggedInUser);
+            modelAndView.addObject("notifications",
+                    notificationService.getAllNotificationsByReceiver(loggedInUser.getUserId()));
             modelAndView.setViewName("tournament/singleeliminationpage");
             return modelAndView;
         }
         modelAndView.addObject("tournament", singleElimination);
         modelAndView.addObject("teams", teamService.findTeamsByPlayer(loggedInUser));
         modelAndView.addObject("user", loggedInUser);
+        modelAndView.addObject("notifications",
+                notificationService.getAllNotificationsByReceiver(loggedInUser.getUserId()));
         modelAndView.setViewName("tournament/singleeliminationpage");
         return modelAndView;
     }

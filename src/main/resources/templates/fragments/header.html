@@ -5,16 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-  <script th:src="@{js/navbar.js}"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+  <!--th:src="@{js/navbar.js}"></script-->
 </head>
 
+<!-- Define as Thymeleaf fragment -->
 <header th:fragment="header" style="background-color: lightgrey;">
+  <!-- Notification Script -->
+  <script th:src='@{/js/notification.js}'></script>
+
+  <!-- Headers -->
   <div class="container-fluid">
     <h1 class='heading' style='font-size: 50px; font-weight: bold; text-align: center'>adesso Kicker</h1>
     <h3 class='heading' style="text-align: center">Kicker Turnier- und Ranking Tool</h3>
   </div>
+
+  <!-- Nav bar -->
   <nav class="navbar navbar-expand navbar-dark bg-dark" id="navbar">
+    <!-- (Left) Title -->
     <a class="navbar-brand" href="/">Adesso Kicker</a>
+    <!-- (Left) Elements -->
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
@@ -34,8 +44,29 @@
         </li>
       </ul>
     </div>
+    <!-- (Right) Elements -->
     <div class="navbar-collapse collapse">
       <ul class="navbar-nav ml-auto">
+        <!-- Notifications -->
+        <li class="nav-item dropdown" th:if="${user != null}">
+          <a th:if="${notifications.size() > 0}" class="nav-link dropdown-toggle" href="#" th:text="'Notification (' + ${notifications.size()} + ')'" data-toggle="dropdown">ERROR: Notifications</a>
+          <a th:if="${notifications.size() <= 0}" class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Notifications</a>
+          <!-- Notification-List -->
+          <div class="dropdown-menu" id="notificationList">
+            <div class="dropdown-item" th:if="${notifications.isEmpty()}"><a>You dont have notifications</a></div>
+            <!-- th:each (notification) -->
+            <div class="notificationList_El dropdown-item" th:each="n : ${notifications}" th:attr="value = ${n.notificationId}">
+              <div style="width: 150px; white-space: normal; padding-bottom: 10px" class="notificationList_El_Text font-weight-bold" th:text="${n.sendDate}">ERROR: Displaying Notification</div>
+              <div style="width: 150px; white-space: normal; padding-bottom: 10px" class="notificationList_El_Text" th:text="${n.message}">ERROR: Displaying Notification</div>
+              <button th:onclick="'javascript:acceptNotification(\'' + ${n.notificationId} + '\');'" class="notificationList_El_AcceptBT btn btn-dark font-weight-bold">Accept</button>
+              <button th:onclick="'javascript:deleteNotification(\'' + ${n.notificationId} + '\');'" class="notificationList_El_DeclineBT btn btn-dark font-weight-bold">Decline</button>
+              <hr>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item" th:if="${user != null}">
+          <a class="nav-link" th:text="'Eingeloggt als: ' + ${user.firstName} + ' ' + ${user.lastName}">ERROR: Logged-in user</a>
+        </li>
         <li class="nav-item" th:if="${user != null}">
           <a class="nav-link" th:href="@{/logout}">Logout</a>
         </li>
@@ -48,7 +79,7 @@
       </ul>
     </div>
   </nav>
-  <!--<script type='text/javascript' th:src='@{/js/notification.js}'></script>-->
+  <!-- Nav bar Script -->
   <script type='text/javascript' th:src='@{/js/navbar.js}'></script>
 </header>
 </html>

@@ -5,6 +5,7 @@ import de.adesso.kicker.user.User;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Entity
 @Table(name = "team")
@@ -92,5 +93,22 @@ public class Team {
     public String toString() {
         return "Team{" + "teamId=" + teamId + ", teamName='" + teamName + '\'' + ", teamWins=" + teamWins
                 + ", teamLosses=" + teamLosses + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Team team = (Team) o;
+        return teamId == team.teamId && teamWins == team.teamWins && teamLosses == team.teamLosses
+                && Objects.equals(teamName, team.teamName) && Objects.equals(playerA, team.playerA)
+                && Objects.equals(playerB, team.playerB);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(teamId, teamName, teamWins, teamLosses, playerA, playerB);
     }
 }

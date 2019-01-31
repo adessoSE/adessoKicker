@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
+import de.adesso.kicker.notification.teamjoinrequest.TeamJoinRequest;
 import de.adesso.kicker.user.User;
 
 public interface NotificationRepository extends CrudRepository<Notification, Long> {
@@ -16,5 +17,5 @@ public interface NotificationRepository extends CrudRepository<Notification, Lon
     List<Notification> findBySender(User sender);
 
     // Get all Notifications that were received by a specific user
-    List<Notification> findByReceiver(User sender);
+    List<Notification> findByReceiver(User receiver);
 }

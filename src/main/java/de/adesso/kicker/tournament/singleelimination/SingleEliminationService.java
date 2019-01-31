@@ -1,13 +1,14 @@
 package de.adesso.kicker.tournament.singleelimination;
 
 import java.util.List;
-
 import javax.annotation.PostConstruct;
-
+import de.adesso.kicker.tournament.singleelimination.exception.PlayerInTournamentException;
+import de.adesso.kicker.tournament.singleelimination.exception.PlayerOfTeamInTournamentException;
+import de.adesso.kicker.tournament.singleelimination.exception.TeamAlreadyInTournamentException;
+import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import de.adesso.kicker.match.Match;
 import de.adesso.kicker.match.MatchService;
 import de.adesso.kicker.team.Team;
@@ -19,11 +20,14 @@ import de.adesso.kicker.user.User;
 public class SingleEliminationService extends TournamentService {
 
     private MatchService matchService;
+    private UserService userService;
 
     @Autowired
-    public SingleEliminationService(TournamentRepository tournamentRepository, MatchService matchService) {
+    public SingleEliminationService(TournamentRepository tournamentRepository, MatchService matchService,
+            UserService userService) {
         super(tournamentRepository);
         this.matchService = matchService;
+        this.userService = userService;
     }
 
     public void addTeamToTournament(SingleElimination singleElimination, Team team) {
@@ -103,10 +107,8 @@ public class SingleEliminationService extends TournamentService {
     public void joinTournament(SingleElimination singleElimination, Team team) {
         checkTeamInTournament(singleElimination, team);
         checkPlayerOfTeamInTournament(singleElimination, team);
-        addTeamToTournament(singleElimination, team);
-        addPlayer(singleElimination, team.getPlayerA());
-        addPlayer(singleElimination, team.getPlayerB());
-        saveTournament(singleElimination);
+        // tournamentJoinRequestService.saveTournamentJoinRequest((Tournament)
+        // singleElimination, userService.getLoggedInUser().getUserId(), team);
     }
 
     public void getTournamentPage(SingleElimination singleElimination, User loggedInUser) {
