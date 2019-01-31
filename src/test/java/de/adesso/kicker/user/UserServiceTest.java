@@ -35,7 +35,7 @@ class UserServiceTest {
 
         when(userRepository.findAll()).thenReturn(Arrays.asList(user, otherUser));
 
-        when(userRepository.findByUserId(anyLong())).thenReturn(null);
+        when(userRepository.findByUserId(anyString())).thenReturn(null);
         when(userRepository.findByUserId(eq(user.getUserId()))).thenReturn(user);
 
         when(userRepository.findByEmail(anyString())).thenReturn(null);

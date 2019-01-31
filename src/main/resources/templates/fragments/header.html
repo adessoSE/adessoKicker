@@ -12,8 +12,6 @@
 <!-- Define as Thymeleaf fragment -->
 <header th:fragment="header" style="background-color: lightgrey;">
   <!-- Notification Script -->
-  <script th:src='@{/js/notification.js}'></script>
-
   <!-- Headers -->
   <div class="container-fluid">
     <h1 class='heading' style='font-size: 50px; font-weight: bold; text-align: center'>adesso Kicker</h1>
@@ -31,16 +29,7 @@
           <a class="nav-link" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/tournaments}">Turniere</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" th:href="@{/users/list}">Users</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/teams}">Teams</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/matches}">Matches</a>
         </li>
       </ul>
     </div>
@@ -48,22 +37,6 @@
     <div class="navbar-collapse collapse">
       <ul class="navbar-nav ml-auto">
         <!-- Notifications -->
-        <li class="nav-item dropdown" th:if="${user != null}">
-          <a th:if="${notifications.size() > 0}" class="nav-link dropdown-toggle" href="#" th:text="'Notification (' + ${notifications.size()} + ')'" data-toggle="dropdown">ERROR: Notifications</a>
-          <a th:if="${notifications.size() <= 0}" class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Notifications</a>
-          <!-- Notification-List -->
-          <div class="dropdown-menu" id="notificationList">
-            <div class="dropdown-item" th:if="${notifications.isEmpty()}"><a>You dont have notifications</a></div>
-            <!-- th:each (notification) -->
-            <div class="notificationList_El dropdown-item" th:each="n : ${notifications}" th:attr="value = ${n.notificationId}">
-              <div style="width: 150px; white-space: normal; padding-bottom: 10px" class="notificationList_El_Text font-weight-bold" th:text="${n.sendDate}">ERROR: Displaying Notification</div>
-              <div style="width: 150px; white-space: normal; padding-bottom: 10px" class="notificationList_El_Text" th:text="${n.message}">ERROR: Displaying Notification</div>
-              <button th:onclick="'javascript:acceptNotification(\'' + ${n.notificationId} + '\');'" class="notificationList_El_AcceptBT btn btn-dark font-weight-bold">Accept</button>
-              <button th:onclick="'javascript:deleteNotification(\'' + ${n.notificationId} + '\');'" class="notificationList_El_DeclineBT btn btn-dark font-weight-bold">Decline</button>
-              <hr>
-            </div>
-          </div>
-        </li>
         <li class="nav-item" th:if="${user != null}">
           <a class="nav-link" th:text="'Eingeloggt als: ' + ${user.firstName} + ' ' + ${user.lastName}">ERROR: Logged-in user</a>
         </li>

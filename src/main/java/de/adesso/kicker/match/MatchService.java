@@ -91,12 +91,6 @@ public class MatchService {
 
     }
 
-    public void identicalTeams(Match match) {
-        if (match.getTeamA().getTeamId() == match.getTeamB().getTeamId()) {
-            throw new IdenticalTeamsException();
-        }
-    }
-
     private Date yesterday() {
         final Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
