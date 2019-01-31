@@ -34,10 +34,10 @@ public class MatchCreationRequest extends Notification {
         this.time = time;
         this.kicker = kicker;
         this.matchCreationValidation = matchCreationValidation;
-        setMessage(generateMessage());
-        setType(NotificationType.MatchCreationRequest);
+        setType(NotificationType.MATCH_CREATION_REQUEST);
     }
 
+    @Override
     public String generateMessage() {
         return getSender().getFirstName() + " " + getSender().getLastName() + " asked you to play a match: "
                 + getGermanDate() + " " + time + " " + teamA.getTeamName() + " vs. " + teamB.getTeamName() + " at "

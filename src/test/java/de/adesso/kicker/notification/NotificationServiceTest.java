@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,8 +53,9 @@ class NotificationServiceTest {
                 .thenReturn(notification);
         when(notificationRepository.findAll())
                 .thenReturn(Arrays.asList(notification, otherNotification, altNotification1, altNotification2));
-        when(notificationRepository.findByReceiver(any(User.class))).thenReturn(Arrays.asList(otherNotification));
-        when(notificationRepository.findBySender(any(User.class))).thenReturn(Arrays.asList(notification));
+        when(notificationRepository.findByReceiver(any(User.class)))
+                .thenReturn(Collections.singletonList(otherNotification));
+        when(notificationRepository.findBySender(any(User.class))).thenReturn(Collections.singletonList(notification));
     }
 
     // Test --> Try adding a notification (type = Notification)
@@ -66,31 +68,25 @@ class NotificationServiceTest {
     @Test
     void saveNotification_ValidInput() {
 
-        notificationService.saveNotification(otherUser.getUserId(), user.getUserId(), anyString());
-    }
-
-    @Test
-    void saveNotification_NullMessage() {
-
-        notificationService.saveNotification(otherUser.getUserId(), user.getUserId(), null);
+        notificationService.saveNotification(otherUser.getUserId(), user.getUserId());
     }
 
     @Test
     void saveNotification_NullSender() {
 
-        notificationService.saveNotification(otherUser.getUserId(), -1L, anyString());
+        notificationService.saveNotification(otherUser.getUserId(), -1L);
     }
 
     @Test
     void saveNotification_NullReceiver() {
 
-        notificationService.saveNotification(-1L, user.getUserId(), anyString());
+        notificationService.saveNotification(-1L, user.getUserId());
     }
 
     @Test
     void saveNotification_NullSenderAndReceiver() {
 
-        notificationService.saveNotification(-1L, -1L, anyString());
+        notificationService.saveNotification(-1L, -1L);
     }
 
     @Test
@@ -110,7 +106,7 @@ class NotificationServiceTest {
     void getNotificationById_Null() {
 
         Notification n = notificationService.getNotificationById(-1L);
-        assertEquals(null, n);
+        assertNull(n);
     }
 
     @Test

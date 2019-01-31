@@ -11,14 +11,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class NotificationController {
 
     private NotificationService notificationService;
-    private TeamJoinRequestService teamJoinRequestService;
 
     @Autowired
-    public NotificationController(NotificationService notificationService,
-            TeamJoinRequestService teamJoinRequestService) {
+    public NotificationController(NotificationService notificationService) {
 
         this.notificationService = notificationService;
-        this.teamJoinRequestService = teamJoinRequestService;
     }
 
     @GetMapping("/notifications")
@@ -60,9 +57,9 @@ public class NotificationController {
     }
 
     @PostMapping("/notifications/add")
-    public ModelAndView addNotificationAddPage(Long senderId, Long receiverId, String message) {
+    public ModelAndView addNotificationAddPage(Long senderId, Long receiverId) {
 
-        notificationService.saveNotification(senderId, receiverId, message);
+        notificationService.saveNotification(senderId, receiverId);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/notification/add");

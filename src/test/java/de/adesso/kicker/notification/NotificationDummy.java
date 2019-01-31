@@ -7,19 +7,19 @@ class NotificationDummy {
     private UserDummy userDummy = new UserDummy();
 
     Notification defaultNotification() {
-        return new Notification(userDummy.alternateUser(), userDummy.defaultUser(), "Test-Message 1");
+        return new Notification(userDummy.alternateUser(), userDummy.defaultUser());
     }
 
     Notification alternateNotification() {
-        return new Notification(userDummy.alternateUser2(), userDummy.alternateUser1(), "Test-Message 2");
+        return new Notification(userDummy.alternateUser2(), userDummy.alternateUser1());
     }
 
     Notification alternateNotification1() {
-        return new Notification(userDummy.alternateUser3(), userDummy.alternateUser2(), "Test-Message 3");
+        return new Notification(userDummy.alternateUser3(), userDummy.alternateUser2());
     }
 
     Notification alternateNotification2() {
-        return new Notification(userDummy.alternateUser4(), userDummy.alternateUser3(), "Test-Message 4");
+        return new Notification(userDummy.alternateUser4(), userDummy.alternateUser3());
     }
 
     Notification nullNotification() {

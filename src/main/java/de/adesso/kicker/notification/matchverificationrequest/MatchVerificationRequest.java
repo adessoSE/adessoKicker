@@ -26,8 +26,7 @@ public class MatchVerificationRequest extends Notification {
         this.match = match;
         this.winner = winner;
         this.tournament = tournament;
-        setMessage(generateMessage());
-        setType(NotificationType.MatchVerificationRequest);
+        setType(NotificationType.MATCH_VERIFICATION_REQUEST);
     }
 
     public Team getWinner() {
@@ -42,6 +41,7 @@ public class MatchVerificationRequest extends Notification {
         return this.tournament;
     }
 
+    @Override
     public String generateMessage() {
         return "Please verify if team " + this.winner.getTeamName() + " has won the match on " + match.getKicker()
                 + " at " + match.getGermanDate();

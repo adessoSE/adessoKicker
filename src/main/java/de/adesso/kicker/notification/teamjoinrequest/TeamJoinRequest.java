@@ -17,10 +17,10 @@ public class TeamJoinRequest extends Notification {
 
         super(sender, receiver);
         this.teamName = teamName;
-        setMessage(generateMessage());
-        setType(NotificationType.TeamJoinRequest);
+        setType(NotificationType.TEAM_JOIN_REQUEST);
     }
 
+    @Override
     public String generateMessage() {
         return getSender().getFirstName() + " " + getSender().getLastName() + " has invited you to join team: "
                 + teamName;

@@ -24,25 +24,19 @@ public class Notification {
 
     private Date sendDate;
 
-    private String message;
-
     public Notification() {
 
-        this.type = NotificationType.Notification;
     }
 
     public Notification(User sender, User receiver) {
-
-        this();
+        this.type = NotificationType.NOTIFICATION;
         this.receiver = receiver;
         this.sender = sender;
         this.sendDate = new Date();
     }
 
-    public Notification(User sender, User receiver, String message) {
-
-        this(sender, receiver);
-        this.message = message;
+    public String generateMessage() {
+        return "";
     }
 
     public long getNotificationId() {
@@ -77,14 +71,6 @@ public class Notification {
         this.sendDate = sendDate;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public NotificationType getType() {
         return type;
     }
@@ -96,7 +82,7 @@ public class Notification {
     @Override
     public String toString() {
         return "Notification{" + "notificationId=" + notificationId + ", notificationType=" + ", receiver=" + receiver
-                + ", sender=" + sender + ", sendDate=" + sendDate + ", message=" + message;
+                + ", sender=" + sender + ", sendDate=" + sendDate;
 
     }
 }

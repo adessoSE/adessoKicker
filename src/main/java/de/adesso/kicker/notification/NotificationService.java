@@ -33,6 +33,7 @@ public class NotificationService {
         this.teamJoinRequestService = teamJoinRequestService;
         this.tournamentJoinRequestService = tournamentJoinRequestService;
         this.matchCreationRequestService = matchCreationRequestService;
+        this.matchVerificationRequestService = matchVerificationRequestService;
     }
 
     public Notification getNotificationById(long id) {
@@ -42,7 +43,6 @@ public class NotificationService {
 
     public List<Notification> getAllNotifications() {
 
-        Notification n = new Notification();
         List<Notification> notifications = new ArrayList<>();
         notificationRepository.findAll().forEach(notifications::add);
         return notifications;
@@ -69,17 +69,13 @@ public class NotificationService {
     public List<Notification> getAllNotificationsBySender(long senderId) {
 
         User sender = userService.getUserById(senderId);
-        List<Notification> notifications = new ArrayList<>();
-        notificationRepository.findBySender(sender).forEach(notifications::add);
-        return notifications;
+        return new ArrayList<>(notificationRepository.findBySender(sender));
     }
 
     public List<Notification> getAllNotificationsByReceiver(long receiverId) {
 
         User receiver = userService.getUserById(receiverId);
-        List<Notification> notifications = new ArrayList<>();
-        notificationRepository.findByReceiver(receiver).forEach(notifications::add);
-        return notifications;
+        return new ArrayList<>(notificationRepository.findByReceiver(receiver));
     }
 
     // Accepts a notification passed on type (enum)
@@ -87,21 +83,21 @@ public class NotificationService {
 
         Notification n = getNotificationById(id);
         switch (n.getType()) {
-        case Notification:
+        case NOTIFICATION:
             removeNotificationById(id);
             break;
-        case TeamJoinRequest:
+        case TEAM_JOIN_REQUEST:
             teamJoinRequestService.acceptTeamJoinRequest(id);
             removeNotificationById(id);
             break;
-        case MatchCreationRequest:
+        case MATCH_CREATION_REQUEST:
             matchCreationRequestService.acceptMatchJoinRequest(id);
             break;
-        case TournamentJoinRequest:
+        case TOURNAMENT_JOIN_REQUEST:
             tournamentJoinRequestService.acceptTournamentJoinRequest(id);
             removeNotificationById(id);
             break;
-        case MatchVerificationRequest:
+        case MATCH_VERIFICATION_REQUEST:
             matchVerificationRequestService.acceptMatchVerificationRequest(id);
             removeNotificationById(id);
             break;
@@ -119,13 +115,13 @@ public class NotificationService {
         notificationRepository.save(notification);
     }
 
-    public void saveNotification(long senderId, long receiverId, String message) {
+    public void saveNotification(long senderId, long receiverId) {
 
-        saveNotification(createNotification(senderId, receiverId, message));
+        saveNotification(createNotification(senderId, receiverId));
     }
 
     // Try to create a notification
-    public Notification createNotification(long senderId, long receiverId, String message) {
+    public Notification createNotification(long senderId, long receiverId) {
 
         User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
@@ -143,7 +139,7 @@ public class NotificationService {
             return null;
         }
 
-        return new Notification(sender, receiver, message);
+        return new Notification(sender, receiver);
     }
 
     public void removeNotificationById(long id) {
@@ -155,10 +151,10 @@ public class NotificationService {
 
         Notification notification = getNotificationById(id);
         switch (notification.getType()) {
-        case MatchCreationRequest:
+        case MATCH_CREATION_REQUEST:
             matchCreationRequestService.declineMatchJoinRequest(id);
             break;
-        case MatchVerificationRequest:
+        case MATCH_VERIFICATION_REQUEST:
             matchVerificationRequestService.declineMatchVerificationRequest(id);
             break;
         default:

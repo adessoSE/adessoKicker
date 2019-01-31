@@ -58,13 +58,12 @@ public class TeamJoinRequestService {
             return null;
         }
 
-        TeamJoinRequest teamJoinRequest = new TeamJoinRequest(receiver, sender, teamName);
-        return teamJoinRequest;
+        return new TeamJoinRequest(receiver, sender, teamName);
     }
 
     public void saveTeamJoinRequest(long senderId, long receiverId, String teamName) {
 
-        if (senderId < 0 || receiverId < 0 || teamName == "") {
+        if (senderId < 0 || receiverId < 0 || teamName.equals("")) {
             System.err.println("ERROR at 'TeamJoinRequestService' --> 'saveTeamJoinRequest()' : Invalid argument");
             return;
         }

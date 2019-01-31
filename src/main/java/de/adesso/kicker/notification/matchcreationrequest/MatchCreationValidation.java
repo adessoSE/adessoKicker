@@ -1,6 +1,9 @@
 package de.adesso.kicker.notification.matchcreationrequest;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class MatchCreationValidation {
@@ -11,7 +14,6 @@ public class MatchCreationValidation {
     private short numVerified;
 
     public MatchCreationValidation() {
-        this.numVerified = 0;
     }
 
     public long getId() {

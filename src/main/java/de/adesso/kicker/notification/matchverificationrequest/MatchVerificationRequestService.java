@@ -1,7 +1,6 @@
 package de.adesso.kicker.notification.matchverificationrequest;
 
 import de.adesso.kicker.match.Match;
-import de.adesso.kicker.notification.NotificationService;
 import de.adesso.kicker.team.Team;
 import de.adesso.kicker.tournament.Tournament;
 import de.adesso.kicker.tournament.singleelimination.SingleElimination;
@@ -103,8 +102,7 @@ public class MatchVerificationRequestService {
                     "ERROR at 'MatchVerificationRequestService' --> 'createMatchVerificationRequest()' : winner team is NULL ");
             return null;
         }
-        MatchVerificationRequest request = new MatchVerificationRequest(sender, receiver, match, winner, tournament);
-        return request;
+        return new MatchVerificationRequest(sender, receiver, match, winner, tournament);
     }
 
     public void saveMatchVerificationRequest(User sender, User receiver, Match match, Team winner,
