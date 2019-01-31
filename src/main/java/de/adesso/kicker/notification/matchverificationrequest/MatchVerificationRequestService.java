@@ -36,15 +36,15 @@ public class MatchVerificationRequestService {
             System.err.println(
                     "ERROR at 'MatchVerificationRequestService' --> 'acceptMatchVerificationRequest()' : cannot find MatchVerificationRequest with id: "
                             + notificationId);
-            return;
-        }
-        matchVerificationRequest.getMatch().setWinner(matchVerificationRequest.getWinner());
+        } else {
+            matchVerificationRequest.getMatch().setWinner(matchVerificationRequest.getWinner());
 
-        if (matchVerificationRequest.getTournament() instanceof SingleElimination) {
-            singleEliminationService.advanceWinner((SingleElimination) matchVerificationRequest.getTournament(),
-                    matchVerificationRequest.getMatch());
+            if (matchVerificationRequest.getTournament() instanceof SingleElimination) {
+                singleEliminationService.advanceWinner((SingleElimination) matchVerificationRequest.getTournament(),
+                        matchVerificationRequest.getMatch());
+            }
+            matchVerificationRequestRepository.deleteByMatch(matchVerificationRequest.getMatch());
         }
-        matchVerificationRequestRepository.deleteByMatch(matchVerificationRequest.getMatch());
     }
 
     public void declineMatchVerificationRequest(long notificationId) {
@@ -56,16 +56,16 @@ public class MatchVerificationRequestService {
             System.err.println(
                     "ERROR at 'MatchVerificationRequestService' --> 'declineMatchVerificationRequest()' : cannot find MatchVerificationRequest with id: "
                             + notificationId);
-            return;
+        } else {
+            User decliner = userService.getLoggedInUser();
+            matchVerificationRequestRepository.deleteByMatch(matchVerificationRequest.getMatch());
+            // Circular dependency :(
+            // notificationService.createNotification(decliner.getUserId(),
+            // matchVerificationRequest.getSender().getUserId(), decliner.getFirstName() + "
+            // " + decliner.getLastName() + " declined your request to set team " +
+            // matchVerificationRequest.getWinner().getTeamName() + " as the winner of the
+            // match from " + matchVerificationRequest.getMatch().getGermanDate());
         }
-        User decliner = userService.getLoggedInUser();
-        matchVerificationRequestRepository.deleteByMatch(matchVerificationRequest.getMatch());
-        // Circular dependency :(
-        // notificationService.createNotification(decliner.getUserId(),
-        // matchVerificationRequest.getSender().getUserId(), decliner.getFirstName() + "
-        // " + decliner.getLastName() + " declined your request to set team " +
-        // matchVerificationRequest.getWinner().getTeamName() + " as the winner of the
-        // match from " + matchVerificationRequest.getMatch().getGermanDate());
 
     }
 
@@ -77,16 +77,16 @@ public class MatchVerificationRequestService {
         if (matchVerificationRequestRepository.findByMatch(match) != null) {
             System.err.println(
                     "ERROR at 'MatchVerificationRequestService' --> 'generateMatchVerificationRequests()' : requests for this match already send");
-            return;
-        }
-
-        if (sender == winner.getPlayerB() || sender == winner.getPlayerA()) {
-            receiverTeam = (match.getTeamA() == winner ? match.getTeamB() : match.getTeamA());
         } else {
-            receiverTeam = (match.getTeamA() == winner ? match.getTeamA() : match.getTeamB());
+
+            if (sender == winner.getPlayerB() || sender == winner.getPlayerA()) {
+                receiverTeam = (match.getTeamA() == winner ? match.getTeamB() : match.getTeamA());
+            } else {
+                receiverTeam = (match.getTeamA() == winner ? match.getTeamA() : match.getTeamB());
+            }
+            saveMatchVerificationRequest(sender, receiverTeam.getPlayerA(), match, winner, tournament);
+            saveMatchVerificationRequest(sender, receiverTeam.getPlayerB(), match, winner, tournament);
         }
-        saveMatchVerificationRequest(sender, receiverTeam.getPlayerA(), match, winner, tournament);
-        saveMatchVerificationRequest(sender, receiverTeam.getPlayerB(), match, winner, tournament);
     }
 
     public MatchVerificationRequest createMatchVerificationRequest(User sender, User receiver, Match match, Team winner,

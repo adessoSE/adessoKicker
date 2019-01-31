@@ -32,19 +32,17 @@ public class TournamentJoinRequestService {
             System.err.println(
                     "ERROR at 'TournamentJoinRequestService' --> 'acceptTournamentJoinRequest()' : Cannot find TournamentJoinRequest with id "
                             + notificationId);
-            return;
+        } else {
+            TournamentJoinRequest request = (TournamentJoinRequest) notificationRepository
+                    .findByNotificationId(notificationId);
+            // Can only be done here! Otherwise it would cause a circular dependency
+            // (SingularEliminationService <--> TournamentJoinRequestService)
+            singleEliminationService.addTeamToTournament((SingleElimination) request.getTargetTournament(),
+                    request.getTargetTeam());
+            singleEliminationService.addPlayer(request.getTargetTournament(), request.getTargetTeam().getPlayerA());
+            singleEliminationService.addPlayer(request.getTargetTournament(), request.getTargetTeam().getPlayerB());
+            singleEliminationService.saveTournament(request.getTargetTournament());
         }
-        TournamentJoinRequest request = (TournamentJoinRequest) notificationRepository
-                .findByNotificationId(notificationId);
-        // Can only be done here! Otherwise it would cause a circular dependency
-        // (SingularEliminationService <--> TournamentJoinRequestService)
-        singleEliminationService.addTeamToTournament((SingleElimination) request.getTargetTournament(),
-                request.getTargetTeam());
-        singleEliminationService.addPlayer((SingleElimination) request.getTargetTournament(),
-                request.getTargetTeam().getPlayerA());
-        singleEliminationService.addPlayer((SingleElimination) request.getTargetTournament(),
-                request.getTargetTeam().getPlayerB());
-        singleEliminationService.saveTournament((SingleElimination) request.getTargetTournament());
     }
 
     public TournamentJoinRequest createTournamentJoinRequest(long senderId, Team team, Tournament tournament) {
@@ -83,9 +81,9 @@ public class TournamentJoinRequestService {
         if (tournamentJoinRequest == null) {
             System.err.println(
                     "ERROR at 'TournamentService' --> 'saveTournamentJoinRequest' : Given TournamentJoinRequest is null");
-            return;
+        } else {
+            notificationRepository.save(tournamentJoinRequest);
         }
-        notificationRepository.save(tournamentJoinRequest);
     }
 
     public void saveTournamentJoinRequest(long senderId, Team team, Tournament tournament) {

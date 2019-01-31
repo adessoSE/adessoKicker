@@ -81,8 +81,8 @@ public class NotificationService {
     // Accepts a notification passed on type (enum)
     public void acceptNotificationById(long id) {
 
-        Notification n = getNotificationById(id);
-        switch (n.getType()) {
+        Notification notification = getNotificationById(id);
+        switch (notification.getType()) {
         case NOTIFICATION:
             removeNotificationById(id);
             break;
@@ -101,8 +101,6 @@ public class NotificationService {
             matchVerificationRequestService.acceptMatchVerificationRequest(id);
             removeNotificationById(id);
             break;
-        default:
-            removeNotificationById(id);
         }
     }
 
