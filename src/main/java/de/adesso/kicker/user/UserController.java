@@ -1,12 +1,10 @@
 package de.adesso.kicker.user;
 
-import de.adesso.kicker.notification.NotificationService;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -14,38 +12,29 @@ import org.springframework.web.servlet.ModelAndView;
  *
  * @author caylak
  */
-@RestController
+@Controller
 public class UserController {
 
     private UserService userService;
-    private NotificationService notificationService;
 
     @Autowired
-    public UserController(UserService userService, NotificationService notificationService) {
+    public UserController(UserService userService) {
 
         this.userService = userService;
-        this.notificationService = notificationService;
     }
 
-    /**
-     * getLoggedInUser() gets the current user.
-     *
-     * @return ModelAndView
-     */
-    @GetMapping(value = { "", "/", "home" })
+    @GetMapping("/home")
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
-        User user = userService.getLoggedInUser();
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
+        modelAndView.addObject("user", userService.getLoggedInUser());
         modelAndView.setViewName("user/home");
         return modelAndView;
     }
 
-    @GetMapping(value = "/impressum")
+    @GetMapping("/impressum")
     public ModelAndView impressum() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("./impressum");
+        modelAndView.setViewName("/impressum");
         return modelAndView;
     }
 
@@ -56,10 +45,10 @@ public class UserController {
      * @return ModelAndView
      */
     @GetMapping("/users/{id}")
-    public ModelAndView getUser(@PathVariable long id) {
+    public ModelAndView getUser(@PathVariable String id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getUserById(id));
-        modelAndView.setViewName("user/_profile");
+        modelAndView.setViewName("user/profile");
         return modelAndView;
     }
 
@@ -71,9 +60,9 @@ public class UserController {
     @GetMapping("/users/you")
     public ModelAndView getUserYourself() {
         ModelAndView modelAndView = new ModelAndView();
-        User user = userService.getLoggedInUser();
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("user/_profile");
+        userService.getLoggedInUser();
+        modelAndView.addObject("user", userService.getLoggedInUser());
+        modelAndView.setViewName("user/profile");
         return modelAndView;
     }
 

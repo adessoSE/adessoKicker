@@ -13,7 +13,7 @@ public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long teamId;
+    private String teamId;
 
     @NotNull
     @Size(min = 1, max = 30, message = "Der Teamname muss zwischen 1 - 30 Zeichen lang sein.")
@@ -41,11 +41,11 @@ public class Team {
         this.teamLosses = 0;
     }
 
-    public long getTeamId() {
+    public String getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(long teamId) {
+    public void setTeamId(String teamId) {
         this.teamId = teamId;
     }
 

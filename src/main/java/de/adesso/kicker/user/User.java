@@ -1,71 +1,47 @@
 package de.adesso.kicker.user;
 
-import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import de.adesso.kicker.role.Role;
 
 @Entity
 @Table(name = "user")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long userId;
+    private String userId;
 
     @NotNull
-    @NotBlank(message = "Please enter your first name")
-    @Size(max = 30, message = "Your first name can't be longer than 30 characters")
     private String firstName;
 
     @NotNull
-    @NotBlank(message = "Please enter your last name")
-    @Size(max = 30, message = "Your last name can't be longer than 30 characters")
     private String lastName;
 
     @NotNull
-    @NotBlank(message = "Please enter a valid password")
-    @Size(min = 8, max = 100, message = "Your password has to be between 8 and 100 characters long")
-    private String password;
-
-    @Email(message = "Please enter a valid e-Mail address")
     private String email;
-
-    // Rename to verified
-    private int active;
 
     private long wins;
 
     private long losses;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
-
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String password) {
+    public User(String userId, String firstName, String lastName, String email) {
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
-        this.active = 0;
         this.wins = 0;
         this.losses = 0;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
@@ -85,14 +61,6 @@ public class User {
         return lastName;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -109,14 +77,6 @@ public class User {
         return losses;
     }
 
-    public void setActive(int active) {
-        this.active = active;
-    }
-
-    public int getActive() {
-        return active;
-    }
-
     public void increaseWins() {
 
         this.wins += 1;
@@ -125,14 +85,6 @@ public class User {
     public void increaseLosses() {
 
         this.losses += 1;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
     }
 
     public void setWins(long wins) {
@@ -145,9 +97,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\''
-                + ", password='" + password + '\'' + ", email='" + email + '\'' + ", active=" + active + ", wins="
-                + wins + ", losses=" + losses + ", roles=" + roles + '}';
+        return "User{" + "userId='" + userId + '\'' + ", firstName='" + firstName + '\'' + ", lastName='" + lastName
+                + '\'' + ", email='" + email + '\'' + ", wins=" + wins + ", losses=" + losses + '}';
     }
 
     @Override

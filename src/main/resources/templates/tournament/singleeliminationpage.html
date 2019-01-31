@@ -28,7 +28,7 @@
   </div>
 </div>
 <div class="container" th:if="${user} != null">
-  <form class="form" autocomplete="off" action="#" th:action="@{/tournaments/} + ${tournamentId} + '?join'" th:object="${tournament}" method="POST">
+  <form class="form" autocomplete="off" th:action="@{/tournaments/} + ${tournamentId} + '?join'" th:object="${tournament}" method="POST">
     <div class="form-group form">
       <label for="teams" th:if="${teams} != null"></label>
       <select class="form-control" id="teams" name="id"  th:if="${teams} != null and ${!teams.empty}">
@@ -39,8 +39,8 @@
         </option>
       </select>
     </div>
-    <button th:if="${teams} != null and ${!teams.empty}" type="submit" class="btn btn-primary btn-block" name="id">Turnier beitreten</button>
-    <button th:if="${teams == null}" type="button" class="btn btn-muted btn-block disabled" disabled name="id">Du bist bereits in diesem Turnier</button>
+    <button th:if="${teams} != null and ${!teams.empty}" type="submit" class="btn btn-primary btn-block">Turnier beitreten</button>
+    <button th:if="${teams == null}" type="button" class="btn btn-muted btn-block disabled" disabled>Du bist bereits in diesem Turnier</button>
     <button th:if="${teams} != null and ${teams.empty}" type="button" class="btn btn-danger btn-block disabled" disabled name="id">Du bist in keinem Team</button>
     <span id="success" th:utext="${successMessage}"></span>
     <span id="fail" th:utext="${failMessage}"></span>

@@ -62,6 +62,7 @@ public class SingleEliminationController implements TournamentControllerInterfac
         }
         modelAndView.addObject("tournament", singleElimination);
         modelAndView.addObject("teams", teamService.findTeamsByPlayer(loggedInUser));
+        System.out.println(teamService.findTeamsByPlayer(loggedInUser));
         modelAndView.addObject("user", loggedInUser);
         modelAndView.addObject("notifications",
                 notificationService.getAllNotificationsByReceiver(loggedInUser.getUserId()));
@@ -102,8 +103,9 @@ public class SingleEliminationController implements TournamentControllerInterfac
     }
 
     @Override
-    public ModelAndView postJoinTournament(SingleElimination tournament, long id) {
+    public ModelAndView postJoinTournament(SingleElimination tournament, String id) {
         ModelAndView modelAndView = new ModelAndView();
+        System.out.println("post join" + id);
         Team team = teamService.findTeamById(id);
         User loggedInUser = userService.getLoggedInUser();
 
