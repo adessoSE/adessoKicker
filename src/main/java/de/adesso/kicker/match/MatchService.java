@@ -1,99 +1,73 @@
 package de.adesso.kicker.match;
 
-import de.adesso.kicker.match.exception.PastDateException;
-import de.adesso.kicker.user.User;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import de.adesso.kicker.match.exception.InvalidCreatorException;
+import de.adesso.kicker.match.exception.SamePlayerMatchExeption;
+import de.adesso.kicker.match.exception.SamePlayerTeamException;
+import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Service that handles "MatchService" used in "MatchController".
- */
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MatchService {
 
     private MatchRepository matchRepository;
+    private UserService userService;
 
     @Autowired
-    public MatchService(MatchRepository matchRepository) {
-
+    public MatchService(MatchRepository matchRepository, UserService userService) {
         this.matchRepository = matchRepository;
+        this.userService = userService;
     }
 
-    private List<Match> matches;
-
-    /**
-     * getAllMatches() returns a list of all matches.
-     * 
-     * @return
-     */
     public List<Match> getAllMatches() {
-
-        matches = new ArrayList<>();
+        var matches = new ArrayList<Match>();
         matchRepository.findAll().forEach(matches::add);
         return matches;
     }
 
-    /**
-     * getMatchById() returns an unique match.
-     * 
-     * @param id
-     * @return
-     */
-    public Match getMatchById(long id) {
-
-        return matchRepository.findByMatchId(id);
-    }
-
-    /**
-     * getAllMatchesByUser() returns a list of all matches from an user.
-     * 
-     * @param user
-     * @return
-     */
-    public List<Match> getAllMatchesByUser(User user) {
-
-        matches = new ArrayList<>();
-        return matches;
-    }
-
-    /**
-     * saveMatch() saves a match object.
-     * 
-     * @param match
-     */
-    public Match saveMatch(Match match) {
-
+    public Match addMatchEntry(Match match) {
+        checkSamePlayerMatch(match);
+        checkSamePlayerTeam(match);
+        checkCurrentUser(match);
         return matchRepository.save(match);
     }
 
-    /**
-     * deleteMatch() deletes an unique match by it's id.
-     * 
-     * @param id
-     */
-    public void deleteMatch(long id) {
+    public Match getMatchById(long id) {
+        return matchRepository.findByMatchId(id);
+    }
 
+    public Match saveMatch(Match match) {
+        return matchRepository.save(match);
+    }
+
+    public void deleteMatch(long id) {
         matchRepository.deleteById(id);
     }
 
-    public void denyPastDate(Match match) {
-        Date currentDate = new Date();
-        if (match.getDate().after(currentDate)) {
-        } else {
-            throw new PastDateException();
+    private void checkSamePlayerMatch(Match match) {
+        if (match.getTeamAPlayer1().equals(match.getTeamBPlayer1())
+                || Objects.equals(match.getTeamAPlayer1(), match.getTeamBPlayer2())
+                || Objects.equals(match.getTeamBPlayer1(), match.getTeamAPlayer2())
+                || (Objects.equals(match.getTeamAPlayer2(), match.getTeamBPlayer2())
+                && match.getTeamAPlayer2() != null)) {
+            throw new SamePlayerMatchExeption();
         }
-
     }
 
-    private Date yesterday() {
-        final Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -1);
-        return cal.getTime();
+    private void checkSamePlayerTeam(Match match) {
+        if (Objects.equals(match.getTeamAPlayer1(), match.getTeamAPlayer2())
+                || Objects.equals(match.getTeamBPlayer1(), match.getTeamBPlayer2())) {
+            throw new SamePlayerTeamException();
+        }
     }
 
+    private void checkCurrentUser(Match match) {
+        if (match.getTeamAPlayer1().equals(userService.getLoggedInUser())) {
+            throw new InvalidCreatorException();
+        }
+    }
 }
