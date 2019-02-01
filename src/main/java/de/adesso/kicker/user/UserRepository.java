@@ -6,7 +6,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User, String> {
+
+    User findByUserId(String userId);
 
     /**
      * findByLastName() returns a list of users by their lastName.
@@ -23,14 +25,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
      * @return
      */
     User findByEmail(String email);
-
-    /**
-     * findByUserId() finds a user by it's id.
-     * 
-     * @param id
-     * @return
-     */
-    User findByUserId(Long id);
 
     /**
      * findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase() finds
