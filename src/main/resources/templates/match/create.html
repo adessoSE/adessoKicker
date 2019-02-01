@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Match eintragen</title>
+</head>
+<body>
+<form action="#" th:action="@{/matches/create}" th:object="${match}" method="post">
+  <div>
+    <label for="date">Datum:</label>
+    <input type="date" id="date" th:field="*{date}">
+  </div>
+  <div>
+    <label for="teamAPlayer1">Team A Spieler 1:</label>
+    <select name="teamAPlayer1" id="teamAPlayer1">
+      <option th:value="${currentUser.userId}"
+              th:text="${currentUser.userId}">
+      </option>
+    </select>
+  </div>
+  <div>
+    <label for="teamAPlayer2">Team A Spieler 2:</label>
+    <select id="teamAPlayer2" name="teamAPlayer2">
+      <option value="" disabled hidden selected>Spieler...</option>
+      <option th:each="user : ${users}"
+              th:value="${user.userId}"
+              th:text="${user.userId}">
+      </option>
+    </select>
+  </div>
+  <div>
+    <label for="teamBPlayer1">Team B Spieler 1:</label>
+    <select id="teamBPlayer1" name="teamBPlayer1">
+      <option value="" disabled hidden selected>Spieler...</option>
+      <option th:each="user :${users}"
+              th:value="${user.userId}"
+              th:text="${user.userId}">
+      </option>
+    </select>
+  </div>
+  <div>
+    <label for="teamBPlayer2">Team B Spieler 2:</label>
+    <select id="teamBPlayer2" name="teamBPlayer2">
+      <option value="" selected hidden disabled>Spieler...</option>
+      <option th:each="user :${users}"
+              th:value="${user.userId}"
+              th:text="${user.userId}">
+      </option>
+    </select>
+  </div>
+  <div>
+    <button type="submit">Erstellen</button>
+  </div>
+</form>
+</body>
+</html>
