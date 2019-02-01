@@ -1,13 +1,14 @@
 package de.adesso.kicker.match;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
-import de.adesso.kicker.team.Team;
-import org.springframework.format.annotation.DateTimeFormat;
+import java.util.Objects;
 
 @Entity
 @Table(name = "match")
@@ -25,23 +26,12 @@ public class Match {
     @NotNull(message = "Bitte eine Uhrzeit wählen.")
     @DateTimeFormat(pattern = "HH:mm")
     @Temporal(TemporalType.TIME)
+    @Nullable
     private Date time;
-
-    @OneToOne(targetEntity = Team.class)
-    private Team winner;
 
     private String kicker;
 
-    @ManyToOne(targetEntity = Team.class)
-    private Team teamA;
-
-    @ManyToOne(targetEntity = Team.class)
-    private Team teamB;
-
     public Match() {
-        date = new Date();
-        time = new Date();
-
     }
 
     public String getGermanDate() {
@@ -50,14 +40,11 @@ public class Match {
         return germanDate;
     }
 
-    public Match(Date date, Date time, String kicker, Team teamA, Team teamB) {
+    public Match(Date date, Date time, String kicker) {
 
         this.date = date;
         this.time = time;
-        this.winner = null;
         this.kicker = kicker;
-        this.teamA = teamA;
-        this.teamB = teamB;
     }
 
     public long getMatchId() {
@@ -76,14 +63,6 @@ public class Match {
         this.date = date;
     }
 
-    public Team getWinner() {
-        return winner;
-    }
-
-    public void setWinner(Team winner) {
-        this.winner = winner;
-    }
-
     public String getKicker() {
         return kicker;
     }
@@ -100,25 +79,25 @@ public class Match {
         this.time = time;
     }
 
-    public Team getTeamA() {
-        return teamA;
-    }
-
-    public void setTeamA(Team teamA) {
-        this.teamA = teamA;
-    }
-
-    public Team getTeamB() {
-        return teamB;
-    }
-
-    public void setTeamB(Team teamB) {
-        this.teamB = teamB;
+    @Override
+    public String toString() {
+        return "Match{" + "matchId=" + matchId + ", date=" + date + ", time=" + time + ", kicker='" + kicker + '\''
+                + '}';
     }
 
     @Override
-    public String toString() {
-        return "Match{" + "matchId=" + matchId + ", date=" + date + ", winner=" + winner + ", kicker='" + kicker + '\''
-                + ", teamA=" + teamA + ", teamB=" + teamB + '}';
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Match match = (Match) o;
+        return matchId == match.matchId && date.equals(match.date) && time.equals(match.time)
+                && kicker.equals(match.kicker);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(matchId, date, time, kicker);
     }
 }
