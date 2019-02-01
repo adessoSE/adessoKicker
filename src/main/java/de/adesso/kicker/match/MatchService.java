@@ -1,6 +1,5 @@
 package de.adesso.kicker.match;
 
-import de.adesso.kicker.match.exception.IdenticalTeamsException;
 import de.adesso.kicker.match.exception.PastDateException;
 import de.adesso.kicker.user.User;
 import java.util.ArrayList;
@@ -89,12 +88,6 @@ public class MatchService {
             throw new PastDateException();
         }
 
-    }
-
-    public void identicalTeams(Match match) {
-        if (match.getTeamA().getTeamId() == match.getTeamB().getTeamId()) {
-            throw new IdenticalTeamsException();
-        }
     }
 
     private Date yesterday() {
