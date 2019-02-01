@@ -1,21 +1,14 @@
 package de.adesso.kicker.match;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.lang.Nullable;
-import org.thymeleaf.expression.Objects;
+import java.util.Objects;
 
 @Entity
 @Table(name = "match")
@@ -94,11 +87,13 @@ public class Match {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Match match = (Match) o;
-        return matchId == match.matchId && Objects.equals(date, match.date) && Objects.equals(time, match.time)
-                && Objects.equals(kicker, match.kicker);
+        return matchId == match.matchId && date.equals(match.date) && time.equals(match.time)
+                && kicker.equals(match.kicker);
     }
 
     @Override
@@ -106,4 +101,3 @@ public class Match {
         return Objects.hash(matchId, date, time, kicker);
     }
 }
-
