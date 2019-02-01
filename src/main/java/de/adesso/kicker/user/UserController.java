@@ -1,7 +1,5 @@
 package de.adesso.kicker.user;
 
-import de.adesso.kicker.notification.NotificationService;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,13 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
 
     private UserService userService;
-    private NotificationService notificationService;
 
     @Autowired
-    public UserController(UserService userService, NotificationService notificationService) {
+    public UserController(UserService userService) {
 
         this.userService = userService;
-        this.notificationService = notificationService;
     }
 
     /**
@@ -37,7 +33,6 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         User user = userService.getLoggedInUser();
         modelAndView.addObject("user", user);
-        modelAndView.addObject("notifications", notificationService.getAllNotificationsByReceiver(user));
         modelAndView.setViewName("user/home");
         return modelAndView;
     }

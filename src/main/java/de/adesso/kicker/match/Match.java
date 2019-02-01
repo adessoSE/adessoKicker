@@ -7,7 +7,6 @@ import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import de.adesso.kicker.team.Team;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
@@ -30,16 +29,7 @@ public class Match {
     @Nullable
     private Date time;
 
-    @OneToOne(targetEntity = Team.class)
-    private Team winner;
-
     private String kicker;
-
-    @ManyToOne(targetEntity = Team.class)
-    private Team teamA;
-
-    @ManyToOne(targetEntity = Team.class)
-    private Team teamB;
 
     public Match() {
     }
@@ -50,14 +40,11 @@ public class Match {
         return germanDate;
     }
 
-    public Match(Date date, Date time, String kicker, Team teamA, Team teamB) {
+    public Match(Date date, Date time, String kicker) {
 
         this.date = date;
         this.time = time;
-        this.winner = null;
         this.kicker = kicker;
-        this.teamA = teamA;
-        this.teamB = teamB;
     }
 
     public long getMatchId() {
@@ -76,14 +63,6 @@ public class Match {
         this.date = date;
     }
 
-    public Team getWinner() {
-        return winner;
-    }
-
-    public void setWinner(Team winner) {
-        this.winner = winner;
-    }
-
     public String getKicker() {
         return kicker;
     }
@@ -100,26 +79,10 @@ public class Match {
         this.time = time;
     }
 
-    public Team getTeamA() {
-        return teamA;
-    }
-
-    public void setTeamA(Team teamA) {
-        this.teamA = teamA;
-    }
-
-    public Team getTeamB() {
-        return teamB;
-    }
-
-    public void setTeamB(Team teamB) {
-        this.teamB = teamB;
-    }
-
     @Override
     public String toString() {
-        return "Match{" + "matchId=" + matchId + ", date=" + date + ", winner=" + winner + ", kicker='" + kicker + '\''
-                + ", teamA=" + teamA + ", teamB=" + teamB + '}';
+        return "Match{" + "matchId=" + matchId + ", date=" + date + ", time=" + time + ", kicker='" + kicker + '\''
+                + '}';
     }
 
     @Override
@@ -130,12 +93,11 @@ public class Match {
             return false;
         Match match = (Match) o;
         return matchId == match.matchId && Objects.equals(date, match.date) && Objects.equals(time, match.time)
-                && Objects.equals(winner, match.winner) && Objects.equals(kicker, match.kicker)
-                && Objects.equals(teamA, match.teamA) && Objects.equals(teamB, match.teamB);
+                && Objects.equals(kicker, match.kicker);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(matchId, date, time, winner, kicker, teamA, teamB);
+        return Objects.hash(matchId, date, time, kicker);
     }
 }
