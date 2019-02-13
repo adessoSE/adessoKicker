@@ -15,7 +15,7 @@ public class Match {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long matchId;
+    private String matchId;
 
     @NotNull(message = "Bitte ein Datum wählen.")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -64,11 +64,11 @@ public class Match {
         verified = false;
     }
 
-    public long getMatchId() {
+    public String getMatchId() {
         return matchId;
     }
 
-    public void setMatchId(long matchId) {
+    public void setMatchId(String matchId) {
         this.matchId = matchId;
     }
 
@@ -137,9 +137,9 @@ public class Match {
         if (o == null || getClass() != o.getClass())
             return false;
         Match match = (Match) o;
-        return matchId == match.matchId && verified == match.verified && date.equals(match.date)
-                && teamAPlayer1.equals(match.teamAPlayer1) && Objects.equals(teamAPlayer2, match.teamAPlayer2)
-                && teamBPlayer1.equals(match.teamBPlayer1) && Objects.equals(teamBPlayer2, match.teamBPlayer2)
+        return verified == match.verified && Objects.equals(matchId, match.matchId) && Objects.equals(date, match.date)
+                && Objects.equals(teamAPlayer1, match.teamAPlayer1) && Objects.equals(teamAPlayer2, match.teamAPlayer2)
+                && Objects.equals(teamBPlayer1, match.teamBPlayer1) && Objects.equals(teamBPlayer2, match.teamBPlayer2)
                 && Objects.equals(winnerIsTeamA, match.winnerIsTeamA);
     }
 

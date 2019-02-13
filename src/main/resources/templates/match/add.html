@@ -2,16 +2,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Match eintragen</title>
+  <title th:text="#{match.add}"></title>
 </head>
 <body>
-<form action="#" th:action="@{/matches/create}" th:object="${match}" method="post">
+<form action="#" th:action="@{/matches/add}" th:object="${match}" method="post">
   <div>
-    <label for="date">Datum:</label>
+    <label for="date" th:text="#{match.date}"></label>
     <input type="date" id="date" th:field="*{date}">
+    <span th:if="${noDate}" th:text="#{error.noDate}"></span>
   </div>
+  <span th:if="${samePlayer}" th:text="#{error.samePlayer}"></span>
   <div>
-    <label for="teamAPlayer1">Team A Spieler 1:</label>
+    <span th:if="${invalidCreator}" th:text="#{error.invalidCreator}"></span>
+    <span th:if="${nullPlayer}" th:text="#{error.nullPlayer}"></span>
+    <label for="teamAPlayer1" th:text="#{match.teamAPlayer1}"></label>
     <select name="teamAPlayer1" id="teamAPlayer1">
       <option th:value="${currentUser.userId}"
               th:text="${currentUser.userId}">
@@ -19,7 +23,7 @@
     </select>
   </div>
   <div>
-    <label for="teamAPlayer2">Team A Spieler 2:</label>
+    <label for="teamAPlayer2" th:text="#{match.teamAPlayer2}"></label>
     <select id="teamAPlayer2" name="teamAPlayer2">
       <option value="" disabled hidden selected>Spieler...</option>
       <option th:each="user : ${users}"
@@ -29,7 +33,7 @@
     </select>
   </div>
   <div>
-    <label for="teamBPlayer1">Team B Spieler 1:</label>
+    <label for="teamBPlayer1" th:text="#{match.teamBPlayer1}"></label>
     <select id="teamBPlayer1" name="teamBPlayer1">
       <option value="" disabled hidden selected>Spieler...</option>
       <option th:each="user :${users}"
@@ -39,7 +43,7 @@
     </select>
   </div>
   <div>
-    <label for="teamBPlayer2">Team B Spieler 2:</label>
+    <label for="teamBPlayer2" th:text="#{match.teamBPlayer2}"></label>
     <select id="teamBPlayer2" name="teamBPlayer2">
       <option value="" selected hidden disabled>Spieler...</option>
       <option th:each="user :${users}"
@@ -49,8 +53,9 @@
     </select>
   </div>
   <div>
-    <button type="submit">Erstellen</button>
+    <button type="submit" th:text="#{match.create}"></button>
   </div>
+  <span th:if="${successMessage}" th:text="#{match.successMessage}"></span>
 </form>
 </body>
 </html>

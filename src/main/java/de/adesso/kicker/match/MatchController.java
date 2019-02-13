@@ -1,5 +1,6 @@
 package de.adesso.kicker.match;
 
+import de.adesso.kicker.match.exception.*;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,42 +33,63 @@ public class MatchController {
     }
 
     @GetMapping("/matches/m/{id}")
-    public ModelAndView getMatch(@PathVariable long id) {
+    public ModelAndView getMatch(@PathVariable String id) {
         var modelAndView = new ModelAndView();
+        Match match;
+        try {
+            match = matchService.getMatchById(id);
+        } catch (MatchNotFoundException e) {
+            modelAndView.setViewName("error/404.html");
+            return modelAndView;
+        }
         User user = userService.getLoggedInUser();
         modelAndView.addObject("user", user);
-        modelAndView.addObject("match", matchService.getMatchById(id));
+        modelAndView.addObject("match", match);
         modelAndView.setViewName("match/page.html");
         return modelAndView;
     }
 
-    @GetMapping("/matches/create")
-    public ModelAndView getCreateMatch() {
+    @GetMapping("/matches/add")
+    public ModelAndView getAddMatch() {
         var modelAndView = new ModelAndView();
+        return addMatchView(modelAndView);
+    }
+
+    @PostMapping("/matches/add")
+    public ModelAndView postAddMatch(Match match) {
+        var modelAndView = new ModelAndView();
+        try {
+            checkMatch(match);
+            try {
+                matchService.addMatchEntry(match);
+                modelAndView.addObject("successMessage", true);
+            } catch (InvalidCreatorException e) {
+                modelAndView.addObject("invalidCreator", true);
+            } catch (SamePlayerException e) {
+                modelAndView.addObject("samePlayer", true);
+            }
+        } catch (NoDateException e) {
+            modelAndView.addObject("noDate", true);
+        } catch (NullPlayersException e) {
+            modelAndView.addObject("nullPlayer", true);
+        }
+        return addMatchView(modelAndView);
+    }
+
+    private ModelAndView addMatchView(ModelAndView modelAndView) {
         modelAndView.addObject("match", new Match());
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.addObject("currentUser", userService.getLoggedInUser());
-        modelAndView.setViewName("match/create.html");
+        modelAndView.setViewName("match/add.html");
         return modelAndView;
     }
 
-    @PostMapping("/matches/create")
-    public ModelAndView postCreateMatch(Match match) {
-        if (match.getTeamAPlayer1() == null || match.getTeamBPlayer1() == null) {
-            // TODO: Proper Exception and handling
-            throw new NullPointerException();
-        }
+    private void checkMatch(Match match) {
         if (match.getDate() == null) {
-            // TODO: Proper Exception and handling
-            throw new NullPointerException();
+            throw new NoDateException();
         }
-
-        matchService.addMatchEntry(match);
-        var modelAndView = new ModelAndView();
-        modelAndView.addObject("match", new Match());
-        modelAndView.addObject("users", userService.getAllUsers());
-        modelAndView.addObject("currentUser", userService.getLoggedInUser());
-        modelAndView.setViewName("match/create.html");
-        return modelAndView;
+        if (match.getTeamAPlayer1() == null || match.getTeamBPlayer1() == null) {
+            throw new NullPlayersException();
+        }
     }
 }

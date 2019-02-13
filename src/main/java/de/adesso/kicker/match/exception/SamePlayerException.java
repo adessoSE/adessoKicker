@@ -1,7 +1,7 @@
 package de.adesso.kicker.match.exception;
 
-public class SamePlayerTeamException extends RuntimeException {
-    public SamePlayerTeamException() {
+public class SamePlayerException extends RuntimeException {
+    public SamePlayerException() {
         super("The same player can't play in a team twice");
     }
 }
