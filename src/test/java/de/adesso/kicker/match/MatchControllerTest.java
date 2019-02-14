@@ -37,12 +37,13 @@ class MatchControllerTest {
     private UserDummy userDummy = new UserDummy();
 
     private Match match = matchDummy.match();
-    private Match match_withoutDate = matchDummy.match_without_date();
-    private Match match_withNullPlayers = matchDummy.match_without_players();
-    private Match match_withOnlyPlayerA1 = matchDummy.match_with_only_player_a_1();
-    private Match match_withOnlyPlayerB1 = matchDummy.match_with_only_player_b_1();
-    private Match match_withSamePlayers = matchDummy.match_with_equal_player1();
-    private Match match_withInvalidCreator = matchDummy.match_without_default_user_player_1();
+    private Match match_noDate = matchDummy.match_without_date();
+    private Match match_nullPlayers = matchDummy.match_without_players();
+    private Match match_onlyA1 = matchDummy.match_with_only_player_a_1();
+    private Match match_onlyB1 = matchDummy.match_with_only_player_b_1();
+    private Match match_noWinner = matchDummy.match_without_winner();
+    private Match match_samePlayers = matchDummy.match_with_equal_player1();
+    private Match match_invalidCreator = matchDummy.match_without_default_user_player_1();
     private User user = userDummy.defaultUser();
 
     private List<Match> matchList = Collections.singletonList(match);
@@ -55,8 +56,8 @@ class MatchControllerTest {
         when(matchService.getMatchById(match.getMatchId())).thenReturn(match);
         when(matchService.getMatchById(anyString())).thenThrow(MatchNotFoundException.class);
         when(matchService.getAllMatches()).thenReturn(matchList);
-        when(matchService.addMatchEntry(match_withSamePlayers)).thenThrow(SamePlayerException.class);
-        when(matchService.addMatchEntry(match_withInvalidCreator)).thenThrow(InvalidCreatorException.class);
+        when(matchService.addMatchEntry(match_samePlayers)).thenThrow(SamePlayerException.class);
+        when(matchService.addMatchEntry(match_invalidCreator)).thenThrow(InvalidCreatorException.class);
         when(userService.getLoggedInUser()).thenReturn(user);
         when(userService.getAllUsers()).thenReturn(userList);
     }
@@ -114,7 +115,7 @@ class MatchControllerTest {
 
     @Test
     void test_postAddMatch_noDate() {
-        var actual_modelAndView = matchController.postAddMatch(match_withoutDate);
+        var actual_modelAndView = matchController.postAddMatch(match_noDate);
         var expected_modelAndView = new ModelAndView();
         expected_modelAndView.addObject("noDate", true);
         expected_modelAndView.addObject("match", new Match());
@@ -126,9 +127,9 @@ class MatchControllerTest {
 
     @Test
     void test_postAddMatch_nullPlayers() {
-        var actual_modelAndView_withBothNull = matchController.postAddMatch(match_withNullPlayers);
-        var actual_modelAndView_withOnlyA1 = matchController.postAddMatch(match_withOnlyPlayerA1);
-        var actual_modelAndView_withOnlyB1 = matchController.postAddMatch(match_withOnlyPlayerB1);
+        var actual_modelAndView_withBothNull = matchController.postAddMatch(match_nullPlayers);
+        var actual_modelAndView_withOnlyA1 = matchController.postAddMatch(match_onlyA1);
+        var actual_modelAndView_withOnlyB1 = matchController.postAddMatch(match_onlyB1);
         var expected_modelAndView = new ModelAndView();
         expected_modelAndView.addObject("nullPlayer", true);
         expected_modelAndView.addObject("match", new Match());
@@ -141,8 +142,20 @@ class MatchControllerTest {
     }
 
     @Test
+    void test_postAddMatch_noWinner() {
+        var actual_modelAndView = matchController.postAddMatch(match_noWinner);
+        var expected_modelAndView = new ModelAndView();
+        expected_modelAndView.addObject("noWinner", true);
+        expected_modelAndView.addObject("match", new Match());
+        expected_modelAndView.addObject("users", userList);
+        expected_modelAndView.addObject("currentUser", user);
+        expected_modelAndView.setViewName("match/add.html");
+        assertModelAndView(expected_modelAndView, actual_modelAndView);
+    }
+
+    @Test
     void test_postAddMatch_invalidCreator() {
-        var actual_modelAndView = matchController.postAddMatch(match_withInvalidCreator);
+        var actual_modelAndView = matchController.postAddMatch(match_invalidCreator);
         var expected_modelAndView = new ModelAndView();
         expected_modelAndView.addObject("invalidCreator", true);
         expected_modelAndView.addObject("match", new Match());
@@ -154,7 +167,7 @@ class MatchControllerTest {
 
     @Test
     void test_postAddMatch_samePlayer() {
-        var actual_modelAndView = matchController.postAddMatch(match_withSamePlayers);
+        var actual_modelAndView = matchController.postAddMatch(match_samePlayers);
         var expected_modelAndView = new ModelAndView();
         expected_modelAndView.addObject("samePlayer", true);
         expected_modelAndView.addObject("match", new Match());

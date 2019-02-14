@@ -53,6 +53,17 @@
     </select>
   </div>
   <div>
+    <span th:id="${noWinner}" th:text="#{error.noWinner}"></span>
+    <div>
+      <input type="radio" name="winnerTeamA" th:field="*{winnerTeamA}" id="teamA" th:value="true">
+      <label for="teamA" th:text="#{match.teamAWon}"></label>
+    </div>
+    <div>
+      <input type="radio" name="winnerTeamA" th:field="*{winnerTeamA}" id="teamB" th:value="false">
+      <label for="teamB" th:text="#{match.teamBWon}"></label>
+    </div>
+  </div>
+  <div>
     <button type="submit" th:text="#{match.create}"></button>
   </div>
   <span th:if="${successMessage}" th:text="#{match.successMessage}"></span>

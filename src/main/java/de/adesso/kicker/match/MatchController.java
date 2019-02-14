@@ -72,6 +72,8 @@ public class MatchController {
             modelAndView.addObject("noDate", true);
         } catch (NullPlayersException e) {
             modelAndView.addObject("nullPlayer", true);
+        } catch (NoWinnerException e) {
+            modelAndView.addObject("noWinner", true);
         }
         return addMatchView(modelAndView);
     }
@@ -90,6 +92,9 @@ public class MatchController {
         }
         if (match.getTeamAPlayer1() == null || match.getTeamBPlayer1() == null) {
             throw new NullPlayersException();
+        }
+        if (match.getWinnerTeamA() == null) {
+            throw new NoWinnerException();
         }
     }
 }
