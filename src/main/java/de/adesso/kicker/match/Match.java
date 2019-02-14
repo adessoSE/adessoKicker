@@ -19,7 +19,7 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String matchId;
 
-    @NotNull(message = "Bitte ein Datum wählen.")
+    @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date;
 
