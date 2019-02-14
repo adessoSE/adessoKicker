@@ -1,9 +1,12 @@
 package de.adesso.kicker.match;
 
+import de.adesso.kicker.configurations.EmailConfig;
 import de.adesso.kicker.match.exception.*;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,11 +18,13 @@ public class MatchController {
 
     private MatchService matchService;
     private UserService userService;
+    private EmailConfig emailConfig;
 
     @Autowired
-    public MatchController(MatchService matchService, UserService userService) {
+    public MatchController(MatchService matchService, UserService userService, EmailConfig emailConfig) {
         this.matchService = matchService;
         this.userService = userService;
+        this.emailConfig = emailConfig;
     }
 
     @GetMapping("/matches")
@@ -73,6 +78,20 @@ public class MatchController {
         } catch (NullPlayersException e) {
             modelAndView.addObject("nullPlayer", true);
         }
+
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost(emailConfig.getHost());
+        mailSender.setPort(emailConfig.getPort());
+        mailSender.setUsername(emailConfig.getUsername());
+        mailSender.setPassword(emailConfig.getPassword());
+
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom(match.getTeamAPlayer1().getEmail());
+        simpleMailMessage.setTo(match.getTeamBPlayer1().getEmail());
+        simpleMailMessage.setSubject("Das Match");
+        simpleMailMessage.setText("Hallo");
+
+        mailSender.send(simpleMailMessage);
         return addMatchView(modelAndView);
     }
 
