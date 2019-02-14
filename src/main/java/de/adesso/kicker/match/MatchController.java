@@ -14,13 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
-/**
- * RestController "MatchController" that manages everything related with
- * matches.
- *
- * @author caylak
- */
-
 @RestController
 public class MatchController {
 
@@ -35,11 +28,6 @@ public class MatchController {
         this.userService = userService;
     }
 
-    /**
-     * getAllMatches() gets all matches that are in the database.
-     * 
-     * @return ModelAndView
-     */
     @GetMapping("/matches")
     public ModelAndView getAllMatches() {
         modelAndView = new ModelAndView();
@@ -54,12 +42,6 @@ public class MatchController {
         return modelAndView;
     }
 
-    /**
-     * getMatch() gets an unique team identified by an index.
-     * 
-     * @param id long
-     * @return ModelAndView
-     */
     @GetMapping("/matches/{id}")
     public ModelAndView getMatch(@PathVariable long id) {
         modelAndView = new ModelAndView();
@@ -70,11 +52,6 @@ public class MatchController {
         return modelAndView;
     }
 
-    /**
-     * getMatchAdd() gets all relevant variables for creating a match later on.
-     * 
-     * @return ModelAndView
-     */
     @GetMapping("/matches/add")
     public ModelAndView getMatchAdd() {
         modelAndView = new ModelAndView();
@@ -83,15 +60,6 @@ public class MatchController {
         modelAndView.setViewName("match/create");
         return modelAndView;
     }
-
-    /**
-     * postMatch() posts all variables written to the form and checks if these are
-     * valid. (e.g already existing data)
-     * 
-     * @param match         Match
-     * @param bindingResult BindingResult
-     * @return ModelAndView
-     */
 
     @PostMapping("/matches/add")
     public ModelAndView postMatch(@Valid Match match, BindingResult bindingResult) {
