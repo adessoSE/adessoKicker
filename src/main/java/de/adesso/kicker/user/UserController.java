@@ -7,11 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-/**
- * RestController "UserController" that manages everything related with users.
- *
- * @author caylak
- */
 @Controller
 public class UserController {
 
@@ -38,12 +33,6 @@ public class UserController {
         return modelAndView;
     }
 
-    /**
-     * getUser() gets an unique user identified by an index.
-     *
-     * @param id long
-     * @return ModelAndView
-     */
     @GetMapping("/users/{id}")
     public ModelAndView getUser(@PathVariable String id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -52,11 +41,6 @@ public class UserController {
         return modelAndView;
     }
 
-    /**
-     * getUserYourself() gets the logged in user.
-     *
-     * @return ModelAndView
-     */
     @GetMapping("/users/you")
     public ModelAndView getUserYourself() {
         ModelAndView modelAndView = new ModelAndView();
@@ -66,14 +50,6 @@ public class UserController {
         return modelAndView;
     }
 
-    /**
-     * showUsersSearchbar() finds teams by the same teamName ignoring the case or
-     * something similar to it.
-     *
-     * @param firstName
-     * @param lastName
-     * @return
-     */
     @GetMapping(value = "/users/list")
     public ModelAndView showUsersSearchbar(@RequestParam(value = "search", required = false) String firstName,
             @RequestParam(value = "search", required = false) String lastName) {
