@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="#{match.add}"></title>
+</head>
+<body>
+<form action="#" th:action="@{/matches/add}" th:object="${match}" method="post">
+  <div>
+    <label for="date" th:text="#{match.date}"></label>
+    <input type="date" id="date" th:field="*{date}">
+    <span th:if="${noDate}" th:text="#{error.noDate}"></span>
+  </div>
+  <span th:if="${samePlayer}" th:text="#{error.samePlayer}"></span>
+  <div>
+    <span th:if="${invalidCreator}" th:text="#{error.invalidCreator}"></span>
+    <span th:if="${nullPlayer}" th:text="#{error.nullPlayer}"></span>
+    <label for="teamAPlayer1" th:text="#{match.teamAPlayer1}"></label>
+    <select name="teamAPlayer1" id="teamAPlayer1">
+      <option th:value="${currentUser.userId}"
+              th:text="${currentUser.userId}">
+      </option>
+    </select>
+  </div>
+  <div>
+    <label for="teamAPlayer2" th:text="#{match.teamAPlayer2}"></label>
+    <select id="teamAPlayer2" name="teamAPlayer2">
+      <option value="" disabled hidden selected>Spieler...</option>
+      <option th:each="user : ${users}"
+              th:value="${user.userId}"
+              th:text="${user.userId}">
+      </option>
+    </select>
+  </div>
+  <div>
+    <label for="teamBPlayer1" th:text="#{match.teamBPlayer1}"></label>
+    <select id="teamBPlayer1" name="teamBPlayer1">
+      <option value="" disabled hidden selected>Spieler...</option>
+      <option th:each="user :${users}"
+              th:value="${user.userId}"
+              th:text="${user.userId}">
+      </option>
+    </select>
+  </div>
+  <div>
+    <label for="teamBPlayer2" th:text="#{match.teamBPlayer2}"></label>
+    <select id="teamBPlayer2" name="teamBPlayer2">
+      <option value="" selected hidden disabled>Spieler...</option>
+      <option th:each="user :${users}"
+              th:value="${user.userId}"
+              th:text="${user.userId}">
+      </option>
+    </select>
+  </div>
+  <div>
+    <button type="submit" th:text="#{match.create}"></button>
+  </div>
+  <span th:if="${successMessage}" th:text="#{match.successMessage}"></span>
+</form>
+</body>
+</html>
