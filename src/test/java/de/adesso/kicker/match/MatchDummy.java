@@ -22,8 +22,8 @@ public class MatchDummy {
     }
 
     public Match match_with_equal_player2_2() {
-        return new Match(LocalDate.now(), userDummy.defaultUser(), userDummy.alternateUser(),
-                userDummy.alternateUser1(), userDummy.alternateUser1(), true);
+        return new Match(LocalDate.now(), userDummy.defaultUser(), userDummy.alternateUser2(),
+                userDummy.alternateUser1(), userDummy.alternateUser2(), true);
     }
 
     public Match match_with_same_player_team() {
