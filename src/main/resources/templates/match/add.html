@@ -53,7 +53,7 @@
     </select>
   </div>
   <div>
-    <span th:id="${noWinner}" th:text="#{error.noWinner}"></span>
+    <span th:if="${noWinner}" th:text="#{error.noWinner}"></span>
     <div>
       <input type="radio" name="winnerTeamA" th:field="*{winnerTeamA}" id="teamA" th:value="true">
       <label for="teamA" th:text="#{match.teamAWon}"></label>
