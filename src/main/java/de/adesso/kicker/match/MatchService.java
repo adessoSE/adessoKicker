@@ -41,6 +41,10 @@ public class MatchService {
         return match;
     }
 
+    public void verifyMatch(Match match) {
+        match.setVerified(true);
+    }
+
     private Match saveMatch(Match match) {
         return matchRepository.save(match);
     }
