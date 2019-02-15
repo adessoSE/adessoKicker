@@ -1,6 +1,7 @@
 package de.adesso.kicker.match;
 
 import de.adesso.kicker.configurations.EmailConfig;
+import de.adesso.kicker.email.EmailService;
 import de.adesso.kicker.match.exception.*;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
@@ -18,13 +19,11 @@ public class MatchController {
 
     private MatchService matchService;
     private UserService userService;
-    private EmailConfig emailConfig;
 
     @Autowired
-    public MatchController(MatchService matchService, UserService userService, EmailConfig emailConfig) {
+    public MatchController(MatchService matchService, UserService userService) {
         this.matchService = matchService;
         this.userService = userService;
-        this.emailConfig = emailConfig;
     }
 
     @GetMapping("/matches")
@@ -78,20 +77,6 @@ public class MatchController {
         } catch (NullPlayersException e) {
             modelAndView.addObject("nullPlayer", true);
         }
-
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(emailConfig.getHost());
-        mailSender.setPort(emailConfig.getPort());
-        mailSender.setUsername(emailConfig.getUsername());
-        mailSender.setPassword(emailConfig.getPassword());
-
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setFrom(match.getTeamAPlayer1().getEmail());
-        simpleMailMessage.setTo(match.getTeamBPlayer1().getEmail());
-        simpleMailMessage.setSubject("Das Match");
-        simpleMailMessage.setText("Hallo");
-
-        mailSender.send(simpleMailMessage);
         return addMatchView(modelAndView);
     }
 
