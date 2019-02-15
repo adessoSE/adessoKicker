@@ -7,10 +7,6 @@ import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
 @Service
 public class MatchService {
 
@@ -29,26 +25,23 @@ public class MatchService {
         return matches;
     }
 
-    public Match addMatchEntry(Match match) {
-        checkSamePlayer(match);
-        checkCurrentUser(match);
-        return saveMatch(match);
+    public Match getMatchById(long id) {
+
+        return matchRepository.findByMatchId(id);
     }
 
-    public Match getMatchById(String id) {
-        var match = matchRepository.findByMatchId(id);
-        checkMatchExists(match);
-        return match;
+    public List<Match> getAllMatchesByUser(User user) {
+
+        matches = new ArrayList<>();
+        return matches;
     }
 
-    private Match saveMatch(Match match) {
+    public Match saveMatch(Match match) {
+
         return matchRepository.save(match);
     }
 
-    private void checkSamePlayer(Match match) {
-        if (match.getTeamAPlayer1().equals(match.getTeamBPlayer1())) {
-            throw new SamePlayerException();
-        }
+    public void deleteMatch(long id) {
 
         if (Objects.equals(match.getTeamAPlayer1(), match.getTeamAPlayer2())
                 || Objects.equals(match.getTeamBPlayer1(), match.getTeamBPlayer2())) {

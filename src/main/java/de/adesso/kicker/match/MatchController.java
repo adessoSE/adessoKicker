@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import javax.validation.Valid;
 
-@Controller
+@RestController
 public class MatchController {
 
     private MatchService matchService;
@@ -35,17 +36,10 @@ public class MatchController {
         modelAndView.setViewName("match/matches.html");
         return modelAndView;
     }
-
-    @GetMapping("/matches/m/{id}")
-    public ModelAndView getMatch(@PathVariable String id) {
-        var modelAndView = new ModelAndView();
-        Match match;
-        try {
-            match = matchService.getMatchById(id);
-        } catch (MatchNotFoundException e) {
-            modelAndView.setViewName("error/404.html");
-            return modelAndView;
-        }
+    
+    @GetMapping("/matches/{id}")
+    public ModelAndView getMatch(@PathVariable long id) {
+        modelAndView = new ModelAndView();
         User user = userService.getLoggedInUser();
         modelAndView.addObject("user", user);
         modelAndView.addObject("match", match);
