@@ -9,7 +9,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EmailConfig{
+public class EmailConfig {
 
     @Value("${spring.mail.host}")
     private String host;
@@ -39,7 +39,7 @@ public class EmailConfig{
         return password;
     }
 
-    public JavaMailSenderImpl initializeMailServer (){
+    public JavaMailSenderImpl initializeMailServer() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(host);
         mailSender.setPort(port);
