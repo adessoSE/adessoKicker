@@ -3,6 +3,7 @@ package de.adesso.kicker.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.adesso.kicker.user.exception.UserDoesNotExistException;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
 import org.keycloak.representations.AccessToken;
