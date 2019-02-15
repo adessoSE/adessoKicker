@@ -18,21 +18,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/home")
-    public ModelAndView home() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", userService.getLoggedInUser());
-        modelAndView.setViewName("user/home");
-        return modelAndView;
-    }
-
-    @GetMapping("/impressum")
-    public ModelAndView impressum() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/impressum");
-        return modelAndView;
-    }
-
     @GetMapping("/users/{id}")
     public ModelAndView getUser(@PathVariable String id) {
         ModelAndView modelAndView = new ModelAndView();
