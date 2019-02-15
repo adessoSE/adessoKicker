@@ -1,4 +1,4 @@
-package de.adesso.kicker.user;
+package de.adesso.kicker.user.exception;
 
 public class UserDoesNotExistException extends RuntimeException {
     public UserDoesNotExistException() {
