@@ -1,6 +1,7 @@
 package de.adesso.kicker.notification;
 
 import de.adesso.kicker.user.User;
+
 import javax.persistence.*;
 import java.util.Date;
 
