@@ -23,7 +23,8 @@ public class EmailService {
         simpleMailMessage.setFrom(match.getTeamAPlayer1().getEmail());
         simpleMailMessage.setTo(match.getTeamBPlayer1().getEmail());
         simpleMailMessage.setSubject("Match: " + match.getMatchId() + "from " + match.getDate());
-        simpleMailMessage.setText("You've sent " + match.getTeamBPlayer1().getFirstName() + ", " + match.getTeamBPlayer1().getLastName() + "a verification request.");
+        simpleMailMessage.setText("You've sent " + match.getTeamBPlayer1().getFirstName() + ", "
+                + match.getTeamBPlayer1().getLastName() + "a verification request.");
         mailSender.send(simpleMailMessage);
     }
 
@@ -34,7 +35,9 @@ public class EmailService {
         simpleMailMessage.setFrom(match.getTeamAPlayer1().getEmail());
         simpleMailMessage.setTo(match.getTeamBPlayer1().getEmail());
         simpleMailMessage.setSubject("Match: " + match.getMatchId() + "from " + match.getDate());
-        simpleMailMessage.setText("Your recently played Match against " + match.getTeamAPlayer1().getFirstName() + ", " + match.getTeamAPlayer1().getLastName() + " needs to be verified. " + match.getWinnerIsTeamA() + " won. Click here to verify or here to decline.");
+        simpleMailMessage.setText("Your recently played Match against " + match.getTeamAPlayer1().getFirstName() + ", "
+                + match.getTeamAPlayer1().getLastName() + " needs to be verified. " + match.getWinnerIsTeamA()
+                + " won. Click here to verify or here to decline.");
         mailSender.send(simpleMailMessage);
     }
 

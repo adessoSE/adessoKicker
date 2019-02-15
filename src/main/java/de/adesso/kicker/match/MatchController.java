@@ -1,13 +1,9 @@
 package de.adesso.kicker.match;
 
-import de.adesso.kicker.configurations.EmailConfig;
-import de.adesso.kicker.email.EmailService;
 import de.adesso.kicker.match.exception.*;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
