@@ -46,7 +46,7 @@ public class Match {
     }
 
     public Match(LocalDate date, User teamAPlayer1, User teamAPlayer2, User teamBPlayer1, User teamBPlayer2,
-                 Boolean winnerTeamA) {
+            Boolean winnerTeamA) {
         this.date = date;
         this.teamAPlayer1 = teamAPlayer1;
         this.teamAPlayer2 = teamAPlayer2;

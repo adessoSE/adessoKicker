@@ -16,7 +16,8 @@ public class VerifyMatchService {
     private UserService userService;
 
     @Autowired
-    public VerifyMatchService(MatchVerificationRequestRepository matchVerificationRequestRepository, UserService userService) {
+    public VerifyMatchService(MatchVerificationRequestRepository matchVerificationRequestRepository,
+            UserService userService) {
 
         this.matchVerificationRequestRepository = matchVerificationRequestRepository;
         this.userService = userService;
@@ -26,22 +27,23 @@ public class VerifyMatchService {
 
         matchVerificationRequest.getMatch().setVerified(true);
         // TODO execute ranking algorithm
-        List<MatchVerificationRequest> requests = matchVerificationRequestRepository.getAllByMatch(matchVerificationRequest.getMatch());
-        for(MatchVerificationRequest request : requests) {
+        List<MatchVerificationRequest> requests = matchVerificationRequestRepository
+                .getAllByMatch(matchVerificationRequest.getMatch());
+        for (MatchVerificationRequest request : requests) {
             matchVerificationRequestRepository.delete(request);
         }
     }
 
-    public void sendRequests(Match match){
+    public void sendRequests(Match match) {
 
         User sender = userService.getLoggedInUser();
         List<User> receivers = new ArrayList<>();
-        if (match.getWinners().contains(sender)){
+        if (match.getWinners().contains(sender)) {
             receivers.addAll(match.getLosers());
         } else {
             receivers.addAll(match.getWinners());
         }
-        for(User receiver : receivers) {
+        for (User receiver : receivers) {
             MatchVerificationRequest request = new MatchVerificationRequest(sender, receiver, match);
             matchVerificationRequestRepository.save(request);
         }
@@ -50,22 +52,23 @@ public class VerifyMatchService {
     public List<User> declineRequest(MatchVerificationRequest matchVerificationRequest) {
 
         deleteRequest(matchVerificationRequest);
-        List<MatchVerificationRequest> otherRequests = matchVerificationRequestRepository.getAllByMatch(matchVerificationRequest.getMatch());
+        List<MatchVerificationRequest> otherRequests = matchVerificationRequestRepository
+                .getAllByMatch(matchVerificationRequest.getMatch());
         List<User> usersToInform = new ArrayList<>();
         for (MatchVerificationRequest request : otherRequests) {
 
             deleteRequest(request);
         }
-        for(User player : matchVerificationRequest.getMatch().getPlayers()){
+        for (User player : matchVerificationRequest.getMatch().getPlayers()) {
 
-            if(!userService.getLoggedInUser().equals(player)){
+            if (!userService.getLoggedInUser().equals(player)) {
                 usersToInform.add(player);
             }
         }
         return usersToInform;
     }
 
-    public void deleteRequest(MatchVerificationRequest matchVerificationRequest){
+    public void deleteRequest(MatchVerificationRequest matchVerificationRequest) {
 
         matchVerificationRequestRepository.delete(matchVerificationRequest);
     }

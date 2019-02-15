@@ -27,8 +27,9 @@ public class MatchVerificationRequest extends Notification {
     public void generateMessage() {
 
         String message = "Bestätige, dass " + getMatch().getWinners().get(0).getFirstName();
-        if(getMatch().getWinners().toArray().length > 1){
-            message += " und " + getMatch().getWinners().get(1).getFirstName() + " das Match am " + getMatch().getDate().toString() + " gewonnen haben.";
+        if (getMatch().getWinners().toArray().length > 1) {
+            message += " und " + getMatch().getWinners().get(1).getFirstName() + " das Match am "
+                    + getMatch().getDate().toString() + " gewonnen haben.";
         } else {
             message += " das Match am " + getMatch().getDate().toString() + " gewonnen hat.";
         }

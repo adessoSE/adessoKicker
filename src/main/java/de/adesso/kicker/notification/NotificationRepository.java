@@ -7,5 +7,6 @@ import java.util.List;
 public interface NotificationRepository extends CrudRepository<Notification, Long> {
 
     Notification findByNotificationId(long id);
+
     List<Notification> findAllByReceiver(User receiver);
 }
