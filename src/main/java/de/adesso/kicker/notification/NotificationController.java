@@ -42,7 +42,7 @@ public class NotificationController {
 
         try {
             notificationService.acceptNotification(id);
-        } catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
