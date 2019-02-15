@@ -36,7 +36,7 @@ public class EmailService {
         simpleMailMessage.setTo(match.getTeamBPlayer1().getEmail());
         simpleMailMessage.setSubject("Match: " + match.getMatchId() + "from " + match.getDate());
         simpleMailMessage.setText("Your recently played Match against " + match.getTeamAPlayer1().getFirstName() + ", "
-                + match.getTeamAPlayer1().getLastName() + " needs to be verified. " + match.getWinnerIsTeamA()
+                + match.getTeamAPlayer1().getLastName() + " needs to be verified. " + match.getWinnerTeamA()
                 + " won. Click here to verify or here to decline.");
         mailSender.send(simpleMailMessage);
     }
