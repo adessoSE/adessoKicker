@@ -39,6 +39,7 @@ public class Match {
     @OneToOne
     private User teamBPlayer2;
 
+    @NotNull
     private Boolean winnerTeamA;
 
     private boolean verified;

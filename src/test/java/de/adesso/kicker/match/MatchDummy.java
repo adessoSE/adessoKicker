@@ -8,8 +8,10 @@ public class MatchDummy {
     private UserDummy userDummy = new UserDummy();
 
     public Match match() {
-        return new Match(LocalDate.now(), userDummy.defaultUser(), userDummy.alternateUser(),
+        var match = new Match(LocalDate.now(), userDummy.defaultUser(), userDummy.alternateUser(),
                 userDummy.alternateUser1(), userDummy.alternateUser2(), true);
+        match.setMatchId("1");
+        return match;
     }
 
     public Match match_with_equal_player1() {

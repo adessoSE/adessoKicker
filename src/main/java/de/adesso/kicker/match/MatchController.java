@@ -1,14 +1,20 @@
 package de.adesso.kicker.match;
 
-import de.adesso.kicker.match.exception.*;
+import de.adesso.kicker.match.exception.InvalidCreatorException;
+import de.adesso.kicker.match.exception.MatchNotFoundException;
+import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @Controller
 public class MatchController {
@@ -39,7 +45,7 @@ public class MatchController {
         try {
             match = matchService.getMatchById(id);
         } catch (MatchNotFoundException e) {
-            modelAndView.setViewName("error/404.html");
+            modelAndView.setStatus(HttpStatus.NOT_FOUND);
             return modelAndView;
         }
         User user = userService.getLoggedInUser();
@@ -56,10 +62,21 @@ public class MatchController {
     }
 
     @PostMapping("/matches/add")
-    public ModelAndView postAddMatch(Match match) {
+    public ModelAndView postAddMatch(@Valid Match match, BindingResult bindingResult) {
         var modelAndView = new ModelAndView();
-        try {
-            checkMatch(match);
+        System.out.println(bindingResult.getModel());
+        if (bindingResult.hasErrors()) {
+            if (bindingResult.hasFieldErrors("date")) {
+                modelAndView.addObject("noDate", true);
+            }
+            if (bindingResult.hasFieldErrors("teamAPlayer1") || bindingResult.hasFieldErrors("teamBPlayer1")) {
+                System.out.println(bindingResult);
+                modelAndView.addObject("nullPlayer", true);
+            }
+            if (bindingResult.hasFieldErrors("winnerTeamA")) {
+                modelAndView.addObject("noWinner", true);
+            }
+        } else {
             try {
                 matchService.addMatchEntry(match);
                 modelAndView.addObject("successMessage", true);
@@ -68,12 +85,6 @@ public class MatchController {
             } catch (SamePlayerException e) {
                 modelAndView.addObject("samePlayer", true);
             }
-        } catch (NoDateException e) {
-            modelAndView.addObject("noDate", true);
-        } catch (NullPlayersException e) {
-            modelAndView.addObject("nullPlayer", true);
-        } catch (NoWinnerException e) {
-            modelAndView.addObject("noWinner", true);
         }
         return addMatchView(modelAndView);
     }
@@ -81,20 +92,7 @@ public class MatchController {
     private ModelAndView addMatchView(ModelAndView modelAndView) {
         modelAndView.addObject("match", new Match());
         modelAndView.addObject("users", userService.getAllUsers());
-        modelAndView.addObject("currentUser", userService.getLoggedInUser());
         modelAndView.setViewName("match/add.html");
         return modelAndView;
-    }
-
-    private void checkMatch(Match match) {
-        if (match.getDate() == null) {
-            throw new NoDateException();
-        }
-        if (match.getTeamAPlayer1() == null || match.getTeamBPlayer1() == null) {
-            throw new NullPlayersException();
-        }
-        if (match.getWinnerTeamA() == null) {
-            throw new NoWinnerException();
-        }
     }
 }

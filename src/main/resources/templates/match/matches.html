@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:if="${matches.empty}">
-  <p>nuting</p>
+  <p th:text="#{error.noMatchesFound}"></p>
 </div>
 <div th:if="!${matches.empty}">
   <div th:each="match : ${matches}">

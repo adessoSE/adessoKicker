@@ -63,19 +63,19 @@ class MatchServiceTest {
     }
 
     @Test
-    void test_addMatchEntry() {
+    void whenValidMatch_thenMatchShouldBeCreated() {
         var testMatch = matchService.addMatchEntry(match);
         assertEquals(match, testMatch);
     }
 
     @Test
-    void test_verifyMatch() {
+    void whenMatchIsEntered_thenShouldBeVerifies() {
         matchService.verifyMatch(match);
         assertTrue(match.isVerified());
     }
 
     @Test
-    void test_addMatchEntry_SamePlayerException() {
+    void whenPlayersAreSame_thenThrowSamePlayerException() {
         Assertions.assertThrows(SamePlayerException.class, () -> matchService.addMatchEntry(match1_1));
         Assertions.assertThrows(SamePlayerException.class, () -> matchService.addMatchEntry(match1_2));
         Assertions.assertThrows(SamePlayerException.class, () -> matchService.addMatchEntry(match1));
@@ -83,23 +83,23 @@ class MatchServiceTest {
     }
 
     @Test
-    void test_addMatchEntry_InvalidCreatorException() {
+    void whenPlayerA1NotCurrentUser_thenThrowInvalidCreatorException() {
         Assertions.assertThrows(InvalidCreatorException.class,
                 () -> matchService.addMatchEntry(match_without_default_user));
     }
 
     @Test
-    void test_getMatchById() {
+    void whenMatchIsValid_thenMatchShouldBeFound() {
         assertEquals(match, matchService.getMatchById(match.getMatchId()));
     }
 
     @Test
-    void test_getMatchById_MatchNotFoundException() {
+    void whenMatchNotExistent_thenThrowMatchNotFoundException() {
         Assertions.assertThrows(MatchNotFoundException.class, () -> matchService.getMatchById("non-existent-id"));
     }
 
     @Test
-    void test_getAllMatches() {
+    void shouldReturnAllMatches() {
         assertEquals(matchList, matchService.getAllMatches());
     }
 }
