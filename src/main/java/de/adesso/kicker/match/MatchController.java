@@ -1,10 +1,7 @@
 package de.adesso.kicker.match;
 
-import de.adesso.kicker.match.exception.InvalidCreatorException;
-import de.adesso.kicker.match.exception.MatchNotFoundException;
-import de.adesso.kicker.match.exception.SamePlayerException;
-import de.adesso.kicker.user.User;
-import de.adesso.kicker.user.UserService;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -12,11 +9,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
+import de.adesso.kicker.match.exception.InvalidCreatorException;
+import de.adesso.kicker.match.exception.MatchNotFoundException;
+import de.adesso.kicker.match.exception.SamePlayerException;
+import de.adesso.kicker.user.User;
+import de.adesso.kicker.user.UserService;
 
 @Controller
+@RequestMapping("/matches")
 public class MatchController {
 
     private MatchService matchService;
@@ -28,7 +31,7 @@ public class MatchController {
         this.userService = userService;
     }
 
-    @GetMapping("/matches")
+    @GetMapping
     public ModelAndView getAllMatches() {
         var modelAndView = new ModelAndView();
         User user = userService.getLoggedInUser();
@@ -38,7 +41,7 @@ public class MatchController {
         return modelAndView;
     }
 
-    @GetMapping("/matches/m/{id}")
+    @GetMapping("/m/{id}")
     public ModelAndView getMatch(@PathVariable String id) {
         var modelAndView = new ModelAndView();
         Match match;
@@ -55,13 +58,13 @@ public class MatchController {
         return modelAndView;
     }
 
-    @GetMapping("/matches/add")
+    @GetMapping("/add")
     public ModelAndView getAddMatch() {
         var modelAndView = new ModelAndView();
         return addMatchView(modelAndView);
     }
 
-    @PostMapping("/matches/add")
+    @PostMapping("/add")
     public ModelAndView postAddMatch(@Valid Match match, BindingResult bindingResult) {
         var modelAndView = new ModelAndView();
         System.out.println(bindingResult.getModel());
