@@ -1,20 +1,18 @@
 package de.adesso.kicker.match;
 
-import de.adesso.kicker.match.exception.IdenticalTeamsException;
 import de.adesso.kicker.match.exception.PastDateException;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
-@RestController
+@Controller
+@RequestMapping("/matches")
 public class MatchController {
 
     private MatchService matchService;
@@ -28,7 +26,7 @@ public class MatchController {
         this.userService = userService;
     }
 
-    @GetMapping("/matches")
+    @GetMapping
     public ModelAndView getAllMatches() {
         modelAndView = new ModelAndView();
         User user = userService.getLoggedInUser();
@@ -42,7 +40,7 @@ public class MatchController {
         return modelAndView;
     }
 
-    @GetMapping("/matches/{id}")
+    @GetMapping("/{id}")
     public ModelAndView getMatch(@PathVariable long id) {
         modelAndView = new ModelAndView();
         User user = userService.getLoggedInUser();
@@ -52,7 +50,7 @@ public class MatchController {
         return modelAndView;
     }
 
-    @GetMapping("/matches/add")
+    @GetMapping("/add")
     public ModelAndView getMatchAdd() {
         modelAndView = new ModelAndView();
         Match match = new Match();
@@ -61,7 +59,7 @@ public class MatchController {
         return modelAndView;
     }
 
-    @PostMapping("/matches/add")
+    @PostMapping("/add")
     public ModelAndView postMatch(@Valid Match match, BindingResult bindingResult) {
         modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
