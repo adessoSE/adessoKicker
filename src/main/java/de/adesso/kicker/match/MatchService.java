@@ -1,68 +1,88 @@
 package de.adesso.kicker.match;
 
-import de.adesso.kicker.match.exception.PastDateException;
-import de.adesso.kicker.user.User;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import de.adesso.kicker.match.exception.FutureDateException;
+import de.adesso.kicker.match.exception.InvalidCreatorException;
+import de.adesso.kicker.match.exception.MatchNotFoundException;
+import de.adesso.kicker.match.exception.SamePlayerException;
+import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MatchService {
 
-    private MatchRepository matchRepository;
+    private final MatchRepository matchRepository;
+    private final UserService userService;
 
     @Autowired
-    public MatchService(MatchRepository matchRepository) {
-
+    public MatchService(MatchRepository matchRepository, UserService userService) {
         this.matchRepository = matchRepository;
+        this.userService = userService;
     }
 
-    private List<Match> matches;
-
     public List<Match> getAllMatches() {
-
-        matches = new ArrayList<>();
+        var matches = new ArrayList<Match>();
         matchRepository.findAll().forEach(matches::add);
         return matches;
     }
 
-    public Match getMatchById(long id) {
-
-        return matchRepository.findByMatchId(id);
+    public void addMatchEntry(Match match) {
+        checkForFutureDate(match);
+        checkSamePlayer(match);
+        checkCurrentUser(match);
+        saveMatch(match);
     }
 
-    public List<Match> getAllMatchesByUser(User user) {
-
-        matches = new ArrayList<>();
-        return matches;
+    public Match getMatchById(String id) {
+        var match = matchRepository.findByMatchId(id);
+        checkMatchExists(match);
+        return match;
     }
 
-    public Match saveMatch(Match match) {
-
-        return matchRepository.save(match);
+    public void verifyMatch(Match match) {
+        match.setVerified(true);
     }
 
-    public void deleteMatch(long id) {
-
-        matchRepository.deleteById(id);
+    private void saveMatch(Match match) {
+        matchRepository.save(match);
     }
 
-    public void denyPastDate(Match match) {
-        Date currentDate = new Date();
-        if (match.getDate().after(currentDate)) {
-        } else {
-            throw new PastDateException();
+    private void checkSamePlayer(Match match) {
+        if (match.getTeamAPlayer1().equals(match.getTeamBPlayer1())) {
+            throw new SamePlayerException();
         }
-
+        if (Objects.equals(match.getTeamAPlayer1(), match.getTeamAPlayer2())
+                || Objects.equals(match.getTeamBPlayer1(), match.getTeamBPlayer2())) {
+            throw new SamePlayerException();
+        }
+        if (Objects.equals(match.getTeamAPlayer1(), match.getTeamBPlayer2())
+                || Objects.equals(match.getTeamBPlayer1(), match.getTeamAPlayer2())
+                || (Objects.equals(match.getTeamAPlayer2(), match.getTeamBPlayer2())
+                        && (match.getTeamBPlayer2() != null || match.getTeamAPlayer2() != null))) {
+            throw new SamePlayerException();
+        }
     }
 
-    private Date yesterday() {
-        final Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -1);
-        return cal.getTime();
+    private void checkCurrentUser(Match match) {
+        if (!match.getTeamAPlayer1().equals(userService.getLoggedInUser())) {
+            throw new InvalidCreatorException();
+        }
     }
 
+    private void checkForFutureDate(Match match) {
+        if (match.getDate().isAfter(LocalDate.now())) {
+            throw new FutureDateException();
+        }
+    }
+
+    private void checkMatchExists(Match match) {
+        if (match == null) {
+            throw new MatchNotFoundException();
+        }
+    }
 }
