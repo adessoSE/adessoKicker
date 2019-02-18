@@ -24,8 +24,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         try {
             modelAndView.addObject("user", userService.getUserById(id));
-        }
-        catch (UserNotFoundException u) {
+        } catch (UserNotFoundException u) {
             modelAndView.setViewName("error/404.html");
             return modelAndView;
         }
