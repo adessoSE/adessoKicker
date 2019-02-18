@@ -1,5 +1,6 @@
 package de.adesso.kicker.match;
 
+import de.adesso.kicker.match.exception.FutureDateException;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.MatchNotFoundException;
 import de.adesso.kicker.match.exception.SamePlayerException;
@@ -7,6 +8,7 @@ import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,8 +16,8 @@ import java.util.Objects;
 @Service
 public class MatchService {
 
-    private MatchRepository matchRepository;
-    private UserService userService;
+    private final MatchRepository matchRepository;
+    private final UserService userService;
 
     @Autowired
     public MatchService(MatchRepository matchRepository, UserService userService) {
@@ -29,10 +31,11 @@ public class MatchService {
         return matches;
     }
 
-    public Match addMatchEntry(Match match) {
+    public void addMatchEntry(Match match) {
+        checkForFutureDate(match);
         checkSamePlayer(match);
         checkCurrentUser(match);
-        return saveMatch(match);
+        saveMatch(match);
     }
 
     public Match getMatchById(String id) {
@@ -45,15 +48,14 @@ public class MatchService {
         match.setVerified(true);
     }
 
-    private Match saveMatch(Match match) {
-        return matchRepository.save(match);
+    private void saveMatch(Match match) {
+        matchRepository.save(match);
     }
 
     private void checkSamePlayer(Match match) {
         if (match.getTeamAPlayer1().equals(match.getTeamBPlayer1())) {
             throw new SamePlayerException();
         }
-
         if (Objects.equals(match.getTeamAPlayer1(), match.getTeamAPlayer2())
                 || Objects.equals(match.getTeamBPlayer1(), match.getTeamBPlayer2())) {
             throw new SamePlayerException();
@@ -69,6 +71,12 @@ public class MatchService {
     private void checkCurrentUser(Match match) {
         if (!match.getTeamAPlayer1().equals(userService.getLoggedInUser())) {
             throw new InvalidCreatorException();
+        }
+    }
+
+    private void checkForFutureDate(Match match) {
+        if (match.getDate().isAfter(LocalDate.now())) {
+            throw new FutureDateException();
         }
     }
 

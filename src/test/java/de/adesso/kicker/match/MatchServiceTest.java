@@ -3,13 +3,11 @@ package de.adesso.kicker.match;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.MatchNotFoundException;
 import de.adesso.kicker.match.exception.SamePlayerException;
-import de.adesso.kicker.user.User;
-import de.adesso.kicker.user.UserDummy;
 import de.adesso.kicker.user.UserService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -17,12 +15,13 @@ import org.mockito.stubbing.Answer;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MatchServiceTest {
@@ -36,70 +35,129 @@ class MatchServiceTest {
     @InjectMocks
     private MatchService matchService;
 
-    private MatchDummy matchDummy = new MatchDummy();
-    private UserDummy userDummy = new UserDummy();
+    static Stream<Match> createMatchesWithSamePlayers() {
+        var matchDummy = new MatchDummy();
+        return Stream.of(matchDummy.match_with_equal_player1(), matchDummy.match_with_equal_player1_2(),
+                matchDummy.match_with_equal_player2_2(), matchDummy.match_with_same_player_team());
+    }
 
-    private Match match = matchDummy.match();
-    private Match match1_1 = matchDummy.match_with_equal_player1();
-    private Match match1_2 = matchDummy.match_with_equal_player1_2();
-    private Match match1 = matchDummy.match_with_same_player_team();
-    private Match match2 = matchDummy.match_with_equal_player2_2();
-    private Match match_without_default_user = matchDummy.match_without_default_user_player_1();
-    private User user = userDummy.defaultUser();
+    static Match createMatchWithDifferentCreator() {
+        var matchDummy = new MatchDummy();
+        return matchDummy.match_without_default_user_player_1();
+    }
 
-    private List<Match> matchList = Collections.singletonList(match);
+    static Match createMatch() {
+        var matchDummy = new MatchDummy();
+        return matchDummy.match();
+    }
+
+    static List<Match> createMatchList() {
+        var matchDummy = new MatchDummy();
+        return Collections.singletonList(matchDummy.match());
+    }
 
     @BeforeAll
     void setUp() {
         MockitoAnnotations.initMocks(this);
+    }
+
+    @Test
+    @DisplayName("If the match is valid it should be created")
+    void whenValidMatchThenMatchShouldBeCreated() {
+        // given
+        var match = createMatch();
+        when(userService.getLoggedInUser()).thenReturn(match.getTeamAPlayer1());
         when(matchRepository.save(any(Match.class))).thenAnswer((Answer<Match>) invocation -> {
             Object[] args = invocation.getArguments();
             return (Match) args[0];
         });
-        when(userService.getLoggedInUser()).thenReturn(user);
-        when(matchRepository.findByMatchId(anyString())).thenReturn(null);
-        when(matchRepository.findByMatchId(match.getMatchId())).thenReturn(match);
-        when(matchRepository.findAll()).thenReturn(matchList);
+
+        // when
+        matchService.addMatchEntry(match);
+
+        // then
+        verify(matchRepository, times(1)).save(match);
     }
 
     @Test
-    void whenValidMatch_thenMatchShouldBeCreated() {
-        var testMatch = matchService.addMatchEntry(match);
-        assertEquals(match, testMatch);
-    }
+    @DisplayName("Match should be verified")
+    void matchShouldBeVerified() {
+        // given
+        var match = createMatch();
 
-    @Test
-    void whenMatchIsEntered_thenShouldBeVerifies() {
+        // when
         matchService.verifyMatch(match);
+
+        // then
         assertTrue(match.isVerified());
     }
 
-    @Test
-    void whenPlayersAreSame_thenThrowSamePlayerException() {
-        Assertions.assertThrows(SamePlayerException.class, () -> matchService.addMatchEntry(match1_1));
-        Assertions.assertThrows(SamePlayerException.class, () -> matchService.addMatchEntry(match1_2));
-        Assertions.assertThrows(SamePlayerException.class, () -> matchService.addMatchEntry(match1));
-        Assertions.assertThrows(SamePlayerException.class, () -> matchService.addMatchEntry(match2));
+    @ParameterizedTest
+    @MethodSource("createMatchesWithSamePlayers")
+    @DisplayName("Throw SamePlayerException if a player appears multiple times in a match")
+    void whenPlayersAreSameThenThrowSamePlayerException(Match match) {
+        // given
+        // See method source
+
+        // when
+        Executable when = () -> matchService.addMatchEntry(match);
+
+        // then
+        Assertions.assertThrows(SamePlayerException.class, when);
     }
 
     @Test
-    void whenPlayerA1NotCurrentUser_thenThrowInvalidCreatorException() {
-        Assertions.assertThrows(InvalidCreatorException.class,
-                () -> matchService.addMatchEntry(match_without_default_user));
+    @DisplayName("When teamAPlayer1 is not equal to the logged in user a InvalidCreatorExeception should be thrown")
+    void whenPlayerA1NotCurrentUserThenThrowInvalidCreatorException() {
+        // given
+        var match = createMatchWithDifferentCreator();
+
+        // when
+        Executable when = () -> matchService.addMatchEntry(match);
+
+        // then
+        Assertions.assertThrows(InvalidCreatorException.class, when);
     }
 
     @Test
-    void whenMatchIsValid_thenMatchShouldBeFound() {
-        assertEquals(match, matchService.getMatchById(match.getMatchId()));
+    @DisplayName("If a match with the given id exists it should be returned")
+    void whenMatchExistsThenMatchShouldBeFound() {
+        // given
+        var expected = createMatch();
+        when(matchRepository.findByMatchId(expected.getMatchId())).thenReturn(expected);
+
+        // when
+        var actual = matchService.getMatchById(expected.getMatchId());
+
+        // then
+        assertEquals(expected, actual);
     }
 
     @Test
-    void whenMatchNotExistent_thenThrowMatchNotFoundException() {
-        Assertions.assertThrows(MatchNotFoundException.class, () -> matchService.getMatchById("non-existent-id"));
+    @DisplayName("If there is no match with the given id the MatchNotFoundException should be thrown")
+    void whenMatchNotExistentThenThrowMatchNotFoundException() {
+        // given
+        when(matchRepository.findByMatchId(anyString())).thenReturn(null);
+        var invalidId = "non-existend-id";
+
+        // when
+        Executable when = () -> matchService.getMatchById(invalidId);
+
+        // then
+        Assertions.assertThrows(MatchNotFoundException.class, when);
     }
 
     @Test
+    @DisplayName("Should return all created matches")
     void shouldReturnAllMatches() {
-        assertEquals(matchList, matchService.getAllMatches());
+        // given
+        var expected = createMatchList();
+        when(matchRepository.findAll()).thenReturn(expected);
+
+        // when
+        var actual = matchService.getAllMatches();
+
+        // then
+        assertEquals(expected, actual);
     }
 }

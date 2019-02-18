@@ -2,9 +2,10 @@
 <html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Matches</title>
+  <title th:text="#{match.matches}"></title>
 </head>
 <body>
+<p th:text="${#authentication.getName()}"></p>
 <div th:if="${matches.empty}">
   <p th:text="#{error.noMatchesFound}"></p>
 </div>
