@@ -42,16 +42,4 @@ public class UserController {
         modelAndView.setViewName("user/profile");
         return modelAndView;
     }
-
-    @GetMapping("/list")
-    public ModelAndView showUsersSearchbar(@RequestParam(value = "search", required = false) String firstName,
-            @RequestParam(value = "search", required = false) String lastName) {
-        ModelAndView modelAndView = new ModelAndView();
-        try {
-            modelAndView.addObject("search", userService.getUserByNameSearchbar(firstName, lastName));
-        } catch (Exception i) {
-        }
-        modelAndView.setViewName("user/searchuser");
-        return modelAndView;
-    }
 }

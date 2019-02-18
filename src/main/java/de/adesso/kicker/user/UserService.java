@@ -73,22 +73,6 @@ public class UserService {
         userRepository.delete(userRepository.findByUserId(id));
     }
 
-    public List<User> getUserByNameSearchbar(String firstName, String lastName) {
-        List<User> users;
-        try {
-            if (firstName.contains(" ")) {
-                String[] name = firstName.split("\\s+", 2);
-                firstName = name[0];
-                lastName = name[1];
-
-            }
-        } catch (NullPointerException n) {
-        }
-        users = new ArrayList<>(
-                userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(firstName, lastName));
-        return users;
-    }
-
     private void checkUserExists(User user) {
         if (user == null) {
             throw new UserDoesNotExistException();
