@@ -2,22 +2,17 @@ package de.adesso.kicker.site;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class SiteController {
+@RequestMapping("/home")
+public class HomeController {
 
-    @GetMapping("/home")
+    @GetMapping
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("user/home");
-        return modelAndView;
-    }
-
-    @GetMapping("/impressum")
-    public ModelAndView impressum() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/impressum");
+        modelAndView.setViewName("user/home.html");
         return modelAndView;
     }
 }
