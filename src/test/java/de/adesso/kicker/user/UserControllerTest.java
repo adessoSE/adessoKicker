@@ -24,7 +24,7 @@ public class UserControllerTest {
     private UserService userService;
 
     @Test
-    public void testGetUser() throws Exception {
+    public void getLoggedInUser() throws Exception {
         User testUser = userdummy.defaultUser();
         when(userService.getLoggedInUser()).thenReturn(testUser);
         mockMvc.perform(get("/users/you")).andExpect(status().isOk())
@@ -32,7 +32,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testGetUserById() throws Exception {
+    public void getUserById() throws Exception {
         User testUser = userdummy.defaultUser();
         when(userService.getUserById(testUser.getUserId())).thenReturn(testUser);
         mockMvc.perform(get("/users/{id}", testUser.getUserId())).andExpect(status().isOk())
