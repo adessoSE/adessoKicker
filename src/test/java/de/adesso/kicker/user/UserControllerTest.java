@@ -1,48 +1,42 @@
 package de.adesso.kicker.user;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@WebMvcTest(value = UserController.class, secure = false)
 public class UserControllerTest {
 
+    @Autowired
     private MockMvc mockMvc;
 
     private UserDummy userdummy = new UserDummy();
 
-    @Mock
+    @MockBean
     private UserService userService;
 
-    @InjectMocks
-    private UserController userController;
-
-    @Before
-    public void setUp() throws Exception {
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
-    }
-
     @Test
-    public void testGetUserYourself() throws Exception {
-        when(userService.getLoggedInUser()).thenReturn(userdummy.defaultUser());
+    public void testGetUser() throws Exception {
+        User testUser = userdummy.defaultUser();
+        when(userService.getLoggedInUser()).thenReturn(testUser);
         mockMvc.perform(get("/users/you")).andExpect(status().isOk())
                 .andExpect(model().attribute("user", userdummy.defaultUser()));
     }
 
     @Test
-    public void testGetUser() throws Exception {
-        when(userService.getUserById(userdummy.defaultUser().getUserId())).thenReturn(userdummy.defaultUser());
-        mockMvc.perform(get("/users/{id}", userdummy.defaultUser().getUserId())).andExpect(status().isOk())
-                .andExpect(model().attribute("user", userdummy.defaultUser()));
+    public void testGetUserById() throws Exception {
+        User testUser = userdummy.defaultUser();
+        when(userService.getUserById(testUser.getUserId())).thenReturn(testUser);
+        mockMvc.perform(get("/users/{id}", testUser.getUserId())).andExpect(status().isOk())
+                .andExpect(model().attribute("user", testUser));
     }
 
 }
