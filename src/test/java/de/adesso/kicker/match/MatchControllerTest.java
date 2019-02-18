@@ -22,7 +22,6 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(value = MatchController.class, secure = false)
@@ -58,7 +57,7 @@ class MatchControllerTest {
     void whenMatchNotExistingThenReturn404() throws Exception {
         when(matchService.getMatchById(anyString())).thenThrow(MatchNotFoundException.class);
 
-        this.mockMvc.perform(get("/matches/m/{id}", "non-existent-id")).andDo(print()).andExpect(status().isNotFound());
+        this.mockMvc.perform(get("/matches/m/{id}", "non-existent-id")).andExpect(status().isNotFound());
     }
 
     @Test
@@ -68,7 +67,7 @@ class MatchControllerTest {
         var match = createMatch();
         when(matchService.getMatchById(match.getMatchId())).thenReturn(match);
 
-        this.mockMvc.perform(get("/matches/m/{id}", match.getMatchId())).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get("/matches/m/{id}", match.getMatchId())).andExpect(status().isOk())
                 .andExpect(view().name("match/page.html"));
     }
 
@@ -79,9 +78,8 @@ class MatchControllerTest {
         var matchList = createMatchList();
         when(matchService.getAllMatches()).thenReturn(matchList);
 
-        this.mockMvc.perform(get("/matches")).andDo(print()).andExpect(status().isOk())
-                .andExpect(view().name("match/matches.html")).andExpect(model().attribute("matches", matchList))
-                .andReturn();
+        this.mockMvc.perform(get("/matches")).andExpect(status().isOk()).andExpect(view().name("match/matches.html"))
+                .andExpect(model().attribute("matches", matchList)).andReturn();
     }
 
     @Test
@@ -90,9 +88,8 @@ class MatchControllerTest {
     void whenNoMatchesExistThenReturnEmptyList() throws Exception {
         when(matchService.getAllMatches()).thenReturn(Collections.emptyList());
 
-        this.mockMvc.perform(get("/matches")).andDo(print()).andExpect(status().isOk())
-                .andExpect(view().name("match/matches.html")).andExpect(model().attribute("matches", new ArrayList<>()))
-                .andReturn();
+        this.mockMvc.perform(get("/matches")).andExpect(status().isOk()).andExpect(view().name("match/matches.html"))
+                .andExpect(model().attribute("matches", new ArrayList<>())).andReturn();
     }
 
     @Test
@@ -102,9 +99,8 @@ class MatchControllerTest {
         var userList = createUserList();
         when(userService.getAllUsers()).thenReturn(userList);
 
-        this.mockMvc.perform(get("/matches/add")).andDo(print()).andExpect(status().isOk())
-                .andExpect(view().name("match/add.html")).andExpect(model().attribute("match", new Match()))
-                .andExpect(model().attribute("users", userList));
+        this.mockMvc.perform(get("/matches/add")).andExpect(status().isOk()).andExpect(view().name("match/add.html"))
+                .andExpect(model().attribute("match", new Match())).andExpect(model().attribute("users", userList));
     }
 
     @Test
@@ -115,7 +111,7 @@ class MatchControllerTest {
         when(userService.getAllUsers()).thenReturn(userList);
 
         this.mockMvc.perform(post("/matches/add").param("teamAPlayer1", "user").param("teamBPlayer1", "user2")
-                .param("winnerTeamA", "true")).andDo(print()).andExpect(model().attributeExists("noDate"));
+                .param("winnerTeamA", "true")).andExpect(model().attributeExists("noDate"));
     }
 
     @Test
@@ -126,7 +122,7 @@ class MatchControllerTest {
         when(userService.getAllUsers()).thenReturn(userList);
 
         mockMvc.perform(post("/matches/add").param("date", LocalDate.now().toString()).param("teamAPlayer1", "user")
-                .param("teamBPlayer1", "user2")).andDo(print()).andExpect(model().attributeExists("noWinner"));
+                .param("teamBPlayer1", "user2")).andExpect(model().attributeExists("noWinner"));
     }
 
     @Test
@@ -136,7 +132,7 @@ class MatchControllerTest {
         when(userService.getAllUsers()).thenReturn(userList);
 
         mockMvc.perform(post("/matches/add").param("date", LocalDate.now().toString()).param("winnerTeamA", "true"))
-                .andDo(print()).andExpect(model().attributeExists("nullPlayer"));
+                .andExpect(model().attributeExists("nullPlayer"));
     }
 
 }
