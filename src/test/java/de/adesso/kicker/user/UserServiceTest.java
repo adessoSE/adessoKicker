@@ -1,7 +1,9 @@
 package de.adesso.kicker.user;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -15,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserServiceTest {
 
     @Mock
@@ -28,7 +31,7 @@ class UserServiceTest {
     private User user = userDummy.defaultUser();
     private User otherUser = userDummy.alternateUser();
 
-    @BeforeEach
+    @BeforeAll
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
