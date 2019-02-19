@@ -3,7 +3,7 @@ package de.adesso.kicker.user;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.adesso.kicker.user.exception.UserDoesNotExistException;
+import de.adesso.kicker.user.exception.UserNotFoundException;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
 import org.keycloak.representations.AccessToken;
@@ -45,7 +45,7 @@ public class UserService {
         User user = userRepository.findByUserId(principal.getName());
         try {
             checkUserExists(user);
-        } catch (UserDoesNotExistException e) {
+        } catch (UserNotFoundException e) {
             user = createUser();
         }
         return user;
@@ -75,7 +75,7 @@ public class UserService {
 
     private void checkUserExists(User user) {
         if (user == null) {
-            throw new UserDoesNotExistException();
+            throw new UserNotFoundException();
         }
     }
 }
