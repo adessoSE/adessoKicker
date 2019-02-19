@@ -3,6 +3,7 @@ package de.adesso.kicker.match;
 import de.adesso.kicker.user.User;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -38,6 +39,7 @@ public class Match {
     @OneToOne
     private User teamBPlayer2;
 
+    @NotNull
     private Boolean winnerTeamA;
 
     private boolean verified;

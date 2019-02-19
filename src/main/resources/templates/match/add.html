@@ -7,25 +7,26 @@
 <body>
 <form action="#" th:action="@{/matches/add}" th:object="${match}" method="post">
   <div>
-    <label for="date" th:text="#{match.date}"></label>
+    <label for="date" th:text="#{match.add.date}"></label>
     <input type="date" id="date" th:field="*{date}">
     <span th:if="${noDate}" th:text="#{error.noDate}"></span>
+    <span th:if="${futureDate}" th:text="#{error.futureDate}"></span>
   </div>
   <span th:if="${samePlayer}" th:text="#{error.samePlayer}"></span>
   <div>
     <span th:if="${invalidCreator}" th:text="#{error.invalidCreator}"></span>
     <span th:if="${nullPlayer}" th:text="#{error.nullPlayer}"></span>
-    <label for="teamAPlayer1" th:text="#{match.teamAPlayer1}"></label>
+    <label for="teamAPlayer1" th:text="#{match.add.teamAPlayer1}"></label>
     <select name="teamAPlayer1" id="teamAPlayer1">
-      <option th:value="${currentUser.userId}"
-              th:text="${currentUser.userId}">
+      <option th:value="${#authentication.getName()}"
+              th:text="${#authentication.getName()}">
       </option>
     </select>
   </div>
   <div>
-    <label for="teamAPlayer2" th:text="#{match.teamAPlayer2}"></label>
+    <label for="teamAPlayer2" th:text="#{match.add.teamAPlayer2}"></label>
     <select id="teamAPlayer2" name="teamAPlayer2">
-      <option value="" disabled hidden selected>Spieler...</option>
+      <option value="" disabled hidden selected th:text="#{match.add.playerPlaceholder}"></option>
       <option th:each="user : ${users}"
               th:value="${user.userId}"
               th:text="${user.userId}">
@@ -33,29 +34,40 @@
     </select>
   </div>
   <div>
-    <label for="teamBPlayer1" th:text="#{match.teamBPlayer1}"></label>
+    <label for="teamBPlayer1" th:text="#{match.add.teamBPlayer1}"></label>
     <select id="teamBPlayer1" name="teamBPlayer1">
-      <option value="" disabled hidden selected>Spieler...</option>
-      <option th:each="user :${users}"
+      <option value="" disabled hidden selected th:text="#{match.add.playerPlaceholder}"></option>
+      <option th:each="user : ${users}"
               th:value="${user.userId}"
               th:text="${user.userId}">
       </option>
     </select>
   </div>
   <div>
-    <label for="teamBPlayer2" th:text="#{match.teamBPlayer2}"></label>
+    <label for="teamBPlayer2" th:text="#{match.add.teamBPlayer2}"></label>
     <select id="teamBPlayer2" name="teamBPlayer2">
-      <option value="" selected hidden disabled>Spieler...</option>
-      <option th:each="user :${users}"
+      <option value="" selected hidden disabled th:text="#{match.add.playerPlaceholder}"></option>
+      <option th:each="user : ${users}"
               th:value="${user.userId}"
               th:text="${user.userId}">
       </option>
     </select>
   </div>
   <div>
-    <button type="submit" th:text="#{match.create}"></button>
+    <span th:if="${noWinner}" th:text="#{error.noWinner}"></span>
+    <div>
+      <input type="radio" name="winnerTeamA" th:field="*{winnerTeamA}" id="teamA" th:value="true">
+      <label for="teamA" th:text="#{match.add.teamAWon}"></label>
+    </div>
+    <div>
+      <input type="radio" name="winnerTeamA" th:field="*{winnerTeamA}" id="teamB" th:value="false">
+      <label for="teamB" th:text="#{match.add.teamBWon}"></label>
+    </div>
   </div>
-  <span th:if="${successMessage}" th:text="#{match.successMessage}"></span>
+  <div>
+    <button type="submit" th:text="#{match.add.create}"></button>
+  </div>
+  <span th:if="${successMessage}" th:text="#{match.add.successMessage}"></span>
 </form>
 </body>
 </html>

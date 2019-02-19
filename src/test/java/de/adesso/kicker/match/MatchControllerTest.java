@@ -1,171 +1,138 @@
 package de.adesso.kicker.match;
 
-import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.MatchNotFoundException;
-import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserDummy;
 import de.adesso.kicker.user.UserService;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@WebMvcTest(value = MatchController.class, secure = false)
 class MatchControllerTest {
 
-    @Mock
+    @MockBean
     MatchService matchService;
 
-    @Mock
+    @MockBean
     UserService userService;
 
-    @InjectMocks
-    MatchController matchController;
+    @Autowired
+    private MockMvc mockMvc;
 
-    private MatchDummy matchDummy = new MatchDummy();
-    private UserDummy userDummy = new UserDummy();
+    static List<User> createUserList() {
+        UserDummy userDummy = new UserDummy();
+        return Arrays.asList(userDummy.defaultUser(), userDummy.alternateUser());
+    }
 
-    private Match match = matchDummy.match();
-    private Match match_withoutDate = matchDummy.match_without_date();
-    private Match match_withNullPlayers = matchDummy.match_without_players();
-    private Match match_withOnlyPlayerA1 = matchDummy.match_with_only_player_a_1();
-    private Match match_withOnlyPlayerB1 = matchDummy.match_with_only_player_b_1();
-    private Match match_withSamePlayers = matchDummy.match_with_equal_player1();
-    private Match match_withInvalidCreator = matchDummy.match_without_default_user_player_1();
-    private User user = userDummy.defaultUser();
+    static Match createMatch() {
+        MatchDummy matchDummy = new MatchDummy();
+        return matchDummy.match();
+    }
 
-    private List<Match> matchList = Collections.singletonList(match);
-    private List<User> userList = Collections.singletonList(user);
+    static List<Match> createMatchList() {
+        MatchDummy matchDummy = new MatchDummy();
+        return Collections.singletonList(matchDummy.match());
+    }
 
-    @BeforeAll
-    void setUp() {
-        MockitoAnnotations.initMocks(this);
-
-        when(matchService.getMatchById(match.getMatchId())).thenReturn(match);
+    @Test
+    @DisplayName("When a match doesn't exist status code 404 should be returned")
+    @WithMockUser
+    void whenMatchNotExistingThenReturn404() throws Exception {
         when(matchService.getMatchById(anyString())).thenThrow(MatchNotFoundException.class);
+
+        this.mockMvc.perform(get("/matches/m/{id}", "non-existent-id")).andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("When a match exists it's page should be returned")
+    @WithMockUser
+    void whenMatchExistsThenReturnPage() throws Exception {
+        var match = createMatch();
+        when(matchService.getMatchById(match.getMatchId())).thenReturn(match);
+
+        this.mockMvc.perform(get("/matches/m/{id}", match.getMatchId())).andExpect(status().isOk())
+                .andExpect(view().name("match/page.html"));
+    }
+
+    @Test
+    @DisplayName("When matches exist they should be shown")
+    @WithMockUser
+    void whenMatchesExistThenReturnMatches() throws Exception {
+        var matchList = createMatchList();
         when(matchService.getAllMatches()).thenReturn(matchList);
-        when(matchService.addMatchEntry(match_withSamePlayers)).thenThrow(SamePlayerException.class);
-        when(matchService.addMatchEntry(match_withInvalidCreator)).thenThrow(InvalidCreatorException.class);
-        when(userService.getLoggedInUser()).thenReturn(user);
+
+        this.mockMvc.perform(get("/matches")).andExpect(status().isOk()).andExpect(view().name("match/matches.html"))
+                .andExpect(model().attribute("matches", matchList)).andReturn();
+    }
+
+    @Test
+    @DisplayName("When no matches exist an empty list should be shown")
+    @WithMockUser
+    void whenNoMatchesExistThenReturnEmptyList() throws Exception {
+        when(matchService.getAllMatches()).thenReturn(Collections.emptyList());
+
+        this.mockMvc.perform(get("/matches")).andExpect(status().isOk()).andExpect(view().name("match/matches.html"))
+                .andExpect(model().attribute("matches", new ArrayList<>())).andReturn();
+    }
+
+    @Test
+    @DisplayName("Return 'match/add.html' and contain a new Match")
+    @WithMockUser
+    void getAddMatch() throws Exception {
+        var userList = createUserList();
         when(userService.getAllUsers()).thenReturn(userList);
+
+        this.mockMvc.perform(get("/matches/add")).andExpect(status().isOk()).andExpect(view().name("match/add.html"))
+                .andExpect(model().attribute("match", new Match())).andExpect(model().attribute("users", userList));
     }
 
     @Test
-    void test_getAllMatches() {
-        var actual_modelAndView = matchController.getAllMatches();
-        var expected_modelAndView = new ModelAndView();
-        expected_modelAndView.addObject("user", user);
-        expected_modelAndView.addObject("matches", matchList);
-        expected_modelAndView.setViewName("match/matches.html");
-        assertModelAndView(expected_modelAndView, actual_modelAndView);
+    @DisplayName("When no date entered then 'noDate' should exist")
+    @WithMockUser
+    void whenMatchWithOutDateThenReturnNoDate() throws Exception {
+        var userList = createUserList();
+        when(userService.getAllUsers()).thenReturn(userList);
+
+        this.mockMvc.perform(post("/matches/add").param("teamAPlayer1", "user").param("teamBPlayer1", "user2")
+                .param("winnerTeamA", "true")).andExpect(model().attributeExists("noDate"));
     }
 
     @Test
-    void test_getMatch() {
-        var actual_modelAndView = matchController.getMatch(match.getMatchId());
-        var expected_modelAndView = new ModelAndView();
-        expected_modelAndView.addObject("user", user);
-        expected_modelAndView.addObject("match", match);
-        expected_modelAndView.setViewName("match/page.html");
-        assertModelAndView(expected_modelAndView, actual_modelAndView);
+    @DisplayName("When no winner has been selected 'noWinner' should exist")
+    @WithMockUser
+    void whenMatchWithNoWinnerThenReturnNoWinner() throws Exception {
+        var userList = createUserList();
+        when(userService.getAllUsers()).thenReturn(userList);
+
+        mockMvc.perform(post("/matches/add").param("date", LocalDate.now().toString()).param("teamAPlayer1", "user")
+                .param("teamBPlayer1", "user2")).andExpect(model().attributeExists("noWinner"));
     }
 
     @Test
-    void test_getMatch_NonExistentMatch() {
-        var actual_modelAndView = matchController.getMatch("non-existent-id");
-        var expected_modelAndView = new ModelAndView();
-        expected_modelAndView.setViewName("error/404.html");
-        assertModelAndView(expected_modelAndView, actual_modelAndView);
+    @WithMockUser
+    void whenMatchWithNoPlayersThenReturnNullPlayers() throws Exception {
+        var userList = createUserList();
+        when(userService.getAllUsers()).thenReturn(userList);
+
+        mockMvc.perform(post("/matches/add").param("date", LocalDate.now().toString()).param("winnerTeamA", "true"))
+                .andExpect(model().attributeExists("nullPlayer"));
     }
 
-    @Test
-    void test_getAddMatch() {
-        var actual_modelAndView = matchController.getAddMatch();
-        var expected_modelAndView = new ModelAndView();
-        expected_modelAndView.addObject("match", new Match());
-        expected_modelAndView.addObject("users", userList);
-        expected_modelAndView.addObject("currentUser", user);
-        expected_modelAndView.setViewName("match/add.html");
-        assertModelAndView(expected_modelAndView, actual_modelAndView);
-    }
-
-    @Test
-    void test_postAddMatch() {
-        var actual_modelAndView = matchController.postAddMatch(match);
-        var expected_modelAndView = new ModelAndView();
-        expected_modelAndView.addObject("successMessage", true);
-        expected_modelAndView.addObject("match", new Match());
-        expected_modelAndView.addObject("users", userList);
-        expected_modelAndView.addObject("currentUser", user);
-        expected_modelAndView.setViewName("match/add.html");
-        assertModelAndView(actual_modelAndView, expected_modelAndView);
-    }
-
-    @Test
-    void test_postAddMatch_noDate() {
-        var actual_modelAndView = matchController.postAddMatch(match_withoutDate);
-        var expected_modelAndView = new ModelAndView();
-        expected_modelAndView.addObject("noDate", true);
-        expected_modelAndView.addObject("match", new Match());
-        expected_modelAndView.addObject("users", userList);
-        expected_modelAndView.addObject("currentUser", user);
-        expected_modelAndView.setViewName("match/add.html");
-        assertModelAndView(actual_modelAndView, expected_modelAndView);
-    }
-
-    @Test
-    void test_postAddMatch_nullPlayers() {
-        var actual_modelAndView_withBothNull = matchController.postAddMatch(match_withNullPlayers);
-        var actual_modelAndView_withOnlyA1 = matchController.postAddMatch(match_withOnlyPlayerA1);
-        var actual_modelAndView_withOnlyB1 = matchController.postAddMatch(match_withOnlyPlayerB1);
-        var expected_modelAndView = new ModelAndView();
-        expected_modelAndView.addObject("nullPlayer", true);
-        expected_modelAndView.addObject("match", new Match());
-        expected_modelAndView.addObject("users", userList);
-        expected_modelAndView.addObject("currentUser", user);
-        expected_modelAndView.setViewName("match/add.html");
-        assertModelAndView(actual_modelAndView_withBothNull, expected_modelAndView);
-        assertModelAndView(actual_modelAndView_withOnlyA1, expected_modelAndView);
-        assertModelAndView(actual_modelAndView_withOnlyB1, expected_modelAndView);
-    }
-
-    @Test
-    void test_postAddMatch_invalidCreator() {
-        var actual_modelAndView = matchController.postAddMatch(match_withInvalidCreator);
-        var expected_modelAndView = new ModelAndView();
-        expected_modelAndView.addObject("invalidCreator", true);
-        expected_modelAndView.addObject("match", new Match());
-        expected_modelAndView.addObject("users", userList);
-        expected_modelAndView.addObject("currentUser", user);
-        expected_modelAndView.setViewName("match/add.html");
-        assertModelAndView(expected_modelAndView, actual_modelAndView);
-    }
-
-    @Test
-    void test_postAddMatch_samePlayer() {
-        var actual_modelAndView = matchController.postAddMatch(match_withSamePlayers);
-        var expected_modelAndView = new ModelAndView();
-        expected_modelAndView.addObject("samePlayer", true);
-        expected_modelAndView.addObject("match", new Match());
-        expected_modelAndView.addObject("users", userList);
-        expected_modelAndView.addObject("currentUser", user);
-        expected_modelAndView.setViewName("match/add.html");
-        assertModelAndView(expected_modelAndView, actual_modelAndView);
-    }
-
-    private void assertModelAndView(ModelAndView expected, ModelAndView actual) {
-        assertEquals(expected.getModelMap(), actual.getModelMap());
-        assertEquals(expected.getView(), actual.getView());
-    }
 }
