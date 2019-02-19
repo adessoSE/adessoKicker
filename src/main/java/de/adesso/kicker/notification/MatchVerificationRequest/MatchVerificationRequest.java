@@ -5,8 +5,10 @@ import de.adesso.kicker.notification.Notification;
 import de.adesso.kicker.notification.NotificationType;
 import de.adesso.kicker.user.User;
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+@Entity
 public class MatchVerificationRequest extends Notification {
 
     @ManyToOne(targetEntity = Match.class, cascade = CascadeType.ALL)
@@ -27,7 +29,7 @@ public class MatchVerificationRequest extends Notification {
     public void generateMessage() {
 
         String message = "Bestätige, dass " + getMatch().getWinners().get(0).getFirstName();
-        if (getMatch().getWinners().toArray().length > 1) {
+        if (getMatch().getWinners().size() > 1) {
             message += " und " + getMatch().getWinners().get(1).getFirstName() + " das Match am "
                     + getMatch().getDate().toString() + " gewonnen haben.";
         } else {

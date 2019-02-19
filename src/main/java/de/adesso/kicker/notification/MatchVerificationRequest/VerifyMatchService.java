@@ -25,12 +25,11 @@ public class VerifyMatchService {
 
     public void acceptRequest(MatchVerificationRequest matchVerificationRequest) {
 
-        matchVerificationRequest.getMatch().setVerified(true);
+        // TODO trigger event to verify match
         // TODO execute ranking algorithm
-        List<MatchVerificationRequest> requests = matchVerificationRequestRepository
-                .getAllByMatch(matchVerificationRequest.getMatch());
+        List<MatchVerificationRequest> requests = getRequestsByMatch(matchVerificationRequest.getMatch());
         for (MatchVerificationRequest request : requests) {
-            matchVerificationRequestRepository.delete(request);
+            deleteRequest(request);
         }
     }
 
@@ -45,15 +44,14 @@ public class VerifyMatchService {
         }
         for (User receiver : receivers) {
             MatchVerificationRequest request = new MatchVerificationRequest(sender, receiver, match);
-            matchVerificationRequestRepository.save(request);
+            saveRequest(request);
         }
     }
 
     public List<User> declineRequest(MatchVerificationRequest matchVerificationRequest) {
 
         deleteRequest(matchVerificationRequest);
-        List<MatchVerificationRequest> otherRequests = matchVerificationRequestRepository
-                .getAllByMatch(matchVerificationRequest.getMatch());
+        List<MatchVerificationRequest> otherRequests = getRequestsByMatch(matchVerificationRequest.getMatch());
         List<User> usersToInform = new ArrayList<>();
         for (MatchVerificationRequest request : otherRequests) {
 
@@ -68,8 +66,18 @@ public class VerifyMatchService {
         return usersToInform;
     }
 
+    public List<MatchVerificationRequest> getRequestsByMatch(Match match) {
+
+        return matchVerificationRequestRepository.getAllByMatch(match);
+    }
+
     public void deleteRequest(MatchVerificationRequest matchVerificationRequest) {
 
         matchVerificationRequestRepository.delete(matchVerificationRequest);
+    }
+
+    public void saveRequest(MatchVerificationRequest matchVerificationRequest) {
+
+        matchVerificationRequestRepository.save(matchVerificationRequest);
     }
 }

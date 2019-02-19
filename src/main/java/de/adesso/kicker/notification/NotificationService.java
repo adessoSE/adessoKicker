@@ -28,39 +28,46 @@ public class NotificationService {
 
     public void acceptNotification(long notificationId) {
 
-        checkNotificationExists(notificationId);
         Notification notification = notificationRepository.findByNotificationId(notificationId);
-        checkWrongReceiver(notification);
+        if (notification == null) {
+            throw new NotificationNotExistingException(notificationId);
+        } else {
+            checkWrongReceiver(notification);
 
-        switch (notification.getType()) {
-        case MESSAGE:
-            deleteNotification(notification);
-            break;
-        case MATCH_VERIFICATION:
-            verifyMatchService.acceptRequest((MatchVerificationRequest) notification);
-            break;
+            switch (notification.getType()) {
+            case MESSAGE:
+                deleteNotification(notification);
+                break;
+            case MATCH_VERIFICATION:
+                verifyMatchService.acceptRequest((MatchVerificationRequest) notification);
+                break;
+            }
         }
     }
 
     public void declineNotification(long notificationId) {
 
-        checkNotificationExists(notificationId);
-        Notification notification = notificationRepository.findByNotificationId(notificationId);
-        checkWrongReceiver(notification);
 
-        switch (notification.getType()) {
-        case MESSAGE:
-            deleteNotification(notification);
-            break;
-        case MATCH_VERIFICATION:
-            // TODO delete the match
-            List<User> users = verifyMatchService.declineRequest((MatchVerificationRequest) notification);
-            for (User user : users) {
-                sendNotification(null, user, userService.getLoggedInUser().getFirstName()
-                        + " hat die Anfrage für das Match am "
-                        + (((MatchVerificationRequest) notification).getMatch().getDate().toString() + " abgelehnt."));
+        Notification notification = notificationRepository.findByNotificationId(notificationId);
+        if (notification == null) {
+            throw new NotificationNotExistingException(notificationId);
+        } else {
+            checkWrongReceiver(notification);
+
+            switch (notification.getType()) {
+                case MESSAGE:
+                    deleteNotification(notification);
+                    break;
+                case MATCH_VERIFICATION:
+                    // TODO delete the match
+                    List<User> users = verifyMatchService.declineRequest((MatchVerificationRequest) notification);
+                    for (User user : users) {
+                        sendNotification(null, user, userService.getLoggedInUser().getFirstName()
+                                + " hat die Anfrage für das Match am "
+                                + (((MatchVerificationRequest) notification).getMatch().getDate().toString() + " abgelehnt."));
+                    }
+                    break;
             }
-            break;
         }
     }
 
@@ -72,6 +79,11 @@ public class NotificationService {
     public void sendNotification(User sender, User receiver, String message) {
 
         Notification notification = new Notification(sender, receiver, message);
+        saveNotification(notification);
+    }
+
+    public void saveNotification(Notification notification) {
+
         notificationRepository.save(notification);
     }
 

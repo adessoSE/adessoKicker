@@ -3,6 +3,7 @@ package de.adesso.kicker.notification;
 import de.adesso.kicker.user.User;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -15,9 +16,11 @@ public class Notification {
     private User sender;
     @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
     private User receiver;
-    private Date sendDate;
+    private LocalDate sendDate;
     private String message;
     private NotificationType type;
+
+    public Notification() {}
 
     public Notification(User sender, User receiver) {
 
@@ -30,7 +33,7 @@ public class Notification {
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
-        this.sendDate = new Date();
+        this.sendDate = LocalDate.now();
     }
 
     public String getMessage() {
@@ -69,7 +72,7 @@ public class Notification {
         this.type = type;
     }
 
-    public Date getSendDate() {
+    public LocalDate getSendDate() {
         return sendDate;
     }
 }
