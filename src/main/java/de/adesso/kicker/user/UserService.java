@@ -42,7 +42,8 @@ public class UserService {
     }
 
     public User getLoggedInUser() {
-        KeycloakPrincipal principal = (KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication()
+        KeycloakPrincipal principal = (KeycloakPrincipal) SecurityContextHolder.getContext()
+                .getAuthentication()
                 .getPrincipal();
         User user = userRepository.findByUserId(principal.getName());
         try {
@@ -55,7 +56,8 @@ public class UserService {
 
     private User createUser() {
         SimpleKeycloakAccount simpleKeycloakAccount = (SimpleKeycloakAccount) SecurityContextHolder.getContext()
-                .getAuthentication().getDetails();
+                .getAuthentication()
+                .getDetails();
         AccessToken userAccessToken = simpleKeycloakAccount.getKeycloakSecurityContext().getToken();
         String userId = userAccessToken.getPreferredUsername();
         String firstName = userAccessToken.getGivenName();

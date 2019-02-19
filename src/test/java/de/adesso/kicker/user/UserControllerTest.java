@@ -27,7 +27,8 @@ public class UserControllerTest {
     public void whenUserLoggedInReturnUser() throws Exception {
         User testUser = userdummy.defaultUser();
         when(userService.getLoggedInUser()).thenReturn(testUser);
-        mockMvc.perform(get("/users/you")).andExpect(status().isOk())
+        mockMvc.perform(get("/users/you"))
+                .andExpect(status().isOk())
                 .andExpect(model().attribute("user", userdummy.defaultUser()));
     }
 
@@ -35,7 +36,8 @@ public class UserControllerTest {
     public void whenUserExistsReturnUser() throws Exception {
         User testUser = userdummy.defaultUser();
         when(userService.getUserById(testUser.getUserId())).thenReturn(testUser);
-        mockMvc.perform(get("/users/{id}", testUser.getUserId())).andExpect(status().isOk())
+        mockMvc.perform(get("/users/{id}", testUser.getUserId()))
+                .andExpect(status().isOk())
                 .andExpect(model().attribute("user", testUser));
     }
 
