@@ -31,7 +31,9 @@ public class UserService {
 
     public User getUserById(String id) {
 
-        return userRepository.findByUserId(id);
+        var user = userRepository.findByUserId(id);
+        checkUserExists(user);
+        return user;
     }
 
     public User getUserByEmail(String email) {
