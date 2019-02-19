@@ -1,8 +1,9 @@
 package de.adesso.kicker.user;
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -11,11 +12,12 @@ import org.mockito.stubbing.Answer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserServiceTest {
 
     @Mock
@@ -29,13 +31,13 @@ class UserServiceTest {
     private User user = userDummy.defaultUser();
     private User otherUser = userDummy.alternateUser();
 
-    @BeforeEach
+    @BeforeAll
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
         when(userRepository.findAll()).thenReturn(Arrays.asList(user, otherUser));
 
-        when(userRepository.findByUserId(anyLong())).thenReturn(null);
+        when(userRepository.findByUserId(anyString())).thenReturn(null);
         when(userRepository.findByUserId(eq(user.getUserId()))).thenReturn(user);
 
         when(userRepository.findByEmail(anyString())).thenReturn(null);
@@ -59,29 +61,9 @@ class UserServiceTest {
         assertEquals(idUser, user);
     }
 
-//    @Test
-//    void testGetUserById_NotExisting() {
-//        Assertions.assertThrows(UserNotFoundException.class, () -> {
-//            userService.getUserById(-1);
-//        });
-//    }
-
     @Test
     void testGetUserByEmail_Success() {
         User emailUser = userService.getUserByEmail(user.getEmail());
         assertEquals(emailUser, user);
     }
-
-//    @Test
-//    void testGetUserByEmail_NotExisting() {
-//        Assertions.assertThrows(UserNotFoundException.class, () -> userService.getUserByEmail("not-existing-email"));
-//    }
-
-//    @Test
-//    void testSaveUser() {
-//        User savedUser = userService.saveUser(user);
-//        verify(userRepository).save(user);
-//        assertEquals(savedUser, user);
-//    }
-
 }

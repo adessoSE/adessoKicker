@@ -1,13 +1,14 @@
 package de.adesso.kicker.match;
 
+import de.adesso.kicker.user.User;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,73 +17,154 @@ public class Match {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long matchId;
+    private String matchId;
 
-    @NotNull(message = "Bitte ein Datum wählen.")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate date;
 
-    @NotNull(message = "Bitte eine Uhrzeit wählen.")
-    @DateTimeFormat(pattern = "HH:mm")
-    @Temporal(TemporalType.TIME)
+    @NotNull
+    @OneToOne
+    private User teamAPlayer1;
+
     @Nullable
-    private Date time;
+    @OneToOne
+    private User teamAPlayer2;
 
-    private String kicker;
+    @NotNull
+    @OneToOne
+    private User teamBPlayer1;
+
+    @Nullable
+    @OneToOne
+    private User teamBPlayer2;
+
+    @NotNull
+    private Boolean winnerTeamA;
+
+    private boolean verified;
 
     public Match() {
     }
 
-    public String getGermanDate() {
-        DateFormat df = new SimpleDateFormat("EEEEE, dd. MMMMM yyyy");
-        String germanDate = df.format(date);
-        return germanDate;
-    }
-
-    public Match(Date date, Date time, String kicker) {
-
+    public Match(LocalDate date, User teamAPlayer1, User teamAPlayer2, User teamBPlayer1, User teamBPlayer2,
+            Boolean winnerTeamA) {
         this.date = date;
-        this.time = time;
-        this.kicker = kicker;
+        this.teamAPlayer1 = teamAPlayer1;
+        this.teamAPlayer2 = teamAPlayer2;
+        this.teamBPlayer1 = teamBPlayer1;
+        this.teamBPlayer2 = teamBPlayer2;
+        this.winnerTeamA = winnerTeamA;
+        this.verified = false;
     }
 
-    public long getMatchId() {
+    public Match(LocalDate date, User teamAPlayer1, User teamBPlayer1, Boolean winnerTeamA) {
+        this.date = date;
+        this.teamAPlayer1 = teamAPlayer1;
+        this.teamAPlayer2 = null;
+        this.teamBPlayer1 = teamBPlayer1;
+        this.teamBPlayer2 = null;
+        this.winnerTeamA = winnerTeamA;
+        this.verified = false;
+    }
+
+    public List<User> getPlayers() {
+        var players = new ArrayList<User>();
+        players.add(teamAPlayer1);
+        players.add(teamAPlayer2);
+        players.add(teamBPlayer1);
+        players.add(teamBPlayer2);
+        return players;
+    }
+
+    public List<User> getWinners() {
+        var winners = new ArrayList<User>();
+        if (winnerTeamA) {
+            winners.add(teamAPlayer1);
+            winners.add(teamAPlayer2);
+        } else {
+            winners.add(teamBPlayer1);
+            winners.add(teamBPlayer2);
+        }
+        return winners;
+    }
+
+    public List<User> getLosers() {
+        var losers = new ArrayList<User>();
+        if (!winnerTeamA) {
+            losers.add(teamAPlayer1);
+            losers.add(teamAPlayer2);
+        } else {
+            losers.add(teamBPlayer1);
+            losers.add(teamBPlayer2);
+        }
+        return losers;
+    }
+
+    public String getMatchId() {
         return matchId;
     }
 
-    public void setMatchId(long matchId) {
+    public void setMatchId(String matchId) {
         this.matchId = matchId;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public String getKicker() {
-        return kicker;
+    public User getTeamAPlayer1() {
+        return teamAPlayer1;
     }
 
-    public void setKicker(String kicker) {
-        this.kicker = kicker;
+    public void setTeamAPlayer1(User teamAPlayer1) {
+        this.teamAPlayer1 = teamAPlayer1;
     }
 
-    public Date getTime() {
-        return time;
+    @Nullable
+    public User getTeamAPlayer2() {
+        return teamAPlayer2;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setTeamAPlayer2(@Nullable User teamAPlayer2) {
+        this.teamAPlayer2 = teamAPlayer2;
     }
 
-    @Override
-    public String toString() {
-        return "Match{" + "matchId=" + matchId + ", date=" + date + ", time=" + time + ", kicker='" + kicker + '\''
-                + '}';
+    public User getTeamBPlayer1() {
+        return teamBPlayer1;
+    }
+
+    public void setTeamBPlayer1(User teamBPlayer1) {
+        this.teamBPlayer1 = teamBPlayer1;
+    }
+
+    @Nullable
+    public User getTeamBPlayer2() {
+        return teamBPlayer2;
+    }
+
+    public void setTeamBPlayer2(@Nullable User teamBPlayer2) {
+        this.teamBPlayer2 = teamBPlayer2;
+    }
+
+    public Boolean getWinnerTeamA() {
+        return winnerTeamA;
+    }
+
+    public void setWinnerTeamA(Boolean winnerTeamA) {
+        this.winnerTeamA = winnerTeamA;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     @Override
@@ -92,12 +174,22 @@ public class Match {
         if (o == null || getClass() != o.getClass())
             return false;
         Match match = (Match) o;
-        return matchId == match.matchId && date.equals(match.date) && time.equals(match.time)
-                && kicker.equals(match.kicker);
+        return verified == match.verified && Objects.equals(matchId, match.matchId) && Objects.equals(date, match.date)
+                && Objects.equals(teamAPlayer1, match.teamAPlayer1) && Objects.equals(teamAPlayer2, match.teamAPlayer2)
+                && Objects.equals(teamBPlayer1, match.teamBPlayer1) && Objects.equals(teamBPlayer2, match.teamBPlayer2)
+                && Objects.equals(winnerTeamA, match.winnerTeamA);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(matchId, date, time, kicker);
+        return Objects.hash(matchId, date, teamAPlayer1, teamAPlayer2, teamBPlayer1, teamBPlayer2, winnerTeamA,
+                verified);
+    }
+
+    @Override
+    public String toString() {
+        return "Match{" + "matchId=" + matchId + ", date=" + date + ", teamAPlayer1=" + teamAPlayer1 + ", teamAPlayer2="
+                + teamAPlayer2 + ", teamBPlayer1=" + teamBPlayer1 + ", teamBPlayer2=" + teamBPlayer2 + ", winnerTeamA="
+                + winnerTeamA + ", verified=" + verified + '}';
     }
 }
