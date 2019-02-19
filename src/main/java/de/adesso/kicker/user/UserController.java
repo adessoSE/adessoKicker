@@ -24,12 +24,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ModelAndView getUser(@PathVariable String id) {
         ModelAndView modelAndView = new ModelAndView();
-        try {
-            modelAndView.addObject("user", userService.getUserById(id));
-        } catch (UserNotFoundException u) {
-            modelAndView.setViewName("error/404.html");
-            return modelAndView;
-        }
+        modelAndView.addObject("user", userService.getUserById(id));
         modelAndView.setViewName("user/profile");
         return modelAndView;
     }
