@@ -1,20 +1,16 @@
 package de.adesso.kicker.user;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.stubbing.Answer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -34,45 +30,54 @@ class UserServiceTest {
     @BeforeAll
     void setUp() {
         MockitoAnnotations.initMocks(this);
+    }
 
-        when(userRepository.findAll()).thenReturn(Arrays.asList(user, otherUser));
+    static User createUser() {
+        var userDummy = new UserDummy();
+        return userDummy.defaultUser();
+    }
 
-        when(userRepository.findByUserId(anyString())).thenReturn(null);
-        when(userRepository.findByUserId(eq(user.getUserId()))).thenReturn(user);
-
-        when(userRepository.findByEmail(anyString())).thenReturn(null);
-        when(userRepository.findByEmail(eq(user.getEmail()))).thenReturn(user);
-
-        when(userRepository.save(any(User.class))).thenAnswer((Answer<User>) invocation -> {
-            Object[] args = invocation.getArguments();
-            return (User) args[0];
-        });
+    static List<User> createUserList() {
+        var userDummy = new UserDummy();
+        return Collections.singletonList(userDummy.defaultUser());
     }
 
     @Test
     void testGetAllUsers() {
+        // given
+        var userList = createUserList();
+        when(userRepository.findAll()).thenReturn(userList);
+
         // when
-        ArrayList<User> allUsers = new ArrayList<>(userService.getAllUsers());
+        var actualList = userService.getAllUsers();
 
         // then
-        assertTrue(allUsers.contains(user));
+        assertEquals(userList, actualList);
     }
 
     @Test
     void testGetUserById_Success() {
+        // given
+        var user = createUser();
+        when(userRepository.findByUserId(user.getUserId())).thenReturn(user);
+
         // when
-        User idUser = userService.getUserById(user.getUserId());
+        var actualUser = userService.getUserById(user.getUserId());
 
         // then
-        assertEquals(idUser, user);
+        assertEquals(user, actualUser);
     }
 
     @Test
     void testGetUserByEmail_Success() {
+        // given
+        var user = createUser();
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(user);
+
         // when
-        User emailUser = userService.getUserByEmail(user.getEmail());
+        User actualUser = userService.getUserByEmail(user.getEmail());
 
         // then
-        assertEquals(emailUser, user);
+        assertEquals(user, actualUser);
     }
 }
