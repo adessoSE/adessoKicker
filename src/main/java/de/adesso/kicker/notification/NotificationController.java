@@ -30,20 +30,12 @@ public class NotificationController {
     @DeleteMapping("/notifications/decline/{id}")
     public void declineNotification(@PathVariable long id) {
 
-        try {
-            notificationService.declineNotification(id);
-        } catch (Exception e) {
-
-        }
+        notificationService.declineNotification(id);
     }
 
     @DeleteMapping("/notifications/accept/{id}")
     public void acceptNotification(@PathVariable long id) {
 
-        try {
-            notificationService.acceptNotification(id);
-        } catch (Exception e) {
-
-        }
+        notificationService.acceptNotification(id);
     }
 }
