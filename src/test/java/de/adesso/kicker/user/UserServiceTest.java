@@ -51,19 +51,28 @@ class UserServiceTest {
 
     @Test
     void testGetAllUsers() {
+        // when
         ArrayList<User> allUsers = new ArrayList<>(userService.getAllUsers());
+
+        // then
         assertTrue(allUsers.contains(user));
     }
 
     @Test
     void testGetUserById_Success() {
+        // when
         User idUser = userService.getUserById(user.getUserId());
+
+        // then
         assertEquals(idUser, user);
     }
 
     @Test
     void testGetUserByEmail_Success() {
+        // when
         User emailUser = userService.getUserByEmail(user.getEmail());
+
+        // then
         assertEquals(emailUser, user);
     }
 }
