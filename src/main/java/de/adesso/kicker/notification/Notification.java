@@ -20,7 +20,8 @@ public class Notification {
     private String message;
     private NotificationType type;
 
-    public Notification() {}
+    public Notification() {
+    }
 
     public Notification(User sender, User receiver) {
 

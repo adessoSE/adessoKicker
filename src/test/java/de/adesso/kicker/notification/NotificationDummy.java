@@ -18,7 +18,7 @@ public class NotificationDummy {
         return new Notification(userDummy.defaultUser(), null, "message");
     }
 
-    public Notification notification_with_no_sender () {
+    public Notification notification_with_no_sender() {
         return new Notification(null, userDummy.defaultUser(), "message");
     }
 }
