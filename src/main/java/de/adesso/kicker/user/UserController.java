@@ -1,12 +1,10 @@
 package de.adesso.kicker.user;
 
-import de.adesso.kicker.user.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -17,24 +15,22 @@ public class UserController {
 
     @Autowired
     public UserController(UserService userService) {
-
         this.userService = userService;
     }
 
     @GetMapping("/{id}")
-    public ModelAndView getUser(@PathVariable String id) {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView getUserProfile(@PathVariable String id) {
+        var modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getUserById(id));
-        modelAndView.setViewName("user/profile");
+        modelAndView.setViewName("user/profile.html");
         return modelAndView;
     }
 
     @GetMapping("/you")
-    public ModelAndView getUserYourself() {
+    public ModelAndView getOwnProfile() {
         ModelAndView modelAndView = new ModelAndView();
-        userService.getLoggedInUser();
         modelAndView.addObject("user", userService.getLoggedInUser());
-        modelAndView.setViewName("user/profile");
+        modelAndView.setViewName("user/profile.html");
         return modelAndView;
     }
 }
