@@ -8,7 +8,10 @@ import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.MessageFormat;
 import java.util.List;
+import java.util.Properties;
 
 @Service
 public class NotificationService {
@@ -60,11 +63,12 @@ public class NotificationService {
             case MATCH_VERIFICATION:
                 // TODO delete the match
                 List<User> users = verifyMatchService.declineRequest((MatchVerificationRequest) notification);
+                Properties properties = new Properties();
+                String message = MessageFormat.format(properties.getProperty("notification.message.declined"),
+                        userService.getLoggedInUser().getFirstName(),
+                        ((MatchVerificationRequest) notification).getMatch().getDate().toString());
                 for (User user : users) {
-                    sendNotification(null, user,
-                            userService.getLoggedInUser().getFirstName() + " hat die Anfrage für das Match am "
-                                    + (((MatchVerificationRequest) notification).getMatch().getDate().toString()
-                                            + " abgelehnt."));
+                    sendNotification(null, user, message);
                 }
                 break;
             }

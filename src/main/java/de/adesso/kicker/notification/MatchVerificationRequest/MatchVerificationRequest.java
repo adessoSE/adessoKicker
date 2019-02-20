@@ -7,6 +7,8 @@ import de.adesso.kicker.user.User;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import java.text.MessageFormat;
+import java.util.Properties;
 
 @Entity
 public class MatchVerificationRequest extends Notification {
@@ -19,6 +21,7 @@ public class MatchVerificationRequest extends Notification {
         super(sender, receiver);
         super.setType(NotificationType.MATCH_VERIFICATION);
         this.match = match;
+        generateMessage();
     }
 
     public Match getMatch() {
@@ -28,12 +31,15 @@ public class MatchVerificationRequest extends Notification {
 
     public void generateMessage() {
 
-        String message = "Bestätige, dass " + getMatch().getWinners().get(0).getFirstName();
+        Properties properties = new Properties();
+        String message;
         if (getMatch().getWinners().size() > 1) {
-            message += " und " + getMatch().getWinners().get(1).getFirstName() + " das Match am "
-                    + getMatch().getDate().toString() + " gewonnen haben.";
+            message = MessageFormat.format(properties.getProperty("notification.matchrequest.twoopponents"),
+                    getMatch().getWinners().get(0).getFirstName(), getMatch().getWinners().get(1).getFirstName(),
+                    getMatch().getDate().toString());
         } else {
-            message += " das Match am " + getMatch().getDate().toString() + " gewonnen hat.";
+            message = MessageFormat.format(properties.getProperty("notification.matchrequest.oneopponent"),
+                    getMatch().getWinners().get(0).getFirstName(), getMatch().getDate().toString());
         }
         setMessage(message);
     }
