@@ -1,31 +1,42 @@
 @import "colorscheme.less";
 
-header {
-  font-family: Klavika-regular, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-}
-
 .fa {color: @colorscheme[warm-grey-dark];}
+.fa-envelope-open {color: white !important;}
 
-.header-bg {background-color: @colorscheme[warm-grey-light] !important;}
-
-.header-link {margin-top: -10px; margin-left: 20px;}
-
-.header-name-bt {
-  margin-top: -10px;
-  color: @colorscheme[warm-grey-dark];
-  font-size: 14px;
-}
-
-.header-dropdown-item-text {color: @colorscheme[adesso-blue];}
+.navbar {background-color: @colorscheme[warm-grey-light] !important;}
 
 .adesso-logo {width: 150px; height: auto;}
+.adesso-blue-text {color: @colorscheme[adesso-blue];}
 
 .move-2px-right {margin-left: 2px;}
-
 .move-1px-left {margin-left: -2px;}
 
-.hvr-reveal:before { border-color: @colorscheme[adesso-blue]; }
-.hvr-fade:before, .hvr-underline-from-left:before , .hvr-shutter-out-horizontal:before , .hvr-underline-from-center:before { background-color: @colorscheme[adesso-blue]; }
-
+.hvr-fade:before, .hvr-underline-from-left:before { background-color: @colorscheme[adesso-blue]; }
 .dropdown-item:hover {background-color : @colorscheme[warm-grey-light]; }
+
+.header-link {
+  margin-top: -10px;
+  margin-left: 20px;
+}
+.header-dropdown-bt {
+  margin-top: -10px;
+  color: @colorscheme[warm-grey-dark];
+  background: @colorscheme[warm-grey-light];
+  font-size: 14px;
+}
+
+#profile-dropdown-menu {margin-top: 25px;}
+#notification-dropdown-menu {margin-top: 18px;}
+
+#notification-dropdown{margin-right: 10px;}
+#notification-dropdown-icon{font-size: 25px;}
+#notification-dropdown-menu{
+  height: 500px;
+  overflow-y: auto;
+}
+
+.matchverification-bt{width: 80px;}
+.matchverification-text{
+  white-space: normal;
+  width: 240px;
+}
