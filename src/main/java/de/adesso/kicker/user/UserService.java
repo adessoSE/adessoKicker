@@ -58,13 +58,13 @@ public class UserService {
     }
 
     private KeycloakPrincipal getPrincipal() {
-        return (KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
+        return (KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     private AccessToken getAccessToken() {
         var simpleKeycloakAccount = (SimpleKeycloakAccount) SecurityContextHolder.getContext()
-                .getAuthentication().getDetails();
+                .getAuthentication()
+                .getDetails();
         return simpleKeycloakAccount.getKeycloakSecurityContext().getToken();
     }
 
