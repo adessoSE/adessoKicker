@@ -39,13 +39,12 @@ public class MatchService {
     }
 
     public Match getMatchById(String id) {
-        var match = matchRepository.findByMatchId(id);
-        checkMatchExists(match);
-        return match;
+        return matchRepository.findById(id).orElseThrow(MatchNotFoundException::new);
     }
 
     public void verifyMatch(Match match) {
         match.setVerified(true);
+        saveMatch(match);
     }
 
     private void saveMatch(Match match) {
@@ -77,12 +76,6 @@ public class MatchService {
     private void checkForFutureDate(Match match) {
         if (match.getDate().isAfter(LocalDate.now())) {
             throw new FutureDateException();
-        }
-    }
-
-    private void checkMatchExists(Match match) {
-        if (match == null) {
-            throw new MatchNotFoundException();
         }
     }
 }
