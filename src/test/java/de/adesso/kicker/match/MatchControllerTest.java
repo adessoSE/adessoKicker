@@ -37,18 +37,15 @@ class MatchControllerTest {
     private MockMvc mockMvc;
 
     static List<User> createUserList() {
-        UserDummy userDummy = new UserDummy();
-        return Arrays.asList(userDummy.defaultUser(), userDummy.alternateUser());
+        return Arrays.asList(UserDummy.defaultUser(), UserDummy.alternateUser());
     }
 
     static Match createMatch() {
-        MatchDummy matchDummy = new MatchDummy();
-        return matchDummy.match();
+        return MatchDummy.match();
     }
 
     static List<Match> createMatchList() {
-        MatchDummy matchDummy = new MatchDummy();
-        return Collections.singletonList(matchDummy.match());
+        return Collections.singletonList(MatchDummy.match());
     }
 
     @Test
