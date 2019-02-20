@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-/**
- * Service that handles "UserService" used in "UserController".
- */
+import de.adesso.kicker.user.exception.UserNotFoundException;
 
 @Service
 public class UserService {
@@ -21,121 +19,56 @@ public class UserService {
 
     @Autowired
     public UserService(UserRepository userRepository) {
-
         this.userRepository = userRepository;
     }
 
-    /**
-     * getAllUsers() returns a list of all users.
-     *
-     * @return
-     */
     public List<User> getAllUsers() {
-        List<User> users;
-        users = new ArrayList<>();
+        var users = new ArrayList<User>();
         userRepository.findAll().forEach(users::add);
         return users;
     }
 
-    /**
-     * getUserById() returns an unique user identified by it's id.
-     *
-     * @param id
-     * @return
-     */
     public User getUserById(String id) {
-
-        return userRepository.findByUserId(id);
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
-    /**
-     * getUserByEmail() returns an unique user identified by it's email.
-     *
-     * @param email
-     */
     public User getUserByEmail(String email) {
-
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
     }
-
-    /**
-     * getLoggedInUser() returns the current user.
-     *
-     * @return
-     */
 
     public User getLoggedInUser() {
-        KeycloakPrincipal principal = (KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        User user = userRepository.findByUserId(principal.getName());
+        var principal = getPrincipal();
+        User user;
         try {
-            checkUserExists(user);
-        } catch (UserDoesNotExistException e) {
+            user = getUserById(principal.getName());
+        } catch (UserNotFoundException e) {
             user = createUser();
         }
         return user;
     }
 
+    private KeycloakPrincipal getPrincipal() {
+        return (KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
     private User createUser() {
-        SimpleKeycloakAccount simpleKeycloakAccount = (SimpleKeycloakAccount) SecurityContextHolder.getContext()
-                .getAuthentication().getDetails();
-        AccessToken userAccessToken = simpleKeycloakAccount.getKeycloakSecurityContext().getToken();
-        String userId = userAccessToken.getPreferredUsername();
-        String firstName = userAccessToken.getGivenName();
-        String lastName = userAccessToken.getFamilyName();
-        String email = userAccessToken.getEmail();
+        var userAccessToken = getAccessToken();
+        var userId = userAccessToken.getPreferredUsername();
+        var firstName = userAccessToken.getGivenName();
+        var lastName = userAccessToken.getFamilyName();
+        var email = userAccessToken.getEmail();
         User user = new User(userId, firstName, lastName, email);
+        return saveUser(user);
+    }
+
+    private AccessToken getAccessToken() {
+        var simpleKeycloakAccount = (SimpleKeycloakAccount) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getDetails();
+        return simpleKeycloakAccount.getKeycloakSecurityContext().getToken();
+    }
+
+    private User saveUser(User user) {
         return userRepository.save(user);
-    }
-
-    /**
-     * saveUser() saves an user object.
-     *
-     * @param user
-     */
-    public void saveUser(User user) {
-
-        userRepository.save(user);
-    }
-
-    /**
-     * deleteUser() deletes an unique user identified by it's id.
-     *
-     * @param id
-     */
-    public void deleteUser(String id) {
-
-        userRepository.delete(userRepository.findByUserId(id));
-    }
-
-    /**
-     * getUserByNameSearchbar is used for the searchbar, accepts a string and it
-     * will be validated by this method into two separate strings if there's a space
-     * inbetween.
-     *
-     * @param firstName
-     * @param lastName
-     * @return
-     */
-    public List<User> getUserByNameSearchbar(String firstName, String lastName) {
-        List<User> users;
-        try {
-            if (firstName.contains(" ")) {
-                String[] name = firstName.split("\\s+", 2);
-                firstName = name[0];
-                lastName = name[1];
-
-            }
-        } catch (NullPointerException n) {
-        }
-        users = new ArrayList<>(
-                userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(firstName, lastName));
-        return users;
-    }
-
-    private void checkUserExists(User user) {
-        if (user == null) {
-            throw new UserDoesNotExistException();
-        }
     }
 }
