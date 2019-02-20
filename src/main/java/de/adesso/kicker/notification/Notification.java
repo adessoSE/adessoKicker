@@ -4,7 +4,6 @@ import de.adesso.kicker.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 public class Notification {

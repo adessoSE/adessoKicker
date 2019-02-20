@@ -32,31 +32,24 @@ public class NotificationService {
     public void acceptNotification(long notificationId) {
 
         Notification notification = notificationRepository.findByNotificationId(notificationId);
-        if (notification == null) {
-            throw new NotificationNotExistingException(notificationId);
-        } else {
-            checkWrongReceiver(notification);
-
-            switch (notification.getType()) {
+        checkNotificationExists(notification);
+        checkWrongReceiver(notification);
+        switch (notification.getType()) {
             case MESSAGE:
                 deleteNotification(notification);
                 break;
             case MATCH_VERIFICATION:
                 verifyMatchService.acceptRequest((MatchVerificationRequest) notification);
                 break;
-            }
         }
     }
 
     public void declineNotification(long notificationId) {
 
         Notification notification = notificationRepository.findByNotificationId(notificationId);
-        if (notification == null) {
-            throw new NotificationNotExistingException(notificationId);
-        } else {
-            checkWrongReceiver(notification);
-
-            switch (notification.getType()) {
+        checkNotificationExists(notification);
+        checkWrongReceiver(notification);
+        switch (notification.getType()) {
             case MESSAGE:
                 deleteNotification(notification);
                 break;
@@ -71,7 +64,6 @@ public class NotificationService {
                     sendNotification(null, user, message);
                 }
                 break;
-            }
         }
     }
 
@@ -103,10 +95,10 @@ public class NotificationService {
         }
     }
 
-    public void checkNotificationExists(long notificationId) {
+    public void checkNotificationExists(Notification notification) {
 
-        if (!notificationRepository.existsById(notificationId)) {
-            throw new NotificationNotExistingException(notificationId);
+        if (notification == null) {
+            throw new NotificationNotExistingException();
         }
     }
 }
