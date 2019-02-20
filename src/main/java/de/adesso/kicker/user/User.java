@@ -38,6 +38,14 @@ public class User {
         this.losses = 0;
     }
 
+    public void increaseWins() {
+        this.wins += 1;
+    }
+
+    public void increaseLosses() {
+        this.losses += 1;
+    }
+
     public void setUserId(String userId) {
         this.userId = userId;
     }
@@ -76,16 +84,6 @@ public class User {
 
     public long getLosses() {
         return losses;
-    }
-
-    public void increaseWins() {
-
-        this.wins += 1;
-    }
-
-    public void increaseLosses() {
-
-        this.losses += 1;
     }
 
     public void setWins(long wins) {
