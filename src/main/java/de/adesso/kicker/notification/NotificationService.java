@@ -35,12 +35,12 @@ public class NotificationService {
         checkNotificationExists(notification);
         checkWrongReceiver(notification);
         switch (notification.getType()) {
-            case MESSAGE:
-                deleteNotification(notification);
-                break;
-            case MATCH_VERIFICATION:
-                verifyMatchService.acceptRequest((MatchVerificationRequest) notification);
-                break;
+        case MESSAGE:
+            deleteNotification(notification);
+            break;
+        case MATCH_VERIFICATION:
+            verifyMatchService.acceptRequest((MatchVerificationRequest) notification);
+            break;
         }
     }
 
@@ -50,20 +50,20 @@ public class NotificationService {
         checkNotificationExists(notification);
         checkWrongReceiver(notification);
         switch (notification.getType()) {
-            case MESSAGE:
-                deleteNotification(notification);
-                break;
-            case MATCH_VERIFICATION:
-                // TODO delete the match
-                List<User> users = verifyMatchService.declineRequest((MatchVerificationRequest) notification);
-                Properties properties = new Properties();
-                String message = MessageFormat.format(properties.getProperty("notification.message.declined"),
-                        userService.getLoggedInUser().getFirstName(),
-                        ((MatchVerificationRequest) notification).getMatch().getDate().toString());
-                for (User user : users) {
-                    sendNotification(null, user, message);
-                }
-                break;
+        case MESSAGE:
+            deleteNotification(notification);
+            break;
+        case MATCH_VERIFICATION:
+            // TODO delete the match
+            List<User> users = verifyMatchService.declineRequest((MatchVerificationRequest) notification);
+            Properties properties = new Properties();
+            String message = MessageFormat.format(properties.getProperty("notification.message.declined"),
+                    userService.getLoggedInUser().getFirstName(),
+                    ((MatchVerificationRequest) notification).getMatch().getDate().toString());
+            for (User user : users) {
+                sendNotification(null, user, message);
+            }
+            break;
         }
     }
 
