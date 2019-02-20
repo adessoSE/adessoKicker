@@ -25,8 +25,7 @@ class UserControllerTest {
         var user = UserDummy.defaultUser();
         when(userService.getLoggedInUser()).thenReturn(user);
 
-        mockMvc.perform(get("/users/you")).andExpect(status().isOk())
-                .andExpect(model().attribute("user", user));
+        mockMvc.perform(get("/users/you")).andExpect(status().isOk()).andExpect(model().attribute("user", user));
     }
 
     @Test
@@ -34,7 +33,8 @@ class UserControllerTest {
         var user = UserDummy.defaultUser();
         when(userService.getUserById(user.getUserId())).thenReturn(user);
 
-        mockMvc.perform(get("/users/{id}", user.getUserId())).andExpect(status().isOk())
+        mockMvc.perform(get("/users/{id}", user.getUserId()))
+                .andExpect(status().isOk())
                 .andExpect(model().attribute("user", user));
     }
 

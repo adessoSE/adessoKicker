@@ -48,8 +48,7 @@ public class UserService {
     }
 
     private KeycloakPrincipal getPrincipal() {
-        return (KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
+        return (KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     private User createUser() {
