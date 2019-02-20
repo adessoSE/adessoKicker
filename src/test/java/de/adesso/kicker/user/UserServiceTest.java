@@ -41,26 +41,24 @@ class UserServiceTest {
     }
 
     static User createUser() {
-        var userDummy = new UserDummy();
-        return userDummy.defaultUser();
+        return UserDummy.defaultUser();
     }
 
     static List<User> createUserList() {
-        var userDummy = new UserDummy();
-        return Collections.singletonList(userDummy.defaultUser());
+        return Collections.singletonList(UserDummy.defaultUser());
     }
 
     @Test
     @DisplayName("Should return a list of all users")
     void whenUsersExistReturnAllUsers() {
-        // given
+        //given
         var userList = createUserList();
         when(userRepository.findAll()).thenReturn(userList);
 
-        // when
+        //when
         var actualList = userService.getAllUsers();
 
-        // then
+        //then
         assertEquals(userList, actualList);
     }
 
@@ -81,14 +79,14 @@ class UserServiceTest {
     @Test
     @DisplayName("Should return a user with given id")
     void whenUserWithIdExistsReturnUser() {
-        // given
+        //given
         var user = createUser();
         when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
 
-        // when
+        //when
         var actualUser = userService.getUserById(user.getUserId());
 
-        // then
+        //then
         assertEquals(user, actualUser);
     }
 
@@ -108,14 +106,14 @@ class UserServiceTest {
     @Test
     @DisplayName("Should return a user with given email")
     void whenUserWithEmailExistsReturnUser() {
-        // given
+        //given
         var user = createUser();
         when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
 
-        // when
+        //when
         User actualUser = userService.getUserByEmail(user.getEmail());
 
-        // then
+        //then
         assertEquals(user, actualUser);
     }
 
@@ -141,6 +139,7 @@ class UserServiceTest {
         var securityContext = mock(SecurityContext.class);
         var principal = mock(KeycloakPrincipal.class);
         SecurityContextHolder.setContext(securityContext);
+
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getPrincipal()).thenReturn(principal);
         when(principal.getName()).thenReturn(expected.getUserId());

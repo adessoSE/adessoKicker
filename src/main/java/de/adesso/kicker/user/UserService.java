@@ -47,6 +47,11 @@ public class UserService {
         return user;
     }
 
+    private KeycloakPrincipal getPrincipal() {
+        return (KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+    }
+
     private User createUser() {
         var userAccessToken = getAccessToken();
         var userId = userAccessToken.getPreferredUsername();
@@ -55,10 +60,6 @@ public class UserService {
         var email = userAccessToken.getEmail();
         User user = new User(userId, firstName, lastName, email);
         return saveUser(user);
-    }
-
-    private KeycloakPrincipal getPrincipal() {
-        return (KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     private AccessToken getAccessToken() {
