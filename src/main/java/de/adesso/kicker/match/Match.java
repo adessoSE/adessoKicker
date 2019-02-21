@@ -74,6 +74,7 @@ public class Match {
         players.add(teamAPlayer2);
         players.add(teamBPlayer1);
         players.add(teamBPlayer2);
+        players.removeIf(Objects::isNull);
         return players;
     }
 
@@ -86,6 +87,7 @@ public class Match {
             winners.add(teamBPlayer1);
             winners.add(teamBPlayer2);
         }
+        winners.removeIf(Objects::isNull);
         return winners;
     }
 
@@ -98,6 +100,7 @@ public class Match {
             losers.add(teamBPlayer1);
             losers.add(teamBPlayer2);
         }
+        losers.removeIf(Objects::isNull);
         return losers;
     }
 
