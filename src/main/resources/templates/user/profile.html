@@ -118,11 +118,11 @@
                     window.open(firstValidEl.href, "_self");
                     return;
                 }*/
-                var value = $(this).val().toLowerCase();
+                var getKFactor = $(this).val().toLowerCase();
                 //Foreach element
                 $(".list-group li").filter(function () {
                     //indexOf() returns the positions of the char typed in the search bar (returns -1 if word doesnt contain char toggle element)
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    $(this).toggle($(this).text().toLowerCase().indexOf(getKFactor) > -1)
                 });
             });
         });

@@ -1,8 +1,7 @@
 package de.adesso.kicker.user;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import de.adesso.kicker.ranking.Ranking;
+import de.adesso.kicker.user.exception.UserNotFoundException;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
 import org.keycloak.representations.AccessToken;
@@ -10,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import de.adesso.kicker.user.exception.UserNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -57,7 +57,7 @@ public class UserService {
         var firstName = userAccessToken.getGivenName();
         var lastName = userAccessToken.getFamilyName();
         var email = userAccessToken.getEmail();
-        User user = new User(userId, firstName, lastName, email);
+        User user = new User(userId, firstName, lastName, email, new Ranking());
         return saveUser(user);
     }
 
