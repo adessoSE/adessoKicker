@@ -6,42 +6,28 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class Notification {
+public abstract class Notification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long notificationId;
+
     @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
     private User sender;
     @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
     private User receiver;
+
     private LocalDate sendDate;
-    private String message;
+
     private NotificationType type;
 
     public Notification() {
     }
 
     public Notification(User sender, User receiver) {
-
-        this(sender, receiver, "");
-    }
-
-    public Notification(User sender, User receiver, String message) {
-
-        this.type = NotificationType.MESSAGE;
         this.sender = sender;
         this.receiver = receiver;
-        this.message = message;
         this.sendDate = LocalDate.now();
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public long getNotificationId() {
