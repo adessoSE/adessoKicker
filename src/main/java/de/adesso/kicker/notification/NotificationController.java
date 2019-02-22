@@ -14,7 +14,6 @@ public class NotificationController {
 
     private UserService userService;
 
-
     @Autowired
     public NotificationController(NotificationService notificationService, UserService userService) {
         this.notificationService = notificationService;
