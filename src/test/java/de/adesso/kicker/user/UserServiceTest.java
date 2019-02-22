@@ -1,7 +1,7 @@
 package de.adesso.kicker.user;
 
 import de.adesso.kicker.user.exception.UserNotFoundException;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -26,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserServiceTest {
 
     @Mock
@@ -35,16 +34,16 @@ class UserServiceTest {
     @InjectMocks
     UserService userService;
 
-    @BeforeAll
+    @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
-    static User createUser() {
+    private static User createUser() {
         return UserDummy.defaultUser();
     }
 
-    static List<User> createUserList() {
+    private static List<User> createUserList() {
         return Collections.singletonList(UserDummy.defaultUser());
     }
 

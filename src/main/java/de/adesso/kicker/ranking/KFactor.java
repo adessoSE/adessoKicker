@@ -5,7 +5,7 @@ public enum KFactor {
     MEDIUM(24),
     HIGH(32);
 
-    private int value;
+    private final int value;
 
     KFactor(int value) {
         this.value = value;

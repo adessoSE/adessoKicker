@@ -4,7 +4,10 @@ import de.adesso.kicker.match.exception.FutureDateException;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.user.UserService;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,14 +15,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MatchServiceTest {
 
     @Mock
@@ -31,29 +31,25 @@ class MatchServiceTest {
     @InjectMocks
     private MatchService matchService;
 
-    static Stream<Match> createMatchesWithSamePlayers() {
+    private static Stream<Match> createMatchesWithSamePlayers() {
         return Stream.of(MatchDummy.matchWithEqualPlayerA1B1(), MatchDummy.matchWithEqualPlayerA1B2(),
                 MatchDummy.matchWithEqualPlayerA2B2(), MatchDummy.matchWithSamePlayerTeamA(),
                 MatchDummy.matchWithEqualPlayerTeamB());
     }
 
-    static Match createMatchWithDifferentCreator() {
+    private static Match createMatchWithDifferentCreator() {
         return MatchDummy.matchWithoutDefaultUserAsPlayerA1();
     }
 
-    static Match createMatchWithFutureDate() {
+    private static Match createMatchWithFutureDate() {
         return MatchDummy.matchWithFutureDate();
     }
 
-    static Match createMatch() {
+    private static Match createMatch() {
         return MatchDummy.match();
     }
 
-    static List<Match> createMatchList() {
-        return Collections.singletonList(MatchDummy.match());
-    }
-
-    @BeforeAll
+    @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
     }

@@ -32,7 +32,7 @@ class MatchControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    static List<User> createUserList() {
+    private static List<User> createUserList() {
         return Arrays.asList(UserDummy.defaultUser(), UserDummy.alternateUser());
     }
 
@@ -40,11 +40,15 @@ class MatchControllerTest {
     @DisplayName("Return 'match/add.html' and contain a new Match")
     @WithMockUser
     void getAddMatch() throws Exception {
+        // given
         var userList = createUserList();
         when(userService.getAllUsers()).thenReturn(userList);
 
-        this.mockMvc.perform(get("/matches/add"))
-                .andExpect(status().isOk())
+        // when
+        var result = this.mockMvc.perform(get("/matches/add"));
+
+        // then
+        result.andExpect(status().isOk())
                 .andExpect(view().name("match/add.html"))
                 .andExpect(model().attribute("match", new Match()))
                 .andExpect(model().attribute("users", userList));
@@ -54,34 +58,49 @@ class MatchControllerTest {
     @DisplayName("When no date entered then 'noDate' should exist")
     @WithMockUser
     void whenMatchWithOutDateThenReturnNoDate() throws Exception {
+        // given
         var userList = createUserList();
         when(userService.getAllUsers()).thenReturn(userList);
 
-        this.mockMvc.perform(post("/matches/add").param("teamAPlayer1", "user")
+        // when
+        var result = this.mockMvc.perform(post("/matches/add").param("teamAPlayer1", "user")
                 .param("teamBPlayer1", "user2")
-                .param("winnerTeamA", "true")).andExpect(model().attributeExists("noDate"));
+                .param("winnerTeamA", "true"));
+
+        // then
+        result.andExpect(model().attributeExists("noDate"));
     }
 
     @Test
     @DisplayName("When no winner has been selected 'noWinner' should exist")
     @WithMockUser
     void whenMatchWithNoWinnerThenReturnNoWinner() throws Exception {
+        // given
         var userList = createUserList();
         when(userService.getAllUsers()).thenReturn(userList);
 
-        mockMvc.perform(post("/matches/add").param("date", LocalDate.now().toString())
+        // when
+        var result = mockMvc.perform(post("/matches/add").param("date", LocalDate.now().toString())
                 .param("teamAPlayer1", "user")
-                .param("teamBPlayer1", "user2")).andExpect(model().attributeExists("noWinner"));
+                .param("teamBPlayer1", "user2"));
+
+        // then
+        result.andExpect(model().attributeExists("noWinner"));
     }
 
     @Test
     @WithMockUser
     void whenMatchWithNoPlayersThenReturnNullPlayers() throws Exception {
+        // given
         var userList = createUserList();
         when(userService.getAllUsers()).thenReturn(userList);
 
-        mockMvc.perform(post("/matches/add").param("date", LocalDate.now().toString()).param("winnerTeamA", "true"))
-                .andExpect(model().attributeExists("nullPlayer"));
+        // when
+        var result = mockMvc
+                .perform(post("/matches/add").param("date", LocalDate.now().toString()).param("winnerTeamA", "true"));
+
+        // then
+        result.andExpect(model().attributeExists("nullPlayer"));
     }
 
 }

@@ -4,7 +4,7 @@ public enum RatingRange {
     VERY_HIGH(2400),
     HIGH(2100);
 
-    private int rating;
+    private final int rating;
 
     RatingRange(int rating) {
         this.rating = rating;
