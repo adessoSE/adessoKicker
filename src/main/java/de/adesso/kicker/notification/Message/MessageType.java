@@ -10,7 +10,7 @@ public enum MessageType {
         this.messageContent = messageContent;
     }
 
-    public String getMessageType() {
+    public String getMessageContent() {
         return this.messageContent;
     }
 }
