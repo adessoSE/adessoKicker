@@ -11,7 +11,8 @@ public class Message extends Notification {
 
     private MessageType messageType;
 
-    public Message() { }
+    public Message() {
+    }
 
     public Message(User sender, User receiver, MessageType messageType) {
         super(sender, receiver);
