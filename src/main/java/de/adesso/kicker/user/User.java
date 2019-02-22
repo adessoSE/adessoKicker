@@ -15,15 +15,12 @@ public class User {
 
     @NotNull
     private String firstName;
-
     @NotNull
     private String lastName;
-
     @NotNull
     private String email;
 
     private long wins;
-
     private long losses;
 
     @OneToOne(cascade = CascadeType.ALL)

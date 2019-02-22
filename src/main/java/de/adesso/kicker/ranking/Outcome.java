@@ -4,7 +4,7 @@ public enum Outcome {
     WON(1),
     LOST(0);
 
-    private int score;
+    private final int score;
 
     Outcome(int score) {
         this.score = score;

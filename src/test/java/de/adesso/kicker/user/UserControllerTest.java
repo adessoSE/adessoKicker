@@ -22,20 +22,28 @@ class UserControllerTest {
 
     @Test
     void whenUserLoggedInReturnUser() throws Exception {
+        // given
         var user = UserDummy.defaultUser();
         when(userService.getLoggedInUser()).thenReturn(user);
 
-        mockMvc.perform(get("/users/you")).andExpect(status().isOk()).andExpect(model().attribute("user", user));
+        // when
+        var result = mockMvc.perform(get("/users/you"));
+
+        // then
+        result.andExpect(status().isOk()).andExpect(model().attribute("user", user));
     }
 
     @Test
     void whenUserExistsReturnUser() throws Exception {
+        // given
         var user = UserDummy.defaultUser();
         when(userService.getUserById(user.getUserId())).thenReturn(user);
 
-        mockMvc.perform(get("/users/{id}", user.getUserId()))
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("user", user));
+        // when
+        var result = mockMvc.perform(get("/users/{id}", user.getUserId()));
+
+        // then
+        result.andExpect(status().isOk()).andExpect(model().attribute("user", user));
     }
 
 }
