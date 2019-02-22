@@ -2,7 +2,6 @@ package de.adesso.kicker.match;
 
 import de.adesso.kicker.match.exception.FutureDateException;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
-import de.adesso.kicker.match.exception.MatchNotFoundException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.user.UserService;
 import org.junit.jupiter.api.*;
@@ -15,12 +14,9 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -129,47 +125,5 @@ class MatchServiceTest {
 
         // then
         Assertions.assertThrows(FutureDateException.class, when);
-    }
-
-    @Test
-    @DisplayName("If a match with the given id exists it should be returned")
-    void whenMatchExistsThenMatchShouldBeFound() {
-        // given
-        var expected = createMatch();
-        when(matchRepository.findById(expected.getMatchId())).thenReturn(Optional.of(expected));
-
-        // when
-        var actual = matchService.getMatchById(expected.getMatchId());
-
-        // then
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    @DisplayName("If there is no match with the given id the MatchNotFoundException should be thrown")
-    void whenMatchNotExistentThenThrowMatchNotFoundException() {
-        // given
-        when(matchRepository.findById(anyString())).thenReturn(Optional.empty());
-        var invalidId = "non-existend-id";
-
-        // when
-        Executable when = () -> matchService.getMatchById(invalidId);
-
-        // then
-        Assertions.assertThrows(MatchNotFoundException.class, when);
-    }
-
-    @Test
-    @DisplayName("Should return all created matches")
-    void shouldReturnAllMatches() {
-        // given
-        var expected = createMatchList();
-        when(matchRepository.findAll()).thenReturn(expected);
-
-        // when
-        var actual = matchService.getAllMatches();
-
-        // then
-        assertEquals(expected, actual);
     }
 }
