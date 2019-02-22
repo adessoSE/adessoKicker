@@ -4,13 +4,13 @@ public enum MessageType {
 
     MESSAGE_DECLINED("notification.message.declined");
 
-    String messageType;
+    private String messageContent;
 
-    private MessageType(String messageType) {
-        this.messageType = messageType;
+    private MessageType(String messageContent) {
+        this.messageContent = messageContent;
     }
 
     public String getMessageType() {
-        return this.messageType;
+        return this.messageContent;
     }
 }
