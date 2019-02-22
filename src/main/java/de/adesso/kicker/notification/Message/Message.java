@@ -19,4 +19,9 @@ public class Message extends Notification {
         super.setType(NotificationType.MESSAGE);
         this.messageType = messageType;
     }
+
+    public MessageType getMessageType() {
+        return this.messageType;
+    }
+
 }

@@ -35,7 +35,7 @@ public class NotificationService {
     }
 
     public void acceptNotification(long notificationId) {
-        Notification notification = checkNotificationExists(notificationId);
+        Notification notification = getNotificationById(notificationId);
         checkWrongReceiver(notification);
 
         switch (notification.getType()) {
@@ -49,7 +49,7 @@ public class NotificationService {
     }
 
     public void declineNotification(long notificationId) {
-        Notification notification = checkNotificationExists(notificationId);
+        Notification notification = getNotificationById(notificationId);
         checkWrongReceiver(notification);
 
         switch (notification.getType()) {
@@ -76,9 +76,7 @@ public class NotificationService {
         }
     }
 
-    public Notification checkNotificationExists(Long notificationId) {
-        Notification notification = notificationRepository.findById(notificationId)
-                .orElseThrow(() -> new NotificationNotExistingException());
-        return notification;
+    public Notification getNotificationById(long notificationId) {
+        return notificationRepository.findById(notificationId).orElseThrow(NotificationNotExistingException::new);
     }
 }

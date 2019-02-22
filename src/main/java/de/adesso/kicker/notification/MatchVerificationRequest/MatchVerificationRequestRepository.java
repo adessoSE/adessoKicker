@@ -9,7 +9,5 @@ import java.util.List;
 @Repository
 public interface MatchVerificationRequestRepository extends CrudRepository<MatchVerificationRequest, Long> {
 
-    MatchVerificationRequest findByNotificationId(long id);
-
     List<MatchVerificationRequest> getAllByMatch(Match match);
 }
