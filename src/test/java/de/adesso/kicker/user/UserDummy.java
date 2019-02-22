@@ -25,7 +25,7 @@ public class UserDummy {
     }
 
     public static User userWithHighRating() {
-        return new User("user", "User", "User", "user@mail", RankingDummy.highRanting());
+        return new User("user", "User", "User", "user@mail", RankingDummy.highRating());
     }
 
     public static User userWithVeryHighRating() {

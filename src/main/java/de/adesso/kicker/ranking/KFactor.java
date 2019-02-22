@@ -5,13 +5,13 @@ public enum KFactor {
     MEDIUM(24),
     HIGH(32);
 
-    private int kFactor;
+    private int value;
 
-    KFactor(int kFactor) {
-        this.kFactor = kFactor;
+    KFactor(int value) {
+        this.value = value;
     }
 
-    public int getKFactor() {
-        return kFactor;
+    public int getValue() {
+        return value;
     }
 }

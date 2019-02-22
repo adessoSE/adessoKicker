@@ -5,7 +5,7 @@ public class RankingDummy {
         return new Ranking();
     }
 
-    public static Ranking highRanting() {
+    public static Ranking highRating() {
         var ranking = new Ranking();
         ranking.setRating(2100);
         return ranking;

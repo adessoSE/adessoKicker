@@ -46,12 +46,12 @@ public class RankingService {
 
     private int kFactor(int rating) {
         if (rating >= RatingRange.VERY_HIGH.getRating()) {
-            return KFactor.LOW.getKFactor();
+            return KFactor.LOW.getValue();
         }
         if (rating >= RatingRange.HIGH.getRating()) {
-            return KFactor.MEDIUM.getKFactor();
+            return KFactor.MEDIUM.getValue();
         }
-        return KFactor.HIGH.getKFactor();
+        return KFactor.HIGH.getValue();
     }
 
     private Pair<Double, Double> expectedScore(Match match) {
