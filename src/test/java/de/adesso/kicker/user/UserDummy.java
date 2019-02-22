@@ -1,33 +1,34 @@
 package de.adesso.kicker.user;
 
+import de.adesso.kicker.ranking.RankingDummy;
+
 public class UserDummy {
 
-    public User defaultUser() {
-        return new User("Peter", "Meier", "test@mail", "password");
+    public static User defaultUser() {
+        return new User("Peter", "Meier", "test@mail", "password", RankingDummy.ranking());
     }
 
-    public User alternateUser() {
-        return new User("Hans", "Meier", "second@mail", "password2");
+    public static User alternateUser() {
+        return new User("Hans", "Meier", "second@mail", "password2", RankingDummy.ranking());
     }
 
-    public User alternateUser1() {
-        return new User("Markus", "Franz", "third@mail", "password3");
+    public static User alternateUser1() {
+        return new User("Markus", "Franz", "third@mail", "password3", RankingDummy.ranking());
     }
 
-    public User alternateUser2() {
-        return new User("Jan", "Müller", "fourht@mail", "password4");
+    public static User alternateUser2() {
+        return new User("Jan", "Müller", "fourht@mail", "password4", RankingDummy.ranking());
     }
 
-    public User alternateUser3() {
-        return new User("Hans", "Müller", "sdfg@mail", "password4");
+    public static User userWithLowRating() {
+        return new User("user", "User", "User", "user@mail", RankingDummy.ranking());
     }
 
-    public User alternateUser4() {
-        return new User("Augustus", "Müller", "sdasdfsdfg@mail", "password4");
+    public static User userWithHighRating() {
+        return new User("user", "User", "User", "user@mail", RankingDummy.highRating());
     }
 
-    public User nullUser() {
-        return null;
+    public static User userWithVeryHighRating() {
+        return new User("user", "User", "User", "user@mail", RankingDummy.veryHighRating());
     }
-
 }

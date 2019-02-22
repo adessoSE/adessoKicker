@@ -2,7 +2,6 @@ package de.adesso.kicker.match;
 
 import de.adesso.kicker.match.exception.FutureDateException;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
-import de.adesso.kicker.match.exception.MatchNotFoundException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +24,6 @@ public class MatchService {
         this.userService = userService;
     }
 
-    public List<Match> getAllMatches() {
-        var matches = new ArrayList<Match>();
-        matchRepository.findAll().forEach(matches::add);
-        return matches;
-    }
-
     public void addMatchEntry(Match match) {
         checkForFutureDate(match);
         checkSamePlayer(match);
@@ -38,14 +31,9 @@ public class MatchService {
         saveMatch(match);
     }
 
-    public Match getMatchById(String id) {
-        var match = matchRepository.findByMatchId(id);
-        checkMatchExists(match);
-        return match;
-    }
-
     public void verifyMatch(Match match) {
         match.setVerified(true);
+        saveMatch(match);
     }
 
     private void saveMatch(Match match) {
@@ -77,12 +65,6 @@ public class MatchService {
     private void checkForFutureDate(Match match) {
         if (match.getDate().isAfter(LocalDate.now())) {
             throw new FutureDateException();
-        }
-    }
-
-    private void checkMatchExists(Match match) {
-        if (match == null) {
-            throw new MatchNotFoundException();
         }
     }
 }

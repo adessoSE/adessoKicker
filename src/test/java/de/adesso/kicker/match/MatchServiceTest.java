@@ -1,7 +1,7 @@
 package de.adesso.kicker.match;
 
+import de.adesso.kicker.match.exception.FutureDateException;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
-import de.adesso.kicker.match.exception.MatchNotFoundException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.user.UserService;
 import org.junit.jupiter.api.*;
@@ -11,16 +11,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.stubbing.Answer;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -36,24 +32,25 @@ class MatchServiceTest {
     private MatchService matchService;
 
     static Stream<Match> createMatchesWithSamePlayers() {
-        var matchDummy = new MatchDummy();
-        return Stream.of(matchDummy.match_with_equal_player1(), matchDummy.match_with_equal_player1_2(),
-                matchDummy.match_with_equal_player2_2(), matchDummy.match_with_same_player_team());
+        return Stream.of(MatchDummy.matchWithEqualPlayerA1B1(), MatchDummy.matchWithEqualPlayerA1B2(),
+                MatchDummy.matchWithEqualPlayerA2B2(), MatchDummy.matchWithSamePlayerTeamA(),
+                MatchDummy.matchWithEqualPlayerTeamB());
     }
 
     static Match createMatchWithDifferentCreator() {
-        var matchDummy = new MatchDummy();
-        return matchDummy.match_without_default_user_player_1();
+        return MatchDummy.matchWithoutDefaultUserAsPlayerA1();
+    }
+
+    static Match createMatchWithFutureDate() {
+        return MatchDummy.matchWithFutureDate();
     }
 
     static Match createMatch() {
-        var matchDummy = new MatchDummy();
-        return matchDummy.match();
+        return MatchDummy.match();
     }
 
     static List<Match> createMatchList() {
-        var matchDummy = new MatchDummy();
-        return Collections.singletonList(matchDummy.match());
+        return Collections.singletonList(MatchDummy.match());
     }
 
     @BeforeAll
@@ -67,10 +64,7 @@ class MatchServiceTest {
         // given
         var match = createMatch();
         when(userService.getLoggedInUser()).thenReturn(match.getTeamAPlayer1());
-        when(matchRepository.save(any(Match.class))).thenAnswer((Answer<Match>) invocation -> {
-            Object[] args = invocation.getArguments();
-            return (Match) args[0];
-        });
+        when(matchRepository.save(match)).thenReturn(match);
 
         // when
         matchService.addMatchEntry(match);
@@ -90,6 +84,7 @@ class MatchServiceTest {
 
         // then
         assertTrue(match.isVerified());
+        verify(matchRepository, times(1)).save(match);
     }
 
     @ParameterizedTest
@@ -120,44 +115,15 @@ class MatchServiceTest {
     }
 
     @Test
-    @DisplayName("If a match with the given id exists it should be returned")
-    void whenMatchExistsThenMatchShouldBeFound() {
+    @DisplayName("When match date is in the future FutureDateException should be thrown")
+    void whenMatchDateInFutureThrowFutureMatchException() {
         // given
-        var expected = createMatch();
-        when(matchRepository.findByMatchId(expected.getMatchId())).thenReturn(expected);
+        var match = createMatchWithFutureDate();
 
         // when
-        var actual = matchService.getMatchById(expected.getMatchId());
+        Executable when = () -> matchService.addMatchEntry(match);
 
         // then
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    @DisplayName("If there is no match with the given id the MatchNotFoundException should be thrown")
-    void whenMatchNotExistentThenThrowMatchNotFoundException() {
-        // given
-        when(matchRepository.findByMatchId(anyString())).thenReturn(null);
-        var invalidId = "non-existend-id";
-
-        // when
-        Executable when = () -> matchService.getMatchById(invalidId);
-
-        // then
-        Assertions.assertThrows(MatchNotFoundException.class, when);
-    }
-
-    @Test
-    @DisplayName("Should return all created matches")
-    void shouldReturnAllMatches() {
-        // given
-        var expected = createMatchList();
-        when(matchRepository.findAll()).thenReturn(expected);
-
-        // when
-        var actual = matchService.getAllMatches();
-
-        // then
-        assertEquals(expected, actual);
+        Assertions.assertThrows(FutureDateException.class, when);
     }
 }

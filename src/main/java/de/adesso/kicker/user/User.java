@@ -1,8 +1,8 @@
 package de.adesso.kicker.user;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import de.adesso.kicker.ranking.Ranking;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -26,16 +26,28 @@ public class User {
 
     private long losses;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Ranking ranking;
+
     public User() {
     }
 
-    public User(String userId, String firstName, String lastName, String email) {
+    public User(String userId, String firstName, String lastName, String email, Ranking ranking) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.wins = 0;
         this.losses = 0;
+        this.ranking = ranking;
+    }
+
+    public void increaseWins() {
+        this.wins += 1;
+    }
+
+    public void increaseLosses() {
+        this.losses += 1;
     }
 
     public void setUserId(String userId) {
@@ -78,16 +90,6 @@ public class User {
         return losses;
     }
 
-    public void increaseWins() {
-
-        this.wins += 1;
-    }
-
-    public void increaseLosses() {
-
-        this.losses += 1;
-    }
-
     public void setWins(long wins) {
         this.wins = wins;
     }
@@ -96,10 +98,19 @@ public class User {
         this.losses = losses;
     }
 
+    public Ranking getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(Ranking ranking) {
+        this.ranking = ranking;
+    }
+
     @Override
     public String toString() {
         return "User{" + "userId='" + userId + '\'' + ", firstName='" + firstName + '\'' + ", lastName='" + lastName
-                + '\'' + ", email='" + email + '\'' + ", wins=" + wins + ", losses=" + losses + '}';
+                + '\'' + ", email='" + email + '\'' + ", wins=" + wins + ", losses=" + losses + ", ranking=" + ranking
+                + '}';
     }
 
     @Override

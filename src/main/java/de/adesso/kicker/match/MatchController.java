@@ -29,25 +29,6 @@ public class MatchController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public ModelAndView getAllMatches() {
-        var modelAndView = new ModelAndView();
-        User user = userService.getLoggedInUser();
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("matches", matchService.getAllMatches());
-        modelAndView.setViewName("match/matches.html");
-        return modelAndView;
-    }
-
-    @GetMapping("/m/{id}")
-    public ModelAndView getMatch(@PathVariable String id) {
-        var modelAndView = new ModelAndView();
-        Match match = matchService.getMatchById(id);
-        modelAndView.addObject("match", match);
-        modelAndView.setViewName("match/page.html");
-        return modelAndView;
-    }
-
     @GetMapping("/add")
     public ModelAndView getAddMatch() {
         return addMatchView(new ModelAndView());
