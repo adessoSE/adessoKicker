@@ -15,14 +15,12 @@ public class MatchVerificationRequest extends Notification {
     private Match match;
 
     public MatchVerificationRequest(User sender, User receiver, Match match) {
-
         super(sender, receiver);
         super.setType(NotificationType.MATCH_VERIFICATION);
         this.match = match;
     }
 
     public Match getMatch() {
-
         return match;
     }
 }

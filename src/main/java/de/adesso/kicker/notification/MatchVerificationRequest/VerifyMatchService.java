@@ -24,8 +24,6 @@ public class VerifyMatchService {
     }
 
     public void acceptRequest(MatchVerificationRequest matchVerificationRequest) {
-        // TODO trigger event to verify match
-        // TODO execute ranking algorithm
         List<MatchVerificationRequest> requests = getRequestsByMatch(matchVerificationRequest.getMatch());
         for (MatchVerificationRequest request : requests) {
             deleteRequest(request);
@@ -48,7 +46,6 @@ public class VerifyMatchService {
     }
 
     public List<User> declineRequest(MatchVerificationRequest matchVerificationRequest) {
-        // TODO delete match
         deleteRequest(matchVerificationRequest);
         List<MatchVerificationRequest> otherRequests = getRequestsByMatch(matchVerificationRequest.getMatch());
         List<User> usersToInform = new ArrayList<>();
