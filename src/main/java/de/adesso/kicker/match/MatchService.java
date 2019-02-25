@@ -8,14 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Service
 public class MatchService {
 
     private final MatchRepository matchRepository;
+
     private final UserService userService;
 
     @Autowired
@@ -41,17 +40,13 @@ public class MatchService {
     }
 
     private void checkSamePlayer(Match match) {
-        if (match.getTeamAPlayer1().equals(match.getTeamBPlayer1())) {
+        if (checkSamePlayerInTeam(match)) {
             throw new SamePlayerException();
         }
-        if (Objects.equals(match.getTeamAPlayer1(), match.getTeamAPlayer2())
-                || Objects.equals(match.getTeamBPlayer1(), match.getTeamBPlayer2())) {
+        if (checkSamePlayer1InBothTeams(match) || checkSamePlayer2InBothTeams(match)) {
             throw new SamePlayerException();
         }
-        if (Objects.equals(match.getTeamAPlayer1(), match.getTeamBPlayer2())
-                || Objects.equals(match.getTeamBPlayer1(), match.getTeamAPlayer2())
-                || (Objects.equals(match.getTeamAPlayer2(), match.getTeamBPlayer2())
-                        && (match.getTeamBPlayer2() != null || match.getTeamAPlayer2() != null))) {
+        if (checkSamePlayerInDifferentTeams(match)) {
             throw new SamePlayerException();
         }
     }
@@ -67,4 +62,24 @@ public class MatchService {
             throw new FutureDateException();
         }
     }
+
+    private boolean checkSamePlayer1InBothTeams(Match match) {
+        return match.getTeamAPlayer1().equals(match.getTeamBPlayer1());
+    }
+
+    private boolean checkSamePlayerInTeam(Match match) {
+        return (Objects.equals(match.getTeamAPlayer1(), match.getTeamAPlayer2())
+                || Objects.equals(match.getTeamBPlayer1(), match.getTeamBPlayer2()));
+    }
+
+    private boolean checkSamePlayerInDifferentTeams(Match match) {
+        return Objects.equals(match.getTeamAPlayer1(), match.getTeamBPlayer2())
+                || Objects.equals(match.getTeamBPlayer1(), match.getTeamAPlayer2());
+    }
+
+    private boolean checkSamePlayer2InBothTeams(Match match) {
+        return (Objects.equals(match.getTeamAPlayer2(), match.getTeamBPlayer2())
+                && (match.getTeamBPlayer2() != null || match.getTeamAPlayer2() != null));
+    }
+
 }

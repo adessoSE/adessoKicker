@@ -8,14 +8,14 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>kicker</name>
-    <description>Demo project for Spring Boot</description>
+    <name>adessoKicker</name>
+    <description>A Tool to play table football games with an ELO-System</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.0.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <properties>
@@ -30,7 +30,6 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
             <version>2.1.0.RELEASE</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -50,7 +49,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version>2.1.0.RELEASE</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -104,7 +102,6 @@
             <version>5.1.1.RELEASE</version>
             <scope>test</scope>
         </dependency>
-        <!-- Keycloak -->
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-spring-boot-starter</artifactId>
@@ -145,7 +142,6 @@
                     <java>
                         <eclipse>
                             <file>${basedir}/formatting-rules.xml</file>
-                            <!-- Optional, available versions: https://github.com/diffplug/spotless/tree/master/lib-extra/src/main/resources/com/diffplug/spotless/extra/config/eclipse_jdt_formatter -->
                             <version>4.8.0</version>
                         </eclipse>
                     </java>
