@@ -9,13 +9,12 @@ import de.adesso.kicker.notification.Message.MessageType;
 import de.adesso.kicker.notification.Message.SendMessageService;
 import de.adesso.kicker.notification.exception.NotificationNotExistingException;
 import de.adesso.kicker.notification.exception.WrongReceiverException;
-import de.adesso.kicker.user.UserDummy;
 import de.adesso.kicker.user.User;
+import de.adesso.kicker.user.UserDummy;
 import de.adesso.kicker.user.UserService;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -28,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class NotificationServiceTest {
 
     @Mock
@@ -54,7 +52,7 @@ public class NotificationServiceTest {
         return MatchVerificationRequestDummy.matchVerificationRequest();
     }
 
-    @BeforeAll
+    @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
     }

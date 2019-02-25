@@ -3,10 +3,9 @@ package de.adesso.kicker.notification.MatchVerificationRequest;
 import de.adesso.kicker.match.Match;
 import de.adesso.kicker.match.MatchDummy;
 import de.adesso.kicker.user.UserService;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -16,11 +15,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class VerifyMatchServiceTest {
 
     @Mock
@@ -40,7 +36,7 @@ public class VerifyMatchServiceTest {
         return Collections.singletonList(MatchVerificationRequestDummy.matchVerificationRequest());
     }
 
-    @BeforeAll
+    @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
     }
