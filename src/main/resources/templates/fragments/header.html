@@ -39,15 +39,15 @@
             <ul class="navbar-nav">
                 <li class="nav-item header-link">
                     <i class="fa fa-calendar-check hvr-icon"></i>
-                    <a class="nav-link hvr-underline-from-left" href="#">Match eintragen</a>
+                    <a class="nav-link hvr-underline-from-left" th:href="@{/matchresult}" th:text="#{'sites.matchrequest'}"></a>
                 </li>
                 <li class="nav-item header-link">
                     <i class="fa fa-trophy hvr-icon"></i>
-                    <a class="nav-link hvr-underline-from-left" href="#">Rangliste</a>
+                    <a class="nav-link hvr-underline-from-left" th:href="@{/ranking}" th:text="#{'sites.ranking'}"></a>
                 </li>
                 <li class="nav-item header-link">
                     <i class="fa fa-user hvr-icon"></i>
-                    <a class="nav-link hvr-underline-from-left" href="#">Mein Profil</a>
+                    <a class="nav-link hvr-underline-from-left" th:href="@{/profile}" th:text="#{'sites.profile'}"></a>
                 </li>
             </ul>
         </div>
@@ -75,20 +75,20 @@
             <div class="dropdown-menu dropdown-menu-right" id="profile-dropdown-menu">
                 <div class="dropdown-item">
                     <i class="fa fa-calendar-check hvr-icon"></i>
-                    <a class="move-2px-right adesso-blue-text" href="#">Match eintragen</a>
+                    <a class="move-2px-right adesso-blue-text" th:href="@{/matchresult}" th:text="#{'sites.matchrequest'}"></a>
                 </div>
                 <div class="dropdown-item">
                     <i class="fa fa-trophy hvr-icon move-1px-left"></i>
-                    <a class="adesso-blue-text" href="#">Rangliste</a>
+                    <a class="adesso-blue-text" th:href="@{/ranking}" th:text="#{'sites.ranking'}"></a>
                 </div>
                 <div class="dropdown-item">
                     <i class="fa fa-user hvr-icon"></i>
-                    <a class="move-2px-right adesso-blue-text" href="#">User</a>
+                    <a class="move-2px-right adesso-blue-text" th:href="@{/profile}" th:text="#{'sites.profile'}"></a>
                 </div>
                 <div class="dropdown-divider"></div>
                 <div class="dropdown-item hvr-icon-back">
                     <i class="fa fa-sign-out-alt hvr-icon"></i>
-                    <a class="move-2px-right adesso-blue-text" href="#">Logout</a>
+                    <a class="move-2px-right adesso-blue-text" th:href="@{/}" th:text="#{'sites.logout'}">Logout</a>
                 </div>
             </div>
         </div>

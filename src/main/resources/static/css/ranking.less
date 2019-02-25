@@ -1,0 +1,29 @@
+@import "colorscheme.less";
+
+#table-container{width: 100%;}
+#text-and-searchbar{margin-top: 15px;}
+#everything-above-table{width: 80%;}
+
+.user-table{text-align: center;}
+.user-table td{border: none !important;}
+.user-table tr{
+  line-height: 18px;
+  min-height: 18px;
+  height: 18px;
+}
+
+.btn-group-horizontal{margin-left: 70%;}
+.pager{
+  color: @colorscheme[adesso-blue];
+  border: none;
+  background: none;
+  font-size: 40px;
+}
+
+@media screen and (max-width: 800px){
+  .hide-on-small-screen{display: none;}
+  #everything-above-table{margin-bottom: 20px;}
+}
+@media screen and (min-width: 800px){
+  .hide-on-large-screen{display: none;}
+}
