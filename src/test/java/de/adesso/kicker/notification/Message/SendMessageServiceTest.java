@@ -28,9 +28,12 @@ public class SendMessageServiceTest {
     @Test
     @DisplayName("Save a decline Message")
     void saveDeclineMessage() {
+        // given
+        var sender = UserDummy.defaultUser();
+        var receiver = UserDummy.alternateUser();
+
         // when
-        sendMessageService.sendMessage(UserDummy.defaultUser(), UserDummy.alternateUser(),
-                MessageType.MESSAGE_DECLINED);
+        sendMessageService.sendMessage(sender, receiver, MessageType.MESSAGE_DECLINED);
 
         // then
         verify(messageRepository, times(1)).save(any(Message.class));
