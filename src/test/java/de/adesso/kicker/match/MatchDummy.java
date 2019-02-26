@@ -5,34 +5,58 @@ import de.adesso.kicker.user.UserDummy;
 import java.time.LocalDate;
 
 public class MatchDummy {
-    private UserDummy userDummy = new UserDummy();
-
-    public Match match() {
-        var match = new Match(LocalDate.now(), userDummy.defaultUser(), userDummy.alternateUser(),
-                userDummy.alternateUser1(), userDummy.alternateUser2(), true);
+    public static Match match() {
+        var match = new Match(LocalDate.now(), UserDummy.defaultUser(), UserDummy.alternateUser(),
+                UserDummy.alternateUser1(), UserDummy.alternateUser2(), true);
         match.setMatchId("1");
         return match;
     }
 
-    public Match match_with_equal_player1() {
-        return new Match(LocalDate.now(), userDummy.defaultUser(), userDummy.defaultUser(), true);
+    public static Match matchWithEqualPlayerA1B1() {
+        return new Match(LocalDate.now(), UserDummy.defaultUser(), UserDummy.defaultUser(), true);
     }
 
-    public Match match_with_equal_player1_2() {
-        return new Match(LocalDate.now(), userDummy.defaultUser(), userDummy.alternateUser(), userDummy.defaultUser(),
-                userDummy.alternateUser2(), true);
+    public static Match matchWithEqualPlayerA1B2() {
+        return new Match(LocalDate.now(), UserDummy.defaultUser(), UserDummy.alternateUser(), UserDummy.defaultUser(),
+                UserDummy.alternateUser2(), true);
     }
 
-    public Match match_with_equal_player2_2() {
-        return new Match(LocalDate.now(), userDummy.defaultUser(), userDummy.alternateUser2(),
-                userDummy.alternateUser1(), userDummy.alternateUser2(), true);
+    public static Match matchWithEqualPlayerA2B2() {
+        return new Match(LocalDate.now(), UserDummy.defaultUser(), UserDummy.alternateUser2(),
+                UserDummy.alternateUser1(), UserDummy.alternateUser2(), true);
     }
 
-    public Match match_with_same_player_team() {
-        return new Match(LocalDate.now(), userDummy.defaultUser(), userDummy.defaultUser(), null, null, true);
+    public static Match matchWithSamePlayerTeamA() {
+        return new Match(LocalDate.now(), UserDummy.defaultUser(), UserDummy.defaultUser(), UserDummy.alternateUser(),
+                UserDummy.alternateUser1(), true);
     }
 
-    public Match match_without_default_user_player_1() {
-        return new Match(LocalDate.now(), userDummy.alternateUser1(), userDummy.alternateUser2(), true);
+    public static Match matchWithEqualPlayerTeamB() {
+        return new Match(LocalDate.now(), UserDummy.defaultUser(), UserDummy.alternateUser(),
+                UserDummy.alternateUser1(), UserDummy.alternateUser1(), true);
+    }
+
+    public static Match matchWithoutDefaultUserAsPlayerA1() {
+        return new Match(LocalDate.now(), UserDummy.alternateUser1(), UserDummy.alternateUser2(), true);
+    }
+
+    public static Match matchWithFutureDate() {
+        return new Match(LocalDate.now().plusDays(2), UserDummy.defaultUser(), UserDummy.alternateUser(), true);
+    }
+
+    public static Match matchWithLowRating() {
+        return new Match(LocalDate.now(), UserDummy.userWithLowRating(), UserDummy.userWithLowRating(), true);
+    }
+
+    public static Match matchWithHighRating() {
+        return new Match(LocalDate.now(), UserDummy.userWithHighRating(), UserDummy.userWithHighRating(), true);
+    }
+
+    public static Match matchWithVeryHighRating() {
+        return new Match(LocalDate.now(), UserDummy.userWithVeryHighRating(), UserDummy.userWithVeryHighRating(), true);
+    }
+
+    public static Match matchWithPlayersInDifferentRatingRanges() {
+        return new Match(LocalDate.now(), UserDummy.userWithVeryHighRating(), UserDummy.userWithHighRating(), true);
     }
 }
