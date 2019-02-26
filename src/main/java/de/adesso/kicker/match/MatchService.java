@@ -1,10 +1,15 @@
 package de.adesso.kicker.match;
 
+import de.adesso.kicker.events.MatchCreatedEvent;
+import de.adesso.kicker.events.MatchDeclinedEvent;
+import de.adesso.kicker.events.MatchVerifiedEvent;
 import de.adesso.kicker.match.exception.FutureDateException;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,10 +22,14 @@ public class MatchService {
 
     private final UserService userService;
 
+    private final ApplicationEventPublisher applicationEventPublisher;
+
     @Autowired
-    public MatchService(MatchRepository matchRepository, UserService userService) {
+    public MatchService(MatchRepository matchRepository, UserService userService,
+            ApplicationEventPublisher applicationEventPublisher) {
         this.matchRepository = matchRepository;
         this.userService = userService;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     public void addMatchEntry(Match match) {
@@ -28,11 +37,29 @@ public class MatchService {
         checkSamePlayer(match);
         checkCurrentUser(match);
         saveMatch(match);
+        sendMatchCreationEvent(match);
     }
 
-    public void verifyMatch(Match match) {
+    private void sendMatchCreationEvent(Match match) {
+        MatchCreatedEvent matchCreatedEvent = new MatchCreatedEvent(this, match);
+        applicationEventPublisher.publishEvent(matchCreatedEvent);
+    }
+
+    @EventListener
+    public void verifyMatch(MatchVerifiedEvent matchVerifiedEvent) {
+        Match match = matchVerifiedEvent.getMatch();
         match.setVerified(true);
         saveMatch(match);
+    }
+
+    @EventListener
+    public void declineMatch(MatchDeclinedEvent matchDeclinedEvent) {
+        Match match = matchDeclinedEvent.getMatch();
+        deleteMatch(match);
+    }
+
+    private void deleteMatch(Match match) {
+        matchRepository.delete(match);
     }
 
     private void saveMatch(Match match) {
