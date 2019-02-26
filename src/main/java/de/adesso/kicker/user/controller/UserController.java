@@ -19,7 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/u/{id}")
     public ModelAndView getUserProfile(@PathVariable String id) {
         var modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getUserById(id));
