@@ -1,5 +1,8 @@
 package de.adesso.kicker.notification.MatchVerificationRequest;
 
+import de.adesso.kicker.events.MatchCreatedEventDummy;
+import de.adesso.kicker.events.MatchDeclinedEvent;
+import de.adesso.kicker.events.MatchVerifiedEvent;
 import de.adesso.kicker.match.Match;
 import de.adesso.kicker.match.MatchDummy;
 import de.adesso.kicker.user.UserService;
@@ -9,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +28,9 @@ public class VerifyMatchServiceTest {
 
     @Mock
     UserService userService;
+
+    @Mock
+    ApplicationEventPublisher applicationEventPublisher;
 
     @InjectMocks
     VerifyMatchService verifyMatchService;
@@ -55,6 +62,7 @@ public class VerifyMatchServiceTest {
         // then
         verify(matchVerificationRequestRepository, times(createMatchVerificationList().size()))
                 .delete(any(MatchVerificationRequest.class));
+        verify(applicationEventPublisher, times(1)).publishEvent(any(MatchVerifiedEvent.class));
     }
 
     @Test
@@ -62,10 +70,11 @@ public class VerifyMatchServiceTest {
     void sendRequestsToOpponents() {
         // given
         var match = MatchDummy.match();
+        var matchCreatedEvent = MatchCreatedEventDummy.matchCreatedEvent();
         when(userService.getLoggedInUser()).thenReturn(match.getTeamAPlayer1());
 
         // when
-        verifyMatchService.sendRequests(match);
+        verifyMatchService.sendRequests(matchCreatedEvent);
 
         // then
         verify(matchVerificationRequestRepository, times(2)).save(any(MatchVerificationRequest.class));
@@ -85,6 +94,7 @@ public class VerifyMatchServiceTest {
         verifyMatchService.declineRequest(matchVerification);
 
         // then
+        verify(applicationEventPublisher, times(1)).publishEvent(any(MatchDeclinedEvent.class));
         verify(matchVerificationRequestRepository, times(2)).delete(any(MatchVerificationRequest.class));
         assertEquals(3, verifyMatchService.declineRequest(matchVerification).size());
     }

@@ -1,8 +1,10 @@
 package de.adesso.kicker.ranking;
 
+import de.adesso.kicker.events.MatchVerifiedEvent;
 import de.adesso.kicker.match.Match;
 import de.adesso.kicker.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,9 @@ public class RankingService {
         this.rankingRepository = rankingRepository;
     }
 
-    public void updateRatings(Match match) {
+    @EventListener
+    public void updateRatings(MatchVerifiedEvent matchVerifiedEvent) {
+        var match = matchVerifiedEvent.getMatch();
         var winners = match.getWinners();
         var losers = match.getLosers();
         var expectedScore = expectedScore(match);
