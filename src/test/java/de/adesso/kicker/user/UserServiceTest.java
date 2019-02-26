@@ -13,6 +13,7 @@ import org.keycloak.representations.AccessToken;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -155,37 +156,36 @@ class UserServiceTest {
     @DisplayName("If there's no entry for the logged in user create and return it")
     void whenLoggedInUserNotFoundCreateUser() {
         // given
-        var expected = createUser();
+        var user = createUser();
+        var authEvent = mock(AuthenticationSuccessEvent.class);
         var authentication = mock(Authentication.class);
-        var securityContext = mock(SecurityContext.class);
         var principal = mock(KeycloakPrincipal.class);
         var simpleAccount = mock(SimpleKeycloakAccount.class);
         var keycloakContext = mock(RefreshableKeycloakSecurityContext.class);
         var accessToken = mock(AccessToken.class);
-        SecurityContextHolder.setContext(securityContext);
 
-        when(securityContext.getAuthentication()).thenReturn(authentication);
+        when(authEvent.getAuthentication()).thenReturn(authentication);
+
         when(authentication.getPrincipal()).thenReturn(principal);
 
-        when(principal.getName()).thenReturn(expected.getUserId());
+        when(principal.getName()).thenReturn(user.getUserId());
 
         when(authentication.getDetails()).thenReturn(simpleAccount);
         when(simpleAccount.getKeycloakSecurityContext()).thenReturn(keycloakContext);
         when(keycloakContext.getToken()).thenReturn(accessToken);
 
-        when(accessToken.getPreferredUsername()).thenReturn(expected.getUserId());
-        when(accessToken.getGivenName()).thenReturn(expected.getFirstName());
-        when(accessToken.getFamilyName()).thenReturn(expected.getLastName());
-        when(accessToken.getEmail()).thenReturn(expected.getEmail());
+        when(accessToken.getPreferredUsername()).thenReturn(user.getUserId());
+        when(accessToken.getGivenName()).thenReturn(user.getFirstName());
+        when(accessToken.getFamilyName()).thenReturn(user.getLastName());
+        when(accessToken.getEmail()).thenReturn(user.getEmail());
 
         when(userRepository.findById(anyString())).thenReturn(Optional.empty());
-        when(userRepository.save(expected)).thenReturn(expected);
+        when(userRepository.save(user)).thenReturn(user);
 
         // when
-        var actual = userService.getLoggedInUser();
+        userService.checkFirstLogin(authEvent);
 
         // then
-        assertEquals(expected, actual);
-        verify(userRepository, times(1)).save(expected);
+        verify(userRepository, times(1)).save(user);
     }
 }
