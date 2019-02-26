@@ -1,12 +1,15 @@
 package de.adesso.kicker.match;
 
-import de.adesso.kicker.events.MatchCreatedEvent;
+import de.adesso.kicker.events.match.MatchCreatedEvent;
 import de.adesso.kicker.events.MatchDeclinedEventDummy;
 import de.adesso.kicker.events.MatchVerifiedEventDummy;
 import de.adesso.kicker.match.exception.FutureDateException;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
-import de.adesso.kicker.user.UserService;
+import de.adesso.kicker.match.persistence.Match;
+import de.adesso.kicker.match.persistence.MatchRepository;
+import de.adesso.kicker.match.service.MatchService;
+import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

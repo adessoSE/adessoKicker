@@ -1,10 +1,12 @@
 package de.adesso.kicker.user;
 
 import de.adesso.kicker.user.exception.UserNotFoundException;
+import de.adesso.kicker.user.persistence.User;
+import de.adesso.kicker.user.persistence.UserRepository;
+import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.function.Executable;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext;

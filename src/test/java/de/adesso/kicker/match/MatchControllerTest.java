@@ -1,8 +1,11 @@
 package de.adesso.kicker.match;
 
-import de.adesso.kicker.user.User;
+import de.adesso.kicker.match.controller.MatchController;
+import de.adesso.kicker.match.persistence.Match;
+import de.adesso.kicker.match.service.MatchService;
+import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.UserDummy;
-import de.adesso.kicker.user.UserService;
+import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

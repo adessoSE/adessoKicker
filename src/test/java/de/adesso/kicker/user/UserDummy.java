@@ -1,6 +1,7 @@
 package de.adesso.kicker.user;
 
 import de.adesso.kicker.ranking.RankingDummy;
+import de.adesso.kicker.user.persistence.User;
 
 public class UserDummy {
 
