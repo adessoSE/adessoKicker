@@ -57,7 +57,7 @@
                     type="button" class="btn header-dropdown-bt hvr-fade" id="notification-dropdown-icon" data-toggle="dropdown">
                 <i class="fa fa-envelope hvr-icon"></i>
             </button>
-            <div class="dropdown-menu dropdown-menu-right" id="notification-dropdown-menu">
+            <div class="shadow dropdown-menu-anim-in dropdown-menu dropdown-menu-right" id="notification-dropdown-menu">
                 <!-- Notifications -->
                 <div th:replace="~{fragments/matchverification.html :: matchverification}"></div>
                 <div class="dropdown-divider"></div>
@@ -72,7 +72,7 @@
                 <!-- User Name -->
                 Jan Schneider
             </button>
-            <div class="dropdown-menu dropdown-menu-right" id="profile-dropdown-menu">
+            <div class="shadow dropdown-menu-anim-in dropdown-menu dropdown-menu-right" id="profile-dropdown-menu">
                 <div class="dropdown-item">
                     <i class="fa fa-calendar-check hvr-icon"></i>
                     <a class="move-2px-right adesso-blue-text" th:href="@{/matchresult}" th:text="#{'sites.matchrequest'}"></a>
@@ -94,7 +94,7 @@
         </div>
     </nav>
     <!-- My JS -->
-    <script src="../js/notification.js"></script>
+    <script src="../js/anim.js"></script>
 </header>
 </body>
 </html>
