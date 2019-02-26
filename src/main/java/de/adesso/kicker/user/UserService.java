@@ -6,6 +6,9 @@ import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
 import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
+import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -38,37 +41,42 @@ public class UserService {
 
     public User getLoggedInUser() {
         var principal = getPrincipal();
-        User user;
-        try {
-            user = getUserById(principal.getName());
-        } catch (UserNotFoundException e) {
-            user = createUser();
-        }
-        return user;
+        return getUserById(principal.getName());
     }
 
     private KeycloakPrincipal getPrincipal() {
         return (KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    private User createUser() {
-        var userAccessToken = getAccessToken();
+    private void createUser(Authentication authentication) {
+        var userAccessToken = getAccessToken(authentication);
         var userId = userAccessToken.getPreferredUsername();
         var firstName = userAccessToken.getGivenName();
         var lastName = userAccessToken.getFamilyName();
         var email = userAccessToken.getEmail();
         User user = new User(userId, firstName, lastName, email, new Ranking());
-        return saveUser(user);
+        saveUser(user);
     }
 
-    private AccessToken getAccessToken() {
-        var simpleKeycloakAccount = (SimpleKeycloakAccount) SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getDetails();
+    private AccessToken getAccessToken(Authentication authentication) {
+        var simpleKeycloakAccount = (SimpleKeycloakAccount) authentication.getDetails();
         return simpleKeycloakAccount.getKeycloakSecurityContext().getToken();
     }
 
-    private User saveUser(User user) {
-        return userRepository.save(user);
+    @EventListener
+    public void checkFirstLogin(AuthenticationSuccessEvent event) {
+        var authentication = event.getAuthentication();
+        var principal = (KeycloakPrincipal) authentication.getPrincipal();
+        if (!checkUserExists(principal.getName())) {
+            createUser(authentication);
+        }
+    }
+
+    private void saveUser(User user) {
+        userRepository.save(user);
+    }
+
+    private boolean checkUserExists(String id) {
+        return userRepository.existsById(id);
     }
 }
