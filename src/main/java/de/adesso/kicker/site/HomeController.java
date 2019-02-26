@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 
-    @GetMapping(value = {"/", "/home", "/ranking"})
+    @GetMapping(value = { "/", "/home", "/ranking" })
     public ModelAndView ranking() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("sites/ranking.html");
