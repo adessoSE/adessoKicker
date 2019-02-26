@@ -1,5 +1,6 @@
 package de.adesso.kicker.events;
 
+import de.adesso.kicker.events.match.MatchCreatedEvent;
 import de.adesso.kicker.match.MatchDummy;
 
 public class MatchCreatedEventDummy {
