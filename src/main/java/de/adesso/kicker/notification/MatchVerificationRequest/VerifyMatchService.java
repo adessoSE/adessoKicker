@@ -1,9 +1,14 @@
 package de.adesso.kicker.notification.MatchVerificationRequest;
 
+import de.adesso.kicker.events.MatchCreatedEvent;
+import de.adesso.kicker.events.MatchDeclinedEvent;
+import de.adesso.kicker.events.MatchVerifiedEvent;
 import de.adesso.kicker.match.Match;
 import de.adesso.kicker.user.User;
 import de.adesso.kicker.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,21 +21,27 @@ public class VerifyMatchService {
 
     private UserService userService;
 
+    private ApplicationEventPublisher applicationEventPublisher;
+
     @Autowired
     public VerifyMatchService(MatchVerificationRequestRepository matchVerificationRequestRepository,
-            UserService userService) {
+            UserService userService, ApplicationEventPublisher applicationEventPublisher) {
         this.matchVerificationRequestRepository = matchVerificationRequestRepository;
         this.userService = userService;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     public void acceptRequest(MatchVerificationRequest matchVerificationRequest) {
+        sendMatchVerifiedEvent(matchVerificationRequest.getMatch());
         List<MatchVerificationRequest> requests = getRequestsByMatch(matchVerificationRequest.getMatch());
         for (MatchVerificationRequest request : requests) {
             deleteRequest(request);
         }
     }
 
-    public void sendRequests(Match match) {
+    @EventListener
+    public void sendRequests(MatchCreatedEvent matchCreatedEvent) {
+        Match match = matchCreatedEvent.getMatch();
         User sender = userService.getLoggedInUser();
         List<User> receivers = new ArrayList<>();
 
@@ -47,6 +58,7 @@ public class VerifyMatchService {
 
     public List<User> declineRequest(MatchVerificationRequest matchVerificationRequest) {
         deleteRequest(matchVerificationRequest);
+        sendMatchRequestDeclinedEvent(matchVerificationRequest.getMatch());
         List<MatchVerificationRequest> otherRequests = getRequestsByMatch(matchVerificationRequest.getMatch());
         List<User> usersToInform = new ArrayList<>();
 
@@ -59,6 +71,16 @@ public class VerifyMatchService {
             }
         }
         return usersToInform;
+    }
+
+    private void sendMatchVerifiedEvent(Match match) {
+        MatchVerifiedEvent matchVerifiedEvent = new MatchVerifiedEvent(this, match);
+        applicationEventPublisher.publishEvent(matchVerifiedEvent);
+    }
+
+    private void sendMatchRequestDeclinedEvent(Match match) {
+        MatchDeclinedEvent matchDeclinedEvent = new MatchDeclinedEvent(this, match);
+        applicationEventPublisher.publishEvent(matchDeclinedEvent);
     }
 
     public List<MatchVerificationRequest> getRequestsByMatch(Match match) {
