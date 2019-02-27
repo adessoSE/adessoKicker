@@ -42,7 +42,7 @@ class UserControllerTest {
         when(userService.getUserById(user.getUserId())).thenReturn(user);
 
         // when
-        var result = mockMvc.perform(get("/users/{id}", user.getUserId()));
+        var result = mockMvc.perform(get("/users/u/{id}", user.getUserId()));
 
         // then
         result.andExpect(status().isOk()).andExpect(model().attribute("user", user));
