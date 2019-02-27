@@ -19,11 +19,11 @@ import java.util.List;
 @Service
 public class VerifyMatchService {
 
-    private MatchVerificationRequestRepository matchVerificationRequestRepository;
+    private final MatchVerificationRequestRepository matchVerificationRequestRepository;
 
-    private UserService userService;
+    private final UserService userService;
 
-    private ApplicationEventPublisher applicationEventPublisher;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
     public VerifyMatchService(MatchVerificationRequestRepository matchVerificationRequestRepository,
@@ -85,15 +85,15 @@ public class VerifyMatchService {
         applicationEventPublisher.publishEvent(matchDeclinedEvent);
     }
 
-    public List<MatchVerificationRequest> getRequestsByMatch(Match match) {
+    private List<MatchVerificationRequest> getRequestsByMatch(Match match) {
         return matchVerificationRequestRepository.getAllByMatch(match);
     }
 
-    public void deleteRequest(MatchVerificationRequest matchVerificationRequest) {
+    private void deleteRequest(MatchVerificationRequest matchVerificationRequest) {
         matchVerificationRequestRepository.delete(matchVerificationRequest);
     }
 
-    public void saveRequest(MatchVerificationRequest matchVerificationRequest) {
+    private void saveRequest(MatchVerificationRequest matchVerificationRequest) {
         matchVerificationRequestRepository.save(matchVerificationRequest);
     }
 }
