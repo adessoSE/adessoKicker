@@ -23,7 +23,7 @@ public class UserController {
     public ModelAndView getUserProfile(@PathVariable String id) {
         var modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getUserById(id));
-        modelAndView.setViewName("user/profile.html");
+        modelAndView.setViewName("sites/profile.html");
         return modelAndView;
     }
 
@@ -31,7 +31,7 @@ public class UserController {
     public ModelAndView getOwnProfile() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", userService.getLoggedInUser());
-        modelAndView.setViewName("user/profile.html");
+        modelAndView.setViewName("sites/profile.html");
         return modelAndView;
     }
 }

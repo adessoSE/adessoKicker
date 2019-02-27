@@ -6,13 +6,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/home")
 public class HomeController {
 
-    @GetMapping
-    public ModelAndView home() {
+    @GetMapping(value = { "/", "/home", "/ranking" })
+    public ModelAndView ranking() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("user/home.html");
+        modelAndView.setViewName("sites/ranking.html");
+        return modelAndView;
+    }
+
+    @GetMapping("/profile")
+    public ModelAndView profile() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("sites/profile.html");
+        return modelAndView;
+    }
+
+    @GetMapping("/matchresult")
+    public ModelAndView matchresult() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("sites/matchresult.html");
         return modelAndView;
     }
 }

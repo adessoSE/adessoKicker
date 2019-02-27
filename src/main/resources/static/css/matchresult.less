@@ -1,0 +1,69 @@
+@import "_colorscheme.less";
+
+.headline{
+  font-size: 50px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  i{color: @colorscheme[orange];}
+  .fa-futbol{animation: icon-rotate 4s infinite linear;}
+}
+
+.team-description{
+  font-size: 15px;
+  text-decoration: underline;
+  color: @colorscheme[warm-grey-dark];
+}
+.team-textbox{
+  width: 100%;
+  font-size: 23px;
+}
+.team-margin-top{margin-top: 15px;}
+
+.form-check{
+  // Hide radio buttons
+  .form-check-input{display: none;}
+  .form-check-label{
+    font-size: 35px;
+    color: @colorscheme[warm-grey-dark];
+    margin-left: -20px;
+  }
+  i{
+    font-size: 40px;
+    margin-left: 5px;
+    color: @colorscheme[orange];
+  }
+  /* When selecting an option from the radio buttons
+   * We need to display the correct trophy icon.
+   * This controls the visibility of the icons.
+   */
+  i:not(.trophy-selected){opacity: 0;}
+  .trophy-selected{
+    opacity: 1;
+    animation-play-state: paused;
+  }
+}
+// Plays the the icon animation as we hover over the form-check of a radio button
+.form-check:hover > i:not(.trophy-selected){animation: icon-display-from-above 0.3s forwards;}
+
+.annotation{margin-top: 30px;}
+.creatematch-btn{
+  margin-top: 20px;
+  background-color: @colorscheme[adesso-blue];
+  color: white;
+}
+
+#reset-button:hover > i{animation: icon-rotate 1s;}
+
+@keyframes icon-move-right-vanish{
+  100%{transform: translateX(100px);opacity: 0;}
+}
+@keyframes icon-rotate{
+  100%{transform: rotate(360deg)}
+}
+@keyframes icon-display-from-above{
+  0%{transform: translateY(-500px); opacity: 0}
+  100%{transform: translateY(0); opacity: 1}
+}
+@keyframes icon-vanish{
+  100%{opacity: 0}
+}
