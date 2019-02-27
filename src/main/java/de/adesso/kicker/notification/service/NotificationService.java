@@ -19,13 +19,13 @@ import java.util.List;
 @Service
 public class NotificationService {
 
-    private NotificationRepository notificationRepository;
+    private final NotificationRepository notificationRepository;
 
-    private VerifyMatchService verifyMatchService;
+    private final VerifyMatchService verifyMatchService;
 
-    private SendMessageService sendMessageService;
+    private final SendMessageService sendMessageService;
 
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public NotificationService(NotificationRepository notificationRepository, VerifyMatchService verifyMatchService,

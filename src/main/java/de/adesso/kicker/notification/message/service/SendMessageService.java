@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SendMessageService {
 
-    private MessageRepository messageRepository;
+    private final MessageRepository messageRepository;
 
     @Autowired
     public SendMessageService(MessageRepository messageRepository) {
@@ -25,7 +25,7 @@ public class SendMessageService {
         messageRepository.delete(message);
     }
 
-    public void saveMessage(Message message) {
+    private void saveMessage(Message message) {
         messageRepository.save(message);
     }
 }
