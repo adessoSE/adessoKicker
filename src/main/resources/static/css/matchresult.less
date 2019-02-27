@@ -52,12 +52,17 @@
   color: white;
 }
 
+#reset-button:hover > i{animation: icon-rotate 1s;}
+
+@keyframes icon-move-right-vanish{
+  100%{transform: translateX(100px);opacity: 0;}
+}
 @keyframes icon-rotate{
-  100%{-webkit-transform: rotate(360deg)}
+  100%{transform: rotate(360deg)}
 }
 @keyframes icon-display-from-above{
-  0%{-webkit-transform: translateY(-500px); opacity: 0}
-  100%{-webkit-transform: translateY(0); opacity: 1}
+  0%{transform: translateY(-500px); opacity: 0}
+  100%{transform: translateY(0); opacity: 1}
 }
 @keyframes icon-vanish{
   100%{opacity: 0}
