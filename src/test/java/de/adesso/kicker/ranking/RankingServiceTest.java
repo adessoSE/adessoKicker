@@ -1,7 +1,10 @@
 package de.adesso.kicker.ranking;
 
 import de.adesso.kicker.events.MatchVerifiedEventDummy;
-import de.adesso.kicker.user.User;
+import de.adesso.kicker.ranking.persistence.Ranking;
+import de.adesso.kicker.ranking.persistence.RankingRepository;
+import de.adesso.kicker.ranking.service.RankingService;
+import de.adesso.kicker.user.persistence.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
