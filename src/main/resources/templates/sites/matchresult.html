@@ -35,42 +35,42 @@
   <div class="container">
     <!-- Who played? -->
     <div class="headline">
-      <span th:text="#{'matchresult.whoplayed'}"></span>
+      <span th:text="#{'matchResult.whoPlayed'}"></span>
       <i class="fas fa-futbol" aria-hidden="true"></i>
     </div>
     <div class="row">
       <div class="col-sm-4">
-        <p class="team-description" th:text="#{'matchresult.team1'}"></p>
-        <div><input class="team-textbox" type="text" th:placeholder="#{'matchresult.player1'}"/></div>
-        <div><input class="team-textbox team-margin-top" type="text" th:placeholder="#{'matchresult.player2'}"/></div>
+        <p class="team-description" th:text="#{'matchResult.team1'}"></p>
+        <div><input class="team-textbox" type="text" th:placeholder="#{'matchResult.player1'}"/></div>
+        <div><input class="team-textbox team-margin-top" type="text" th:placeholder="#{'matchResult.player2'}"/></div>
       </div>
       <div class="col-sm-4">
-        <p class="team-description" th:text="#{'matchresult.team2'}"></p>
-        <div><input class="team-textbox" type="text" th:placeholder="#{'matchresult.player1'}"/></div>
-        <div><input class="team-textbox team-margin-top" type="text" th:placeholder="#{'matchresult.player2'}"/></div>
+        <p class="team-description" th:text="#{'matchResult.team2'}"></p>
+        <div><input class="team-textbox" type="text" th:placeholder="#{'matchResult.player1'}"/></div>
+        <div><input class="team-textbox team-margin-top" type="text" th:placeholder="#{'matchResult.player2'}"/></div>
       </div>
       <!-- Annotation -->
       <div class="col-sm-4">
-          <p class="annotation" th:text="#{'matchresult.annotation'}"></p>
+          <p class="annotation" th:text="#{'matchResult.annotation'}"></p>
       </div>
     </div>
     <div class="headline">
       <!-- Who won -->
-      <span class="headline" th:text="#{'matchresult.whowon'}"></span>
+      <span class="headline" th:text="#{'matchResult.whoWon'}"></span>
       <i class="fas fa-trophy" aria-hidden="true"></i>
     </div>
     <div class="row" id="radio-winner-team">
       <div class="col-sm-4">
         <div class="form-check">
           <input class="form-check-input" type="radio" name="winnerteam" id="radio1" checked>
-          <label class="form-check-label" for="radio1" th:text="#{'matchresult.team1'}"></label>
+          <label class="form-check-label" for="radio1" th:text="#{'matchResult.team1'}"></label>
           <i class="fas fa-trophy" id="radio1-icon" aria-hidden="true"></i>
         </div>
       </div>
       <div class="col-sm-4">
         <div class="form-check">
           <input class="form-check-input" type="radio" name="winnerteam" id="radio2">
-          <label class="form-check-label" for="radio2" th:text="#{'matchresult.team2'}"></label>
+          <label class="form-check-label" for="radio2" th:text="#{'matchResult.team2'}"></label>
           <i class="fas fa-trophy" id="radio2-icon" aria-hidden="true"></i>
         </div>
       </div>
@@ -78,14 +78,14 @@
     </div>
     <!-- When did you play? -->
     <div class="headline">
-      <span class="headline" th:text="#{'matchresult.whendidyouplay'}"></span>
+      <span class="headline" th:text="#{'matchResult.whenDidYouPlay'}"></span>
       <i class="fa fa-calendar-check" aria-hidden="true"></i>
     </div>
     <div>
       <input type="date" id="datepicker" name="date"/>
     </div>
     <div>
-      <button class="btn creatematch-btn" th:text="#{'matchresult.creatematch'}"></button>
+      <button class="btn creatematch-btn" th:text="#{'matchResult.createMatch'}"></button>
     </div>
   </div>
 </form>
