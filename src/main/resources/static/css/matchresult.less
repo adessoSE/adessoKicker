@@ -4,8 +4,8 @@
   font-size: 50px;
   margin-bottom: 20px;
   margin-top: 20px;
-  i{color: @colorscheme[orange];}
-  .fa-futbol{animation: icon-rotate 4s infinite linear;}
+  i{color: @colorscheme[adesso-blue];}
+  .fa-futbol{animation: icon-rotate 5s infinite linear;}
 }
 
 .team-description{
@@ -43,7 +43,7 @@
   }
 }
 // Plays the the icon animation as we hover over the form-check of a radio button
-.form-check:hover > i:not(.trophy-selected){animation: icon-display-from-above 0.3s forwards;}
+.form-check:hover > i:not(.trophy-selected){animation: icon-display-from-above ease-out 0.2s forwards;}
 
 .annotation{margin-top: 30px;}
 .creatematch-btn{
@@ -51,8 +51,11 @@
   background-color: @colorscheme[adesso-blue];
   color: white;
 }
-
-#reset-button:hover > i{animation: icon-rotate 1s;}
+#dateContainer i{
+  color: @colorscheme[adesso-blue];
+  font-size: 25px;
+  margin-left: 5px;
+}
 
 @keyframes icon-move-right-vanish{
   100%{transform: translateX(100px);opacity: 0;}
@@ -61,7 +64,7 @@
   100%{transform: rotate(360deg)}
 }
 @keyframes icon-display-from-above{
-  0%{transform: translateY(-500px); opacity: 0}
+  0%{transform: translateY(-250px); opacity: 0}
   100%{transform: translateY(0); opacity: 1}
 }
 @keyframes icon-vanish{
