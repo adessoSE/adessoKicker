@@ -57,18 +57,17 @@
     <div class="headline">
       <!-- Who won -->
       <span class="headline" th:text="#{'matchResult.whoWon'}"></span>
-      <i class="fas fa-trophy" aria-hidden="true"></i>
     </div>
     <div class="row" id="radio-winner-team">
       <div class="col-sm-4">
-        <div class="form-check">
+        <div class="form-check" id="form-check-1">
           <input class="form-check-input" type="radio" name="winnerteam" id="radio1" checked>
           <label class="form-check-label" for="radio1" th:text="#{'matchResult.team1'}"></label>
           <i class="fas fa-trophy" id="radio1-icon" aria-hidden="true"></i>
         </div>
       </div>
       <div class="col-sm-4">
-        <div class="form-check">
+        <div class="form-check" id="form-check-2">
           <input class="form-check-input" type="radio" name="winnerteam" id="radio2">
           <label class="form-check-label" for="radio2" th:text="#{'matchResult.team2'}"></label>
           <i class="fas fa-trophy" id="radio2-icon" aria-hidden="true"></i>
@@ -79,9 +78,9 @@
     <!-- When did you play? -->
     <div class="headline">
       <span class="headline" th:text="#{'matchResult.whenDidYouPlay'}"></span>
-      <i class="fa fa-calendar-check" aria-hidden="true"></i>
     </div>
     <div>
+      <i class="fa fa-calendar-check" aria-hidden="true"></i>
       <input type="date" id="datepicker" name="date"/>
     </div>
     <div>
