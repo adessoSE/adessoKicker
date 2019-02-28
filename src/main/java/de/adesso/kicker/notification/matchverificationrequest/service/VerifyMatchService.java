@@ -2,6 +2,7 @@ package de.adesso.kicker.notification.matchverificationrequest.service;
 
 import de.adesso.kicker.events.match.MatchCreatedEvent;
 import de.adesso.kicker.events.match.MatchDeclinedEvent;
+import de.adesso.kicker.events.match.MatchVerificationSentEvent;
 import de.adesso.kicker.events.match.MatchVerifiedEvent;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
@@ -55,6 +56,7 @@ public class VerifyMatchService {
         for (User receiver : receivers) {
             MatchVerificationRequest request = new MatchVerificationRequest(sender, receiver, match);
             saveRequest(request);
+            sendMatchVerificationRequestEvent(request);
         }
     }
 
@@ -75,8 +77,10 @@ public class VerifyMatchService {
         return usersToInform;
     }
 
-    public MatchVerificationRequest getRequestByMatchAndReceiver(Match match, User receiver) {
-        return matchVerificationRequestRepository.getByMatchAndReceiver(match, receiver);
+    private void sendMatchVerificationRequestEvent(MatchVerificationRequest matchVerificationRequest) {
+        MatchVerificationSentEvent matchVerificationSentEvent = new MatchVerificationSentEvent(this,
+                matchVerificationRequest);
+        applicationEventPublisher.publishEvent(matchVerificationSentEvent);
     }
 
     private void sendMatchVerifiedEvent(Match match) {
