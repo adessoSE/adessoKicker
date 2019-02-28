@@ -43,12 +43,11 @@ public class UserService {
     }
 
     public User getLoggedInUser() {
-        var principal = getPrincipal();
-        return getUserById(principal.getName());
+        return getUserById(visitingUserId());
     }
 
-    private KeycloakPrincipal getPrincipal() {
-        return (KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    private String visitingUserId() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     private void createUser(Authentication authentication) {

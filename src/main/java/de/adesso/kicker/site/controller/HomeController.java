@@ -1,7 +1,7 @@
 package de.adesso.kicker.site.controller;
 
-import de.adesso.kicker.ranking.persistence.Ranking;
 import de.adesso.kicker.ranking.service.RankingService;
+import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +25,16 @@ public class HomeController {
             @RequestParam(defaultValue = "10") int size) {
         ModelAndView modelAndView = new ModelAndView();
         var users = userService.getUserPageSortedByRating(page, size);
-        var user = userService.getLoggedInUser();
-        var rank = rankingService.getPositionOfPlayer(user.getRanking());
+        try {
+            var user = userService.getLoggedInUser();
+            var rank = rankingService.getPositionOfPlayer(user.getRanking());
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("rank", rank);
+        } catch (UserNotFoundException e) {
+            modelAndView.addObject("user", false);
+            modelAndView.addObject("rank", false);
+        }
         modelAndView.addObject("users", users);
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("rank", rank);
         modelAndView.setViewName("sites/ranking.html");
         return modelAndView;
     }
