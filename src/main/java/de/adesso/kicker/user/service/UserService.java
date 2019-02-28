@@ -9,6 +9,8 @@ import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
 import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,17 +30,16 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
-        var users = new ArrayList<User>();
-        userRepository.findAll().forEach(users::add);
-        return users;
+        return new ArrayList<>(userRepository.findAll());
+    }
+
+    public List<User> getUserPageSortedByRating(int page, int size) {
+        var pageable = PageRequest.of(page, size, Sort.by("ranking.rating").descending());
+        return userRepository.findAll(pageable).getContent();
     }
 
     public User getUserById(String id) {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
-    }
-
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
     }
 
     public User getLoggedInUser() {

@@ -10,7 +10,7 @@ jobs:
           command: mvn dependency:go-offline
       - run:
           name: spotlessCheck
-          command: mvn spotless:apply
+          command: mvn spotless:check
       - run:
           name: compile
           command: mvn compile
