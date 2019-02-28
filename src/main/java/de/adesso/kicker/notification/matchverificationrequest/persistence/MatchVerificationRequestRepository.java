@@ -12,5 +12,4 @@ public interface MatchVerificationRequestRepository extends CrudRepository<Match
 
     List<MatchVerificationRequest> getAllByMatch(Match match);
 
-    MatchVerificationRequest getByMatchAndReceiver(Match match, User receiver);
 }
