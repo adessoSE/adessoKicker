@@ -75,7 +75,7 @@ public class VerifyMatchService {
         return usersToInform;
     }
 
-    public MatchVerificationRequest getRequestByMatchAndReceiver(Match match, User receiver){
+    public MatchVerificationRequest getRequestByMatchAndReceiver(Match match, User receiver) {
         return matchVerificationRequestRepository.getByMatchAndReceiver(match, receiver);
     }
 
