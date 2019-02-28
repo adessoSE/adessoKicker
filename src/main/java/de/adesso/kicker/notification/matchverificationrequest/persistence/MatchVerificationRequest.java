@@ -14,6 +14,9 @@ public class MatchVerificationRequest extends Notification {
     @ManyToOne(targetEntity = Match.class, cascade = CascadeType.ALL)
     private Match match;
 
+    public MatchVerificationRequest() {
+    }
+
     public MatchVerificationRequest(User sender, User receiver, Match match) {
         super(sender, receiver);
         super.setType(NotificationType.MATCH_VERIFICATION);
