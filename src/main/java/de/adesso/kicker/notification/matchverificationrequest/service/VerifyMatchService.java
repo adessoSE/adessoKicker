@@ -56,8 +56,7 @@ public class VerifyMatchService {
         for (User receiver : receivers) {
             MatchVerificationRequest request = new MatchVerificationRequest(sender, receiver, match);
             saveRequest(request);
-            MatchVerificationSentEvent matchVerificationSentEvent = new MatchVerificationSentEvent(this, request);
-            applicationEventPublisher.publishEvent(matchVerificationSentEvent);
+            sendMatchVerificationRequestEvent(request);
         }
     }
 
@@ -76,6 +75,11 @@ public class VerifyMatchService {
             }
         }
         return usersToInform;
+    }
+
+    private void sendMatchVerificationRequestEvent(MatchVerificationRequest matchVerificationRequest){
+        MatchVerificationSentEvent matchVerificationSentEvent = new MatchVerificationSentEvent(this, matchVerificationRequest);
+        applicationEventPublisher.publishEvent(matchVerificationSentEvent);
     }
 
     private void sendMatchVerifiedEvent(Match match) {
