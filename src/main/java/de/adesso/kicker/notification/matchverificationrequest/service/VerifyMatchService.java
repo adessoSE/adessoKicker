@@ -75,6 +75,10 @@ public class VerifyMatchService {
         return usersToInform;
     }
 
+    public MatchVerificationRequest getRequestByMatchAndReceiver(Match match, User receiver){
+        return matchVerificationRequestRepository.getByMatchAndReceiver(match, receiver);
+    }
+
     private void sendMatchVerifiedEvent(Match match) {
         MatchVerifiedEvent matchVerifiedEvent = new MatchVerifiedEvent(this, match);
         applicationEventPublisher.publishEvent(matchVerifiedEvent);
