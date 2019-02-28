@@ -106,33 +106,6 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("Should return a user with given email")
-    void whenUserWithEmailExistsReturnUser() {
-        // given
-        var user = createUser();
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
-
-        // when
-        User actualUser = userService.getUserByEmail(user.getEmail());
-
-        // then
-        assertEquals(user, actualUser);
-    }
-
-    @Test
-    @DisplayName("If user with given email doesn't exist throw UserNotFoundException")
-    void whenUserWithEmailNotFoundThrowUserNotFoundException() {
-        // given
-        when(userRepository.findByEmail(anyString())).thenReturn(Optional.empty());
-
-        // when
-        Executable when = () -> userService.getUserByEmail("non-existent-email");
-
-        // then
-        assertThrows(UserNotFoundException.class, when);
-    }
-
-    @Test
     @DisplayName("If there's an entry for the logged in user return them")
     void whenLoggedInUserExistsReturnUser() {
         // given
