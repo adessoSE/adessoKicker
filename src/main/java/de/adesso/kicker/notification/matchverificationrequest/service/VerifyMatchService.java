@@ -77,8 +77,9 @@ public class VerifyMatchService {
         return usersToInform;
     }
 
-    private void sendMatchVerificationRequestEvent(MatchVerificationRequest matchVerificationRequest){
-        MatchVerificationSentEvent matchVerificationSentEvent = new MatchVerificationSentEvent(this, matchVerificationRequest);
+    private void sendMatchVerificationRequestEvent(MatchVerificationRequest matchVerificationRequest) {
+        MatchVerificationSentEvent matchVerificationSentEvent = new MatchVerificationSentEvent(this,
+                matchVerificationRequest);
         applicationEventPublisher.publishEvent(matchVerificationSentEvent);
     }
 

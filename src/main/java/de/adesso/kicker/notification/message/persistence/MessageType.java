@@ -6,7 +6,7 @@ public enum MessageType {
 
     private String messageContent;
 
-    private MessageType(String messageContent) {
+    MessageType(String messageContent) {
         this.messageContent = messageContent;
     }
 

@@ -7,10 +7,12 @@ public class MatchVerificationSentEvent extends ApplicationEvent {
 
     private MatchVerificationRequest matchVerificationRequest;
 
-    public MatchVerificationSentEvent(Object source, MatchVerificationRequest matchVerificationRequest){
+    public MatchVerificationSentEvent(Object source, MatchVerificationRequest matchVerificationRequest) {
         super(source);
         this.matchVerificationRequest = matchVerificationRequest;
     }
 
-    public MatchVerificationRequest getMatchVerificationRequest() { return matchVerificationRequest;}
+    public MatchVerificationRequest getMatchVerificationRequest() {
+        return matchVerificationRequest;
+    }
 }
