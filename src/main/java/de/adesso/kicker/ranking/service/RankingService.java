@@ -38,6 +38,10 @@ public class RankingService {
         changeRating(losers, Outcome.LOST.getScore(), expectedLoserScore);
     }
 
+    public int getPositionOfPlayer(Ranking ranking) {
+        return rankingRepository.countAllByRatingAfter(ranking.getRating()) + 1;
+    }
+
     private void changeRating(List<User> players, int actualScore, double expectedScore) {
         for (var player : players) {
             var rating = player.getRanking().getRating();

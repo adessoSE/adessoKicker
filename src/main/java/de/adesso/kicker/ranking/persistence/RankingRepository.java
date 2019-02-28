@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RankingRepository extends CrudRepository<Ranking, String> {
+    int countAllByRatingAfter(int rating);
 }
