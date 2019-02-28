@@ -4,14 +4,12 @@ function toggleEnvelope(){
 
 $(document).ready(function() {
     // Visualizes the selected radio button
-    $("#radio-winner-team input:radio").click(function() {
-        if($(this).attr('id') === 'radio1'){
-            $('#radio2-icon').removeClass('trophy-selected');
-            $('#radio1-icon').addClass('trophy-selected');
-        }
-        else if($(this).attr('id') === 'radio2'){
-            $('#radio1-icon').removeClass('trophy-selected');
-            $('#radio2-icon').addClass('trophy-selected');
-        }
+    $("#form-check-1").click(function() {
+        $('#radio2-icon').removeClass('trophy-selected');
+        $('#radio1-icon').addClass('trophy-selected');
+    });
+    $("#form-check-2").click(function() {
+        $('#radio1-icon').removeClass('trophy-selected');
+        $('#radio2-icon').addClass('trophy-selected');
     });
 });
