@@ -39,15 +39,19 @@ public class User {
         this.ranking = ranking;
     }
 
-    public int getWinratio() {
+    public int getWinRatio() {
         if (getPlayedMatches() == 0 || losses == 0) {
             return 100;
         }
-        return Math.round(100 - (100 / getPlayedMatches() * losses));
+        return Math.round(100 - (100f / getPlayedMatches() * losses));
     }
 
     public Long getPlayedMatches() {
         return wins + losses;
+    }
+
+    public String getFullName() {
+        return String.format("%s %s", firstName, lastName);
     }
 
     public void increaseWins() {
