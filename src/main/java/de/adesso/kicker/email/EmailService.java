@@ -1,22 +1,24 @@
 package de.adesso.kicker.email;
 
 import de.adesso.kicker.configurations.EmailConfig;
-import de.adesso.kicker.events.match.MatchCreatedEvent;
+import de.adesso.kicker.events.match.MatchVerificationSentEvent;
+import de.adesso.kicker.match.persistence.Match;
+import de.adesso.kicker.user.persistence.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
-import java.text.MessageFormat;
-import java.util.Properties;
+import java.util.Objects;
 
 @Service
 public class EmailService {
 
     private EmailConfig emailConfig;
 
-    private static Properties properties = new Properties();
+    private final String ACCEPT_URL = "https://localhost/accept/";
+    private final String DECLINE_URL = "https://localhost/decline/";
 
     private static SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 
@@ -26,42 +28,51 @@ public class EmailService {
     }
 
     @EventListener
-    public void sendRequest(MatchCreatedEvent matchCreatedEvent) {
-        JavaMailSenderImpl mailSender = emailConfig.initializeMailServer();
-        simpleMailMessage.setFrom(matchCreatedEvent.getMatch().getTeamAPlayer1().getEmail());
-        simpleMailMessage.setTo(matchCreatedEvent.getMatch().getTeamBPlayer1().getEmail());
-        simpleMailMessage.setSubject(setSubject(matchCreatedEvent));
-        simpleMailMessage.setText(requestText(matchCreatedEvent));
+    public void sendVerification(MatchVerificationSentEvent matchVerificationSentEvent) {
+        Match match = matchVerificationSentEvent.getMatchVerificationRequest().getMatch();
+
+        JavaMailSenderImpl mailSender = emailConfig.setMailServerConfig();
+
+        simpleMailMessage.setFrom(match.getTeamAPlayer1().getEmail());
+        simpleMailMessage.setTo(matchVerificationSentEvent.getMatchVerificationRequest().getReceiver().getEmail());
+        simpleMailMessage.setSubject(setSubject(match));
+        simpleMailMessage.setText(verificationText(matchVerificationSentEvent));
         mailSender.send(simpleMailMessage);
     }
 
-    @EventListener
-    public void sendVerification(MatchCreatedEvent matchCreatedEvent) {
-        JavaMailSenderImpl mailSender = emailConfig.initializeMailServer();
-        simpleMailMessage.setFrom(matchCreatedEvent.getMatch().getTeamAPlayer1().getEmail());
-        simpleMailMessage.setTo(matchCreatedEvent.getMatch().getTeamBPlayer1().getEmail());
-        //simpleMailMessage.setSubject(subject(matchCreatedEvent));
-        //simpleMailMessage.setText(verificationText(matchCreatedEvent));
-        simpleMailMessage.setSubject("hallo");
-        simpleMailMessage.setText("hallo");
-        mailSender.send(simpleMailMessage);
+    private String setSubject(Match match) {
+        return String.format("Verify Match: %s played on %s", match.getMatchId(), match.getDate().toString());
     }
 
+    private String verificationText(MatchVerificationSentEvent matchVerificationSentEvent) {
+        String acceptUrl = ACCEPT_URL + matchVerificationSentEvent.getMatchVerificationRequest().getNotificationId();
+        String declineUrl = DECLINE_URL + matchVerificationSentEvent.getMatchVerificationRequest().getNotificationId();
 
-    public String setSubject(MatchCreatedEvent matchCreatedEvent) {
-        return String.format("Match: %s from %s", matchCreatedEvent.getMatch().getMatchId(), matchCreatedEvent.getMatch().getDate().toString());
+        Match match = matchVerificationSentEvent.getMatchVerificationRequest().getMatch();
+
+        String playerA1 = match.getTeamAPlayer1().getFullName();
+
+        User userA2 = match.getTeamAPlayer2();
+
+        String winnerText = getWinner(match);
+
+        if (checkPlayerExist(userA2)) {
+            String playerA2 = match.getTeamAPlayer2().getFullName();
+            return String.format(
+                    "Your recently played Match against %s and %s needs to be verified. Did %s win?\nClick here to verify -> %s to \nClick here decline -> %s",
+                    playerA1, playerA2, winnerText, acceptUrl, declineUrl);
+        } else {
+            return String.format(
+                    "Your recently played Match against %s needs to be verified. Did %s win?\nClick here to verify -> %s to \nClick here decline -> %s",
+                    playerA1, winnerText, acceptUrl, declineUrl);
+        }
     }
 
-    public String requestText(MatchCreatedEvent matchCreatedEvent) {
-        return String.format("You've sent %s a verification request.", matchCreatedEvent.getMatch().getTeamBPlayer1().getFirstName()+" "+matchCreatedEvent.getMatch().getTeamBPlayer1().getLastName())
+    private boolean checkPlayerExist(User user) {
+        return !Objects.isNull(user);
     }
 
-    public String verificationText(MatchCreatedEvent matchCreatedEvent) {
-        return String.format(properties.getProperty("emailService.sendVerification.text"),
-                matchCreatedEvent.getMatch().getTeamAPlayer1(),
-                "localhost/notifications/accept/1",
-                "localhost/notifications/decline/1");
-
+    private String getWinner(Match match) {
+        return String.format("%s won and %s lost", match.getWinners(), match.getLosers());
     }
-
 }

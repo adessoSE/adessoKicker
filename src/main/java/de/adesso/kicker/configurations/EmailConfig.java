@@ -1,10 +1,6 @@
 package de.adesso.kicker.configurations;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +19,9 @@ public class EmailConfig {
     @Value("${spring.mail.password}")
     private String password;
 
+    @Value("${spring.mail.serveremail}")
+    private String email;
+
     public String getHost() {
         return host;
     }
@@ -39,7 +38,7 @@ public class EmailConfig {
         return password;
     }
 
-    public JavaMailSenderImpl initializeMailServer() {
+    public JavaMailSenderImpl setMailServerConfig() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(host);
         mailSender.setPort(port);
