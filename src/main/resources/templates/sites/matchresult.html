@@ -31,7 +31,7 @@
 </head>
 <body>
 <header th:replace="~{fragments/header.html :: header}"></header>
-<form>
+<form action="#" th:action="@{/matches/add}" th:object="${match}" method="post">
   <div class="container">
     <!-- Who played? -->
     <div class="headline">
