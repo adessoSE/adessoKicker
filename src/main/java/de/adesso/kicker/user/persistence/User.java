@@ -40,13 +40,15 @@ public class User {
     }
 
     public int getWinratio() {
-        if(getPlayedMatches() == 0 || losses == 0) {
+        if (getPlayedMatches() == 0 || losses == 0) {
             return 100;
         }
         return Math.round(100 - (100 / getPlayedMatches() * losses));
     }
 
-    public Long getPlayedMatches() { return wins + losses; }
+    public Long getPlayedMatches() {
+        return wins + losses;
+    }
 
     public void increaseWins() {
         this.wins += 1;
