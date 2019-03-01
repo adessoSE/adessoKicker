@@ -21,6 +21,7 @@ import javax.validation.Valid;
 public class MatchController {
 
     private final MatchService matchService;
+
     private final UserService userService;
 
     @Autowired
@@ -67,7 +68,8 @@ public class MatchController {
     private ModelAndView addMatchView(ModelAndView modelAndView) {
         modelAndView.addObject("match", new Match());
         modelAndView.addObject("users", userService.getAllUsers());
-        modelAndView.setViewName("match/add.html");
+        modelAndView.addObject("currentUser", userService.getLoggedInUser());
+        modelAndView.setViewName("sites/matchresult.html");
         return modelAndView;
     }
 }

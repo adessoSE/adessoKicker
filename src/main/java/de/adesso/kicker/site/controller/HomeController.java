@@ -38,11 +38,4 @@ public class HomeController {
         modelAndView.setViewName("sites/ranking.html");
         return modelAndView;
     }
-
-    @GetMapping("/matchresult")
-    public ModelAndView matchresult() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("sites/matchresult.html");
-        return modelAndView;
-    }
 }

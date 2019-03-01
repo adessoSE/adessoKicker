@@ -39,7 +39,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item header-link">
                     <i class="fa fa-calendar-check hvr-icon"></i>
-                    <a class="nav-link hvr-underline-from-left" th:href="@{/matchresult}" th:text="#{'sites.matchRequest'}"></a>
+                    <a class="nav-link hvr-underline-from-left" th:href="@{/matches/add}" th:text="#{'sites.matchRequest'}"></a>
                 </li>
                 <li class="nav-item header-link">
                     <i class="fa fa-trophy hvr-icon"></i>
@@ -70,12 +70,12 @@
         <div class="dropdown ml-auto" id="profile-dropdown">
             <button type="button" class="btn dropdown-toggle header-dropdown-bt hvr-fade" data-toggle="dropdown">
                 <!-- User Name -->
-                Jan Schneider
+                <span th:text="${#authentication.getName()}"></span>
             </button>
             <div class="shadow dropdown-menu-anim-in dropdown-menu dropdown-menu-right" id="profile-dropdown-menu">
                 <div class="dropdown-item">
                     <i class="fa fa-calendar-check hvr-icon"></i>
-                    <a class="move-2px-right adesso-blue-text" th:href="@{/matchresult}" th:text="#{'sites.matchRequest'}"></a>
+                    <a class="move-2px-right adesso-blue-text" th:href="@{/matches/add}" th:text="#{'sites.matchRequest'}"></a>
                 </div>
                 <div class="dropdown-item">
                     <i class="fa fa-trophy hvr-icon move-1px-left"></i>

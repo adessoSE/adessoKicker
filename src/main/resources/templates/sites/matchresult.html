@@ -41,7 +41,7 @@
     <div class="row">
       <div class="col-sm-4">
         <p class="team-description" th:text="#{'matchResult.team1'}"></p>
-        <div><input class="team-textbox" type="text" th:placeholder="#{'matchResult.player1'}"/></div>
+        <div><input class="team-textbox" type="text" th:value="${currentUser.getFullName()}" disabled/></div>
         <div><input class="team-textbox team-margin-top" type="text" th:placeholder="#{'matchResult.player2'}"/></div>
       </div>
       <div class="col-sm-4">
