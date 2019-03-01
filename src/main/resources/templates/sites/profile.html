@@ -41,7 +41,7 @@
     </div>
     <input class="form-control" type="text" th:placeholder="#{'searchbar'}">
   </div>
-  <h2>Jan Schneider</h2>
+  <h2 th:text="${user.getFullName()}"></h2>
 </div>
 <!-- User Statistics -->
 <div class="container" id="user-statistics-container">
@@ -49,32 +49,32 @@
     <div class="card col-sm-2">
       <p class="card-header" th:text="#{'statistics.rank'}"></p>
       <i class="card-body fas fa-chart-line"></i>
-      <p class="card-footer">100</p>
+      <p class="card-footer" th:text="${rankingPosition}"></p>
     </div>
     <div class="card col-sm-2">
       <p class="card-header" th:text="#{'statistics.points'}"></p>
       <i class="card-body fas fa-trophy"></i>
-      <p class="card-footer">100</p>
+      <p class="card-footer" th:text="${user.ranking.rating}"></p>
     </div>
     <div class="card col-sm-2">
       <p class="card-header" th:text="#{'statistics.games'}"></p>
       <i class="card-body fas fa-futbol"></i>
-      <p class="card-footer">100</p>
+      <p class="card-footer" th:text="${user.getPlayedMatches()}"></p>
     </div>
     <div class="card col-sm-2">
       <p class="card-header" th:text="#{'statistics.victories'}"></p>
       <i class="card-body fas fa-check"></i>
-      <p class="card-footer">100</p>
+      <p class="card-footer" th:text="${user.wins}"></p>
     </div>
     <div class="card col-sm-2">
       <p class="card-header" th:text="#{'statistics.defeats'}"></p>
       <i class="card-body fas fa-times"></i>
-      <p class="card-footer">100</p>
+      <p class="card-footer" th:text="${user.losses}"></p>
     </div>
     <div class="card col-sm-2">
       <p class="card-header" th:text="#{'statistics.victoryrate'}"></p>
       <i class="card-body fas fa-balance-scale"></i>
-      <p class="card-footer">100</p>
+      <p class="card-footer" th:text="${user.getWinRatio() + '%'}"></p>
     </div>
   </div>
 </div>

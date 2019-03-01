@@ -1,5 +1,6 @@
 package de.adesso.kicker.user.controller;
 
+import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,15 +15,21 @@ public class UserController {
 
     private final UserService userService;
 
+    private final RankingService rankingService;
+
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RankingService rankingService) {
         this.userService = userService;
+        this.rankingService = rankingService;
     }
 
     @GetMapping("/u/{id}")
     public ModelAndView getUserProfile(@PathVariable String id) {
         var modelAndView = new ModelAndView();
-        modelAndView.addObject("user", userService.getUserById(id));
+        var user = userService.getUserById(id);
+        var rankingPosition = rankingService.getPositionOfPlayer(user.getRanking());
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("rankingPosition", rankingPosition);
         modelAndView.setViewName("sites/profile.html");
         return modelAndView;
     }
@@ -30,7 +37,10 @@ public class UserController {
     @GetMapping("/you")
     public ModelAndView getOwnProfile() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", userService.getLoggedInUser());
+        var user = userService.getLoggedInUser();
+        var rankingPosition = rankingService.getPositionOfPlayer(user.getRanking());
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("rankingPosition", rankingPosition);
         modelAndView.setViewName("sites/profile.html");
         return modelAndView;
     }

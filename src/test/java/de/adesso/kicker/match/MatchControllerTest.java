@@ -44,16 +44,19 @@ class MatchControllerTest {
     @WithMockUser
     void getAddMatch() throws Exception {
         // given
+        var user = UserDummy.defaultUser();
         var userList = createUserList();
         when(userService.getAllUsers()).thenReturn(userList);
+        when(userService.getLoggedInUser()).thenReturn(user);
 
         // when
         var result = this.mockMvc.perform(get("/matches/add"));
 
         // then
         result.andExpect(status().isOk())
-                .andExpect(view().name("match/add.html"))
+                .andExpect(view().name("sites/matchresult.html"))
                 .andExpect(model().attribute("match", new Match()))
+                .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
     }
 
@@ -62,8 +65,10 @@ class MatchControllerTest {
     @WithMockUser
     void whenMatchWithOutDateThenReturnNoDate() throws Exception {
         // given
+        var user = UserDummy.defaultUser();
         var userList = createUserList();
         when(userService.getAllUsers()).thenReturn(userList);
+        when(userService.getLoggedInUser()).thenReturn(user);
 
         // when
         var result = this.mockMvc.perform(post("/matches/add").param("teamAPlayer1", "user")
@@ -79,8 +84,10 @@ class MatchControllerTest {
     @WithMockUser
     void whenMatchWithNoWinnerThenReturnNoWinner() throws Exception {
         // given
+        var user = UserDummy.defaultUser();
         var userList = createUserList();
         when(userService.getAllUsers()).thenReturn(userList);
+        when(userService.getLoggedInUser()).thenReturn(user);
 
         // when
         var result = mockMvc.perform(post("/matches/add").param("date", LocalDate.now().toString())
@@ -95,8 +102,10 @@ class MatchControllerTest {
     @WithMockUser
     void whenMatchWithNoPlayersThenReturnNullPlayers() throws Exception {
         // given
+        var user = UserDummy.defaultUser();
         var userList = createUserList();
         when(userService.getAllUsers()).thenReturn(userList);
+        when(userService.getLoggedInUser()).thenReturn(user);
 
         // when
         var result = mockMvc
