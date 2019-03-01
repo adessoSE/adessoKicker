@@ -39,6 +39,8 @@ public class User {
         this.ranking = ranking;
     }
 
+    public Long getPlayedMatches() { return wins + losses; }
+
     public void increaseWins() {
         this.wins += 1;
     }
