@@ -10,6 +10,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 @Service
@@ -17,8 +18,8 @@ public class EmailService {
 
     private EmailConfig emailConfig;
 
-    private final String ACCEPT_URL = "https://localhost/accept/";
-    private final String DECLINE_URL = "https://localhost/decline/";
+    private final String ACCEPT_URL = "http://localhost/notifications/accept/";
+    private final String DECLINE_URL = "http://localhost/notifications/decline/";
 
     private static SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 
@@ -59,11 +60,11 @@ public class EmailService {
         if (checkPlayerExist(userA2)) {
             String playerA2 = match.getTeamAPlayer2().getFullName();
             return String.format(
-                    "Your recently played Match against %s and %s needs to be verified. Did %s win?\nClick here to verify -> %s to \nClick here decline -> %s",
+                    "Your recently played Match against %s and %s needs to be verified.\n%s\nVerify -> %s\nDecline -> %s",
                     playerA1, playerA2, winnerText, acceptUrl, declineUrl);
         } else {
             return String.format(
-                    "Your recently played Match against %s needs to be verified. Did %s win?\nClick here to verify -> %s to \nClick here decline -> %s",
+                    "Your recently played Match against %s needs to be verified.\n%s\nVerify -> %s\nDecline -> %s",
                     playerA1, winnerText, acceptUrl, declineUrl);
         }
     }
@@ -73,6 +74,14 @@ public class EmailService {
     }
 
     private String getWinner(Match match) {
-        return String.format("%s won and %s lost", match.getWinners(), match.getLosers());
+        ArrayList<String> winners = new ArrayList<>();
+        for (User winner : match.getWinners()) {
+            winners.add(winner.getFullName());
+        }
+        ArrayList<String> losers = new ArrayList<>();
+        for (User loser : match.getLosers()) {
+            losers.add(loser.getFullName());
+        }
+        return String.format("Winners: %s\tLosers:%s", winners, losers);
     }
 }
