@@ -39,13 +39,6 @@ public class HomeController {
         return modelAndView;
     }
 
-    @GetMapping("/profile")
-    public ModelAndView profile() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("sites/profile.html");
-        return modelAndView;
-    }
-
     @GetMapping("/matchresult")
     public ModelAndView matchresult() {
         ModelAndView modelAndView = new ModelAndView();
