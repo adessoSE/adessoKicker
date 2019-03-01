@@ -1,11 +1,20 @@
 @import "_colorscheme.less";
 
+#background{
+  border: 1px solid @colorscheme[warm-grey-midtone];
+  margin-top: 50px;
+  padding-bottom: 20px;
+  animation: container-fly-in 0.75s cubic-bezier(.17,.84,.44,1);
+}
+
 .headline{
-  font-size: 50px;
+  font-size: 40px;
   margin-bottom: 20px;
   margin-top: 20px;
   i{color: @colorscheme[adesso-blue];}
-  .fa-futbol{animation: icon-rotate 5s infinite linear;}
+  .fa-info-circle{
+    font-size: 20px;
+  }
 }
 
 .team-description{
@@ -14,18 +23,18 @@
   color: @colorscheme[warm-grey-dark];
 }
 .team-textbox{
-  width: 100%;
+  width: 60%;
   font-size: 23px;
 }
 .team-margin-top{margin-top: 15px;}
 
 .form-check{
-  // Hide radio buttons
-  .form-check-input{display: none;}
+  .form-check-input{
+    margin-top: 22px;
+  }
   .form-check-label{
     font-size: 35px;
     color: @colorscheme[warm-grey-dark];
-    margin-left: -20px;
   }
   i{
     font-size: 40px;
@@ -43,7 +52,7 @@
   }
 }
 // Plays the the icon animation as we hover over the form-check of a radio button
-.form-check:hover > i:not(.trophy-selected){animation: icon-display-from-above ease-out 0.2s forwards;}
+.form-check:hover > i:not(.trophy-selected){/*animation: icon-display-from-above ease-out 0.2s forwards;*/}
 
 .annotation{margin-top: 30px;}
 .creatematch-btn{
@@ -55,6 +64,12 @@
   color: @colorscheme[adesso-blue];
   font-size: 25px;
   margin-left: 5px;
+}
+
+@keyframes container-fly-in {
+  0%{transform: translateY(200px); opacity: 0}
+  50%{transform: translateY(0); opacity: 25%}
+  100%{transform: translateY(0); opacity: 1}
 }
 
 @keyframes icon-move-right-vanish{

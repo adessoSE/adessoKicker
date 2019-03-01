@@ -31,27 +31,24 @@
 </head>
 <body>
 <header th:replace="~{fragments/header.html :: header}"></header>
+
 <form action="#" th:action="@{/matches/add}" th:object="${match}" method="post">
-  <div class="container">
+  <div class="container shadow" id="background">
     <!-- Who played? -->
     <div class="headline">
       <span th:text="#{'matchResult.whoPlayed'}"></span>
-      <i class="fas fa-futbol" aria-hidden="true"></i>
+      <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="auto right" th:title="#{'matchResult.annotation'}"></i>
     </div>
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <p class="team-description" th:text="#{'matchResult.team1'}"></p>
         <div><input class="team-textbox" type="text" th:value="${currentUser.getFullName()}" disabled/></div>
         <div><input class="team-textbox team-margin-top" type="text" th:placeholder="#{'matchResult.player2'}"/></div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <p class="team-description" th:text="#{'matchResult.team2'}"></p>
         <div><input class="team-textbox" type="text" th:placeholder="#{'matchResult.player1'}"/></div>
         <div><input class="team-textbox team-margin-top" type="text" th:placeholder="#{'matchResult.player2'}"/></div>
-      </div>
-      <!-- Annotation -->
-      <div class="col-sm-4">
-          <p class="annotation" th:text="#{'matchResult.annotation'}"></p>
       </div>
     </div>
     <div class="headline">
@@ -59,21 +56,20 @@
       <span class="headline" th:text="#{'matchResult.whoWon'}"></span>
     </div>
     <div class="row" id="radio-winner-team">
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <div class="form-check" id="form-check-1">
           <input class="form-check-input" type="radio" name="winnerteam" id="radio1" checked>
           <label class="form-check-label" for="radio1" th:text="#{'matchResult.team1'}"></label>
-          <i class="fas fa-trophy" id="radio1-icon" aria-hidden="true"></i>
+          <i class="fas fa-trophy trophy-selected" id="radio1-icon" aria-hidden="true"></i>
         </div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <div class="form-check" id="form-check-2">
           <input class="form-check-input" type="radio" name="winnerteam" id="radio2">
           <label class="form-check-label" for="radio2" th:text="#{'matchResult.team2'}"></label>
           <i class="fas fa-trophy" id="radio2-icon" aria-hidden="true"></i>
         </div>
       </div>
-      <div class="col-sm-4"></div>
     </div>
     <!-- When did you play? -->
     <div class="headline">
@@ -90,5 +86,7 @@
 </form>
 <!-- Set date of datepicker to today's date -->
 <script>document.getElementById("datepicker").valueAsDate = new Date();</script>
+<!-- Tooltip -->
+<script>$(document).ready(function(){$('[data-toggle="tooltip"]').tooltip();});</script>
 </body>
 </html>
