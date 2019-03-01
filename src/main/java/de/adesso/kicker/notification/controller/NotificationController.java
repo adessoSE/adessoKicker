@@ -1,9 +1,9 @@
 package de.adesso.kicker.notification.controller;
 
-import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.notification.persistence.Notification;
+import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.user.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,18 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/notifications")
 public class NotificationController {
 
-    private NotificationService notificationService;
+    private final NotificationService notificationService;
 
-    private UserService userService;
-
-    @Autowired
-    public NotificationController(NotificationService notificationService, UserService userService) {
-        this.notificationService = notificationService;
-        this.userService = userService;
-    }
+    private final UserService userService;
 
     @GetMapping("/get")
     public List<Notification> getNotifications() {

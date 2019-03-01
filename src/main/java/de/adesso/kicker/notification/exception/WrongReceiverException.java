@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.BAD_REQUEST)
 public class WrongReceiverException extends RuntimeException {
-
     public WrongReceiverException() {
         super("Logged in user does not match notification receiver");
     }

@@ -1,12 +1,12 @@
 package de.adesso.kicker.match.controller;
 
-import de.adesso.kicker.match.service.MatchService;
 import de.adesso.kicker.match.exception.FutureDateException;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.match.persistence.Match;
+import de.adesso.kicker.match.service.MatchService;
 import de.adesso.kicker.user.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,18 +17,13 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/matches")
 public class MatchController {
 
     private final MatchService matchService;
 
     private final UserService userService;
-
-    @Autowired
-    public MatchController(MatchService matchService, UserService userService) {
-        this.matchService = matchService;
-        this.userService = userService;
-    }
 
     @GetMapping("/add")
     public ModelAndView getAddMatch() {

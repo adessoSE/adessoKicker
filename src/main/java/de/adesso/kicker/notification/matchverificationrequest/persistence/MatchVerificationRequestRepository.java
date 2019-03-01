@@ -8,7 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MatchVerificationRequestRepository extends CrudRepository<MatchVerificationRequest, Long> {
-
     List<MatchVerificationRequest> getAllByMatch(Match match);
-
 }

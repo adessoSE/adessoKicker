@@ -1,19 +1,19 @@
 package de.adesso.kicker.notification;
 
-import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
-import de.adesso.kicker.notification.matchverificationrequest.MatchVerificationRequestDummy;
-import de.adesso.kicker.notification.matchverificationrequest.service.VerifyMatchService;
-import de.adesso.kicker.notification.message.persistence.Message;
-import de.adesso.kicker.notification.message.MessageDummy;
-import de.adesso.kicker.notification.message.persistence.MessageType;
-import de.adesso.kicker.notification.message.service.SendMessageService;
 import de.adesso.kicker.notification.exception.NotificationNotExistingException;
 import de.adesso.kicker.notification.exception.WrongReceiverException;
+import de.adesso.kicker.notification.matchverificationrequest.MatchVerificationRequestDummy;
+import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
+import de.adesso.kicker.notification.matchverificationrequest.service.VerifyMatchService;
+import de.adesso.kicker.notification.message.MessageDummy;
+import de.adesso.kicker.notification.message.persistence.Message;
+import de.adesso.kicker.notification.message.persistence.MessageType;
+import de.adesso.kicker.notification.message.service.SendMessageService;
 import de.adesso.kicker.notification.persistence.Notification;
 import de.adesso.kicker.notification.persistence.NotificationRepository;
 import de.adesso.kicker.notification.service.NotificationService;
-import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.UserDummy;
+import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +29,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;

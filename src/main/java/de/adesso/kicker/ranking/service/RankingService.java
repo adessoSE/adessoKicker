@@ -1,15 +1,17 @@
 package de.adesso.kicker.ranking.service;
 
 import de.adesso.kicker.match.persistence.Match;
-import de.adesso.kicker.ranking.persistence.*;
+import de.adesso.kicker.ranking.persistence.Ranking;
+import de.adesso.kicker.ranking.persistence.RankingRepository;
 import de.adesso.kicker.user.persistence.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RankingService {
 
     private final RankingRepository rankingRepository;
@@ -17,11 +19,6 @@ public class RankingService {
     private static final int MAGNITUDE = 10;
 
     private static final int RATING_DIFFERENCE_MAGNITUDE = 400;
-
-    @Autowired
-    public RankingService(RankingRepository rankingRepository) {
-        this.rankingRepository = rankingRepository;
-    }
 
     public void updateRatings(Match match) {
         var winners = match.getWinners();

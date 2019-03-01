@@ -2,7 +2,7 @@ package de.adesso.kicker.user.controller;
 
 import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,18 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
 
     private final RankingService rankingService;
-
-    @Autowired
-    public UserController(UserService userService, RankingService rankingService) {
-        this.userService = userService;
-        this.rankingService = rankingService;
-    }
 
     @GetMapping("/u/{id}")
     public ModelAndView getUserProfile(@PathVariable String id) {
