@@ -1,6 +1,6 @@
 package de.adesso.kicker.ranking;
 
-import de.adesso.kicker.events.MatchVerifiedEventDummy;
+import de.adesso.kicker.match.MatchDummy;
 import de.adesso.kicker.ranking.persistence.Ranking;
 import de.adesso.kicker.ranking.persistence.RankingRepository;
 import de.adesso.kicker.ranking.service.RankingService;
@@ -35,11 +35,10 @@ class RankingServiceTest {
     @DisplayName("When players with a rating of 1500 play their rating should change by 16")
     void ratingsShouldChangeBy16() {
         // given
-        var matchVerifiedEvent = MatchVerifiedEventDummy.matchVerifiedEventLowRanking();
-        var match = matchVerifiedEvent.getMatch();
+        var match = MatchDummy.matchWithLowRating();
 
         // when
-        rankingService.updateRatings(matchVerifiedEvent);
+        rankingService.updateRatings(match);
 
         // then
         assertRating(match.getWinners(), 1516);
@@ -50,11 +49,10 @@ class RankingServiceTest {
     @DisplayName("When players with a rating of 2100 play their rating should change by 12")
     void ratingsShouldChangeBy12() {
         // given
-        var matchVerifiedEvent = MatchVerifiedEventDummy.matchVerifiedEventHighRanking();
-        var match = matchVerifiedEvent.getMatch();
+        var match = MatchDummy.matchWithHighRating();
 
         // when
-        rankingService.updateRatings(matchVerifiedEvent);
+        rankingService.updateRatings(match);
 
         // then
         assertRating(match.getWinners(), 2112);
@@ -65,11 +63,10 @@ class RankingServiceTest {
     @DisplayName("When players with a rating of 2400 play their rating should change by 8")
     void ratingsShouldChangeBy8() {
         // given
-        var matchVerifiedEvent = MatchVerifiedEventDummy.matchVerifiedEventVeryHighRanking();
-        var match = matchVerifiedEvent.getMatch();
+        var match = MatchDummy.matchWithVeryHighRating();
 
         // when
-        rankingService.updateRatings(matchVerifiedEvent);
+        rankingService.updateRatings(match);
 
         // then
         assertRating(match.getWinners(), 2408);
@@ -80,28 +77,15 @@ class RankingServiceTest {
     @DisplayName("When to players in different rating ranges play each players respective k Factor")
     void shouldUseEachPlayersKFactor() {
         // given
-        var matchVerifiedEvent = MatchVerifiedEventDummy.matchVerifiedEventPlayersDifferentRankingRanges();
-        var match = matchVerifiedEvent.getMatch();
+        var match = MatchDummy.matchWithPlayersInDifferentRatingRanges();
         when(rankingRepository.save(any(Ranking.class))).thenReturn(new Ranking());
 
         // when
-        rankingService.updateRatings(matchVerifiedEvent);
+        rankingService.updateRatings(match);
 
         // then
         assertRating(match.getWinners(), 2402);
         assertRating(match.getLosers(), 2096);
-    }
-
-    @Test
-    void verifyAllRatingsAreUpdated() {
-        // given
-        var matchVerifiedEvent = MatchVerifiedEventDummy.matchVerifiedEvent();
-
-        // when
-        rankingService.updateRatings(matchVerifiedEvent);
-
-        // then
-        verify(rankingRepository, times(2)).saveAll(any(List.class));
     }
 
     private static void assertRating(List<User> players, int expected) {

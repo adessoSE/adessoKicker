@@ -12,9 +12,9 @@ public abstract class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long notificationId;
 
-    @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
+    @OneToOne
     private User sender;
-    @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
+    @OneToOne
     private User receiver;
 
     private LocalDate sendDate;

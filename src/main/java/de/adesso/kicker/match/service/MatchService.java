@@ -8,6 +8,7 @@ import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.match.persistence.MatchRepository;
+import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,16 @@ public class MatchService {
 
     private final UserService userService;
 
+    private final RankingService rankingService;
+
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
-    public MatchService(MatchRepository matchRepository, UserService userService,
+    public MatchService(MatchRepository matchRepository, UserService userService, RankingService rankingService,
             ApplicationEventPublisher applicationEventPublisher) {
         this.matchRepository = matchRepository;
         this.userService = userService;
+        this.rankingService = rankingService;
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
@@ -77,6 +81,7 @@ public class MatchService {
         for (User loser : match.getLosers()) {
             loser.increaseLosses();
         }
+        rankingService.updateRatings(match);
     }
 
     private void checkSamePlayer(Match match) {

@@ -9,6 +9,7 @@ import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.match.persistence.MatchRepository;
 import de.adesso.kicker.match.service.MatchService;
+import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +35,9 @@ class MatchServiceTest {
 
     @Mock
     private UserService userService;
+
+    @Mock
+    private RankingService rankingService;
 
     @Mock
     private ApplicationEventPublisher applicationEventPublisher;
@@ -107,6 +111,7 @@ class MatchServiceTest {
         // then
         assertTrue(match.isVerified());
         verify(matchRepository, times(1)).save(match);
+        verify(rankingService, times(1)).updateRatings(match);
     }
 
     @ParameterizedTest
