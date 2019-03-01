@@ -112,13 +112,11 @@ class UserServiceTest {
         var expected = createUser();
         var authentication = mock(Authentication.class);
         var securityContext = mock(SecurityContext.class);
-        var principal = mock(KeycloakPrincipal.class);
         SecurityContextHolder.setContext(securityContext);
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
-        when(authentication.getPrincipal()).thenReturn(principal);
-        when(principal.getName()).thenReturn(expected.getUserId());
-        when(userRepository.findById(anyString())).thenReturn(Optional.of(expected));
+        when(authentication.getName()).thenReturn(expected.getUserId());
+        when(userRepository.findById(expected.getUserId())).thenReturn(Optional.of(expected));
 
         // when
         var actual = userService.getLoggedInUser();
