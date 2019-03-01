@@ -71,10 +71,10 @@ public class MatchService {
     }
 
     private void updateStatistics(Match match) {
-        for (User winner: match.getWinners()){
+        for (User winner : match.getWinners()) {
             winner.increaseWins();
         }
-        for(User loser: match.getLosers()){
+        for (User loser : match.getLosers()) {
             loser.increaseLosses();
         }
     }
