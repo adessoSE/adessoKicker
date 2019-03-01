@@ -8,6 +8,7 @@ import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.match.persistence.MatchRepository;
+import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -51,6 +52,7 @@ public class MatchService {
     public void verifyMatch(MatchVerifiedEvent matchVerifiedEvent) {
         Match match = matchVerifiedEvent.getMatch();
         match.setVerified(true);
+        updateStatistics(match);
         saveMatch(match);
     }
 
@@ -66,6 +68,15 @@ public class MatchService {
 
     private void saveMatch(Match match) {
         matchRepository.save(match);
+    }
+
+    private void updateStatistics(Match match) {
+        for (User winner: match.getWinners()){
+            winner.increaseWins();
+        }
+        for(User loser: match.getLosers()){
+            loser.increaseLosses();
+        }
     }
 
     private void checkSamePlayer(Match match) {
