@@ -47,7 +47,7 @@
                 </li>
                 <li class="nav-item header-link">
                     <i class="fa fa-user hvr-icon"></i>
-                    <a class="nav-link hvr-underline-from-left" th:href="@{/profile}" th:text="#{'sites.profile'}"></a>
+                    <a class="nav-link hvr-underline-from-left" th:href="@{/users/you}" th:text="#{'sites.profile'}"></a>
                 </li>
             </ul>
         </div>
@@ -83,12 +83,12 @@
                 </div>
                 <div class="dropdown-item">
                     <i class="fa fa-user hvr-icon"></i>
-                    <a class="move-2px-right adesso-blue-text" th:href="@{/profile}" th:text="#{'sites.profile'}"></a>
+                    <a class="move-2px-right adesso-blue-text" th:href="@{/users/you}" th:text="#{'sites.profile'}"></a>
                 </div>
                 <div class="dropdown-divider"></div>
                 <div class="dropdown-item hvr-icon-back">
                     <i class="fa fa-sign-out-alt hvr-icon"></i>
-                    <a class="move-2px-right adesso-blue-text" th:href="@{/}" th:text="#{'sites.logout'}">Logout</a>
+                    <a class="move-2px-right adesso-blue-text" th:href="@{/logout}" th:text="#{'sites.logout'}">Logout</a>
                 </div>
             </div>
         </div>
