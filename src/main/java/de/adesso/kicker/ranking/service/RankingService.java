@@ -1,16 +1,13 @@
 package de.adesso.kicker.ranking.service;
 
-import de.adesso.kicker.events.match.MatchVerifiedEvent;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.ranking.persistence.*;
 import de.adesso.kicker.user.persistence.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.EventListener;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class RankingService {
@@ -26,31 +23,27 @@ public class RankingService {
         this.rankingRepository = rankingRepository;
     }
 
-    @EventListener
-    public void updateRatings(MatchVerifiedEvent matchVerifiedEvent) {
-        var match = matchVerifiedEvent.getMatch();
+    public void updateRatings(Match match) {
         var winners = match.getWinners();
         var losers = match.getLosers();
         var expectedScore = expectedScore(match);
         var expectedWinnerScore = expectedScore.getFirst();
         var expectedLoserScore = expectedScore.getSecond();
-        changeRating(winners, Outcome.WON.getScore(), expectedWinnerScore);
-        changeRating(losers, Outcome.LOST.getScore(), expectedLoserScore);
+        setNewRatings(winners, Outcome.WON.getScore(), expectedWinnerScore);
+        setNewRatings(losers, Outcome.LOST.getScore(), expectedLoserScore);
     }
 
     public int getPositionOfPlayer(Ranking ranking) {
         return rankingRepository.countAllByRatingAfter(ranking.getRating()) + 1;
     }
 
-    private void changeRating(List<User> players, int actualScore, double expectedScore) {
+    private void setNewRatings(List<User> players, int actualScore, double expectedScore) {
         for (var player : players) {
             var rating = player.getRanking().getRating();
             var kFactor = kFactor(rating);
             rating += kFactor * (actualScore - expectedScore);
             player.getRanking().setRating(rating);
         }
-        var ratings = players.stream().map(User::getRanking).collect(Collectors.toList());
-        saveRatings(ratings);
     }
 
     private int kFactor(int rating) {
@@ -84,9 +77,5 @@ public class RankingService {
         var loserRating = losers.stream().map(User::getRanking).mapToInt(Ranking::getRating).average().getAsDouble();
         var winnerRating = winners.stream().map(User::getRanking).mapToInt(Ranking::getRating).average().getAsDouble();
         return Pair.of(winnerRating, loserRating);
-    }
-
-    private void saveRatings(List<Ranking> rankings) {
-        rankingRepository.saveAll(rankings);
     }
 }
