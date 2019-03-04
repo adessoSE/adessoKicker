@@ -6,6 +6,9 @@ import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.match.service.MatchService;
+import de.adesso.kicker.notification.message.MessageDummy;
+import de.adesso.kicker.notification.persistence.Notification;
+import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.user.UserDummy;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
@@ -19,9 +22,12 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -35,6 +41,9 @@ class MatchControllerTest {
 
     @MockBean
     UserService userService;
+
+    @MockBean
+    NotificationService notificationService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -54,8 +63,10 @@ class MatchControllerTest {
         // given
         var user = createUser();
         var userList = createUserList();
+        List<Notification> notificationList = Collections.singletonList(MessageDummy.messageDeclined());
         given(userService.getAllUsers()).willReturn(userList);
         given(userService.getLoggedInUser()).willReturn(user);
+        given(notificationService.getNotificationsByReceiver(any(User.class))).willReturn(notificationList);
 
         // when
         var result = this.mockMvc.perform(get("/matches/add"));
@@ -65,7 +76,8 @@ class MatchControllerTest {
                 .andExpect(view().name("sites/matchresult.html"))
                 .andExpect(model().attribute("match", new Match()))
                 .andExpect(model().attribute("currentUser", user))
-                .andExpect(model().attribute("users", userList));
+                .andExpect(model().attribute("users", userList))
+                .andExpect(model().attribute("notifications", notificationList));
     }
 
     @Test

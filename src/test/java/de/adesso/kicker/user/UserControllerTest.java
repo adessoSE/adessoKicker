@@ -1,7 +1,11 @@
 package de.adesso.kicker.user;
 
+import de.adesso.kicker.notification.message.MessageDummy;
+import de.adesso.kicker.notification.persistence.Notification;
+import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.controller.UserController;
+import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Collections;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -27,13 +35,18 @@ class UserControllerTest {
     @MockBean
     private RankingService rankingService;
 
+    @MockBean
+    private NotificationService notificationService;
+
     @Test
     @WithMockUser
     void whenUserLoggedInReturnUser() throws Exception {
         // given
         var user = UserDummy.defaultUser();
+        List<Notification> notificationList = Collections.singletonList(MessageDummy.messageDeclined());
         given(userService.getLoggedInUser()).willReturn(user);
         given(rankingService.getPositionOfPlayer(user.getRanking())).willReturn(1);
+        given(notificationService.getNotificationsByReceiver(any(User.class)));
 
         // when
         var result = mockMvc.perform(get("/users/you"));
@@ -41,7 +54,8 @@ class UserControllerTest {
         // then
         result.andExpect(status().isOk())
                 .andExpect(model().attribute("user", user))
-                .andExpect(model().attribute("rankingPosition", 1));
+                .andExpect(model().attribute("rankingPosition", 1))
+                .andExpect(model().attribute("notifications", notificationList));
     }
 
     @Test
