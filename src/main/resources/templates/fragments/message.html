@@ -28,16 +28,16 @@
 </head>
 <body>
 <div th:fragment="message">
-  <div class="dropdown-item matchverification" th:value="${notification.notificationId}">
+  <div class="dropdown-item message" th:value="${notification.notificationId}">
     <p class="adesso-blue-text" th:text="${notification.sendDate}"></p>
-    <p class="matchverification-text">
+    <p class="notification-text">
       <div th:if="${notification.messageType == T(de.adesso.kicker.notification.message.persistence.MessageType).MESSAGE_DECLINED}">
         <div th:text="#{notification.message.declined(${notification.sender.firstName})}"></div>
       </div>
     </p>
     <div class="row">
       <div class="col">
-        <button type="button" class="btn hvr-fade matchverification-bt" onclick="accept(this);">OK</button>
+        <button type="button" class="btn hvr-fade notification-bt" onclick="accept(this);">OK</button>
       </div>
     </div>
   </div>
