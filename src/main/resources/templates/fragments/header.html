@@ -52,7 +52,7 @@
             </ul>
         </div>
         <!-- Notification Dropdown -->
-        <div class="dropdown ml-auto" id="notification-dropdown">
+        <div class="dropdown ml-auto" id="notification-dropdown" th:if="${#authentication.getName() != 'anonymousUser'}">
             <button onblur="toggleEnvelope()" onfocus="toggleEnvelope()"
                     type="button" class="btn header-dropdown-bt hvr-fade" id="notification-dropdown-icon" data-toggle="dropdown">
                 <i class="fa fa-envelope hvr-icon"></i>
@@ -67,7 +67,7 @@
             </div>
         </div>
         <!-- Profile Settings -->
-        <div class="dropdown ml-auto" id="profile-dropdown">
+        <div class="dropdown ml-auto" id="profile-dropdown" th:if="${#authentication.getName() != 'anonymousUser'}">
             <button type="button" class="btn dropdown-toggle header-dropdown-bt hvr-fade" data-toggle="dropdown">
                 <!-- User Name -->
                 <span th:text="${#authentication.getName()}"></span>
