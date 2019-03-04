@@ -1,5 +1,6 @@
 package de.adesso.kicker.user;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -7,8 +8,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import de.adesso.kicker.notification.message.MessageDummy;
+import de.adesso.kicker.notification.persistence.Notification;
+import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.controller.UserController;
+import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -21,6 +26,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Collections;
 import java.util.Optional;
 
 @WebMvcTest(value = UserController.class, secure = false)
@@ -35,13 +41,18 @@ class UserControllerTest {
     @MockBean
     private RankingService rankingService;
 
+    @MockBean
+    private NotificationService notificationService;
+
     @Test
     @WithMockUser
     void whenUserLoggedInReturnUser() throws Exception {
         // given
         var user = UserDummy.defaultUser();
+        var notificationList = Collections.singletonList((Notification) MessageDummy.messageDeclined());
         when(userService.getLoggedInUser()).thenReturn(user);
         when(rankingService.getPositionOfPlayer(user.getRanking())).thenReturn(1);
+        when(notificationService.getNotificationsByReceiver(any(User.class))).thenReturn(notificationList);
 
         // when
         var result = mockMvc.perform(get("/users/you"));
@@ -49,7 +60,8 @@ class UserControllerTest {
         // then
         result.andExpect(status().isOk())
                 .andExpect(model().attribute("user", user))
-                .andExpect(model().attribute("rankingPosition", 1));
+                .andExpect(model().attribute("rankingPosition", 1))
+                .andExpect(model().attribute("notifications", notificationList));
     }
 
     @Test
