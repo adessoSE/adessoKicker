@@ -40,10 +40,10 @@
     </p>
     <div class="row">
       <div class="col">
-        <button type="button" class="btn hvr-fade matchverification-bt" th:text="#{notification.yes}"></button>
+        <button type="button" class="btn hvr-fade matchverification-bt" onclick="accept(this);" th:text="#{notification.yes}"></button>
       </div>
       <div class="col">
-        <button type="button" class="btn hvr-fade matchverification-bt" th:text="#{notification.no}"></button>
+        <button type="button" class="btn hvr-fade matchverification-bt" onclick="decline(this);" th:text="#{notification.no}"></button>
       </div>
     </div>
   </div>
