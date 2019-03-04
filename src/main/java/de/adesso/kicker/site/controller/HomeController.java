@@ -1,5 +1,6 @@
 package de.adesso.kicker.site.controller;
 
+import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.service.UserService;
@@ -15,9 +16,13 @@ public class HomeController {
 
     private final RankingService rankingService;
 
-    public HomeController(UserService userService, RankingService rankingService) {
+    private final NotificationService notificationService;
+
+    public HomeController(UserService userService, RankingService rankingService,
+            NotificationService notificationService) {
         this.userService = userService;
         this.rankingService = rankingService;
+        this.notificationService = notificationService;
     }
 
     @GetMapping(value = { "/", "/home", "/ranking" })
@@ -28,11 +33,14 @@ public class HomeController {
         try {
             var user = userService.getLoggedInUser();
             var rank = rankingService.getPositionOfPlayer(user.getRanking());
+            var notifications = notificationService.getNotificationsByReceiver(user);
             modelAndView.addObject("user", user);
             modelAndView.addObject("rank", rank);
+            modelAndView.addObject("notifications", notifications);
         } catch (UserNotFoundException e) {
             modelAndView.addObject("user", false);
             modelAndView.addObject("rank", false);
+            modelAndView.addObject("notifications", false);
         }
         modelAndView.addObject("users", users);
         modelAndView.setViewName("sites/ranking.html");

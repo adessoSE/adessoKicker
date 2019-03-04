@@ -5,6 +5,7 @@ import de.adesso.kicker.match.exception.FutureDateException;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.match.persistence.Match;
+import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,10 +25,14 @@ public class MatchController {
 
     private final UserService userService;
 
+    private final NotificationService notificationService;
+
     @Autowired
-    public MatchController(MatchService matchService, UserService userService) {
+    public MatchController(MatchService matchService, UserService userService,
+            NotificationService notificationService) {
         this.matchService = matchService;
         this.userService = userService;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("/add")
@@ -69,6 +74,8 @@ public class MatchController {
         modelAndView.addObject("match", new Match());
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.addObject("currentUser", userService.getLoggedInUser());
+        modelAndView.addObject("notifications",
+                notificationService.getNotificationsByReceiver(userService.getLoggedInUser()));
         modelAndView.setViewName("sites/matchresult.html");
         return modelAndView;
     }

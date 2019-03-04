@@ -1,5 +1,6 @@
 package de.adesso.kicker.user.controller;
 
+import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,14 @@ public class UserController {
 
     private final RankingService rankingService;
 
+    private final NotificationService notificationService;
+
     @Autowired
-    public UserController(UserService userService, RankingService rankingService) {
+    public UserController(UserService userService, RankingService rankingService,
+            NotificationService notificationService) {
         this.userService = userService;
         this.rankingService = rankingService;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("/u/{id}")
@@ -30,6 +35,8 @@ public class UserController {
         var rankingPosition = rankingService.getPositionOfPlayer(user.getRanking());
         modelAndView.addObject("user", user);
         modelAndView.addObject("rankingPosition", rankingPosition);
+        modelAndView.addObject("notifications",
+                notificationService.getNotificationsByReceiver(userService.getLoggedInUser()));
         modelAndView.setViewName("sites/profile.html");
         return modelAndView;
     }
@@ -41,6 +48,7 @@ public class UserController {
         var rankingPosition = rankingService.getPositionOfPlayer(user.getRanking());
         modelAndView.addObject("user", user);
         modelAndView.addObject("rankingPosition", rankingPosition);
+        modelAndView.addObject("notifications", notificationService.getNotificationsByReceiver(user));
         modelAndView.setViewName("sites/profile.html");
         return modelAndView;
     }
