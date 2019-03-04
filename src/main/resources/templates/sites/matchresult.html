@@ -8,24 +8,28 @@
 
   <!-- JQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
   <!-- Popper JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <!-- Moment JS -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <!-- Tempus Dominus Bootstrap -->
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css"/>
 
   <!-- Fontawesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css">
-
   <!-- Hover CSS -->
   <link rel="stylesheet" type="text/css" href="../css/hover-min.css">
 
   <!-- My stylesheets -->
   <link rel="stylesheet/less" type="text/css" href="../css/header.less">
   <link rel="stylesheet/less" type="text/css" href="../css/matchresult.less">
-
   <!-- LESS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
 </head>
@@ -37,7 +41,8 @@
     <!-- Who played? -->
     <div class="headline">
       <span th:text="#{'matchResult.whoPlayed'}"></span>
-      <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="auto right" th:title="#{'matchResult.annotation'}"></i>
+      <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right"
+         th:title="#{'matchResult.annotation'}"></i>
     </div>
     <div class="row">
       <div class="col-sm-6">
@@ -75,18 +80,32 @@
     <div class="headline">
       <span class="headline" th:text="#{'matchResult.whenDidYouPlay'}"></span>
     </div>
-    <div id="dateContainer">
-      <input type="date" id="datepicker" name="date"/>
-      <i class="fa fa-calendar-check" aria-hidden="true"></i>
+    <!-- Tempus Dominus Bootstrap Timepicker -->
+    <div class="form-group">
+      <div class="input-group date" id="datetimepicker" data-target-input="nearest">
+        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker"/>
+        <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
+          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+        </div>
+      </div>
+      <script type="text/javascript">
+          $('#datetimepicker').valueAsDate = new Date();
+          $(function () {
+              $('#datetimepicker').datetimepicker({
+                  defaultDate: moment(),
+                  format: 'L'
+              });
+          });
+      </script>
     </div>
     <div>
       <button class="btn creatematch-btn" th:text="#{'matchResult.createMatch'}"></button>
     </div>
   </div>
 </form>
-<!-- Set date of datepicker to today's date -->
-<script>document.getElementById("datepicker").valueAsDate = new Date();</script>
 <!-- Tooltip -->
-<script>$(document).ready(function(){$('[data-toggle="tooltip"]').tooltip();});</script>
+<script>$(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});</script>
 </body>
 </html>
