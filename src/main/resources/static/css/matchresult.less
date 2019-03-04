@@ -7,10 +7,13 @@
  */
 @media screen and (min-width: 1480px){body {overflow:hidden;}}
 
+@media screen and (max-width: 767px){.fa-info-circle{margin-left: -30px;}}
+
 #background{
   border: 1px solid @colorscheme[warm-grey-midtone];
   margin-top: 50px;
   padding-bottom: 20px;
+  padding-left: 30px;
   animation: container-fly-in 0.75s cubic-bezier(.17,.84,.44,1);
 }
 
@@ -18,9 +21,15 @@
   font-size: 40px;
   margin-bottom: 15px;
   margin-top: 15px;
+  color: @colorscheme[warm-grey-darker];
+}
+
+#info-tooltip{
+  text-align: center;
   .fa-info-circle{
     color: @colorscheme[adesso-blue];
-    font-size: 20px;
+    font-size: 30px;
+    margin-top: 25px;
   }
 }
 
@@ -30,10 +39,13 @@
   color: @colorscheme[warm-grey-dark];
 }
 .team-textbox{
-  width: 60%;
+  width: 85%;
   font-size: 23px;
 }
 .team-margin-top{margin-top: 15px;}
+
+#datetimepicker-form-group{width: 41%;}
+#form-check-1{margin-left: 5px;}
 
 .form-check{
   .form-check-input{

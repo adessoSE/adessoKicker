@@ -35,31 +35,35 @@
 </head>
 <body>
 <header th:replace="~{fragments/header.html :: header}"></header>
-
 <form action="#" th:action="@{/matches/add}" th:object="${match}" method="post">
   <div class="container shadow" id="background">
-    <!-- Who played? -->
-    <div class="headline">
-      <span th:text="#{'matchResult.whoPlayed'}"></span>
-      <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right"
-         th:title="#{'matchResult.annotation'}"></i>
+    <div class="row">
+      <!-- Who played? -->
+      <div class="col-sm-11 headline" th:text="#{'matchResult.whoPlayed'}"></div>
+      <!-- Info Tooltip -->
+      <div class="col-sm-1" id="info-tooltip">
+        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="left"
+           th:title="#{'matchResult.annotation'}"></i>
+      </div>
     </div>
     <div class="row">
+      <!-- Team A -->
       <div class="col-sm-6">
         <p class="team-description" th:text="#{'matchResult.team1'}"></p>
         <div><input class="team-textbox" type="text" th:value="${currentUser.getFullName()}" disabled/></div>
         <div><input class="team-textbox team-margin-top" type="text" th:placeholder="#{'matchResult.player2'}"/></div>
       </div>
+      <!-- Team B -->
       <div class="col-sm-6">
         <p class="team-description" th:text="#{'matchResult.team2'}"></p>
         <div><input class="team-textbox" type="text" th:placeholder="#{'matchResult.player1'}"/></div>
         <div><input class="team-textbox team-margin-top" type="text" th:placeholder="#{'matchResult.player2'}"/></div>
       </div>
     </div>
-    <div class="headline">
-      <!-- Who won -->
-      <span class="headline" th:text="#{'matchResult.whoWon'}"></span>
+    <!-- Who won -->
+    <div class="headline" th:text="#{'matchResult.whoWon'}">
     </div>
+    <!-- Radio Buttons -->
     <div class="row" id="radio-winner-team">
       <div class="col-sm-6">
         <div class="form-check" id="form-check-1">
@@ -77,11 +81,9 @@
       </div>
     </div>
     <!-- When did you play? -->
-    <div class="headline">
-      <span class="headline" th:text="#{'matchResult.whenDidYouPlay'}"></span>
-    </div>
-    <!-- Tempus Dominus Bootstrap Timepicker -->
-    <div class="form-group">
+    <div class="headline" th:text="#{'matchResult.whenDidYouPlay'}"></div>
+    <!-- Tempus Dominus Timepicker -->
+    <div class="form-group" id="datetimepicker-form-group">
       <div class="input-group date" id="datetimepicker" data-target-input="nearest">
         <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker"/>
         <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
