@@ -5,16 +5,19 @@
  * So we hide the scrollbar, as we don't need it at this specific size.
  * This is an ideal solution, as it can mess up the scrollbar in other sizes too.
  */
-@media screen and (min-width: 1480px){body {overflow:hidden;}}
+@media screen and(min-width: 1480px){body {overflow: hidden;}}
 
-@media screen and (max-width: 767px){.fa-info-circle{margin-left: -30px;}}
+/* Move info-tooltip to the right when the screen reaches a specific size
+ * Otherwise it looks weird.
+ */
+@media screen and(max-width: 767px){.fa-info-circle {margin-left: -30px;}}
 
 #background{
   border: 1px solid @colorscheme[warm-grey-midtone];
   margin-top: 50px;
   padding-bottom: 20px;
   padding-left: 30px;
-  animation: container-fly-in 0.75s cubic-bezier(.17,.84,.44,1);
+  animation: container-fly-in 0.75s cubic-bezier(.17, .84, .44, 1);
 }
 
 .headline{
@@ -33,40 +36,44 @@
   }
 }
 
-.team-description{
-  font-size: 15px;
-  text-decoration: underline;
-  color: @colorscheme[warm-grey-dark];
-}
-.team-textbox{
-  width: 85%;
-  font-size: 23px;
-}
-.team-margin-top{margin-top: 15px;}
-
-#datetimepicker-form-group{width: 41%;}
-#form-check-1{margin-left: 5px;}
-
-.form-check{
-  .form-check-input{
-    margin-top: 22px;
+.team{
+  &-description{
+    font-size: 15px;
+    text-decoration: underline;
+    color: @colorscheme[warm-grey-dark];
   }
-  .form-check-label{
+  &-textbox{
+    width: 85%;
+    font-size: 23px;
+  }
+  &-margin-top{margin-top: 15px;}
+}
+
+#form-check-1, #form-check-2 {margin-left: -20px;}
+.form-check{
+  width:60%;
+  &-input{display: none;}
+  &-label{
     font-size: 35px;
     color: @colorscheme[warm-grey-dark];
   }
+  &:hover > .outline-trophy{
+    -webkit-text-stroke: 0 black;
+    -webkit-text-fill-color: @colorscheme[orange];
+    opacity: 0.5;
+  }
   i{
     font-size: 40px;
-    margin-left: 5px;
-    color: @colorscheme[orange];
+    padding-left: 5px;
   }
-  /* When selecting an option from the radio buttons
-   * We need to display the correct trophy icon.
-   * This controls the visibility of the icons.
-   */
-  i:not(.trophy-selected){opacity: 0;}
   .trophy-selected{
-    opacity: 1;
+    -webkit-text-stroke: 0 black !important;
+    -webkit-text-fill-color: @colorscheme[orange] !important;
+    opacity: 1 !important;
+  }
+  .outline-trophy{
+    -webkit-text-stroke: 1px @colorscheme[warm-grey-dark];
+    -webkit-text-fill-color: transparent;
   }
 }
 
@@ -75,9 +82,19 @@
   background-color: @colorscheme[adesso-blue];
   color: white;
 }
+#datetimepicker-form-group{width: 41%;}
 
 @keyframes container-fly-in {
-  0%{transform: translateY(200px); opacity: 0}
-  50%{transform: translateY(0); opacity: 25%}
-  100%{transform: translateY(0); opacity: 1}
+  0% {
+    transform: translateY(200px);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(0);
+    opacity: 25%;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
