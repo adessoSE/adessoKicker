@@ -22,6 +22,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 public class VerifyMatchServiceTest {
@@ -73,7 +75,7 @@ public class VerifyMatchServiceTest {
     void sendRequestsToOpponents() {
         // given
         var match = MatchDummy.match();
-        var matchCreatedEvent = MatchCreatedEventDummy.matchCreatedEvent();
+        var matchCreatedEvent = MatchCreatedEventDummy.matchCreatedEvent(match);
         when(userService.getLoggedInUser()).thenReturn(match.getTeamAPlayer1());
 
         // when
@@ -81,6 +83,19 @@ public class VerifyMatchServiceTest {
 
         // then
         verify(matchVerificationRequestRepository, times(2)).save(any(MatchVerificationRequest.class));
+    }
+
+    @Test
+    void sendRequestToOpponentsAsLoser() {
+        var match = MatchDummy.matchTeamBWon();
+        var matchCreatedEvent = MatchCreatedEventDummy.matchCreatedEvent(match);
+        given(userService.getLoggedInUser()).willReturn(match.getTeamAPlayer1());
+
+        // when
+        verifyMatchService.sendRequests(matchCreatedEvent);
+
+        // then
+        then(matchVerificationRequestRepository).should(times(1)).save(any(MatchVerificationRequest.class));
     }
 
     @Test

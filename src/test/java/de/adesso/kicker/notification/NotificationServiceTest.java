@@ -24,10 +24,13 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 public class NotificationServiceTest {
@@ -58,6 +61,10 @@ public class NotificationServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
+    }
+
+    static List<Notification> notificationList() {
+        return List.of(MessageDummy.messageDeclined(), MatchVerificationRequestDummy.matchVerificationRequest());
     }
 
     @Test
@@ -150,5 +157,20 @@ public class NotificationServiceTest {
         verify(verifyMatchService, times(1)).declineRequest((MatchVerificationRequest) matchVerification);
         verify(sendMessageService, times(1)).sendMessage(any(User.class), any(User.class),
                 eq(MessageType.MESSAGE_DECLINED));
+    }
+
+    @Test
+    @DisplayName("Should return list of notifications with receiver")
+    void shouldReturnNotificationsWithReceiver() {
+        // given
+        var notifications = notificationList();
+        var user = UserDummy.defaultUser();
+        given(notificationRepository.findAllByReceiver(user)).willReturn(notifications);
+
+        // when
+        var actualList = notificationService.getNotificationsByReceiver(user);
+
+        // then
+        assertEquals(notifications, actualList);
     }
 }
