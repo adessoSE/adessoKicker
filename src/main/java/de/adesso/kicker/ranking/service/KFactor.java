@@ -1,4 +1,4 @@
-package de.adesso.kicker.ranking.persistence;
+package de.adesso.kicker.ranking.service;
 
 public enum KFactor {
     LOW(16),

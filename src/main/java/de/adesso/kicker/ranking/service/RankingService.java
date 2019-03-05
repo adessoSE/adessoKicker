@@ -71,11 +71,11 @@ public class RankingService {
         return Math.pow(MAGNITUDE, rating / RATING_DIFFERENCE_MAGNITUDE);
     }
 
-    private Pair<Double, Double> getRatings(Match match) {
+    private Pair<Integer, Integer> getRatings(Match match) {
         var winners = match.getWinners();
         var losers = match.getLosers();
-        var loserRating = losers.stream().map(User::getRanking).mapToInt(Ranking::getRating).average().getAsDouble();
-        var winnerRating = winners.stream().map(User::getRanking).mapToInt(Ranking::getRating).average().getAsDouble();
+        var loserRating = losers.stream().map(User::getRanking).mapToInt(Ranking::getRating).sum();
+        var winnerRating = winners.stream().map(User::getRanking).mapToInt(Ranking::getRating).sum();
         return Pair.of(winnerRating, loserRating);
     }
 }
