@@ -57,10 +57,6 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
                 .deleteCookies();
-
-        // Don't know what it does, but H2 console works only with this
-        http.csrf().disable();
-        http.headers().frameOptions().disable();
     }
 
     @Bean
