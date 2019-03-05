@@ -1,189 +1,127 @@
 package de.adesso.kicker.email;
 
 import de.adesso.kicker.events.match.MatchVerificationSentEvent;
-import de.adesso.kicker.match.service.MatchService;
-import de.adesso.kicker.user.UserDummy;
+import de.adesso.kicker.match.persistence.Match;
+import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
 import de.adesso.kicker.user.persistence.User;
-import de.adesso.kicker.user.service.UserService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EmailServiceTest {
 
-    @MockBean
-    MatchService matchService;
+    @Mock
+    private JavaMailSenderImpl mailSenderMock;
 
-    @MockBean
-    UserService userService;
+    @Mock
+    private MatchVerificationSentEvent matchVerificationSentEventMock;
 
-    @MockBean
-    EmailService emailService;
+    @Mock
+    private Match matchMock;
 
-    @MockBean
-    JavaMailSenderImpl javaMailSender;
+    @Mock
+    private MatchVerificationRequest matchVerificationRequestMock;
 
-    @Autowired
-    private MockMvc mockMvc;
+    @Mock
+    private User teamAPlayer1Mock;
 
-    MatchVerificationSentEvent matchVerificationSentEvent;
+    @Mock
+    private User teamBPlayer1Mock;
 
-    private static User createPlayer() {
-        return UserDummy.defaultUser();
+    private EmailService emailService;
+
+    @Before
+    public void setUp() {
+        this.emailService = new EmailService(mailSenderMock);
     }
 
     @Test
     public void when1v1thenSendEmail() throws NullPointerException {
         // given
-        var playerA = createPlayer();
-        var playerB = createPlayer();
-
-        matchVerificationSentEvent.getMatchVerificationRequest().getMatch().setTeamAPlayer1(playerA);
-        matchVerificationSentEvent.getMatchVerificationRequest().getMatch().setTeamBPlayer1(playerB);
-
-        matchVerificationSentEvent.getMatchVerificationRequest().getMatch().setTeamAPlayer2(null);
-        matchVerificationSentEvent.getMatchVerificationRequest().getMatch().setTeamBPlayer2(null);
-
-        var realPlayerA = matchVerificationSentEvent.getMatchVerificationRequest().getMatch().getTeamAPlayer1();
-        var realPlayerB = matchVerificationSentEvent.getMatchVerificationRequest().getMatch().getTeamBPlayer1();
-
-        var expectedFrom = realPlayerA.getEmail();
-        var expectedTo = realPlayerB.getEmail();
-        var expectedSubject = emailService.setSubject(matchVerificationSentEvent.getMatchVerificationRequest().getMatch());
-        var expectedText = emailService.verificationText(matchVerificationSentEvent);
+        var matchId = "test-match-1";
+        var notificationId = 1337L;
+        var teamAPlayer1Mail = "teamAplayer1@test.com";
+        var teamBPlayer1Mail = "teamBplayer1@test.com";
+        var teamAPlayer1FullName = "Full Name PlayerA1";
+        var teamBPlayer1FullName = "Full Name PlayerB1";
+        var matchDate = LocalDate.now();
+        var expectedAcceptUrl = EmailService.ACCEPT_URL + notificationId;
+        var expectedDeclineUrl = EmailService.ACCEPT_URL + notificationId;
+        var expectedWinnerText = String.format("Winners: %s\tLosers:%s",
+                teamAPlayer1FullName, teamBPlayer1FullName);
+        var expectedMessageSubject = String.format("Verify Match: %s played on %s",
+                matchId, matchDate.toString());
+        var expectedMessageText = String.format("Your recently played Match against %s needs to be verified.\n%s\nVerify -> %s\nDecline -> %s",
+                teamAPlayer1FullName, expectedWinnerText, expectedAcceptUrl, expectedDeclineUrl);
 
         var expectedSimpleMailMessage = new SimpleMailMessage();
+        expectedSimpleMailMessage.setFrom(teamAPlayer1Mail);
+        expectedSimpleMailMessage.setTo(teamBPlayer1Mail);
+        expectedSimpleMailMessage.setSubject(expectedMessageSubject);
+        expectedSimpleMailMessage.setText(expectedMessageText);
 
-        expectedSimpleMailMessage.setFrom(expectedFrom);
-        expectedSimpleMailMessage.setTo(expectedTo);
-        expectedSimpleMailMessage.setSubject(expectedSubject);
-        expectedSimpleMailMessage.setText(expectedText);
+        given(teamAPlayer1Mock.getEmail()).willReturn(teamAPlayer1Mail);
+        given(teamAPlayer1Mock.getFullName()).willReturn(teamAPlayer1FullName);
+
+        given(teamBPlayer1Mock.getEmail()).willReturn(teamBPlayer1Mail);
+        given(teamBPlayer1Mock.getFullName()).willReturn(teamBPlayer1FullName);
+
+        given(matchMock.getMatchId()).willReturn(matchId);
+        given(matchMock.getDate()).willReturn(matchDate);
+        given(matchMock.getWinners()).willReturn(List.of(teamAPlayer1Mock));
+        given(matchMock.getLosers()).willReturn(List.of(teamBPlayer1Mock));
+
+        given(matchVerificationSentEventMock.getMatchVerificationRequest()).willReturn(matchVerificationRequestMock);
+        given(matchVerificationRequestMock.getMatch()).willReturn(matchMock);
+        given(matchVerificationRequestMock.getReceiver()).willReturn(teamBPlayer1Mock);
+        given(matchVerificationRequestMock.getNotificationId()).willReturn(notificationId);
+
+        given(matchMock.getTeamAPlayer1()).willReturn(teamAPlayer1Mock);
 
         // when
-        emailService.sendVerification(matchVerificationSentEvent);
+        emailService.sendVerification(matchVerificationSentEventMock);
 
         // then
-        verify(times(1));
-        verify(javaMailSender).send(expectedSimpleMailMessage);
+        verify(mailSenderMock).send(expectedSimpleMailMessage);
     }
 
     @Test
     public void when1v2thenSendEmail() {
         // given
-        // given
-        var playerA = createPlayer();
-        var playerB1 = createPlayer();
-        var playerB2 = createPlayer();
-
-        matchVerificationSentEvent.getMatchVerificationRequest().getMatch().setTeamAPlayer1(playerA);
-        matchVerificationSentEvent.getMatchVerificationRequest().getMatch().setTeamBPlayer1(playerB1);
-        matchVerificationSentEvent.getMatchVerificationRequest().getMatch().setTeamBPlayer2(playerB2);
-
-        matchVerificationSentEvent.getMatchVerificationRequest().getMatch().setTeamAPlayer2(null);
-
-        var realPlayerA = matchVerificationSentEvent.getMatchVerificationRequest().getMatch().getTeamAPlayer1();
-        var realPlayerB = matchVerificationSentEvent.getMatchVerificationRequest().getMatch().getTeamBPlayer1();
-
-        var expectedFrom = realPlayerA.getEmail();
-        var expectedTo = realPlayerB.getEmail(); //HIER NOCH ÄNDERN
-        var expectedSubject = emailService.setSubject(matchVerificationSentEvent.getMatchVerificationRequest().getMatch());
-        var expectedText = emailService.verificationText(matchVerificationSentEvent);
-
-        var expectedSimpleMailMessage = new SimpleMailMessage();
-
-        expectedSimpleMailMessage.setFrom(expectedFrom);
-        expectedSimpleMailMessage.setTo(expectedTo);
-        expectedSimpleMailMessage.setSubject(expectedSubject);
-        expectedSimpleMailMessage.setText(expectedText);
 
         // when
-        emailService.sendVerification(matchVerificationSentEvent);
 
         // then
-        verify(times(1));
-        verify(javaMailSender).send(expectedSimpleMailMessage);
-
     }
 
     @Test
     public void when2v1thenSendEmail() {
         // given
-        var playerA1 = createPlayer();
-        var playerA2 = createPlayer();
-        var playerB1 = createPlayer();
-
-        matchVerificationSentEvent.getMatchVerificationRequest().getMatch().setTeamAPlayer1(playerA1);
-        matchVerificationSentEvent.getMatchVerificationRequest().getMatch().setTeamAPlayer2(playerA2);
-        matchVerificationSentEvent.getMatchVerificationRequest().getMatch().setTeamBPlayer1(playerB1);
-
-        matchVerificationSentEvent.getMatchVerificationRequest().getMatch().setTeamBPlayer2(null);
-
-        var realPlayerA1 = matchVerificationSentEvent.getMatchVerificationRequest().getMatch().getTeamAPlayer1();
-        var realPlayerB1 = matchVerificationSentEvent.getMatchVerificationRequest().getMatch().getTeamBPlayer1();
-
-        var expectedFrom = realPlayerA1.getEmail();
-        var expectedTo = realPlayerB1.getEmail();
-        var expectedSubject = emailService.setSubject(matchVerificationSentEvent.getMatchVerificationRequest().getMatch());
-        var expectedText = emailService.verificationText(matchVerificationSentEvent);
-
-        var expectedSimpleMailMessage = new SimpleMailMessage();
-
-        expectedSimpleMailMessage.setFrom(expectedFrom);
-        expectedSimpleMailMessage.setTo(expectedTo);
-        expectedSimpleMailMessage.setSubject(expectedSubject);
-        expectedSimpleMailMessage.setText(expectedText);
 
         // when
-        emailService.sendVerification(matchVerificationSentEvent);
 
         // then
-        verify(times(1));
-        verify(javaMailSender).send(expectedSimpleMailMessage);
     }
 
     @Test
     public void when2v2thenSendEmail() {
         // given
-        var playerA1 = createPlayer();
-        var playerA2 = createPlayer();
-        var playerB1 = createPlayer();
-        var playerB2 = createPlayer();
-
-        matchVerificationSentEvent.getMatchVerificationRequest().getMatch().setTeamAPlayer1(playerA1);
-        matchVerificationSentEvent.getMatchVerificationRequest().getMatch().setTeamAPlayer2(playerA2);
-        matchVerificationSentEvent.getMatchVerificationRequest().getMatch().setTeamBPlayer1(playerB1);
-        matchVerificationSentEvent.getMatchVerificationRequest().getMatch().setTeamBPlayer2(playerB2);
-
-        var realPlayerA = matchVerificationSentEvent.getMatchVerificationRequest().getMatch().getTeamAPlayer1();
-        var realPlayerB1 = matchVerificationSentEvent.getMatchVerificationRequest().getMatch().getTeamBPlayer1();
-        var realPlayerB2 = matchVerificationSentEvent.getMatchVerificationRequest().getMatch().getTeamBPlayer2();
-
-        var expectedFrom = realPlayerA.getEmail();
-        var expectedTo = realPlayerB2.getEmail(); //noch ka
-        var expectedSubject = emailService.setSubject(matchVerificationSentEvent.getMatchVerificationRequest().getMatch());
-        var expectedText = emailService.verificationText(matchVerificationSentEvent);
-
-        var expectedSimpleMailMessage = new SimpleMailMessage();
-
-        expectedSimpleMailMessage.setFrom(expectedFrom);
-        expectedSimpleMailMessage.setTo(expectedTo);
-        expectedSimpleMailMessage.setSubject(expectedSubject);
-        expectedSimpleMailMessage.setText(expectedText);
 
         // when
-        emailService.sendVerification(matchVerificationSentEvent);
 
         // then
-        verify(times(2));
-        verify(javaMailSender).send(expectedSimpleMailMessage);
     }
+
 }
