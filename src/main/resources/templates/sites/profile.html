@@ -8,24 +8,20 @@
 
   <!-- JQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
   <!-- Popper JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-
   <!-- Fontawesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css">
-
   <!-- Hover CSS -->
   <link rel="stylesheet" type="text/css" href="../css/hover-min.css">
 
   <!-- My stylesheets -->
   <link rel="stylesheet/less" type="text/css" href="../css/header.less">
   <link rel="stylesheet/less" type="text/css" href="../css/profile.less">
-
   <!-- LESS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
 </head>
@@ -46,35 +42,47 @@
 <!-- User Statistics -->
 <div class="container" id="user-statistics-container">
   <div class="row">
-    <div class="card col-sm-2">
-      <p class="card-header" th:text="#{'statistics.rank'}"></p>
-      <i class="card-body fas fa-chart-line"></i>
-      <p class="card-footer" th:text="${rankingPosition}"></p>
+    <div class="col-sm-2">
+         <div class="statistic statistic-1 statistic-up">
+           <p class="statistic-title" th:text="#{'statistics.rank'}"></p>
+           <i class="fas fa-chart-line"></i>
+           <p class="" th:text="${rankingPosition}"></p>
+         </div>
     </div>
-    <div class="card col-sm-2">
-      <p class="card-header" th:text="#{'statistics.points'}"></p>
-      <i class="card-body fas fa-trophy"></i>
-      <p class="card-footer" th:text="${user.ranking.rating}"></p>
+    <div class="col-sm-2">
+      <div class="statistic statistic-2 statistic-down">
+        <p class="statistic-title" th:text="#{'statistics.points'}"></p>
+        <i class="fas fa-trophy"></i>
+        <p class="" th:text="${user.ranking.rating}"></p>
+      </div>
     </div>
-    <div class="card col-sm-2">
-      <p class="card-header" th:text="#{'statistics.games'}"></p>
-      <i class="card-body fas fa-futbol"></i>
-      <p class="card-footer" th:text="${user.getPlayedMatches()}"></p>
+    <div class="col-sm-2">
+      <div class="statistic statistic-3 statistic-up">
+        <p class="statistic-title" th:text="#{'statistics.games'}"></p>
+        <i class="fas fa-futbol"></i>
+        <p class="" th:text="${user.getPlayedMatches()}"></p>
+      </div>
     </div>
-    <div class="card col-sm-2">
-      <p class="card-header" th:text="#{'statistics.victories'}"></p>
-      <i class="card-body fas fa-check"></i>
-      <p class="card-footer" th:text="${user.wins}"></p>
+    <div class="col-sm-2">
+      <div class="statistic statistic-4 statistic-down">
+        <p class="statistic-title" th:text="#{'statistics.victories'}"></p>
+        <i class="fas fa-check"></i>
+        <p class="" th:text="${user.wins}"></p>
+      </div>
     </div>
-    <div class="card col-sm-2">
-      <p class="card-header" th:text="#{'statistics.defeats'}"></p>
-      <i class="card-body fas fa-times"></i>
-      <p class="card-footer" th:text="${user.losses}"></p>
+    <div class="col-sm-2">
+      <div class="statistic statistic-5 statistic-up">
+        <p class="statistic-title" th:text="#{'statistics.defeats'}"></p>
+        <i class="fas fa-times"></i>
+        <p class="" th:text="${user.losses}"></p>
+      </div>
     </div>
-    <div class="card col-sm-2">
-      <p class="card-header" th:text="#{'statistics.victoryrate'}"></p>
-      <i class="card-body fas fa-balance-scale"></i>
-      <p class="card-footer" th:text="${user.getWinRatio() + '%'}"></p>
+    <div class="col-sm-2">
+      <div class="statistic statistic-6 statistic-down">
+        <p class="statistic-title" th:text="#{'statistics.victoryrate'}"></p>
+        <i class="fas fa-balance-scale"></i>
+        <p class="" th:text="${user.getWinRatio() + '%'}"></p>
+      </div>
     </div>
   </div>
 </div>

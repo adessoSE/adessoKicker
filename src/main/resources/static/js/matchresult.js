@@ -1,6 +1,9 @@
 $(document).ready(function () {
-    // Toggle tooltip
+    // Enable tooltip
     $('[data-toggle="tooltip"]').tooltip();
+
+    // Set default date
+    document.getElementById('datetimepicker').valueAsDate = new Date();
 
     // Shows/Disables trophies on click
     var icon1 = $('#radio1-icon');
@@ -21,4 +24,11 @@ $(document).ready(function () {
         selectedRadio.prop("checked", false);
         otherRadio.prop("checked", true);
     }
+
+    /* As Thymeleaf don't recognize that the radio button is selected by default
+     * We trigger the radio button to update the field value by force.
+     * The only other way would be to set the variable 'winnerTeamA' to try by default in the constructor,
+     * But this doesn't seem ideal to me, as people don't expect a boolean to be true by default.
+     */
+    radio1.prop("checked", true);
 });

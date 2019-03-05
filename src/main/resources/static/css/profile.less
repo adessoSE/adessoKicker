@@ -7,15 +7,32 @@
   h2{margin-top: 10px;}
 }
 
-#user-statistics-container{text-align: center;}
+.statistic{
+  opacity: 0;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  -moz-box-shadow:    3px 3px 5px 6px #ccc;  /* Firefox 3.5 - 3.6 */
+  box-shadow:         3px 3px 5px 6px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+  width: 90%;
+  background-color: @colorscheme[adesso-blue];
+  color: white;
+  &-title{text-decoration: underline; margin-top: 5px;}
+  i{font-size: 40px;}
+  p{margin-top: 20px; padding-bottom: 20px; font-size: 20px;}
 
-.card{
-  background: @colorscheme[warm-grey-light];
-  color: @colorscheme[warm-grey-dark];
-  padding: 0;
-  .card-body{
-    font-size: 40px;
-    color: @colorscheme[adesso-blue];
-  }
-  .card-footer{margin-bottom: 0;}
+  &-1{animation-delay: 0s;}
+  &-2{animation-delay: 0.1s;}
+  &-3{animation-delay: 0.2s;}
+  &-4{animation-delay: 0.3s;}
+  &-5{animation-delay: 0.4s;}
+  &-6{animation-delay: 0.5s;}
+  animation: fly-in-up 1.2s cubic-bezier(.19,1,.22,1) forwards;
+}
+
+#user-statistics-container{
+  text-align: center;
+}
+
+@keyframes fly-in-up {
+  0%{transform: translateY(250px); opacity: 0;}
+  100%{transform: translateY(0); opacity: 1;}
 }
