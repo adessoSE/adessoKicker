@@ -41,8 +41,8 @@ class RankingServiceTest {
         rankingService.updateRatings(match);
 
         // then
-        assertRating(match.getWinners(), 1516);
-        assertRating(match.getLosers(), 1484);
+        assertRating(match.getWinners(), 1016);
+        assertRating(match.getLosers(), 984);
     }
 
     @Test

@@ -1,4 +1,4 @@
-package de.adesso.kicker.ranking.persistence;
+package de.adesso.kicker.ranking.service;
 
 public enum RatingRange {
     VERY_HIGH(2400),
