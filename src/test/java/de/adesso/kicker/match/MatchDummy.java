@@ -18,8 +18,8 @@ public class MatchDummy {
     }
 
     public static Match matchWithEqualPlayerA1B2() {
-        return new Match(LocalDate.now(), UserDummy.defaultUser(), UserDummy.alternateUser(), UserDummy.defaultUser(),
-                UserDummy.alternateUser2(), true);
+        return new Match(LocalDate.now(), UserDummy.defaultUser(), UserDummy.alternateUser(),
+                UserDummy.alternateUser2(), UserDummy.defaultUser(), true);
     }
 
     public static Match matchWithEqualPlayerA2B2() {
