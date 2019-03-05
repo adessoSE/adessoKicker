@@ -42,7 +42,7 @@ class SendMessageServiceTest {
         sendMessageService.sendMessage(sender, receiver, MessageType.MESSAGE_DECLINED);
 
         // then
-        verify(messageRepository, times(1)).save(any(Message.class));
+        then(messageRepository).should(times(1)).save(any(Message.class));
     }
 
     @Test

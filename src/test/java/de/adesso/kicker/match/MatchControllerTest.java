@@ -6,8 +6,8 @@ import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.match.service.MatchService;
-import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.UserDummy;
+import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -54,8 +54,8 @@ class MatchControllerTest {
         // given
         var user = createUser();
         var userList = createUserList();
-        when(userService.getAllUsers()).thenReturn(userList);
-        when(userService.getLoggedInUser()).thenReturn(user);
+        given(userService.getAllUsers()).willReturn(userList);
+        given(userService.getLoggedInUser()).willReturn(user);
 
         // when
         var result = this.mockMvc.perform(get("/matches/add"));
@@ -75,8 +75,8 @@ class MatchControllerTest {
         // given
         var user = createUser();
         var userList = createUserList();
-        when(userService.getAllUsers()).thenReturn(userList);
-        when(userService.getLoggedInUser()).thenReturn(user);
+        given(userService.getAllUsers()).willReturn(userList);
+        given(userService.getLoggedInUser()).willReturn(user);
 
         // when
         var result = this.mockMvc.perform(post("/matches/add").param("teamAPlayer1.userId", "user")
@@ -89,7 +89,7 @@ class MatchControllerTest {
                 .andExpect(model().attributeExists("noDate"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
-        verify(matchService, times(0)).addMatchEntry(any(Match.class));
+        then(matchService).shouldHaveZeroInteractions();
     }
 
     @Test
@@ -99,8 +99,8 @@ class MatchControllerTest {
         // given
         var user = createUser();
         var userList = createUserList();
-        when(userService.getAllUsers()).thenReturn(userList);
-        when(userService.getLoggedInUser()).thenReturn(user);
+        given(userService.getAllUsers()).willReturn(userList);
+        given(userService.getLoggedInUser()).willReturn(user);
 
         // when
         var result = mockMvc.perform(post("/matches/add").param("date", LocalDate.now().toString())
@@ -113,7 +113,7 @@ class MatchControllerTest {
                 .andExpect(model().attributeExists("noWinner"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
-        verify(matchService, times(0)).addMatchEntry(any(Match.class));
+        then(matchService).shouldHaveZeroInteractions();
     }
 
     @Test
@@ -136,7 +136,7 @@ class MatchControllerTest {
                 .andExpect(model().attributeExists("nullPlayer"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
-        verify(matchService, times(0)).addMatchEntry(any(Match.class));
+        then(matchService).shouldHaveZeroInteractions();
     }
 
     @Test
@@ -160,6 +160,7 @@ class MatchControllerTest {
                 .andExpect(model().attributeExists("nullPlayer"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
+        then(matchService).shouldHaveZeroInteractions();
     }
 
     @Test
@@ -183,7 +184,7 @@ class MatchControllerTest {
                 .andExpect(model().attributeExists("nullPlayer"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
-        verify(matchService, times(0)).addMatchEntry(any(Match.class));
+        then(matchService).shouldHaveZeroInteractions();
     }
 
     @Test
@@ -193,8 +194,8 @@ class MatchControllerTest {
         // given
         var user = createUser();
         var userList = createUserList();
-        when(userService.getAllUsers()).thenReturn(userList);
-        when(userService.getLoggedInUser()).thenReturn(user);
+        given(userService.getAllUsers()).willReturn(userList);
+        given(userService.getLoggedInUser()).willReturn(user);
 
         // when
         var result = mockMvc.perform(post("/matches/add").param("date", LocalDate.now().toString())
@@ -208,7 +209,7 @@ class MatchControllerTest {
                 .andExpect(model().attributeExists("successMessage"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
-        verify(matchService, times(1)).addMatchEntry(any(Match.class));
+        then(matchService).should(times(1)).addMatchEntry(any(Match.class));
     }
 
     @Test
@@ -218,9 +219,9 @@ class MatchControllerTest {
         // given
         var user = createUser();
         var userList = createUserList();
-        when(userService.getAllUsers()).thenReturn(userList);
-        when(userService.getLoggedInUser()).thenReturn(user);
-        doThrow(FutureDateException.class).when(matchService).addMatchEntry(any(Match.class));
+        given(userService.getAllUsers()).willReturn(userList);
+        given(userService.getLoggedInUser()).willReturn(user);
+        willThrow(FutureDateException.class).given(matchService).addMatchEntry(any(Match.class));
 
         // when
         var result = mockMvc.perform(post("/matches/add").param("date", LocalDate.now().plusDays(1).toString())
@@ -234,6 +235,7 @@ class MatchControllerTest {
                 .andExpect(model().attributeExists("futureDate"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
+        then(matchService).should(times(1)).addMatchEntry(any(Match.class));
     }
 
     @Test
@@ -243,9 +245,9 @@ class MatchControllerTest {
         // given
         var user = createUser();
         var userList = createUserList();
-        when(userService.getAllUsers()).thenReturn(userList);
-        when(userService.getLoggedInUser()).thenReturn(user);
-        doThrow(InvalidCreatorException.class).when(matchService).addMatchEntry(any(Match.class));
+        given(userService.getAllUsers()).willReturn(userList);
+        given(userService.getLoggedInUser()).willReturn(user);
+        willThrow(InvalidCreatorException.class).given(matchService).addMatchEntry(any(Match.class));
 
         // when
         var result = mockMvc.perform(post("/matches/add").param("date", LocalDate.now().plusDays(1).toString())
@@ -259,6 +261,7 @@ class MatchControllerTest {
                 .andExpect(model().attributeExists("invalidCreator"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
+        then(matchService).should(times(1)).addMatchEntry(any(Match.class));
     }
 
     @Test
@@ -268,8 +271,8 @@ class MatchControllerTest {
         // given
         var user = createUser();
         var userList = createUserList();
-        when(userService.getAllUsers()).thenReturn(userList);
-        when(userService.getLoggedInUser()).thenReturn(user);
+        given(userService.getAllUsers()).willReturn(userList);
+        given(userService.getLoggedInUser()).willReturn(user);
         doThrow(SamePlayerException.class).when(matchService).addMatchEntry(any(Match.class));
 
         // when
@@ -284,5 +287,6 @@ class MatchControllerTest {
                 .andExpect(model().attributeExists("samePlayer"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
+        then(matchService).should(times(1)).addMatchEntry(any(Match.class));
     }
 }

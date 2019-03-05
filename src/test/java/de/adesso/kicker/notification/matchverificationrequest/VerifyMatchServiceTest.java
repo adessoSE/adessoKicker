@@ -26,7 +26,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
-public class VerifyMatchServiceTest {
+class VerifyMatchServiceTest {
 
     @Mock
     MatchVerificationRequestRepository matchVerificationRequestRepository;
@@ -58,16 +58,16 @@ public class VerifyMatchServiceTest {
     void verifyMatchAndDeleteAllRequests() {
         // given
         var matchVerification = createMatchVerification();
-        when(matchVerificationRequestRepository.getAllByMatch(matchVerification.getMatch()))
-                .thenReturn(createMatchVerificationList());
+        given(matchVerificationRequestRepository.getAllByMatch(matchVerification.getMatch()))
+                .willReturn(createMatchVerificationList());
 
         // when
         verifyMatchService.acceptRequest(matchVerification);
 
         // then
-        verify(matchVerificationRequestRepository, times(createMatchVerificationList().size()))
+        then(matchVerificationRequestRepository).should(times(createMatchVerificationList().size()))
                 .delete(any(MatchVerificationRequest.class));
-        verify(applicationEventPublisher, times(1)).publishEvent(any(MatchVerifiedEvent.class));
+        then(applicationEventPublisher).should(times(1)).publishEvent(any(MatchVerifiedEvent.class));
     }
 
     @Test
@@ -76,13 +76,13 @@ public class VerifyMatchServiceTest {
         // given
         var match = MatchDummy.match();
         var matchCreatedEvent = MatchCreatedEventDummy.matchCreatedEvent(match);
-        when(userService.getLoggedInUser()).thenReturn(match.getTeamAPlayer1());
+        given(userService.getLoggedInUser()).willReturn(match.getTeamAPlayer1());
 
         // when
         verifyMatchService.sendRequests(matchCreatedEvent);
 
         // then
-        verify(matchVerificationRequestRepository, times(2)).save(any(MatchVerificationRequest.class));
+        then(matchVerificationRequestRepository).should(times(2)).save(any(MatchVerificationRequest.class));
     }
 
     @Test
@@ -104,16 +104,16 @@ public class VerifyMatchServiceTest {
     void deleteMatchAndRequestsAndReturnUsersToInform() {
         // given
         var matchVerification = createMatchVerification();
-        when(userService.getLoggedInUser()).thenReturn(matchVerification.getMatch().getTeamAPlayer1());
-        when(matchVerificationRequestRepository.getAllByMatch(any(Match.class)))
-                .thenReturn(createMatchVerificationList());
+        given(userService.getLoggedInUser()).willReturn(matchVerification.getMatch().getTeamAPlayer1());
+        given(matchVerificationRequestRepository.getAllByMatch(any(Match.class)))
+                .willReturn(createMatchVerificationList());
 
         // when
         verifyMatchService.declineRequest(matchVerification);
 
         // then
-        verify(applicationEventPublisher, times(1)).publishEvent(any(MatchDeclinedEvent.class));
-        verify(matchVerificationRequestRepository, times(2)).delete(any(MatchVerificationRequest.class));
+        then(applicationEventPublisher).should(times(1)).publishEvent(any(MatchDeclinedEvent.class));
+        then(matchVerificationRequestRepository).should(times(2)).delete(any(MatchVerificationRequest.class));
         assertEquals(3, verifyMatchService.declineRequest(matchVerification).size());
     }
 }
