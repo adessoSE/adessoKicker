@@ -9,13 +9,17 @@ function updateBadgeCount(){
     }
 }
 
-function accept(btn) {
+function removeNotification(btn){
     var notification = btn.parentNode.parentNode.parentNode;
-    var id = notification.getAttribute('value');
+    notification.remove();
+}
+
+function accept(btn) {
     var xhttp = new XMLHttpRequest();
+    var id = btn.parentNode.parentNode.parentNode.getAttribute('value');
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            notification.remove();
+            removeNotification(btn);
             updateBadgeCount();
         }
     }
@@ -25,13 +29,11 @@ function accept(btn) {
 }
 
 function decline(btn) {
-    var notification = btn.parentNode.parentNode.parentNode;
-    var id = notification.getAttribute('value');
     var xhttp = new XMLHttpRequest();
+    var id = btn.parentNode.parentNode.parentNode.getAttribute('value');
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            alert();
-            notification.remove();
+            removeNotification(btn);
             updateBadgeCount();
         }
     }
