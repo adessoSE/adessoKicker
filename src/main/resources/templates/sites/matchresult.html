@@ -129,8 +129,14 @@
     <!-- When did you play? -->
     <div class="headline" th:text="#{'matchResult.whenDidYouPlay'}"></div>
     <!-- Timepicker -->
-    <div class="popup popup-error" th:if="${futureDate}" th:text="#{error.futureDate}"></div>
-    <div class="popup popup-error" th:if="${noDate}" th:text="#{error.noDate}"></div>
+    <div class="popup popup-error" th:if="${futureDate}">
+      <i class="fa fa-times" aria-hidden="true"></i>
+      <span th:text="#{error.futureDate}"></span>
+    </div>
+    <div class="popup popup-error" th:if="${noDate}">
+      <i class="fa fa-times" aria-hidden="true"></i>
+      <span th:text="#{error.noDate}"></span>
+    </div>
     <div class="form-group" id="datetimepicker-form-group">
       <div class="input-group date">
         <input type="date" th:field="*{date}" id="datetimepicker" class="form-control"/>
