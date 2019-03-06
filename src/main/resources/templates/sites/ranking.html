@@ -20,14 +20,18 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css">
 
   <!-- Hover CSS -->
-  <link rel="stylesheet" type="text/css" href="../css/hover-min.css">
+  <link rel="stylesheet" type="text/css" href="/css/hover-min.css">
 
   <!-- My stylesheets -->
-  <link rel="stylesheet/less" type="text/css" href="../css/header.less">
-  <link rel="stylesheet/less" type="text/css" href="../css/ranking.less">
+  <link rel="stylesheet/less" type="text/css" href="/css/header.less">
+  <link rel="stylesheet/less" type="text/css" href="/css/ranking.less">
 
   <!-- LESS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
+
+  <!-- ranking js -->
+  <script src="js/ranking.js"></script>
+
 </head>
 <body>
 <header th:replace="~{fragments/header.html :: header}"></header>
@@ -50,8 +54,8 @@
     <!-- Pager Buttons Vertical -->
     <div class="col-1">
       <div class="btn-group-vertical hide-on-small-screen">
-        <button class="pager"><i class="fas fa-chevron-circle-up"></i></button>
-        <button class="pager"><i class="fas fa-chevron-circle-down"></i></button>
+        <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>
+        <button class="pager" onclick="nextPage()"><i class="fas fa-chevron-circle-down"></i></button>
       </div>
     </div>
   </div>
@@ -69,83 +73,24 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>1.</td>
-      <td>Florian Albers</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>2.</td>
-      <td>Jan Schneider</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>3.</td>
-      <td>Florian Albers</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>4.</td>
-      <td>Jan Schneider</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>5.</td>
-      <td>Florian Albers</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>6.</td>
-      <td>Jan Schneider</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>7.</td>
-      <td>Florian Albers</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>8.</td>
-      <td>Jan Schneider</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>9.</td>
-      <td>Florian Albers</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>10.</td>
-      <td>Jan Schneider</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>289.</td>
-      <td>Jan Schneider</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
+    <div th:each="player : ${users}">
+      <tr>
+        <td th:text="${@rankingService.getPositionOfPlayer(player.ranking)}"></td>
+        <td th:text="${player.getFullName()}"></td>
+        <td th:text="${player.wins}"></td>
+        <td th:text="${player.getWinRatio() + '%'}"></td>
+        <td th:text="${player.ranking.rating}"></td>
+      </tr>
+    </div>
+    <div th:if="${user != false}">
+      <tr>
+        <td th:text="${@rankingService.getPositionOfPlayer(user.ranking)}"></td>
+        <td th:text="${user.getFullName()}"></td>
+        <td th:text="${user.wins}"></td>
+        <td th:text="${user.getWinRatio() + '%'}"></td>
+        <td th:text="${user.ranking.rating}"></td>
+      </tr>
+    </div>
     </tbody>
   </table>
 </div>
@@ -153,7 +98,6 @@
 <div class="btn-group-horizontal hide-on-large-screen">
   <button class="pager"><i class="fas fa-chevron-circle-up"></i></button>
   <button class="pager"><i class="fas fa-chevron-circle-down"></i></button>
-</div>
 </div>
 </body>
 </html>
