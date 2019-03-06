@@ -18,10 +18,10 @@
     <span th:if="${nullPlayer}" th:text="#{error.nullPlayer}"></span>
     <label for="teamAPlayer1" th:text="#{match.add.teamAPlayer1}"></label>
     <select name="teamAPlayer1" id="teamAPlayer1">
-      <option th:value="${#authentication.getName()}"
-              th:text="${#authentication.getName()}">
-      </option>
-    </select>
+    <option th:value="${#authentication.getName()}"
+            th:text="${#authentication.getName()}">
+    </option>
+  </select>
   </div>
   <div>
     <label for="teamAPlayer2" th:text="#{match.add.teamAPlayer2}"></label>
