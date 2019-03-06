@@ -40,11 +40,11 @@ public class EmailService {
         mailSender.send(simpleMailMessage);
     }
 
-    String setSubject(Match match) {
+    private String setSubject(Match match) {
         return String.format("Verify Match: %s played on %s", match.getMatchId(), match.getDate().toString());
     }
 
-    String verificationText(MatchVerificationSentEvent matchVerificationSentEvent) {
+    private String verificationText(MatchVerificationSentEvent matchVerificationSentEvent) {
         String acceptUrl = ACCEPT_URL + matchVerificationSentEvent.getMatchVerificationRequest().getNotificationId();
         String declineUrl = DECLINE_URL + matchVerificationSentEvent.getMatchVerificationRequest().getNotificationId();
 
@@ -68,11 +68,11 @@ public class EmailService {
         }
     }
 
-    boolean checkPlayerExist(User user) {
+    private boolean checkPlayerExist(User user) {
         return Objects.nonNull(user);
     }
 
-    String getWinner(Match match) {
+    private String getWinner(Match match) {
         ArrayList<String> winners = new ArrayList<>();
         for (User winner : match.getWinners()) {
             winners.add(winner.getFullName());
