@@ -1,13 +1,12 @@
 package de.adesso.kicker.email;
 
-import de.adesso.kicker.configurations.EmailConfig;
 import de.adesso.kicker.events.match.MatchVerificationSentEvent;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.user.persistence.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,64 +15,64 @@ import java.util.Objects;
 @Service
 public class EmailService {
 
-    private EmailConfig emailConfig;
+    static final String ACCEPT_URL = "http://localhost/notifications/accept/";
 
-    private final String ACCEPT_URL = "http://localhost/notifications/accept/";
-    private final String DECLINE_URL = "http://localhost/notifications/decline/";
+    static final String DECLINE_URL = "http://localhost/notifications/decline/";
 
-    private static SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+    private final JavaMailSender mailSender;
 
     @Autowired
-    public EmailService(EmailConfig emailConfig) {
-        this.emailConfig = emailConfig;
+    public EmailService(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
     }
 
     @EventListener
     public void sendVerification(MatchVerificationSentEvent matchVerificationSentEvent) {
-        Match match = matchVerificationSentEvent.getMatchVerificationRequest().getMatch();
+        var matchVerificationRequest = matchVerificationSentEvent.getMatchVerificationRequest();
+        var match = matchVerificationRequest.getMatch();
 
-        JavaMailSenderImpl mailSender = emailConfig.setMailServerConfig();
-
+        var simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom(match.getTeamAPlayer1().getEmail());
-        simpleMailMessage.setTo(matchVerificationSentEvent.getMatchVerificationRequest().getReceiver().getEmail());
+        simpleMailMessage.setTo(matchVerificationRequest.getReceiver().getEmail());
         simpleMailMessage.setSubject(setSubject(match));
         simpleMailMessage.setText(verificationText(matchVerificationSentEvent));
+
         mailSender.send(simpleMailMessage);
     }
 
-    private String setSubject(Match match) {
+    String setSubject(Match match) {
         return String.format("Verify Match: %s played on %s", match.getMatchId(), match.getDate().toString());
     }
 
-    private String verificationText(MatchVerificationSentEvent matchVerificationSentEvent) {
+    String verificationText(MatchVerificationSentEvent matchVerificationSentEvent) {
         String acceptUrl = ACCEPT_URL + matchVerificationSentEvent.getMatchVerificationRequest().getNotificationId();
         String declineUrl = DECLINE_URL + matchVerificationSentEvent.getMatchVerificationRequest().getNotificationId();
 
         Match match = matchVerificationSentEvent.getMatchVerificationRequest().getMatch();
 
-        String playerA1 = match.getTeamAPlayer1().getFullName();
+        String playerA1Name = match.getTeamAPlayer1().getFullName();
 
-        User userA2 = match.getTeamAPlayer2();
+        User playerA2 = match.getTeamAPlayer2();
 
         String winnerText = getWinner(match);
 
-        if (checkPlayerExist(userA2)) {
-            String playerA2 = match.getTeamAPlayer2().getFullName();
+        if (checkPlayerExist(playerA2)) {
+            String playerA2Name = match.getTeamAPlayer2().getFullName();
             return String.format(
                     "Your recently played Match against %s and %s needs to be verified.\n%s\nVerify -> %s\nDecline -> %s",
-                    playerA1, playerA2, winnerText, acceptUrl, declineUrl);
+                    playerA1Name, playerA2Name, winnerText, acceptUrl, declineUrl);
         } else {
             return String.format(
                     "Your recently played Match against %s needs to be verified.\n%s\nVerify -> %s\nDecline -> %s",
-                    playerA1, winnerText, acceptUrl, declineUrl);
+                    playerA1Name, winnerText, acceptUrl, declineUrl);
         }
     }
 
-    private boolean checkPlayerExist(User user) {
-        return !Objects.isNull(user);
+    boolean checkPlayerExist(User user) {
+        return Objects.nonNull(user);
     }
 
-    private String getWinner(Match match) {
+    String getWinner(Match match) {
         ArrayList<String> winners = new ArrayList<>();
         for (User winner : match.getWinners()) {
             winners.add(winner.getFullName());
