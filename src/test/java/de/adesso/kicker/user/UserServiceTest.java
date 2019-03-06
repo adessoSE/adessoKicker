@@ -15,6 +15,8 @@ import org.keycloak.representations.AccessToken;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -27,6 +29,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 class UserServiceTest {
@@ -160,5 +163,21 @@ class UserServiceTest {
 
         // then
         verify(userRepository, times(1)).save(user);
+    }
+
+    @Test
+    @DisplayName("Expect a list of users")
+    void expectListOfUsers() {
+        // given
+        var userList = createUserList();
+        var pageable = mock(Page.class);
+        given(userRepository.findAll(any(Pageable.class))).willReturn(pageable);
+        given(pageable.getContent()).willReturn(userList);
+
+        // when
+        var actualList = userService.getUserPageSortedByRating(0, 10);
+
+        // then
+        assertEquals(userList, actualList);
     }
 }
