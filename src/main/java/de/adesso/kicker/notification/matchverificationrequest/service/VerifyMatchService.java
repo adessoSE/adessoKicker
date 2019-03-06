@@ -55,13 +55,12 @@ public class VerifyMatchService {
 
     public List<User> declineRequest(MatchVerificationRequest matchVerificationRequest) {
         deleteRequest(matchVerificationRequest);
-        sendMatchRequestDeclinedEvent(matchVerificationRequest.getMatch());
         List<MatchVerificationRequest> otherRequests = getRequestsByMatch(matchVerificationRequest.getMatch());
         List<User> usersToInform = new ArrayList<>();
-
         for (MatchVerificationRequest request : otherRequests) {
             deleteRequest(request);
         }
+        sendMatchRequestDeclinedEvent(matchVerificationRequest.getMatch());
         for (User player : matchVerificationRequest.getMatch().getPlayers()) {
             if (!userService.getLoggedInUser().equals(player)) {
                 usersToInform.add(player);
