@@ -31,9 +31,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
-public class NotificationServiceTest {
+class NotificationServiceTest {
 
     @Mock
     private NotificationRepository notificationRepository;
@@ -71,7 +72,7 @@ public class NotificationServiceTest {
     @DisplayName("If the notification does not exists a NotificationNotExistingException should be thrown")
     void whenInvalidIdThenExceptionShouldBeThrown() {
         // given
-        when(notificationRepository.findById(anyLong())).thenReturn(Optional.empty());
+        given(notificationRepository.findById(anyLong())).willReturn(Optional.empty());
 
         // when
         Executable when = () -> notificationService.getNotificationById(anyLong());
@@ -85,7 +86,7 @@ public class NotificationServiceTest {
     void whenWrongReceiverThenThrowWrongReceiverException() {
         // given
         var notification = createMatchVerification();
-        when(userService.getLoggedInUser()).thenReturn(UserDummy.alternateUser2());
+        given(userService.getLoggedInUser()).willReturn(UserDummy.alternateUser2());
 
         // when
         Executable when = () -> notificationService.checkWrongReceiver(notification);
@@ -99,14 +100,14 @@ public class NotificationServiceTest {
     void whenMessageAcceptedThenDeleteMessageShouldBeCalled() {
         // given
         var message = createMessageDeclined();
-        when(notificationRepository.findById(anyLong())).thenReturn(Optional.of(message));
-        when(userService.getLoggedInUser()).thenReturn(message.getReceiver());
+        given(notificationRepository.findById(anyLong())).willReturn(Optional.of(message));
+        given(userService.getLoggedInUser()).willReturn(message.getReceiver());
 
         // when
         notificationService.acceptNotification(1);
 
         // then
-        verify(sendMessageService, times(1)).deleteMessage((Message) message);
+        then(sendMessageService).should(times(1)).deleteMessage((Message) message);
     }
 
     @Test
@@ -114,14 +115,14 @@ public class NotificationServiceTest {
     void whenMatchVerificationAcceptedThenAcceptRequestShouldBeCalled() {
         // given
         var matchVerification = createMatchVerification();
-        when(notificationRepository.findById(anyLong())).thenReturn(Optional.of(matchVerification));
-        when(userService.getLoggedInUser()).thenReturn(matchVerification.getReceiver());
+        given(notificationRepository.findById(anyLong())).willReturn(Optional.of(matchVerification));
+        given(userService.getLoggedInUser()).willReturn(matchVerification.getReceiver());
 
         // when
         notificationService.acceptNotification(1);
 
         // then
-        verify(verifyMatchService, times(1)).acceptRequest((MatchVerificationRequest) matchVerification);
+        then(verifyMatchService).should(times(1)).acceptRequest((MatchVerificationRequest) matchVerification);
     }
 
     @Test
@@ -129,14 +130,14 @@ public class NotificationServiceTest {
     void whenMessageDeletedThenDeleteMessageShouldBeCalled() {
         // given
         var message = createMessageDeclined();
-        when(notificationRepository.findById(anyLong())).thenReturn(Optional.of(message));
-        when(userService.getLoggedInUser()).thenReturn(message.getReceiver());
+        given(notificationRepository.findById(anyLong())).willReturn(Optional.of(message));
+        given(userService.getLoggedInUser()).willReturn(message.getReceiver());
 
         // when
         notificationService.declineNotification(1);
 
         // then
-        verify(sendMessageService, times(1)).deleteMessage((Message) message);
+        then(sendMessageService).should(times(1)).deleteMessage((Message) message);
     }
 
     @Test
@@ -145,18 +146,18 @@ public class NotificationServiceTest {
     void whenMatchVerificationDeclinedThenDeclineRequestShouldBeCalledAndMessagesSent() {
         // given
         var matchVerification = createMatchVerification();
-        when(notificationRepository.findById(anyLong())).thenReturn(Optional.of(matchVerification));
-        when(userService.getLoggedInUser()).thenReturn(matchVerification.getReceiver());
-        when(verifyMatchService.declineRequest(any(MatchVerificationRequest.class)))
-                .thenReturn(Collections.singletonList(UserDummy.defaultUser()));
+        given(notificationRepository.findById(anyLong())).willReturn(Optional.of(matchVerification));
+        given(userService.getLoggedInUser()).willReturn(matchVerification.getReceiver());
+        given(verifyMatchService.declineRequest(any(MatchVerificationRequest.class)))
+                .willReturn(Collections.singletonList(UserDummy.defaultUser()));
 
         // when
         notificationService.declineNotification(1);
 
         // then
-        verify(verifyMatchService, times(1)).declineRequest((MatchVerificationRequest) matchVerification);
-        verify(sendMessageService, times(1)).sendMessage(any(User.class), any(User.class),
-                eq(MessageType.MESSAGE_DECLINED));
+        then(verifyMatchService).should(times(1)).declineRequest((MatchVerificationRequest) matchVerification);
+        then(sendMessageService).should(times(1))
+                .sendMessage(any(User.class), any(User.class), eq(MessageType.MESSAGE_DECLINED));
     }
 
     @Test

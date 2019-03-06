@@ -30,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 class UserServiceTest {
@@ -58,7 +59,7 @@ class UserServiceTest {
     void whenUsersExistReturnAllUsers() {
         // given
         var userList = createUserList();
-        when(userRepository.findAll()).thenReturn(userList);
+        given(userRepository.findAll()).willReturn(userList);
 
         // when
         var actualList = userService.getAllUsers();
@@ -72,7 +73,7 @@ class UserServiceTest {
     void whenNoUsersExistReturnEmptyList() {
         // given
         List<User> expected = Collections.emptyList();
-        when(userRepository.findAll()).thenReturn(expected);
+        given(userRepository.findAll()).willReturn(expected);
 
         // when
         var actual = userService.getAllUsers();
@@ -86,7 +87,7 @@ class UserServiceTest {
     void whenUserWithIdExistsReturnUser() {
         // given
         var user = createUser();
-        when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
+        given(userRepository.findById(user.getUserId())).willReturn(Optional.of(user));
 
         // when
         var actualUser = userService.getUserById(user.getUserId());
@@ -99,7 +100,7 @@ class UserServiceTest {
     @DisplayName("If user with given id doesn't exist throw UserNotFoundException")
     void whenUserWithIdNotFoundThrowUserNotFoundException() {
         // given
-        when(userRepository.findById(anyString())).thenReturn(Optional.empty());
+        given(userRepository.findById(anyString())).willReturn(Optional.empty());
 
         // when
         Executable when = () -> userService.getUserById("non-existent-id");
@@ -117,9 +118,9 @@ class UserServiceTest {
         var securityContext = mock(SecurityContext.class);
         SecurityContextHolder.setContext(securityContext);
 
-        when(securityContext.getAuthentication()).thenReturn(authentication);
-        when(authentication.getName()).thenReturn(expected.getUserId());
-        when(userRepository.findById(expected.getUserId())).thenReturn(Optional.of(expected));
+        given(securityContext.getAuthentication()).willReturn(authentication);
+        given(authentication.getName()).willReturn(expected.getUserId());
+        given(userRepository.findById(expected.getUserId())).willReturn(Optional.of(expected));
 
         // when
         var actual = userService.getLoggedInUser();
@@ -140,29 +141,29 @@ class UserServiceTest {
         var keycloakContext = mock(RefreshableKeycloakSecurityContext.class);
         var accessToken = mock(AccessToken.class);
 
-        when(authEvent.getAuthentication()).thenReturn(authentication);
+        given(authEvent.getAuthentication()).willReturn(authentication);
 
-        when(authentication.getPrincipal()).thenReturn(principal);
+        given(authentication.getPrincipal()).willReturn(principal);
 
-        when(principal.getName()).thenReturn(user.getUserId());
+        given(principal.getName()).willReturn(user.getUserId());
 
-        when(authentication.getDetails()).thenReturn(simpleAccount);
-        when(simpleAccount.getKeycloakSecurityContext()).thenReturn(keycloakContext);
-        when(keycloakContext.getToken()).thenReturn(accessToken);
+        given(authentication.getDetails()).willReturn(simpleAccount);
+        given(simpleAccount.getKeycloakSecurityContext()).willReturn(keycloakContext);
+        given(keycloakContext.getToken()).willReturn(accessToken);
 
-        when(accessToken.getPreferredUsername()).thenReturn(user.getUserId());
-        when(accessToken.getGivenName()).thenReturn(user.getFirstName());
-        when(accessToken.getFamilyName()).thenReturn(user.getLastName());
-        when(accessToken.getEmail()).thenReturn(user.getEmail());
+        given(accessToken.getPreferredUsername()).willReturn(user.getUserId());
+        given(accessToken.getGivenName()).willReturn(user.getFirstName());
+        given(accessToken.getFamilyName()).willReturn(user.getLastName());
+        given(accessToken.getEmail()).willReturn(user.getEmail());
 
-        when(userRepository.findById(anyString())).thenReturn(Optional.empty());
-        when(userRepository.save(user)).thenReturn(user);
+        given(userRepository.findById(anyString())).willReturn(Optional.empty());
+        given(userRepository.save(user)).willReturn(user);
 
         // when
         userService.checkFirstLogin(authEvent);
 
         // then
-        verify(userRepository, times(1)).save(user);
+        then(userRepository).should(times(1)).save(user);
     }
 
     @Test
