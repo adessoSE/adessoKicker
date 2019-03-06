@@ -18,10 +18,10 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css">
 
   <!-- Hover CSS -->
-  <link rel="stylesheet" type="text/css" href="../css/hover-min.css">
+  <link rel="stylesheet" type="text/css" href="/css/hover-min.css">
 
   <!-- My stylesheets -->
-  <link rel="stylesheet/less" type="text/css" href="../css/header.less">
+  <link rel="stylesheet/less" type="text/css" href="/css/header.less">
 
   <!-- LESS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
@@ -32,18 +32,22 @@
     <p class="adesso-blue-text" th:text="${notification.sendDate}"></p>
     <div class="notification-text">
       <div th:if="${notification.match.getWinners().size() == 1}">
-        <div th:text="#{notification.matchRequest.oneOpponent(${notification.match.getWinners().get(0).firstName}, ${notification.match.date})}"></div>
+        <div
+            th:text="#{notification.matchRequest.oneOpponent(${notification.match.getWinners().get(0).firstName}, ${notification.match.date})}"></div>
       </div>
       <div th:if="${notification.match.getWinners().size() == 2}">
-        <div th:text="#{notification.matchRequest.twoOpponents(${notification.match.getWinners().get(0).firstName}, ${notification.match.getWinners().get(1).firstName}, ${notification.match.date})}"></div>
+        <div
+            th:text="#{notification.matchRequest.twoOpponents(${notification.match.getWinners().get(0).firstName}, ${notification.match.getWinners().get(1).firstName}, ${notification.match.date})}"></div>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-6">
-        <button type="button" class="btn hvr-fade notification-bt" onclick="accept(this);" th:text="#{notification.yes}"></button>
+        <button type="button" class="btn hvr-fade notification-bt" onclick="accept(this);"
+                th:text="#{notification.yes}"></button>
       </div>
       <div class="col-sm-6">
-        <button type="button" class="btn hvr-fade notification-bt" onclick="decline(this);" th:text="#{notification.no}"></button>
+        <button type="button" class="btn hvr-fade notification-bt" onclick="decline(this);"
+                th:text="#{notification.no}"></button>
       </div>
     </div>
     <div class="dropdown-divider"></div>

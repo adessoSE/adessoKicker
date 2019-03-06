@@ -1,110 +1,110 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>adesso kicker</title>
+  <title>adesso kicker</title>
 
-    <!-- Required meta tags -->
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- JQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-    <!-- Fontawesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css">
+  <!-- Fontawesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css">
 
-    <!-- Hover CSS -->
-    <link rel="stylesheet" type="text/css" href="../css/hover-min.css">
+  <!-- Hover CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/hover-min.css">
 
-    <!-- My stylesheets -->
-    <link rel="stylesheet/less" type="text/css" href="../css/header.less">
+  <!-- My stylesheets -->
+  <link rel="stylesheet/less" type="text/css" href="/css/header.less">
 
-    <!-- LESS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
+  <!-- LESS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
 </head>
 <body>
 <!-- Header Template -->
 <header th:fragment="header">
-    <nav class="navbar navbar-light navbar-expand-lg">
-        <!-- Logo -->
-        <a class="navbar-brand" href="#">
-            <img class="adesso-logo" src="../img/adesso-logo.png" alt="adesso kicker">
-        </a>
-        <script src="../js/notifications.js"></script>
-        <!-- Links -->
-        <div class="navbar-collapse collapse">
-            <ul class="navbar-nav">
-                <li class="nav-item header-link" th:href="@{/matches/add}">
-                    <i class="fa fa-calendar-check hvr-icon"></i>
-                    <a class="nav-link hvr-underline-from-left" th:href="@{/matches/add}" th:text="#{'sites.matchRequest'}"></a>
-                </li>
-                <li class="nav-item header-link">
-                    <i class="fa fa-trophy hvr-icon"></i>
-                    <a class="nav-link hvr-underline-from-left" th:href="@{/ranking}" th:text="#{'sites.ranking'}"></a>
-                </li>
-                <li class="nav-item header-link">
-                    <i class="fa fa-user hvr-icon"></i>
-                    <a class="nav-link hvr-underline-from-left" th:href="@{/users/you}" th:text="#{'sites.profile'}"></a>
-                </li>
-            </ul>
+  <nav class="navbar navbar-light navbar-expand-lg">
+    <!-- Logo -->
+    <a class="navbar-brand" href="#">
+      <img class="adesso-logo" src="/img/adesso-logo.png" alt="adesso kicker">
+    </a>
+    <script src="/js/notifications.js"></script>
+    <!-- Links -->
+    <div class="navbar-collapse collapse">
+      <ul class="navbar-nav">
+        <li class="nav-item header-link" th:href="@{/matches/add}">
+          <i class="fa fa-calendar-check hvr-icon"></i>
+          <a class="nav-link hvr-underline-from-left" th:href="@{/matches/add}" th:text="#{sites.matchRequest}"></a>
+        </li>
+        <li class="nav-item header-link">
+          <i class="fa fa-trophy hvr-icon"></i>
+          <a class="nav-link hvr-underline-from-left" th:href="@{/ranking}" th:text="#{sites.ranking}"></a>
+        </li>
+        <li class="nav-item header-link">
+          <i class="fa fa-user hvr-icon"></i>
+          <a class="nav-link hvr-underline-from-left" th:href="@{/users/you}" th:text="#{sites.profile}"></a>
+        </li>
+      </ul>
+    </div>
+    <!-- Notification Dropdown -->
+    <div class="dropdown ml-auto" id="notification-dropdown" th:if="${#authentication.getName() != 'anonymousUser'}">
+      <button onblur="toggleEnvelope()" onfocus="toggleEnvelope()"
+              type="button" class="btn header-dropdown-bt hvr-fade" id="notification-dropdown-icon"
+              data-toggle="dropdown">
+        <i class="fa fa-envelope hvr-icon"></i>
+        <span th:if="${notifications.size() > 0}" class="badge" id="notification-badge"
+              th:value="${notifications.size()}" th:text="${notifications.size()}"></span>
+      </button>
+      <div class="shadow dropdown-menu-anim-in dropdown-menu dropdown-menu-right" id="notification-dropdown-menu"
+           th:if="${notifications}">
+        <!-- No Notifications Info -->
+        <div id="no-notifications" th:if="${notifications.size() <= 0}" th:text="#{notification.noNotifications}"></div>
+        <!-- Notifications -->
+        <div th:each="notification : ${notifications}">
+          <div
+              th:if="${notification.type == T(de.adesso.kicker.notification.persistence.NotificationType).MATCH_VERIFICATION}">
+            <div th:replace="~{fragments/matchverification.html :: matchverification}"></div>
+          </div>
+          <div th:if="${notification.type == T(de.adesso.kicker.notification.persistence.NotificationType).MESSAGE}">
+            <div th:replace="~{fragments/message.html :: message}"></div>
+          </div>
         </div>
-        <!-- Notification Dropdown -->
-        <div class="dropdown ml-auto" id="notification-dropdown" th:if="${#authentication.getName() != 'anonymousUser'}">
-            <button onblur="toggleEnvelope()" onfocus="toggleEnvelope()"
-                    type="button" class="btn header-dropdown-bt hvr-fade" id="notification-dropdown-icon" data-toggle="dropdown">
-                <i class="fa fa-envelope hvr-icon"></i>
-                <span th:if="${notifications.size() > 0}" class="badge" id="notification-badge" th:value="${notifications.size()}" th:text="${notifications.size()}"></span>
-            </button>
-            <div class="shadow dropdown-menu-anim-in dropdown-menu dropdown-menu-right" id="notification-dropdown-menu" th:if="${notifications}">
-              <!-- No Notifications Info -->
-               <div id="no-notifications" th:if="${notifications.size() <= 0}" th:text="#{'notification.noNotifications'}"></div>
-              <!-- Notifications -->
-               <div th:each="notification : ${notifications}">
-                <div th:if="${notification.type == T(de.adesso.kicker.notification.persistence.NotificationType).MATCH_VERIFICATION}">
-                  <div th:replace="~{fragments/matchverification.html :: matchverification}"></div>
-                </div>
-                <div th:if="${notification.type == T(de.adesso.kicker.notification.persistence.NotificationType).MESSAGE}">
-                  <div th:replace="~{fragments/message.html :: message}"></div>
-                </div>
-              </div>
-            </div>
+      </div>
+    </div>
+    <!-- Profile Settings -->
+    <div class="dropdown ml-auto" id="profile-dropdown" th:if="${#authentication.getName() != 'anonymousUser'}">
+      <button type="button" class="btn dropdown-toggle header-dropdown-bt hvr-fade" data-toggle="dropdown">
+        <!-- User Name -->
+        <span th:text="${#authentication.getName()}"></span>
+      </button>
+      <div class="shadow dropdown-menu-anim-in dropdown-menu dropdown-menu-right" id="profile-dropdown-menu">
+        <div class="dropdown-item">
+          <i class="fa fa-calendar-check hvr-icon"></i>
+          <a class="move-2px-right adesso-blue-text" th:href="@{/matches/add}" th:text="#{sites.matchRequest}"></a>
         </div>
-        <!-- Login Button -->
-        <div th:if="${#authentication.getName() == 'anonymousUser'}">
-          <a type="button" class="btn btn-primary hvr-fade" id="login-button" href="/sso/login">login</a>
+        <div class="dropdown-item">
+          <i class="fa fa-trophy hvr-icon move-1px-left"></i>
+          <a class="adesso-blue-text" th:href="@{/ranking}" th:text="#{sites.ranking}"></a>
         </div>
-        <!-- Profile Settings -->
-        <div class="dropdown ml-auto" id="profile-dropdown" th:if="${#authentication.getName() != 'anonymousUser'}">
-            <button type="button" class="btn dropdown-toggle header-dropdown-bt hvr-fade" data-toggle="dropdown">
-                <!-- User Name -->
-                <span th:text="${#authentication.getName()}"></span>
-            </button>
-            <div class="shadow dropdown-menu-anim-in dropdown-menu dropdown-menu-right" id="profile-dropdown-menu">
-                <div class="dropdown-item">
-                    <i class="fa fa-calendar-check hvr-icon"></i>
-                    <a class="move-2px-right adesso-blue-text" th:href="@{/matches/add}" th:text="#{'sites.matchRequest'}"></a>
-                </div>
-                <div class="dropdown-item">
-                    <i class="fa fa-trophy hvr-icon move-1px-left"></i>
-                    <a class="adesso-blue-text" th:href="@{/ranking}" th:text="#{'sites.ranking'}"></a>
-                </div>
-                <div class="dropdown-item">
-                    <i class="fa fa-user hvr-icon"></i>
-                    <a class="move-2px-right adesso-blue-text" th:href="@{/users/you}" th:text="#{'sites.profile'}"></a>
-                </div>
-                <div class="dropdown-divider"></div>
-                <div class="dropdown-item hvr-icon-back">
-                    <i class="fa fa-sign-out-alt hvr-icon"></i>
-                    <a class="move-2px-right adesso-blue-text" th:href="@{/logout}" th:text="#{'sites.logout'}">Logout</a>
-                </div>
-            </div>
+        <div class="dropdown-item">
+          <i class="fa fa-user hvr-icon"></i>
+          <a class="move-2px-right adesso-blue-text" th:href="@{/users/you}" th:text="#{sites.profile}"></a>
         </div>
-    </nav>
-    <script src="../js/header.js"></script>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-item hvr-icon-back">
+          <i class="fa fa-sign-out-alt hvr-icon"></i>
+          <a class="move-2px-right adesso-blue-text" th:href="@{/logout}" th:text="#{sites.logout}">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <script src="/js/header.js"></script>
 </header>
 </body>
 </html>

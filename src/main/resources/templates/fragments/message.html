@@ -18,10 +18,10 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css">
 
   <!-- Hover CSS -->
-  <link rel="stylesheet" type="text/css" href="../css/hover-min.css">
+  <link rel="stylesheet" type="text/css" href="/css/hover-min.css">
 
   <!-- My stylesheets -->
-  <link rel="stylesheet/less" type="text/css" href="../css/header.less">
+  <link rel="stylesheet/less" type="text/css" href="/css/header.less">
 
   <!-- LESS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
@@ -31,10 +31,10 @@
   <div class="dropdown-item message" th:value="${notification.notificationId}">
     <p class="adesso-blue-text" th:text="${notification.sendDate}"></p>
     <p class="notification-text">
-      <div th:if="${notification.messageType == T(de.adesso.kicker.notification.message.persistence.MessageType).MESSAGE_DECLINED}">
-        <div th:text="#{notification.message.declined(${notification.sender.firstName})}"></div>
-      </div>
-    </p>
+    <div
+        th:if="${notification.messageType == T(de.adesso.kicker.notification.message.persistence.MessageType).MESSAGE_DECLINED}">
+      <div th:text="#{notification.message.declined(${notification.sender.firstName})}"></div>
+    </div>
     <div class="row">
       <div class="col">
         <button type="button" class="btn hvr-fade notification-bt" onclick="accept(this);">OK</button>

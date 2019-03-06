@@ -30,7 +30,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
 
   <!-- ranking js -->
-  <script src="js/ranking.js"></script>
+  <script src="/js/ranking.js"></script>
 
 </head>
 <body>
@@ -39,7 +39,7 @@
   <div class="row">
     <div class="col-11">
       <div id="text-and-searchbar">
-        <h2 th:text="#{'sites.ranking'}"></h2>
+        <h2 th:text="#{sites.ranking}"></h2>
         <!-- Search Bar -->
         <div class="searchbar input-group">
           <div class="input-group-prepend">
@@ -47,7 +47,7 @@
              <i class="fas fa-search"></i>
            </span>
           </div>
-          <input class="form-control" type="text" th:placeholder="#{'searchbar'}">
+          <input class="form-control" type="text" th:placeholder="#{searchbar}">
         </div>
       </div>
     </div>
@@ -69,11 +69,11 @@
   <table class="user-table table">
     <thead>
     <tr>
-      <th th:text="#{'statistics.rank'}"></th>
-      <th th:text="#{'ranking.name'}"></th>
-      <th th:text="#{'statistics.victories'}"></th>
-      <th th:text="#{'statistics.victoryrate'}"></th>
-      <th th:text="#{'statistics.points'}"></th>
+      <th th:text="#{statistics.rank}"></th>
+      <th th:text="#{ranking.name}"></th>
+      <th th:text="#{statistics.victories}"></th>
+      <th th:text="#{statistics.winRate}"></th>
+      <th th:text="#{statistics.points}"></th>
     </tr>
     </thead>
     <tbody>
