@@ -38,7 +38,7 @@
         <!-- Links -->
         <div class="navbar-collapse collapse">
             <ul class="navbar-nav">
-                <li class="nav-item header-link">
+                <li class="nav-item header-link" th:href="@{/matches/add}">
                     <i class="fa fa-calendar-check hvr-icon"></i>
                     <a class="nav-link hvr-underline-from-left" th:href="@{/matches/add}" th:text="#{'sites.matchRequest'}"></a>
                 </li>
@@ -98,14 +98,7 @@
             </div>
         </div>
     </nav>
-    <!-- My JS -->
-    <script src="../js/anim.js"></script>
-    <!-- Stop notification menu to close when clicked inside -->
-    <script>
-        $("#notification-dropdown-menu").click(function(e){
-            e.stopPropagation();
-        });
-    </script>
+    <script src="../js/header.js"></script>
 </header>
 </body>
 </html>

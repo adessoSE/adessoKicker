@@ -18,7 +18,7 @@ public class Ranking {
     private int rating;
 
     public Ranking() {
-        this.rating = 1500;
+        this.rating = 1000;
     }
 
     public String getRankingId() {

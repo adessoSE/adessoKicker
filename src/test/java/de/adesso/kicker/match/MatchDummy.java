@@ -13,6 +13,10 @@ public class MatchDummy {
         return match;
     }
 
+    public static Match matchTeamBWon() {
+        return new Match(LocalDate.now(), UserDummy.defaultUser(), UserDummy.alternateUser(), false);
+    }
+
     public static Match matchWithEqualPlayerA1B1() {
         return new Match(LocalDate.now(), UserDummy.defaultUser(), UserDummy.defaultUser(), true);
     }
