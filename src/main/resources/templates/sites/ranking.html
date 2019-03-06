@@ -69,83 +69,24 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>1.</td>
-      <td>Florian Albers</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>2.</td>
-      <td>Jan Schneider</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>3.</td>
-      <td>Florian Albers</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>4.</td>
-      <td>Jan Schneider</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>5.</td>
-      <td>Florian Albers</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>6.</td>
-      <td>Jan Schneider</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>7.</td>
-      <td>Florian Albers</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>8.</td>
-      <td>Jan Schneider</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>9.</td>
-      <td>Florian Albers</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>10.</td>
-      <td>Jan Schneider</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>289.</td>
-      <td>Jan Schneider</td>
-      <td>3</td>
-      <td>1.5</td>
-      <td>1500</td>
-    </tr>
+      <div th:each="player : ${users}">
+        <tr>
+          <td>1.</td>
+          <td th:text="${player.getFullName()}"></td>
+          <td th:text="${player.wins}"></td>
+          <td th:text="${player.getWinRatio() + '%'}"></td>
+          <td th:text="${player.ranking.rating}"></td>
+        </tr>
+      </div>
+      <div th:if="${user != false}">
+        <tr>
+          <td>1.</td>
+          <td th:text="${user.getFullName()}"></td>
+          <td th:text="${user.wins}"></td>
+          <td th:text="${user.getWinRatio() + '%'}"></td>
+          <td th:text="${user.ranking.rating}"></td>
+        </tr>
+      </div>
     </tbody>
   </table>
 </div>
