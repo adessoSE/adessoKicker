@@ -13,10 +13,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class SendMessageServiceTest {
+class SendMessageServiceTest {
 
     @Mock
     private MessageRepository messageRepository;
@@ -41,5 +43,18 @@ public class SendMessageServiceTest {
 
         // then
         verify(messageRepository, times(1)).save(any(Message.class));
+    }
+
+    @Test
+    void verifyMessageIsDeleted() {
+        // given
+        var message = MessageDummy.messageDeclined();
+        willDoNothing().given(messageRepository).delete(message);
+
+        // when
+        sendMessageService.deleteMessage(message);
+
+        // then
+        then(messageRepository).should(times(1)).delete(message);
     }
 }
