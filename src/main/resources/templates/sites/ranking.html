@@ -57,7 +57,7 @@
         <div th:if="${(param.site != null) and (param.site != 0)}">
           <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>
         </div>
-        <div th:if="${@rankingService.getPositionOfPlayer(users.get(users.size()-1).ranking) != @userService.getAllUsers().size()}">
+        <div th:if="${@userService.getUserPageSortedByRating((param.site == null ? 1 : param.site+1), (param.size == null ? 10 : param.size)).size() != 0}">
           <button class="pager" onclick="nextPage()"><i class="fas fa-chevron-circle-down"></i></button>
         </div>
       </div>
@@ -103,7 +103,7 @@
   <div th:if="${(param.site != null) and (param.site != 0)}">
     <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>
   </div>
-  <div th:if="${@rankingService.getPositionOfPlayer(users.get(users.size()-1).ranking) != @userService.getAllUsers().size()}">
+  <div th:if="${@userService.getUserPageSortedByRating((param.site == null ? 1 : param.site+1), (param.size == null ? 10 : param.size)).size() != 0}">
     <button class="pager" onclick="nextPage()"><i class="fas fa-chevron-circle-down"></i></button>
   </div>
 </div>
