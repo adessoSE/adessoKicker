@@ -28,6 +28,10 @@
 
   <!-- LESS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
+
+  <!-- ranking js -->
+  <script src="js/ranking.js"></script>
+
 </head>
 <body>
 <header th:replace="~{fragments/header.html :: header}"></header>
@@ -50,8 +54,8 @@
     <!-- Pager Buttons Vertical -->
     <div class="col-1">
       <div class="btn-group-vertical hide-on-small-screen">
-        <button class="pager"><i class="fas fa-chevron-circle-up"></i></button>
-        <button class="pager"><i class="fas fa-chevron-circle-down"></i></button>
+        <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>
+        <button class="pager" onclick="nextPage()"><i class="fas fa-chevron-circle-down"></i></button>
       </div>
     </div>
   </div>
@@ -94,7 +98,6 @@
 <div class="btn-group-horizontal hide-on-large-screen">
   <button class="pager"><i class="fas fa-chevron-circle-up"></i></button>
   <button class="pager"><i class="fas fa-chevron-circle-down"></i></button>
-</div>
 </div>
 </body>
 </html>
