@@ -37,7 +37,6 @@
     margin-top: 18px;
   }
 }
-
 #notification-badge{
   position: absolute !important;
   margin-left: -12px;
@@ -48,13 +47,17 @@
   font-size: 15px;
   padding-top: 2px;
 }
-
-.notification-bt{width: 80px;}
+.notification-bt{
+  width: 100%;
+}
 .notification-text{
   color: black;
   white-space: normal;
   width: 240px;
+  margin-bottom: 15px;
 }
+
+.matchverification:hover{background-color: @colorscheme[warm-grey-lighter];}
 
 .dropdown-menu-anim-in{animation: dropdown-fly-in-bounce 0.35s;}
 @keyframes dropdown-fly-in-bounce {
