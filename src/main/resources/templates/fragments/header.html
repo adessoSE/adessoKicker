@@ -66,6 +66,10 @@
                 <div th:replace="~{fragments/matchverification.html :: matchverification}"></div>
             </div>
         </div>
+        <!-- Login Button -->
+        <div th:if="${#authentication.getName() == 'anonymousUser'}">
+          <a type="button" class="btn btn-primary hvr-fade" id="login-button" href="/sso/login">login</a>
+        </div>
         <!-- Profile Settings -->
         <div class="dropdown ml-auto" id="profile-dropdown" th:if="${#authentication.getName() != 'anonymousUser'}">
             <button type="button" class="btn dropdown-toggle header-dropdown-bt hvr-fade" data-toggle="dropdown">

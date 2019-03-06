@@ -10,7 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,8 +32,8 @@ class UserControllerTest {
     void whenUserLoggedInReturnUser() throws Exception {
         // given
         var user = UserDummy.defaultUser();
-        when(userService.getLoggedInUser()).thenReturn(user);
-        when(rankingService.getPositionOfPlayer(user.getRanking())).thenReturn(1);
+        given(userService.getLoggedInUser()).willReturn(user);
+        given(rankingService.getPositionOfPlayer(user.getRanking())).willReturn(1);
 
         // when
         var result = mockMvc.perform(get("/users/you"));
@@ -49,8 +49,8 @@ class UserControllerTest {
     void whenUserExistsReturnUser() throws Exception {
         // given
         var user = UserDummy.defaultUser();
-        when(userService.getUserById(user.getUserId())).thenReturn(user);
-        when(rankingService.getPositionOfPlayer(user.getRanking())).thenReturn(1);
+        given(userService.getUserById(user.getUserId())).willReturn(user);
+        given(rankingService.getPositionOfPlayer(user.getRanking())).willReturn(1);
 
         // when
         var result = mockMvc.perform(get("/users/u/{id}", user.getUserId()));
