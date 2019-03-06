@@ -1,72 +1,125 @@
 @import "_colorscheme.less";
 
+/* When container-fly-in animation starts, the scrollbar appears,
+ * As the container is out of the initial screen. This looks weird,
+ * So we hide the scrollbar, as we don't need it at this specific size.
+ * This is an ideal solution, as it can mess up the scrollbar in other sizes too.
+ */
+@media screen and(min-width: 1480px){body {overflow: hidden;}}
+
+/* Move info-tooltip to the right when the screen reaches a specific size
+ * Otherwise it looks weird.
+ */
+@media screen and(max-width: 767px){.fa-info-circle {margin-left: -30px;}}
+
+#background{
+  border: 1px solid @colorscheme[warm-grey-midtone];
+  margin-top: 50px;
+  padding-bottom: 20px;
+  padding-left: 30px;
+  animation: container-fly-in 0.75s cubic-bezier(.17, .84, .44, 1);
+}
+
 .headline{
-  font-size: 50px;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  i{color: @colorscheme[adesso-blue];}
-  .fa-futbol{animation: icon-rotate 5s infinite linear;}
+  font-size: 40px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  color: @colorscheme[warm-grey-darker];
 }
 
-.team-description{
-  font-size: 15px;
-  text-decoration: underline;
-  color: @colorscheme[warm-grey-dark];
+#info-tooltip{
+  text-align: center;
+  .fa-info-circle{
+    color: @colorscheme[adesso-blue];
+    font-size: 30px;
+    margin-top: 25px;
+  }
 }
-.team-textbox{
-  width: 100%;
-  font-size: 23px;
-}
-.team-margin-top{margin-top: 15px;}
 
+.team{
+  height: 40px;
+  color: @colorscheme[warm-grey-darker];
+  &-description{
+    font-size: 15px;
+    text-decoration: underline;
+    color: @colorscheme[warm-grey-dark];
+  }
+  &-textbox{
+    width: 85%;
+    font-size: 23px;
+  }
+  &-margin-top{margin-top: 15px;}
+}
+
+#form-check-1, #form-check-2 {margin-left: -20px;}
 .form-check{
-  // Hide radio buttons
-  .form-check-input{display: none;}
-  .form-check-label{
+  width:60%;
+  &-input{display: none;}
+  &-label{
     font-size: 35px;
     color: @colorscheme[warm-grey-dark];
-    margin-left: -20px;
+  }
+  &:hover > .outline-trophy{
+    -webkit-text-stroke: 0 black;
+    -webkit-text-fill-color: @colorscheme[orange];
+    opacity: 0.5;
   }
   i{
     font-size: 40px;
-    margin-left: 5px;
-    color: @colorscheme[orange];
+    padding-left: 5px;
   }
-  /* When selecting an option from the radio buttons
-   * We need to display the correct trophy icon.
-   * This controls the visibility of the icons.
-   */
-  i:not(.trophy-selected){opacity: 0;}
   .trophy-selected{
-    opacity: 1;
-    animation-play-state: paused;
+    -webkit-text-stroke: 0 black !important;
+    -webkit-text-fill-color: @colorscheme[orange] !important;
+    opacity: 1 !important;
+  }
+  .outline-trophy{
+    -webkit-text-stroke: 1px @colorscheme[warm-grey-dark];
+    -webkit-text-fill-color: transparent;
   }
 }
-// Plays the the icon animation as we hover over the form-check of a radio button
-.form-check:hover > i:not(.trophy-selected){animation: icon-display-from-above ease-out 0.2s forwards;}
 
-.annotation{margin-top: 30px;}
 .creatematch-btn{
-  margin-top: 20px;
+  margin-top: 5px;
   background-color: @colorscheme[adesso-blue];
   color: white;
 }
-#dateContainer i{
-  color: @colorscheme[adesso-blue];
-  font-size: 25px;
-  margin-left: 5px;
+#datetimepicker-form-group{width: 41%;}
+
+.popup{
+  .fa{
+    color: white;
+    margin-right: 5px;
+  }
+  opacity: 0;
+  font-size: 22px;
+  margin-bottom: 10px;
+  border-radius: 1px;
+  text-align: center;
+  color: white;
+  animation: popup-display 0.4s ease-in forwards;
+  animation-delay: 0.5s;
+  &-success{background-color: @colorscheme[success];}
+  &-error{background-color: @colorscheme[error];}
 }
 
-@keyframes icon-move-right-vanish{
-  100%{transform: translateX(100px);opacity: 0;}
+@keyframes popup-display {
+  0% {opacity: 0;}
+  50% {opacity: 20%;}
+  100% {opacity: 1;}
 }
-@keyframes icon-rotate{
-  100%{transform: rotate(360deg)}
-}
-@keyframes icon-display-from-above{
-  0%{transform: translateY(-250px); opacity: 0}
-  100%{transform: translateY(0); opacity: 1}
-}
-@keyframes icon-vanish{
-  100%{opacity: 0}
+
+@keyframes container-fly-in {
+  0% {
+    transform: translateY(200px);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(0);
+    opacity: 25%;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

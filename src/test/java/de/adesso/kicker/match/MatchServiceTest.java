@@ -1,8 +1,8 @@
 package de.adesso.kicker.match;
 
-import de.adesso.kicker.events.match.MatchCreatedEvent;
 import de.adesso.kicker.events.MatchDeclinedEventDummy;
 import de.adesso.kicker.events.MatchVerifiedEventDummy;
+import de.adesso.kicker.events.match.MatchCreatedEvent;
 import de.adesso.kicker.match.exception.FutureDateException;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
@@ -11,7 +11,6 @@ import de.adesso.kicker.match.persistence.MatchRepository;
 import de.adesso.kicker.match.service.MatchService;
 import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.service.UserService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,8 +24,12 @@ import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.times;
 
 class MatchServiceTest {
 
@@ -73,15 +76,15 @@ class MatchServiceTest {
     void whenValidMatchThenMatchShouldBeCreatedAndEventPublished() {
         // given
         var match = createMatch();
-        when(userService.getLoggedInUser()).thenReturn(match.getTeamAPlayer1());
-        when(matchRepository.save(match)).thenReturn(match);
+        given(userService.getLoggedInUser()).willReturn(match.getTeamAPlayer1());
+        given(matchRepository.save(match)).willReturn(match);
 
         // when
         matchService.addMatchEntry(match);
 
         // then
-        verify(matchRepository, times(1)).save(match);
-        verify(applicationEventPublisher, times(1)).publishEvent(any(MatchCreatedEvent.class));
+        then(matchRepository).should(times(1)).save(match);
+        then(applicationEventPublisher).should(times(1)).publishEvent(any(MatchCreatedEvent.class));
     }
 
     @Test
@@ -95,7 +98,7 @@ class MatchServiceTest {
         matchService.declineMatch(matchDeclinedEvent);
 
         // then
-        verify(matchRepository, times(1)).delete(match);
+        then(matchRepository).should(times(1)).delete(match);
     }
 
     @Test
@@ -110,8 +113,8 @@ class MatchServiceTest {
 
         // then
         assertTrue(match.isVerified());
-        verify(matchRepository, times(1)).save(match);
-        verify(rankingService, times(1)).updateRatings(match);
+        then(matchRepository).should(times(1)).save(match);
+        then(rankingService).should(times(1)).updateRatings(match);
     }
 
     @ParameterizedTest
@@ -125,7 +128,7 @@ class MatchServiceTest {
         Executable when = () -> matchService.addMatchEntry(match);
 
         // then
-        Assertions.assertThrows(SamePlayerException.class, when);
+        assertThrows(SamePlayerException.class, when);
     }
 
     @Test
@@ -138,7 +141,7 @@ class MatchServiceTest {
         Executable when = () -> matchService.addMatchEntry(match);
 
         // then
-        Assertions.assertThrows(InvalidCreatorException.class, when);
+        assertThrows(InvalidCreatorException.class, when);
     }
 
     @Test
@@ -151,6 +154,6 @@ class MatchServiceTest {
         Executable when = () -> matchService.addMatchEntry(match);
 
         // then
-        Assertions.assertThrows(FutureDateException.class, when);
+        assertThrows(FutureDateException.class, when);
     }
 }
