@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,11 +40,11 @@ public class EmailService {
         mailSender.send(simpleMailMessage);
     }
 
-    public String setSubject(Match match) {
+    String setSubject(Match match) {
         return String.format("Verify Match: %s played on %s", match.getMatchId(), match.getDate().toString());
     }
 
-    public String verificationText(MatchVerificationSentEvent matchVerificationSentEvent) {
+    String verificationText(MatchVerificationSentEvent matchVerificationSentEvent) {
         String acceptUrl = ACCEPT_URL + matchVerificationSentEvent.getMatchVerificationRequest().getNotificationId();
         String declineUrl = DECLINE_URL + matchVerificationSentEvent.getMatchVerificationRequest().getNotificationId();
 
@@ -69,11 +68,11 @@ public class EmailService {
         }
     }
 
-    public boolean checkPlayerExist(User user) {
+    boolean checkPlayerExist(User user) {
         return Objects.nonNull(user);
     }
 
-    public String getWinner(Match match) {
+    String getWinner(Match match) {
         ArrayList<String> winners = new ArrayList<>();
         for (User winner : match.getWinners()) {
             winners.add(winner.getFullName());
