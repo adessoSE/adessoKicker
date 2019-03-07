@@ -29,7 +29,7 @@
 <header th:replace="~{fragments/header.html :: header}"></header>
 <div class="container" id="text-and-searchbar">
   <!-- Searchbar -->
-  <div class="searchbar">
+  <div class="search-bar">
     <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text">
@@ -41,7 +41,29 @@
     <!-- For searching we send all user data (as DTO's) to the client. This isn't ideal,
          As it can cause a big amount of data. But it enables us to implement an easy to use
          And efficient way to search for a user in perspective of the user experience. -->
-    <div class="panel-body searched-user container">
+    <div class="panel-body search-bar-content container">
+      <ul class="list-group">
+        <li th:each="u : ${users}" class="list-group-item">
+          <a th:text="${u.getFullName()}" th:href="@{/users/u/{id}(id=${u.userId})}">No user found</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <br/><br/>
+  <!-- Searchbar -->
+  <div class="search-bar">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+      <input class="form-control" type="text" th:placeholder="#{'searchbar'}"/>
+    </div>
+    <!-- For searching we send all user data (as DTO's) to the client. This isn't ideal,
+         As it can cause a big amount of data. But it enables us to implement an easy to use
+         And efficient way to search for a user in perspective of the user experience. -->
+    <div class="panel-body search-bar-content container">
       <ul class="list-group">
         <li th:each="u : ${users}" class="list-group-item">
           <a th:text="${u.getFullName()}" th:href="@{/users/u/{id}(id=${u.userId})}">No user found</a>
