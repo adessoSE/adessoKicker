@@ -22,4 +22,8 @@ public class Ranking {
     public Ranking() {
         this.rating = 1000;
     }
+
+    public void updateRating(double rating) {
+        this.rating += rating;
+    }
 }
