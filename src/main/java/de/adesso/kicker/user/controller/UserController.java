@@ -1,5 +1,6 @@
 package de.adesso.kicker.user.controller;
 
+import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,8 @@ public class UserController {
 
     private final RankingService rankingService;
 
+    private final NotificationService notificationService;
+
     @GetMapping("/u/{id}")
     public ModelAndView getUserProfile(@PathVariable String id) {
         var modelAndView = new ModelAndView();
@@ -25,6 +28,8 @@ public class UserController {
         var rankingPosition = rankingService.getPositionOfPlayer(user.getRanking());
         modelAndView.addObject("user", user);
         modelAndView.addObject("rankingPosition", rankingPosition);
+        modelAndView.addObject("notifications",
+                notificationService.getNotificationsByReceiver(userService.getLoggedInUser()));
         modelAndView.setViewName("sites/profile.html");
         return modelAndView;
     }
@@ -36,6 +41,7 @@ public class UserController {
         var rankingPosition = rankingService.getPositionOfPlayer(user.getRanking());
         modelAndView.addObject("user", user);
         modelAndView.addObject("rankingPosition", rankingPosition);
+        modelAndView.addObject("notifications", notificationService.getNotificationsByReceiver(user));
         modelAndView.setViewName("sites/profile.html");
         return modelAndView;
     }

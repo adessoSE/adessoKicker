@@ -16,7 +16,8 @@ $(document).ready(function () {
     $('#form-check-2').click(function () {
         toggleTrophies(icon1, icon2, radio1, radio2);
     });
-    function toggleTrophies(selectedIcon, otherIcon, selectedRadio, otherRadio){
+
+    function toggleTrophies(selectedIcon, otherIcon, selectedRadio, otherRadio) {
         selectedIcon.removeClass('trophy-selected');
         selectedIcon.addClass('outline-trophy');
         otherIcon.removeClass('outline-trophy');
