@@ -3,6 +3,7 @@ package de.adesso.kicker.match.controller;
 import de.adesso.kicker.match.exception.FutureDateException;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
+import de.adesso.kicker.match.exception.TooManyMailsException;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.match.service.MatchService;
 import de.adesso.kicker.notification.service.NotificationService;
@@ -59,6 +60,8 @@ public class MatchController {
             modelAndView.addObject("invalidCreator", true);
         } catch (SamePlayerException e) {
             modelAndView.addObject("samePlayer", true);
+        } catch (TooManyMailsException e) {
+            modelAndView.addObject("tooManyMails", true);
         }
         return addMatchView(modelAndView);
     }
