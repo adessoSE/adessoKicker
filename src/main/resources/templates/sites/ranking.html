@@ -85,7 +85,7 @@
       <td th:text="${player.getWinRatio() + '%'}"></td>
       <td th:text="${player.ranking.rating}"></td>
     </tr>
-    <tr th:if="${user}">
+    <tr th:if="${user}" id="user-self">
       <td th:text="${@rankingService.getPositionOfPlayer(user.ranking)}"></td>
       <td th:text="${user.getFullName()}"></td>
       <td th:text="${user.wins}"></td>
