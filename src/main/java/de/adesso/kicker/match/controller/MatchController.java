@@ -5,8 +5,10 @@ import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.match.service.MatchService;
+import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +27,11 @@ public class MatchController {
 
     private final UserService userService;
 
+    private final NotificationService notificationService;
+
     @GetMapping("/add")
     public ModelAndView getAddMatch() {
-        return addMatchView(new ModelAndView());
+        return defaultAddMatchView(new ModelAndView());
     }
 
     @PostMapping("/add")
@@ -44,7 +48,7 @@ public class MatchController {
             if (bindingResult.hasFieldErrors("winnerTeamA")) {
                 modelAndView.addObject("noWinner", true);
             }
-            return addMatchView(modelAndView);
+            return defaultAddMatchView(modelAndView);
         }
 
         try {
@@ -56,14 +60,18 @@ public class MatchController {
             modelAndView.addObject("invalidCreator", true);
         } catch (SamePlayerException e) {
             modelAndView.addObject("samePlayer", true);
+        } catch (MailException e) {
+            modelAndView.addObject("tooManyMails", true);
         }
-        return addMatchView(modelAndView);
+        return defaultAddMatchView(modelAndView);
     }
 
-    private ModelAndView addMatchView(ModelAndView modelAndView) {
+    private ModelAndView defaultAddMatchView(ModelAndView modelAndView) {
         modelAndView.addObject("match", new Match());
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.addObject("currentUser", userService.getLoggedInUser());
+        modelAndView.addObject("notifications",
+                notificationService.getNotificationsByReceiver(userService.getLoggedInUser()));
         modelAndView.setViewName("sites/matchresult.html");
         return modelAndView;
     }

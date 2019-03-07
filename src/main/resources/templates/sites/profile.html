@@ -70,6 +70,7 @@
         </li>
       </ul>
     </div>
+    <input class="form-control" type="text" th:placeholder="#{searchbar}">
   </div>
   <h2 th:text="${user.getFullName()}"></h2>
 </div>
@@ -78,42 +79,42 @@
   <div class="row">
     <div class="col-lg-2">
       <div class="statistic statistic-1">
-        <p class="statistic-title" th:text="#{'statistics.rank'}"></p>
+        <p class="statistic-title" th:text="#{statistics.rank}"></p>
         <i class="fas fa-chart-line"></i>
         <p class="statistic-value" th:text="${rankingPosition}"></p>
       </div>
     </div>
     <div class="col-lg-2">
       <div class="statistic statistic-2">
-        <p class="statistic-title" th:text="#{'statistics.points'}"></p>
+        <p class="statistic-title" th:text="#{statistics.points}"></p>
         <i class="fas fa-trophy"></i>
         <p class="statistic-value" th:text="${user.ranking.rating}"></p>
       </div>
     </div>
     <div class="col-lg-2">
       <div class="statistic statistic-3">
-        <p class="statistic-title" th:text="#{'statistics.games'}"></p>
+        <p class="statistic-title" th:text="#{statistics.games}"></p>
         <i class="fas fa-futbol"></i>
         <p class="statistic-value" th:text="${user.getPlayedMatches()}"></p>
       </div>
     </div>
     <div class="col-lg-2">
       <div class="statistic statistic-4">
-        <p class="statistic-title" th:text="#{'statistics.victories'}"></p>
+        <p class="statistic-title" th:text="#{statistics.victories}"></p>
         <i class="fas fa-check"></i>
         <p class="statistic-value" th:text="${user.wins}"></p>
       </div>
     </div>
     <div class="col-lg-2">
       <div class="statistic statistic-5">
-        <p class="statistic-title" th:text="#{'statistics.defeats'}"></p>
+        <p class="statistic-title" th:text="#{statistics.defeats}"></p>
         <i class="fas fa-times"></i>
         <p class="statistic-value" th:text="${user.losses}"></p>
       </div>
     </div>
     <div class="col-lg-2">
       <div class="statistic statistic-6">
-        <p class="statistic-title" th:text="#{'statistics.victoryrate'}"></p>
+        <p class="statistic-title" th:text="#{statistics.winRate}"></p>
         <i class="fas fa-balance-scale"></i>
         <p class="statistic-value" th:text="${user.getWinRatio() + '%'}"></p>
       </div>

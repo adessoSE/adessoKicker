@@ -2,15 +2,18 @@
 @import "_util.less";
 @import "searchbar.less";
 
-#text-and-searchbar{
+#text-and-searchbar {
   text-align: center;
   margin-top: 15px;
   margin-bottom: 20px;
-  h2{margin-top: 10px;}
+
+  h2 {
+    margin-top: 10px;
+  }
 }
 
-.statistic{
-  @media screen and(max-width: 991px){
+.statistic {
+  @media screen and(max-width: 991px) {
     width: 60%;
     margin-left: 20%;
   }
@@ -23,20 +26,55 @@
   background-color: @colorscheme[adesso-blue];
   color: white;
 
-  &-title{font-weight: bold; margin-top: 20px;font-size: 18px;padding-top: 10px; padding-bottom: 10px;}
-  &-value{font-size: 35px; padding-bottom: 15px; padding-top: 10px;}
-  i{font-size: 40px;}
+  &-title {
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: 18px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  &-value {
+    font-size: 35px;
+    padding-bottom: 15px;
+    padding-top: 10px;
+  }
+
+  i {
+    font-size: 40px;
+  }
 
   // Different animation delay for each statistic
-  animation: fly-in-up 1.2s cubic-bezier(.19,1,.22,1) forwards;
-  &-2{animation-delay: 0.1s;}
-  &-3{animation-delay: 0.2s;}
-  &-4{animation-delay: 0.3s;}
-  &-5{animation-delay: 0.4s;}
-  &-6{animation-delay: 0.5s;}
+  animation: fly-in-up 1.2s cubic-bezier(.19, 1, .22, 1) forwards;
+
+  &-2 {
+    animation-delay: 0.1s;
+  }
+
+  &-3 {
+    animation-delay: 0.2s;
+  }
+
+  &-4 {
+    animation-delay: 0.3s;
+  }
+
+  &-5 {
+    animation-delay: 0.4s;
+  }
+
+  &-6 {
+    animation-delay: 0.5s;
+  }
 }
 
 @keyframes fly-in-up {
-  0%{transform: translateY(250px); opacity: 0;}
-  100%{transform: translateY(0); opacity: 1;}
+  0% {
+    transform: translateY(250px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

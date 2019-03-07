@@ -1,13 +1,12 @@
-
 function nextPage() {
     var size = findGetParameter("size");
     var page = Number(findGetParameter("page"));
-    if(page == null) {
+    if (page == null) {
         page = 1;
     } else {
         page += 1;
     }
-    if(size == null){
+    if (size == null) {
         size = 10;
     }
     location.href = "/ranking?page=" + page + "&size=" + size;
@@ -16,12 +15,12 @@ function nextPage() {
 function previousPage() {
     var size = findGetParameter("size");
     var page = Number(findGetParameter("page"));
-    if(page == null || page == 0) {
+    if (page == null || page === 0) {
         page = 0;
     } else {
         page -= 1;
     }
-    if(size == null){
+    if (size == null) {
         size = 10;
     }
     location.href = "/ranking?page=" + page + "&size=" + size;

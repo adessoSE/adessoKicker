@@ -30,7 +30,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
 
   <!-- ranking js -->
-  <script src="js/ranking.js"></script>
+  <script src="/js/ranking.js"></script>
 
 </head>
 <body>
@@ -39,7 +39,7 @@
   <div class="row">
     <div class="col-11">
       <div id="text-and-searchbar">
-        <h2 th:text="#{'sites.ranking'}"></h2>
+        <h2 th:text="#{sites.ranking}"></h2>
         <!-- Search Bar -->
         <div class="search-bar input-group">
           <div class="input-group-prepend">
@@ -47,7 +47,7 @@
              <i class="fas fa-search"></i>
            </span>
           </div>
-          <input class="form-control" type="text" th:placeholder="#{'searchbar'}">
+          <input class="form-control" type="text" th:placeholder="#{searchbar}">
         </div>
       </div>
     </div>
@@ -57,7 +57,8 @@
         <div th:if="${(param.site != null) and (param.site != 0)}">
           <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>
         </div>
-        <div th:if="${@userService.getUserPageSortedByRating((param.site == null ? 1 : param.site+1), (param.size == null ? 10 : param.size)).size() != 0}">
+        <div
+            th:if="${@userService.getUserPageSortedByRating((param.site == null ? 1 : param.site+1), (param.size == null ? 10 : param.size)).size() != 0}">
           <button class="pager" onclick="nextPage()"><i class="fas fa-chevron-circle-down"></i></button>
         </div>
       </div>
@@ -69,32 +70,28 @@
   <table class="user-table table">
     <thead>
     <tr>
-      <th th:text="#{'statistics.rank'}"></th>
-      <th th:text="#{'ranking.name'}"></th>
-      <th th:text="#{'statistics.victories'}"></th>
-      <th th:text="#{'statistics.victoryrate'}"></th>
-      <th th:text="#{'statistics.points'}"></th>
+      <th th:text="#{statistics.rank}"></th>
+      <th th:text="#{ranking.name}"></th>
+      <th th:text="#{statistics.victories}"></th>
+      <th th:text="#{statistics.winRate}"></th>
+      <th th:text="#{statistics.points}"></th>
     </tr>
     </thead>
     <tbody>
-    <div th:each="player : ${users}">
-      <tr>
-        <td th:text="${@rankingService.getPositionOfPlayer(player.ranking)}"></td>
-        <td th:text="${player.getFullName()}"></td>
-        <td th:text="${player.wins}"></td>
-        <td th:text="${player.getWinRatio() + '%'}"></td>
-        <td th:text="${player.ranking.rating}"></td>
-      </tr>
-    </div>
-    <div th:if="${user != false}">
-      <tr>
-        <td th:text="${@rankingService.getPositionOfPlayer(user.ranking)}"></td>
-        <td th:text="${user.getFullName()}"></td>
-        <td th:text="${user.wins}"></td>
-        <td th:text="${user.getWinRatio() + '%'}"></td>
-        <td th:text="${user.ranking.rating}"></td>
-      </tr>
-    </div>
+    <tr th:each="player : ${users}">
+      <td th:text="${@rankingService.getPositionOfPlayer(player.ranking)}"></td>
+      <td th:text="${player.getFullName()}"></td>
+      <td th:text="${player.wins}"></td>
+      <td th:text="${player.getWinRatio() + '%'}"></td>
+      <td th:text="${player.ranking.rating}"></td>
+    </tr>
+    <tr th:if="${user}">
+      <td th:text="${@rankingService.getPositionOfPlayer(user.ranking)}"></td>
+      <td th:text="${user.getFullName()}"></td>
+      <td th:text="${user.wins}"></td>
+      <td th:text="${user.getWinRatio() + '%'}"></td>
+      <td th:text="${user.ranking.rating}"></td>
+    </tr>
     </tbody>
   </table>
 </div>
@@ -103,7 +100,8 @@
   <div th:if="${(param.site != null) and (param.site != 0)}">
     <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>
   </div>
-  <div th:if="${@userService.getUserPageSortedByRating((param.site == null ? 1 : param.site+1), (param.size == null ? 10 : param.size)).size() != 0}">
+  <div
+      th:if="${@userService.getUserPageSortedByRating((param.site == null ? 1 : param.site+1), (param.size == null ? 10 : param.size)).size() != 0}">
     <button class="pager" onclick="nextPage()"><i class="fas fa-chevron-circle-down"></i></button>
   </div>
 </div>

@@ -39,11 +39,11 @@
   <div class="container shadow" id="background">
     <div class="row">
       <!-- Who played? -->
-      <div class="col-sm-11 headline" th:text="#{'matchResult.whoPlayed'}"></div>
+      <div class="col-sm-11 headline" th:text="#{matchResult.whoPlayed}"></div>
       <!-- Info Tooltip -->
       <div class="col-sm-1" id="info-tooltip">
         <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="left"
-           th:title="#{'matchResult.annotation'}"></i>
+           th:title="#{matchResult.annotation}"></i>
       </div>
     </div>
     <!-- Error warnings -->
@@ -59,10 +59,14 @@
       <i class="fa fa-times" aria-hidden="true"></i>
       <span th:text="#{error.nullPlayer}"></span>
     </div>
+    <div class="popup popup-error" th:if="${tooManyMails}">
+      <i class="fa fa-times" aria-hidden="true"></i>
+      <span th:text="#{error.tooManyMails}"></span>
+    </div>
     <div class="row">
       <!-- Team A -->
       <div class="col-sm-6">
-        <p class="team-description" th:text="#{'matchResult.team1'}"></p>
+        <p class="team-description" th:text="#{matchResult.team1}"></p>
         <div>
           <!-- As we want to display the user in a disabled input text field, we cant add the field value to it.
                As Thymeleaf wouldn't use it for the form, so were creating a hidden input field.
@@ -72,7 +76,7 @@
         </div>
         <div>
           <select class="team team-textbox team-margin-top" id="teamAPlayer2" name="teamAPlayer2">
-            <option value="" disabled hidden selected th:text="#{'matchResult.player2'}"></option>
+            <option value="" disabled hidden selected th:text="#{matchResult.player2}"></option>
             <option th:each="user : ${users}"
                     th:value="${user.userId}"
                     th:text="${user.fullName}">
@@ -82,10 +86,10 @@
       </div>
       <!-- Team B -->
       <div class="col-sm-6">
-        <p class="team-description" th:text="#{'matchResult.team2'}"></p>
+        <p class="team-description" th:text="#{matchResult.team2}"></p>
         <div>
           <select class="team team-textbox" id="teamBPlayer1" name="teamBPlayer1">
-            <option value="" disabled hidden selected th:text="#{'matchResult.player1'}"></option>
+            <option value="" disabled hidden selected th:text="#{matchResult.player1}"></option>
             <option th:each="user : ${users}"
                     th:value="${user.userId}"
                     th:text="${user.fullName}">
@@ -94,7 +98,7 @@
         </div>
         <div>
           <select class="team team-textbox team-margin-top" id="teamBPlayer2" name="teamBPlayer2">
-            <option value="" selected hidden disabled th:text="#{'matchResult.player2'}"></option>
+            <option value="" selected hidden disabled th:text="#{matchResult.player2}"></option>
             <option th:each="user : ${users}"
                     th:value="${user.userId}"
                     th:text="${user.fullName}">
@@ -104,7 +108,7 @@
       </div>
     </div>
     <!-- Who won -->
-    <div class="headline" th:text="#{'matchResult.whoWon'}">
+    <div class="headline" th:text="#{matchResult.whoWon}">
     </div>
     <!-- Radio Buttons -->
     <div class="row" id="radio-winner-team">
@@ -115,7 +119,7 @@
           <script>
               document.getElementById("optionsRadios1").setAttribute("checked", "checked")
           </script>
-          <label class="form-check-label" for="radio1" id="radio1-label" th:text="#{'matchResult.team1'}"></label>
+          <label class="form-check-label" for="radio1" id="radio1-label" th:text="#{matchResult.team1}"></label>
           <i class="fas fa-trophy trophy-selected" id="radio1-icon" aria-hidden="true"></i>
         </div>
       </div>
@@ -123,13 +127,20 @@
         <div class="form-check" id="form-check-2">
           <input th:field="*{winnerTeamA}" th:value="false" class="form-check-input" type="radio" name="winnerteam"
                  id="radio2">
+          <label class="form-check-label" id="radio2-label" for="radio2" th:text="#{matchResult.team2}"></label>
+          <input th:field="*{winnerTeamA}" th:value="false" class="form-check-input" type="radio" name="winnerteam"
+                 id="radio2">
           <label class="form-check-label" id="radio2-label" for="radio2" th:text="#{'matchResult.team2'}"></label>
           <i class="fas fa-trophy outline-trophy" id="radio2-icon" aria-hidden="true"></i>
         </div>
       </div>
     </div>
+    <div class="popup popup-error" th:if="${noWinner}">
+      <i class="fa fa-times" aria-hidden="true"></i>
+      <span th:text="#{error.noWinner}"></span>
+    </div>
     <!-- When did you play? -->
-    <div class="headline" th:text="#{'matchResult.whenDidYouPlay'}"></div>
+    <div class="headline" th:text="#{matchResult.whenDidYouPlay}"></div>
     <!-- Timepicker -->
     <div class="popup popup-error" th:if="${futureDate}">
       <i class="fa fa-times" aria-hidden="true"></i>
@@ -151,12 +162,12 @@
     <div>
       <div class="popup popup-success" th:if="${successMessage}">
         <i class="fa fa-check" aria-hidden="true"></i>
-        <span th:text="#{match.add.successMessage}"></span>
+        <span th:text="#{matchResult.successMessage}"></span>
       </div>
-      <button type="submit" class="btn creatematch-btn" th:text="#{'matchResult.createMatch'}"></button>
+      <button type="submit" class="btn creatematch-btn" th:text="#{matchResult.createMatch}"></button>
     </div>
   </div>
 </form>
-<script src="../js/matchresult.js"></script>
+<script src="/js/matchresult.js"></script>
 </body>
 </html>

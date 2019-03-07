@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationEvent;
 @Getter
 public class MatchVerifiedEvent extends ApplicationEvent {
 
-    private Match match;
+    private final Match match;
 
     public MatchVerifiedEvent(Object source, Match match) {
         super(source);
