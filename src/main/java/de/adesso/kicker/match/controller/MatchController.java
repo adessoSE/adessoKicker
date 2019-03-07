@@ -3,12 +3,12 @@ package de.adesso.kicker.match.controller;
 import de.adesso.kicker.match.exception.FutureDateException;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
-import de.adesso.kicker.match.exception.TooManyMailsException;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.match.service.MatchService;
 import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,7 +60,7 @@ public class MatchController {
             modelAndView.addObject("invalidCreator", true);
         } catch (SamePlayerException e) {
             modelAndView.addObject("samePlayer", true);
-        } catch (TooManyMailsException e) {
+        } catch (MailException e) {
             modelAndView.addObject("tooManyMails", true);
         }
         return addMatchView(modelAndView);
