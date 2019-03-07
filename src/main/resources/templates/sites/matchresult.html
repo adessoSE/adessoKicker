@@ -59,6 +59,10 @@
       <i class="fa fa-times" aria-hidden="true"></i>
       <span th:text="#{error.nullPlayer}"></span>
     </div>
+    <div class="popup popup-error" th:if="${tooManyMails}">
+      <i class="fa fa-times" aria-hidden="true"></i>
+      <span th:text="#{error.tooManyMails}"></span>
+    </div>
     <div class="row">
       <!-- Team A -->
       <div class="col-sm-6">

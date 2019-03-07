@@ -8,6 +8,7 @@ import de.adesso.kicker.match.service.MatchService;
 import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,6 +60,8 @@ public class MatchController {
             modelAndView.addObject("invalidCreator", true);
         } catch (SamePlayerException e) {
             modelAndView.addObject("samePlayer", true);
+        } catch (MailException e) {
+            modelAndView.addObject("tooManyMails", true);
         }
         return addMatchView(modelAndView);
     }
