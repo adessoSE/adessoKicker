@@ -46,7 +46,7 @@ class UserControllerTest {
         List<Notification> notificationList = Collections.singletonList(MessageDummy.messageDeclined());
         given(userService.getLoggedInUser()).willReturn(user);
         given(rankingService.getPositionOfPlayer(user.getRanking())).willReturn(1);
-        given(notificationService.getNotificationsByReceiver(any(User.class)));
+        given(notificationService.getNotificationsByReceiver(any(User.class))).willReturn(notificationList);
 
         // when
         var result = mockMvc.perform(get("/users/you"));

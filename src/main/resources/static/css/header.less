@@ -1,43 +1,74 @@
 @import "_colorscheme.less";
 
-.fa {color: @colorscheme[warm-grey-dark];}
-.fa-envelope-open {color: white !important;}
+.fa {
+  color: @colorscheme [warm-grey-dark];
+}
 
-.navbar {background-color: @colorscheme[warm-grey-light] !important;}
+.fa-envelope-open {
+  color: white !important;
+}
 
-.adesso-logo {width: 150px; height: auto;}
-.adesso-blue-text {color: @colorscheme[adesso-blue];}
+.navbar {
+  background-color: @colorscheme [warm-grey-light] !important;
+}
 
-.move-2px-right {margin-left: 2px;}
-.move-1px-left {margin-left: -2px;}
+.adesso-logo {
+  width: 150px;
+  height: auto;
+}
+
+.adesso-blue-text {
+  color: @colorscheme [adesso-blue];
+}
+
+.move-2px-right {
+  margin-left: 2px;
+}
+
+.move-1px-left {
+  margin-left: -2px;
+}
 
 //Overwrites animation color
-.hvr-fade:before, .hvr-underline-from-left:before { background-color: @colorscheme[adesso-blue]; }
-.dropdown-item:hover {background-color : @colorscheme[warm-grey-light]; }
+.hvr-fade:before, .hvr-underline-from-left:before {
+  background-color: @colorscheme [adesso-blue];
+}
+
+.dropdown-item:hover {
+  background-color: @colorscheme [warm-grey-light];
+}
 
 .header-link {
   margin-top: -10px;
   margin-left: 20px;
 }
+
 .header-dropdown-bt {
   margin-top: -10px;
-  color: @colorscheme[warm-grey-dark];
-  background: @colorscheme[warm-grey-light];
+  color: @colorscheme [warm-grey-dark];
+  background: @colorscheme [warm-grey-light];
   font-size: 14px;
 }
 
-#profile-dropdown-menu {margin-top: 25px;}
+#profile-dropdown-menu {
+  margin-top: 25px;
+}
 
-#notification-dropdown{
+#notification-dropdown {
   margin-right: 10px;
-  #notification-dropdown-icon{font-size: 25px;}
-  #notification-dropdown-menu{
+
+  #notification-dropdown-icon {
+    font-size: 25px;
+  }
+
+  #notification-dropdown-menu {
     max-height: 500px;
     overflow-y: auto;
     margin-top: 18px;
   }
 }
-#notification-badge{
+
+#notification-badge {
   position: absolute !important;
   margin-left: -12px;
   background-color: #EF8200;
@@ -47,23 +78,38 @@
   font-size: 15px;
   padding-top: 2px;
 }
-.notification-bt{
+
+.notification-bt {
   width: 100%;
 }
-.notification-text{
+
+.notification-text {
   color: black;
   white-space: normal;
   width: 240px;
   margin-bottom: 15px;
 }
 
-#no-notifications{text-align: center;}
+#no-notifications {
+  text-align: center;
+}
 
-.matchverification:hover{background-color: @colorscheme[warm-grey-lighter];}
+.matchverification:hover {
+  background-color: @colorscheme [warm-grey-lighter];
+}
 
-.dropdown-menu-anim-in{animation: dropdown-fly-in-bounce 0.35s;}
+.dropdown-menu-anim-in {
+  animation: dropdown-fly-in-bounce 0.35s;
+}
+
 @keyframes dropdown-fly-in-bounce {
-  0%{-webkit-transform: translateY(-300px);}
-  75%{-webkit-transform: translateY(20px);}
-  100%{-webkit-transform: translateY(0px);}
+  0% {
+    -webkit-transform: translateY(-300px);
+  }
+  75% {
+    -webkit-transform: translateY(20px);
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+  }
 }

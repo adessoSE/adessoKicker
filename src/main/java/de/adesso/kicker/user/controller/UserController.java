@@ -1,7 +1,6 @@
 package de.adesso.kicker.user.controller;
 
 import de.adesso.kicker.notification.service.NotificationService;
-import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
