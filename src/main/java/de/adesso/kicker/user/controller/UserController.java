@@ -31,7 +31,6 @@ public class UserController {
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.addObject("rankingPosition", rankingPosition);
         modelAndView.setViewName("sites/profile.html");
-        return modelAndView;
         return defaultProfileView(modelAndView, user);
     }
 
