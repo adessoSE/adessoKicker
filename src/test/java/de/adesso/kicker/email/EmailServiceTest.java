@@ -52,7 +52,7 @@ class EmailServiceTest {
     }
 
     @Test
-    void when1v1thenSendEmail() throws Exception {
+    void when1v1thenSendEmail() {
         // given
         var matchId = "test-match-1";
         var notificationId = 1337L;

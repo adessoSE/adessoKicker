@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum MessageType {
-
     MESSAGE_DECLINED("notification.message.declined");
 
     private final String messageContent;

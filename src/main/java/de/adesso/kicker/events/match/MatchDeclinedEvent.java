@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationEvent;
 @Getter
 public class MatchDeclinedEvent extends ApplicationEvent {
 
-    private Match match;
+    private final Match match;
 
     public MatchDeclinedEvent(Object source, Match match) {
         super(source);

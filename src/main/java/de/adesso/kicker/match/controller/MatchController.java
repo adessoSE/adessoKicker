@@ -31,7 +31,7 @@ public class MatchController {
 
     @GetMapping("/add")
     public ModelAndView getAddMatch() {
-        return addMatchView(new ModelAndView());
+        return defaultAddMatchView(new ModelAndView());
     }
 
     @PostMapping("/add")
@@ -48,7 +48,7 @@ public class MatchController {
             if (bindingResult.hasFieldErrors("winnerTeamA")) {
                 modelAndView.addObject("noWinner", true);
             }
-            return addMatchView(modelAndView);
+            return defaultAddMatchView(modelAndView);
         }
 
         try {
@@ -63,10 +63,10 @@ public class MatchController {
         } catch (MailException e) {
             modelAndView.addObject("tooManyMails", true);
         }
-        return addMatchView(modelAndView);
+        return defaultAddMatchView(modelAndView);
     }
 
-    private ModelAndView addMatchView(ModelAndView modelAndView) {
+    private ModelAndView defaultAddMatchView(ModelAndView modelAndView) {
         modelAndView.addObject("match", new Match());
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.addObject("currentUser", userService.getLoggedInUser());
