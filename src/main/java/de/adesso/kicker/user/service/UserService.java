@@ -4,10 +4,10 @@ import de.adesso.kicker.ranking.persistence.Ranking;
 import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.persistence.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
 import org.keycloak.representations.AccessToken;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -20,14 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public List<User> getAllUsers() {
         return new ArrayList<>(userRepository.findAll());

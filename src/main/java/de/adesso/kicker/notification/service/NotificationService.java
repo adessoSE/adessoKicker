@@ -1,21 +1,22 @@
 package de.adesso.kicker.notification.service;
 
+import de.adesso.kicker.notification.exception.NotificationNotExistingException;
+import de.adesso.kicker.notification.exception.WrongReceiverException;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
 import de.adesso.kicker.notification.matchverificationrequest.service.VerifyMatchService;
 import de.adesso.kicker.notification.message.persistence.Message;
 import de.adesso.kicker.notification.message.persistence.MessageType;
 import de.adesso.kicker.notification.message.service.SendMessageService;
-import de.adesso.kicker.notification.exception.NotificationNotExistingException;
-import de.adesso.kicker.notification.exception.WrongReceiverException;
 import de.adesso.kicker.notification.persistence.Notification;
 import de.adesso.kicker.notification.persistence.NotificationRepository;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class NotificationService {
 
@@ -26,15 +27,6 @@ public class NotificationService {
     private final SendMessageService sendMessageService;
 
     private final UserService userService;
-
-    @Autowired
-    public NotificationService(NotificationRepository notificationRepository, VerifyMatchService verifyMatchService,
-            UserService userService, SendMessageService sendMessageService) {
-        this.notificationRepository = notificationRepository;
-        this.verifyMatchService = verifyMatchService;
-        this.sendMessageService = sendMessageService;
-        this.userService = userService;
-    }
 
     public void acceptNotification(long notificationId) {
         Notification notification = getNotificationById(notificationId);

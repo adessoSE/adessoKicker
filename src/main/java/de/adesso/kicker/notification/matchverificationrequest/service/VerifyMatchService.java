@@ -9,7 +9,7 @@ import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchV
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequestRepository;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class VerifyMatchService {
 
@@ -25,14 +26,6 @@ public class VerifyMatchService {
     private final UserService userService;
 
     private final ApplicationEventPublisher applicationEventPublisher;
-
-    @Autowired
-    public VerifyMatchService(MatchVerificationRequestRepository matchVerificationRequestRepository,
-            UserService userService, ApplicationEventPublisher applicationEventPublisher) {
-        this.matchVerificationRequestRepository = matchVerificationRequestRepository;
-        this.userService = userService;
-        this.applicationEventPublisher = applicationEventPublisher;
-    }
 
     public void acceptRequest(MatchVerificationRequest matchVerificationRequest) {
         sendMatchVerifiedEvent(matchVerificationRequest.getMatch());

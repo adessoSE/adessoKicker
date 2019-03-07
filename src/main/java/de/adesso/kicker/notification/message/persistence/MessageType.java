@@ -1,16 +1,13 @@
 package de.adesso.kicker.notification.message.persistence;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public enum MessageType {
 
     MESSAGE_DECLINED("notification.message.declined");
 
-    private String messageContent;
-
-    MessageType(String messageContent) {
-        this.messageContent = messageContent;
-    }
-
-    public String getMessageContent() {
-        return this.messageContent;
-    }
+    private final String messageContent;
 }

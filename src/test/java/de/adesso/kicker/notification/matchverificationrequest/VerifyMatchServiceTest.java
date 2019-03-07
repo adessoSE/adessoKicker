@@ -3,8 +3,8 @@ package de.adesso.kicker.notification.matchverificationrequest;
 import de.adesso.kicker.events.MatchCreatedEventDummy;
 import de.adesso.kicker.events.match.MatchDeclinedEvent;
 import de.adesso.kicker.events.match.MatchVerifiedEvent;
-import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.match.MatchDummy;
+import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequestRepository;
 import de.adesso.kicker.notification.matchverificationrequest.service.VerifyMatchService;
@@ -21,10 +21,10 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.times;
 
 class VerifyMatchServiceTest {
 

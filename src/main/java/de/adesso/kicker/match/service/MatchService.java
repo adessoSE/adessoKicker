@@ -11,7 +11,7 @@ import de.adesso.kicker.match.persistence.MatchRepository;
 import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class MatchService {
 
     private final MatchRepository matchRepository;
@@ -29,15 +30,6 @@ public class MatchService {
     private final RankingService rankingService;
 
     private final ApplicationEventPublisher applicationEventPublisher;
-
-    @Autowired
-    public MatchService(MatchRepository matchRepository, UserService userService, RankingService rankingService,
-            ApplicationEventPublisher applicationEventPublisher) {
-        this.matchRepository = matchRepository;
-        this.userService = userService;
-        this.rankingService = rankingService;
-        this.applicationEventPublisher = applicationEventPublisher;
-    }
 
     public void addMatchEntry(Match match) {
         checkForFutureDate(match);

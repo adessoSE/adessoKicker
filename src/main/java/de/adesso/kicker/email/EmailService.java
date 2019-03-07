@@ -3,7 +3,7 @@ package de.adesso.kicker.email;
 import de.adesso.kicker.events.match.MatchVerificationSentEvent;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.user.persistence.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class EmailService {
 
     static final String ACCEPT_URL = "http://localhost/notifications/accept/";
@@ -20,11 +21,6 @@ public class EmailService {
     static final String DECLINE_URL = "http://localhost/notifications/decline/";
 
     private final JavaMailSender mailSender;
-
-    @Autowired
-    public EmailService(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
-    }
 
     @EventListener
     public void sendVerification(MatchVerificationSentEvent matchVerificationSentEvent) {

@@ -6,8 +6,6 @@ import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchV
 import de.adesso.kicker.user.persistence.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
