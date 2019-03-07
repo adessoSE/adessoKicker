@@ -24,6 +24,7 @@ public class UserController {
         var user = userService.getUserById(id);
         var rankingPosition = rankingService.getPositionOfPlayer(user.getRanking());
         modelAndView.addObject("user", user);
+        modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.addObject("rankingPosition", rankingPosition);
         modelAndView.setViewName("sites/profile.html");
         return modelAndView;
@@ -35,6 +36,7 @@ public class UserController {
         var user = userService.getLoggedInUser();
         var rankingPosition = rankingService.getPositionOfPlayer(user.getRanking());
         modelAndView.addObject("user", user);
+        modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.addObject("rankingPosition", rankingPosition);
         modelAndView.setViewName("sites/profile.html");
         return modelAndView;
