@@ -40,7 +40,8 @@ public class UserController {
         var rankingPosition = rankingService.getPositionOfPlayer(user.getRanking());
         modelAndView.addObject("user", user);
         modelAndView.addObject("rankingPosition", rankingPosition);
-        modelAndView.addObject("notifications", notificationService.getNotificationsByReceiver(user));
+        modelAndView.addObject("notifications",
+                notificationService.getNotificationsByReceiver(userService.getLoggedInUser()));
         modelAndView.setViewName("sites/profile.html");
         return modelAndView;
     }
