@@ -46,7 +46,8 @@ public class UserController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.addObject("rankingPosition", rankingPosition);
-        modelAndView.addObject("notifications", notificationService.getNotificationsByReceiver(user));
+        modelAndView.addObject("notifications",
+                notificationService.getNotificationsByReceiver(userService.getLoggedInUser()));
         modelAndView.setViewName("sites/profile.html");
         return modelAndView;
     }
