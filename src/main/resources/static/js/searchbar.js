@@ -11,16 +11,6 @@ $(document).ready(function () {
         selectNewElement($(this));
     });
 
-    // Display 'search-bar-content' and select first
-    searchbarInput.on("focus", function () {
-        var searchbar = $(this).parents('.search-bar');
-        var seachbarElements = $(searchbar).find(".list-group li");
-        var searchbarContent = $(searchbar).find(".search-bar-content");
-
-        searchbarContent.toggle();
-        selectNewElement($(seachbarElements).siblings(":visible").first());
-    });
-
     // Hide 'search-bar-content' when clicking anywhere else (loses focus)
     searchbarInput.on("blur", function () {
         var thisSearchbarInput = this;
@@ -37,16 +27,31 @@ $(document).ready(function () {
     searchbarInput.on("keydown", function (event) {
         var searchbar = $(this).parents('.search-bar');
         var searchbarElements = $(searchbar).find(".list-group li");
+        var searchbarList = $(searchbar).find(".search-bar-content ul");
+        var searchbarSelected = $('#search-bar-selected');
 
         if (event.keyCode === ENTER) {
             event.preventDefault();
-            $('#search-bar-selected').click();
+            searchbarSelected.click();
+
         } else if (event.keyCode === UP) {
             event.preventDefault();
-            selectNewElement($('#search-bar-selected').prevAll('li:visible').eq(0));
+            var previousElement = $(searchbarSelected).prevAll('li:visible').eq(0);
+            selectNewElement(previousElement);
+            $(searchbarList).scrollTop($(previousElement).scrollHeight);
+            var newScrollbarPos = $(searchbarList).scrollTop() - $(previousElement).prop('scrollHeight');
+            if (!isNaN(newScrollbarPos)){
+                $(searchbarList).scrollTop(newScrollbarPos);
+            }
+
         } else if (event.keyCode === DOWN) {
             event.preventDefault();
-            selectNewElement($('#search-bar-selected').nextAll('li:visible').eq(0));
+            var nextElement = $(searchbarSelected).nextAll('li:visible').eq(0);
+            selectNewElement(nextElement);
+            var newScrollbarPos = $(searchbarList).scrollTop() + $(nextElement).prop('scrollHeight');
+            if (!isNaN(newScrollbarPos)){
+                $(searchbarList).scrollTop(newScrollbarPos);
+            }
         }
     });
 
@@ -58,6 +63,9 @@ $(document).ready(function () {
         var value = $(this).val().toLowerCase();
         var searchbar = $(this).parents('.search-bar');
         var searchbarElements = $(searchbar).find(".list-group li");
+        var searchbarContent = $(searchbar).find(".search-bar-content");
+
+        searchbarContent.show();
 
         searchbarElements.filter(function () {
             //indexOf() returns the positions of the char typed in the search bar (returns -1 if word doesn't contain char --> toggles element)

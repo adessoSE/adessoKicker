@@ -74,59 +74,53 @@
           <input type="text" name="teamAPlayer1" th:value="${#authentication.getName()}" id="teamAPlayer1" hidden/>
           <input class="form-control" type="text" th:value="${currentUser.fullName}" disabled>
         </div>
-        <div>
-          <!-- Searchbar -->
-          <div class="team team-textbox team-margin-top search-bar">
-            <div class="input-group">
-              <input class="hidden-input" type="text" id="teamAPlayer2" name="teamAPlayer2" value="" hidden/>
-              <input class="pseudo-input form-control" type="text" th:placeholder="#{'matchResult.player2'}"/>
-            </div>
-            <div class="panel-body search-bar-content container">
-              <ul class="list-group">
-                <li th:each="u : ${users}" th:value="${u.userId}" onclick="selectSearchedUser(this);"
-                    th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">
-                  <span th:text="${u.getFullName()}">No user found</span>
-                </li>
-              </ul>
-            </div>
+        <!-- Searchbar -->
+        <div class="team team-textbox team-margin-top search-bar">
+          <div class="input-group">
+            <input class="hidden-input" type="text" id="teamAPlayer2" name="teamAPlayer2" value="" hidden/>
+            <input class="pseudo-input form-control" type="text" th:placeholder="#{'matchResult.player2'}"/>
+          </div>
+          <div class="panel-body search-bar-content container">
+            <ul class="list-group">
+              <li th:each="u : ${users}" th:value="${u.userId}" onclick="selectSearchedUser(this);"
+                  th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">
+                <span th:text="${u.getFullName()}">No user found</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
       <!-- Team B -->
       <div class="col-sm-6">
         <p class="team-description" th:text="#{matchResult.team2}"></p>
-        <div>
-          <!-- Searchbar -->
-          <div class="team team-textbox search-bar">
-            <div class="input-group">
-              <input class="hidden-input" type="text" id="teamBPlayer1" name="teamBPlayer1" value="" hidden/>
-              <input class="pseudo-input form-control" type="text" th:placeholder="#{matchResult.player1}"/>
-            </div>
-            <div class="panel-body search-bar-content container">
-              <ul class="list-group">
-                <li th:each="u : ${users}" th:value="${u.userId}" onclick="selectSearchedUser(this);"
-                    th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">
-                  <span th:text="${u.getFullName()}">No user found</span>
-                </li>
-              </ul>
-            </div>
+        <!-- Searchbar -->
+        <div class="team team-textbox search-bar">
+          <div class="input-group">
+            <input class="hidden-input" type="text" id="teamBPlayer1" name="teamBPlayer1" value="" hidden/>
+            <input class="pseudo-input form-control" type="text" th:placeholder="#{matchResult.player1}"/>
+          </div>
+          <div class="panel-body search-bar-content container">
+            <ul class="list-group">
+              <li th:each="u : ${users}" th:value="${u.userId}" onclick="selectSearchedUser(this);"
+                  th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">
+                <span th:text="${u.getFullName()}">No user found</span>
+              </li>
+            </ul>
           </div>
         </div>
-        <div>
-          <!-- Searchbar -->
-          <div class="team team-textbox team-margin-top search-bar">
-            <div class="input-group">
-              <input class="hidden-input" type="text" id="teamBPlayer2" name="teamBPlayer2" value="" hidden/>
-              <input class="pseudo-input form-control" type="text" th:placeholder="#{'matchResult.player2'}"/>
-            </div>
-            <div class="panel-body search-bar-content container">
-              <ul class="list-group">
-                <li th:each="u : ${users}" th:value="${u.userId}" onclick="selectSearchedUser(this);"
-                    th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">
-                  <span th:text="${u.getFullName()}">No user found</span>
-                </li>
-              </ul>
-            </div>
+        <!-- Searchbar -->
+        <div class="team team-textbox team-margin-top search-bar">
+          <div class="input-group">
+            <input class="hidden-input" type="text" id="teamBPlayer2" name="teamBPlayer2" value="" hidden/>
+            <input class="pseudo-input form-control" type="text" th:placeholder="#{'matchResult.player2'}"/>
+          </div>
+          <div class="panel-body search-bar-content container">
+            <ul class="list-group">
+              <li th:each="u : ${users}" th:value="${u.userId}" onclick="selectSearchedUser(this);"
+                  th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">
+                <span th:text="${u.getFullName()}">No user found</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

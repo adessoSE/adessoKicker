@@ -27,25 +27,7 @@
 </head>
 <body>
 <header th:replace="~{fragments/header.html :: header}"></header>
-<div class="container" id="text-and-searchbar">
-  <!-- Searchbar -->
-  <div class="search-bar">
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text">
-          <i class="fas fa-search"></i>
-        </span>
-      </div>
-      <input class="form-control" type="text" th:placeholder="#{'searchbar'}"/>
-    </div>
-    <div class="panel-body search-bar-content container">
-      <ul class="list-group">
-        <li th:each="u : ${users}" onclick="window.location.href=this.getAttribute('href')" th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">
-          <span th:text="${u.getFullName()}">No user found</span>
-        </li>
-      </ul>
-    </div>
-  </div>
+<div class="container" id="text-container">
   <h2 th:text="${user.getFullName()}"></h2>
 </div>
 <!-- User Statistics -->
@@ -96,6 +78,5 @@
   </div>
 </div>
 <hr>
-<script src="/js/searchbar.js"></script>
 </body>
 </html>
