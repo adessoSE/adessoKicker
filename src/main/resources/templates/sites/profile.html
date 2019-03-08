@@ -58,21 +58,21 @@
     </div>
     <div class="col-lg-2">
       <div class="statistic statistic-3">
-        <p class="statistic-title" th:text="#{statistics.games}"></p>
+        <p class="statistic-title" th:text="#{statistics.matchesPlayed}"></p>
         <i class="fas fa-futbol"></i>
         <p class="statistic-value" th:text="${user.getPlayedMatches()}"></p>
       </div>
     </div>
     <div class="col-lg-2">
       <div class="statistic statistic-4">
-        <p class="statistic-title" th:text="#{statistics.victories}"></p>
+        <p class="statistic-title" th:text="#{statistics.wins}"></p>
         <i class="fas fa-check"></i>
         <p class="statistic-value" th:text="${user.wins}"></p>
       </div>
     </div>
     <div class="col-lg-2">
       <div class="statistic statistic-5">
-        <p class="statistic-title" th:text="#{statistics.defeats}"></p>
+        <p class="statistic-title" th:text="#{statistics.losses}"></p>
         <i class="fas fa-times"></i>
         <p class="statistic-value" th:text="${user.losses}"></p>
       </div>
