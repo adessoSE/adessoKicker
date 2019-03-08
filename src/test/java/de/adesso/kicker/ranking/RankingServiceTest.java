@@ -47,8 +47,8 @@ class RankingServiceTest {
         rankingService.updateRatings(match);
 
         // then
-        assertRating(match.getWinners(), 1016);
-        assertRating(match.getLosers(), 984);
+        assertRatingPlayers(1016, match.getWinners());
+        assertRatingPlayers(984, match.getLosers());
     }
 
     @Test
@@ -61,8 +61,8 @@ class RankingServiceTest {
         rankingService.updateRatings(match);
 
         // then
-        assertRating(match.getWinners(), 2112);
-        assertRating(match.getLosers(), 2088);
+        assertRatingPlayers(2112, match.getWinners());
+        assertRatingPlayers(2088, match.getLosers());
     }
 
     @Test
@@ -75,8 +75,8 @@ class RankingServiceTest {
         rankingService.updateRatings(match);
 
         // then
-        assertRating(match.getWinners(), 2408);
-        assertRating(match.getLosers(), 2392);
+        assertRatingPlayers(2408, match.getWinners());
+        assertRatingPlayers(2392, match.getLosers());
     }
 
     @Test
@@ -90,8 +90,8 @@ class RankingServiceTest {
         rankingService.updateRatings(match);
 
         // then
-        assertRating(match.getWinners(), 2402);
-        assertRating(match.getLosers(), 2096);
+        assertRatingPlayers(1032, match.getWinners());
+        assertRatingPlayers(2384, match.getLosers());
     }
 
     @Test
@@ -108,7 +108,7 @@ class RankingServiceTest {
         assertEquals(1, actualRank);
     }
 
-    private static void assertRating(List<User> players, int expected) {
+    private static void assertRatingPlayers(int expected, List<User> players) {
         for (var player : players) {
             var actual = player.getRanking().getRating();
             assertEquals(expected, actual);
