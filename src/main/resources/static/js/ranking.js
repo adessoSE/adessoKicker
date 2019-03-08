@@ -26,6 +26,11 @@ function previousPage() {
     location.href = "/ranking?page=" + page + "&size=" + size;
 }
 
+function toPlayerPage(player) {
+    playerID = player.getAttribute("value");
+    location.href = "/users/u/" + playerID;
+}
+
 function findGetParameter(parameterName) {
     var result = null,
         tmp = [];
