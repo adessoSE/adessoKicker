@@ -64,13 +64,13 @@
               type="button" class="btn header-dropdown-bt hvr-fade" id="notification-dropdown-icon"
               data-toggle="dropdown">
         <i class="fa fa-envelope hvr-icon"></i>
-        <span th:if="${notifications.size() > 0}" class="badge" id="notification-badge"
+        <span th:if="${!notifications.isEmpty()}" class="badge" id="notification-badge"
               th:value="${notifications.size()}" th:text="${notifications.size()}"></span>
       </button>
       <div class="shadow dropdown-menu-anim-in dropdown-menu dropdown-menu-right" id="notification-dropdown-menu"
            th:if="${notifications}">
         <!-- No Notifications Info -->
-        <div id="no-notifications" th:if="${notifications.size() <= 0}" th:text="#{notification.noNotifications}"></div>
+        <div id="no-notifications" th:if="${notifications.isEmpty()}" th:text="#{notification.noNotifications}"></div>
         <!-- Notifications -->
         <div th:each="notification : ${notifications}">
           <div
