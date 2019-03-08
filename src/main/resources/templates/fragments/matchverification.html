@@ -29,15 +29,15 @@
 <body>
 <div th:fragment="matchverification">
   <div class="dropdown-item matchverification notification" th:value="${notification.notificationId}">
-    <p class="adesso-blue-text" th:text="${notification.sendDate}"></p>
+    <p class="adesso-blue-text" th:text="${#temporals.format(notification.sendDate, 'd MMM yyyy')}"></p>
     <div class="notification-text">
       <div th:if="${notification.match.getWinners().size() == 1}">
         <div
-            th:text="#{notification.matchRequest.oneOpponent(${notification.match.getWinners().get(0).firstName}, ${notification.match.date})}"></div>
+            th:text="#{notification.matchRequest.oneOpponent(${notification.match.getWinners().get(0).firstName}, ${#temporals.format(notification.match.date, 'd MMM yyyy')})}"></div>
       </div>
       <div th:if="${notification.match.getWinners().size() == 2}">
         <div
-            th:text="#{notification.matchRequest.twoOpponents(${notification.match.getWinners().get(0).firstName}, ${notification.match.getWinners().get(1).firstName}, ${notification.match.date})}"></div>
+            th:text="#{notification.matchRequest.twoOpponents(${notification.match.getWinners().get(0).firstName}, ${notification.match.getWinners().get(1).firstName}, ${#temporals.format(notification.match.date, 'd MMM yyyy')})}"></div>
       </div>
     </div>
     <div class="row">
