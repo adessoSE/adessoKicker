@@ -30,7 +30,7 @@ $(document).ready(function () {
          */
         setTimeout(function () {
             $(thisSearchbarInput).parents('.search-bar').find(".search-bar-content").toggle();
-        }, 200);
+        }, 100);
     });
 
     // Key controls
