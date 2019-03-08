@@ -38,9 +38,6 @@
       </div>
       <input class="form-control" type="text" th:placeholder="#{'searchbar'}"/>
     </div>
-    <!-- For searching we send all user data (as DTO's) to the client. This isn't ideal,
-         As it can cause a big amount of data. But it enables us to implement an easy to use
-         And efficient way to search for a user in perspective of the user experience. -->
     <div class="panel-body search-bar-content container">
       <ul class="list-group">
         <li th:each="u : ${users}" onclick="window.location.href=this.getAttribute('href')" th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">

@@ -39,16 +39,25 @@
   <div class="row">
     <div class="col-11">
       <div id="text-and-searchbar">
-        <h2 th:text="#{sites.ranking}"></h2>
-        <!-- Search Bar -->
-        <div class="search-bar input-group">
-          <div class="input-group-prepend">
-           <span class="input-group-text">
-             <i class="fas fa-search"></i>
-           </span>
+        <!-- Searchbar -->
+        <div class="search-bar">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+          <i class="fas fa-search"></i>
+        </span>
+            </div>
+            <input class="form-control" type="text" th:placeholder="#{'searchbar'}"/>
           </div>
-          <input class="form-control" type="text" th:placeholder="#{searchbar}">
+          <div class="panel-body search-bar-content container">
+            <ul class="list-group">
+              <li th:each="u : ${users}" onclick="window.location.href=this.getAttribute('href')" th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">
+                <span th:text="${u.getFullName()}">No user found</span>
+              </li>
+            </ul>
+          </div>
         </div>
+        <h2 th:text="#{sites.ranking}"></h2>
       </div>
     </div>
     <!-- Pager Buttons Vertical -->
@@ -105,5 +114,6 @@
     <button class="pager" onclick="nextPage()"><i class="fas fa-chevron-circle-down"></i></button>
   </div>
 </div>
+<script src="/js/searchbar.js"></script>
 </body>
 </html>
