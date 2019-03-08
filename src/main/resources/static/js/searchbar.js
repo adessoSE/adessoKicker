@@ -39,10 +39,13 @@ $(document).ready(function () {
         var searchbarElements = $(searchbar).find(".list-group li");
 
         if (event.keyCode === ENTER) {
+            event.preventDefault();
             $('#search-bar-selected').click();
         } else if (event.keyCode === UP) {
+            event.preventDefault();
             selectNewElement($('#search-bar-selected').prevAll('li:visible').eq(0));
         } else if (event.keyCode === DOWN) {
+            event.preventDefault();
             selectNewElement($('#search-bar-selected').nextAll('li:visible').eq(0));
         }
     });
