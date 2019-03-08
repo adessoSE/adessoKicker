@@ -54,11 +54,11 @@
     <!-- Pager Buttons Vertical -->
     <div class="col-1">
       <div class="btn-group-vertical hide-on-small-screen">
-        <div th:if="${(param.site != null) and (param.site != 0)}">
+        <div th:if="${(param.page != null) && (T(Integer).parseInt(param.page) != 0)}">
           <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>
         </div>
         <div
-            th:if="${@userService.getUserPageSortedByRating((param.site == null ? 1 : param.site+1), (param.size == null ? 10 : param.size)).size() != 0}">
+            th:if="${@userService.getUserPageSortedByRating((param.page == null ? 1 : T(Integer).parseInt(param.page)+1), (param.size == null ? 10 : param.size)).size() != 0}">
           <button class="pager" onclick="nextPage()"><i class="fas fa-chevron-circle-down"></i></button>
         </div>
       </div>
@@ -97,11 +97,11 @@
 </div>
 <!-- Pager Buttons Horizontal -->
 <div class="btn-group-horizontal hide-on-large-screen">
-  <div th:if="${(param.site != null) and (param.site != 0)}">
+  <div th:if="${(param.page != null) && (T(Integer).parseInt(param.page) != 0)}">
     <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>
   </div>
   <div
-      th:if="${@userService.getUserPageSortedByRating((param.site == null ? 1 : param.site+1), (param.size == null ? 10 : param.size)).size() != 0}">
+      th:if="${@userService.getUserPageSortedByRating((param.page == null ? 1 : T(Integer).parseInt(param.page)+1), (param.size == null ? 10 : param.size)).size() != 0}">
     <button class="pager" onclick="nextPage()"><i class="fas fa-chevron-circle-down"></i></button>
   </div>
 </div>
