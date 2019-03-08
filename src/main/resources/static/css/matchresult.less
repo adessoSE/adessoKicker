@@ -47,6 +47,9 @@
 }
 
 .team {
+  @fontsize: 23px;
+  @width: 85%;
+
   height: 40px;
   color: @colorscheme[warm-grey-darker];
 
@@ -57,8 +60,10 @@
   }
 
   &-textbox {
-    width: 85%;
-    font-size: 23px;
+    .search-bar-content{width: @width; font-size: @fontsize;}
+    input{font-size: @fontsize; height: 48px;}
+    width: @width;
+    font-size: @fontsize;
   }
 
   &-margin-top {

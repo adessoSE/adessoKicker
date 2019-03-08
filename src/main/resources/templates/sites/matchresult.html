@@ -67,12 +67,12 @@
       <!-- Team A -->
       <div class="col-sm-6">
         <p class="team-description" th:text="#{matchResult.team1}"></p>
-        <div>
+        <div class="team team-textbox">
           <!-- As we want to display the user in a disabled input text field, we cant add the field value to it.
                As Thymeleaf wouldn't use it for the form, so were creating a hidden input field.
                This is the easiest solution as we don't need to style the input to behave like a disabled input -->
           <input type="text" name="teamAPlayer1" th:value="${#authentication.getName()}" id="teamAPlayer1" hidden/>
-          <input class="team team-textbox" type="text" th:value="${currentUser.fullName}" disabled>
+          <input class="form-control" type="text" th:value="${currentUser.fullName}" disabled>
         </div>
         <div>
           <!-- Searchbar -->
@@ -97,7 +97,7 @@
         <p class="team-description" th:text="#{matchResult.team2}"></p>
         <div>
           <!-- Searchbar -->
-          <div class="team team-textbox team-margin-top search-bar">
+          <div class="team team-textbox search-bar">
             <div class="input-group">
               <input class="hidden-input" type="text" id="teamBPlayer1" name="teamBPlayer1" value="" hidden/>
               <input class="pseudo-input form-control" type="text" th:placeholder="#{matchResult.player1}"/>
