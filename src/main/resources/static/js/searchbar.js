@@ -1,21 +1,24 @@
 $(document).ready(function () {
+    // Keycodes
+    var UP = 38;
+    var DOWN = 40;
+    var ENTER = 13;
 
     var searchbarInput = $(".search-bar input");
 
+    // Select the hovered element
     $('.search-bar-content li').mouseover(function(){
-        var searchbar = $(this).parents('.search-bar');
-        var searchbarElements = $(searchbar).find(".list-group li");
-
-        setNewSelected(searchbarElements, $(this));
+        selectNewElement($(this));
     });
 
-    // Display 'search-bar-content' when clicking in a searchbar input
+    // Display 'search-bar-content' and select first
     searchbarInput.on("focus", function () {
         var searchbar = $(this).parents('.search-bar');
         var seachbarElements = $(searchbar).find(".list-group li");
+        var searchbarContent = $(searchbar).find(".search-bar-content");
 
-        searchbar.find(".search-bar-content").toggle();
-        setNewSelected(seachbarElements, $(seachbarElements).siblings(":visible").first());
+        searchbarContent.toggle();
+        selectNewElement($(seachbarElements).siblings(":visible").first());
     });
 
     // Hide 'search-bar-content' when clicking anywhere else (loses focus)
@@ -30,46 +33,41 @@ $(document).ready(function () {
         }, 200);
     });
 
+    // Key controls
+    searchbarInput.on("keydown", function (event) {
+        var searchbar = $(this).parents('.search-bar');
+        var searchbarElements = $(searchbar).find(".list-group li");
+
+        if (event.keyCode === ENTER) {
+            $('#search-bar-selected').click();
+        } else if (event.keyCode === UP) {
+            selectNewElement($('#search-bar-selected').prevAll('li:visible').eq(0));
+        } else if (event.keyCode === DOWN) {
+            selectNewElement($('#search-bar-selected').nextAll('li:visible').eq(0));
+        }
+    });
+
+    // Search filter
     searchbarInput.on("keyup", function (event) {
-        var UP = 38;
-        var DOWN = 40;
-        var ENTER = 13;
+        if(event.keyCode === ENTER || event.keyCode === UP || event.keyCode === DOWN){
+            return;
+        }
         var value = $(this).val().toLowerCase();
         var searchbar = $(this).parents('.search-bar');
         var searchbarElements = $(searchbar).find(".list-group li");
-        var searchbarVisibleElements = $(searchbarElements).siblings(":visible");
 
-        if (event.keyCode === ENTER) {
-            $('#search-bar-content-selected').click();
-            return;
-        } else if (event.keyCode === UP) {
-            console.log($('#search-bar-content-selected').prevAll('li:visible').html());
-            setNewSelected(searchbarElements, $('#search-bar-content-selected').prevAll('li:visible').eq(0));
-            return;
-        } else if (event.keyCode === DOWN) {
-            console.log($('#search-bar-content-selected').nextAll('li:visible').html());
-            setNewSelected(searchbarElements, $('#search-bar-content-selected').nextAll('li:visible').eq(0));
-            return;
-        }
-
-        // Filters the list elements of 'search-bar-content' and hides the elements that doesn't match the filter requirements
         searchbarElements.filter(function () {
-            //indexOf() returns the positions of the char typed in the search bar (returns -1 if word doesnt contain char --> toggle element)
+            //indexOf() returns the positions of the char typed in the search bar (returns -1 if word doesn't contain char --> toggles element)
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-
         });
-
-        // Set first visible li as selected
-        setNewSelected(searchbarElements, $(searchbarElements).siblings(":visible").first());
+        selectNewElement($(searchbarElements).siblings(":visible").first());
     });
 
-    function setNewSelected(searchbarElements, newSelected) {
-        if(newSelected.length > 0){
-            // Remove id from all
-            $(searchbarElements).each(function (element) {
-                $(this).removeAttr('id');
-            });
-            $(newSelected).attr("id", "search-bar-content-selected");
+    function selectNewElement(element) {
+        // To check if a JQuery object/result is valid we need to check for length > 0 (0 -> invalid)
+        if(element.length > 0){
+            $('#search-bar-selected').removeAttr('id');
+            $(element).attr("id", "search-bar-selected");
         }
     }
 });
