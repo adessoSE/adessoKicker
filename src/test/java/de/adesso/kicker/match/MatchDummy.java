@@ -62,6 +62,6 @@ public class MatchDummy {
     }
 
     public static Match matchWithPlayersInDifferentRatingRanges() {
-        return new Match(LocalDate.now(), UserDummy.userWithVeryHighRating(), UserDummy.userWithHighRating(), true);
+        return new Match(LocalDate.now(), UserDummy.userWithVeryHighRating(), UserDummy.userWithLowRating(), false);
     }
 }
