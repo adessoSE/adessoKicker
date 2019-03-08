@@ -36,7 +36,7 @@
 <body>
 <header th:replace="~{fragments/header.html :: header}"></header>
 <form action="#" th:action="@{/matches/add}" th:object="${match}" method="POST">
-  <div class="container shadow" id="background">
+  <div class="container shadow" id="form">
     <div class="row">
       <!-- Who played? -->
       <div class="col-sm-11 headline" th:text="#{matchResult.whoPlayed}"></div>
