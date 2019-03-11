@@ -47,10 +47,10 @@ public class UserController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.addObject("rankingPosition", rankingPosition);
-        try{
+        try {
             modelAndView.addObject("notifications",
-                   notificationService.getNotificationsByReceiver(userService.getLoggedInUser()));
-        } catch(UserNotFoundException e) {
+                    notificationService.getNotificationsByReceiver(userService.getLoggedInUser()));
+        } catch (UserNotFoundException e) {
             modelAndView.addObject("notifications", false);
         }
         modelAndView.setViewName("sites/profile.html");
