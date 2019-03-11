@@ -2,19 +2,19 @@ package de.adesso.kicker.email;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.util.Map;
 
-@Service
+@Component
 @RequiredArgsConstructor
-public class EmailMessageBuilder {
+class EmailMessageBuilder {
 
     private final TemplateEngine templateEngine;
 
-    public String build(Map<String, Object> attributes, String template) {
+    String build(Map<String, Object> attributes, String template) {
         var context = new Context();
         context.setLocale(LocaleContextHolder.getLocale());
         context.setVariables(attributes);
