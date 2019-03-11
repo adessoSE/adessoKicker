@@ -51,7 +51,7 @@
           </div>
           <div class="panel-body search-bar-content container">
             <ul class="list-group">
-              <li th:each="u : ${users}" onclick="window.location.href=this.getAttribute('href')" th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">
+              <li th:each="u : ${allUsers}" onclick="window.location.href=this.getAttribute('href')" th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">
                 <span th:text="${u.getFullName()}">No user found</span>
               </li>
             </ul>
