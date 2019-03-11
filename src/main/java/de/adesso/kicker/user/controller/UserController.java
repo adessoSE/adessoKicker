@@ -2,6 +2,7 @@ package de.adesso.kicker.user.controller;
 
 import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.ranking.service.RankingService;
+import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -46,8 +47,12 @@ public class UserController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("users", userService.getAllUsers());
         modelAndView.addObject("rankingPosition", rankingPosition);
-        modelAndView.addObject("notifications",
-                notificationService.getNotificationsByReceiver(userService.getLoggedInUser()));
+        try{
+            modelAndView.addObject("notifications",
+                   notificationService.getNotificationsByReceiver(userService.getLoggedInUser()));
+        } catch(UserNotFoundException e) {
+            modelAndView.addObject("notifications", false);
+        }
         modelAndView.setViewName("sites/profile.html");
         return modelAndView;
     }
