@@ -32,10 +32,17 @@
 #everything-above-table {
 width: 80%;
 }
+
 #user-self {
   background-color: darken(@colorscheme[warm-grey-light], 5%);
 }
 .user-table-row:hover{.highlight;}
+
+#user-searched {
+  background-color: darken(@colorscheme[orange], 5%);
+}
+
+.user-table-row:hover{background-color: darken(@colorscheme[warm-grey-light], 20%) !important;}
 .user-table {
   text-align: center;
   td {
