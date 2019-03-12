@@ -5,6 +5,7 @@ import de.adesso.kicker.notification.persistence.Notification;
 import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.controller.UserController;
+import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,9 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -75,4 +78,33 @@ class UserControllerTest {
                 .andExpect(model().attribute("rankingPosition", 1));
     }
 
+    @Test
+    void whenUserNotExistentExpectNotFound() throws Exception {
+        // given
+        willThrow(UserNotFoundException.class).given(userService).getUserById(anyString());
+
+        // when
+        var result = mockMvc.perform(get("/users/u/{id}", "non-existent-id"));
+
+        // then
+        result.andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser("anonymousUser")
+    void whenUserExistsReturnUserLoggedOut() throws Exception {
+        // given
+        var user = UserDummy.defaultUser();
+        willThrow(UserNotFoundException.class).given(userService).getLoggedInUser();
+        given(userService.getUserById(user.getUserId())).willReturn(user);
+        given(rankingService.getPositionOfPlayer(user.getRanking())).willReturn(1);
+
+        // when
+        var result = mockMvc.perform(get("/users/u/{id}", user.getUserId()));
+
+        // then
+        result.andExpect(status().isOk())
+                .andExpect(model().attribute("user", user))
+                .andExpect(model().attribute("rankingPosition", 1));
+    }
 }
