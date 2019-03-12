@@ -54,7 +54,7 @@
               <li class="list-group-item" th:each="u : ${allUsers}"
                   onclick="window.location.href=this.getAttribute('href')"
                   th:href="@{/ranking(page=${@rankingService.getPositionOfPlayer(u.ranking) <= (param.size == null ? 10 : T(Integer).parseInt(param.size)) ? 0 :
-                  ((@rankingService.getPositionOfPlayer(u.ranking) - 1) / (param.size == null ? 10 : T(Integer).parseInt(param.size)))},size=${param.size == null ? 10 : param.size})}">
+                  ((@rankingService.getPositionOfPlayer(u.ranking) - 1) / (param.size == null ? 10 : T(Integer).parseInt(param.size)))},size=${param.size == null ? 10 : param.size}, player=${u.getUserId()})}">
                 <span th:text="${u.getFullName()}">No user found</span>
               </li>
             </ul>
@@ -69,8 +69,7 @@
         <div th:if="${(param.page != null) && (T(Integer).parseInt(param.page) != 0)}">
           <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>
         </div>
-        <div
-            th:if="${@userService.getUserPageSortedByRating((param.page == null ? 1 : T(Integer).parseInt(param.page)+1), (param.size == null ? 10 : param.size)).size() != 0}">
+        <div th:if="${@userService.getUserPageSortedByRating((param.page == null ? 1 : T(Integer).parseInt(param.page)+1), (param.size == null ? 10 : param.size)).size() != 0}">
           <button class="pager" onclick="nextPage()"><i class="fas fa-chevron-circle-down"></i></button>
         </div>
       </div>
@@ -91,7 +90,7 @@
     </thead>
     <tbody>
     <tr class="user-table-row" onclick="window.location.href=this.getAttribute('href')" th:each="player : ${users}"
-        th:href="@{/users/u/{id}(id=${player.userId})}">
+        th:href="@{/users/u/{id}(id=${player.userId})}" th:id="${param.player == null ? '' : (player.getUserId() == param.player[0] ? 'user-searched' : '')}">
       <td th:text="${@rankingService.getPositionOfPlayer(player.ranking)}"></td>
       <td th:text="${player.getFullName()}"></td>
       <td th:text="${player.wins}"></td>
