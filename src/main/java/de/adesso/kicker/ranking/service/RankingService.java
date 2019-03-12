@@ -35,7 +35,17 @@ public class RankingService {
 
     private static final int INDEX_OFFSET = 1;
 
-    public int getPositionOfPlayer(Ranking ranking) {
+    public void updateRanks() {
+        var rankings = getAllRankings();
+        rankings.forEach(ranking -> {
+                    int rank = calculateRank(ranking);
+                    ranking.setRank(rank);
+                }
+        );
+        saveAllRankings(rankings);
+    }
+
+    private int calculateRank(Ranking ranking) {
         return rankingRepository.countAllByRatingAfter(ranking.getRating()) + INDEX_OFFSET;
     }
 
@@ -94,5 +104,13 @@ public class RankingService {
             return KFactor.MEDIUM;
         }
         return KFactor.HIGH;
+    }
+
+    private List<Ranking> getAllRankings() {
+        return rankingRepository.findAll();
+    }
+
+    private void saveAllRankings(List<Ranking> rankings) {
+        rankingRepository.saveAll(rankings);
     }
 }

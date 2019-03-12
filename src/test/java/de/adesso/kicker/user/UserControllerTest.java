@@ -48,7 +48,7 @@ class UserControllerTest {
         var user = UserDummy.defaultUser();
         List<Notification> notificationList = Collections.singletonList(MessageDummy.messageDeclined());
         given(userService.getLoggedInUser()).willReturn(user);
-        given(rankingService.getPositionOfPlayer(user.getRanking())).willReturn(1);
+//        given(rankingService.calculateRank(user.getRanking())).willReturn(1);
         given(notificationService.getNotificationsByReceiver(any(User.class))).willReturn(notificationList);
 
         // when
@@ -67,7 +67,7 @@ class UserControllerTest {
         // given
         var user = UserDummy.defaultUser();
         given(userService.getUserById(user.getUserId())).willReturn(user);
-        given(rankingService.getPositionOfPlayer(user.getRanking())).willReturn(1);
+//        given(rankingService.calculateRank(user.getRanking())).willReturn(1);
 
         // when
         var result = mockMvc.perform(get("/users/u/{id}", user.getUserId()));
