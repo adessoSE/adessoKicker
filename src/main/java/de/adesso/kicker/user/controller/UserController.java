@@ -27,6 +27,10 @@ public class UserController {
     public ModelAndView getUserProfile(@PathVariable String id) {
         var modelAndView = new ModelAndView();
         var user = userService.getUserById(id);
+        var rankingPosition = rankingService.getPositionOfPlayer(user.getRanking());
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("rankingPosition", rankingPosition);
+        modelAndView.setViewName("sites/profile.html");
         return defaultProfileView(modelAndView, user);
     }
 

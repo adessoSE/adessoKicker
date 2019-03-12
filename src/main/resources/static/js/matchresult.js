@@ -33,3 +33,17 @@ $(document).ready(function () {
      */
     radio1.prop("checked", true);
 });
+
+function selectSearchedUser(element) {
+    var userID = $(element).attr('value');
+    var userName = $(element).find('span').html();
+    var inputGroup = $(element).parents('.search-bar').children('.input-group');
+    var hiddenInput = $(inputGroup).children('.hidden-input');
+    var pseudoInput = $(inputGroup).children('.pseudo-input');
+
+    /* Notice: 'attr()' changes the value attribute (aka the default value) and 'val()'
+     * Changes the actual value of the DOM element
+     */
+    $(hiddenInput).val(userID);
+    $(pseudoInput).val(userName);
+}

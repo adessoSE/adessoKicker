@@ -1,4 +1,5 @@
 @import "_colorscheme.less";
+@import "searchbar.less";
 
 /* When container-fly-in animation starts, the scrollbar appears,
  * As the container is out of the initial screen. This looks weird,
@@ -20,7 +21,7 @@
   }
 }
 
-#background {
+#form {
   border: 1px solid @colorscheme[warm-grey-midtone];
   margin-top: 50px;
   padding-bottom: 20px;
@@ -46,6 +47,9 @@
 }
 
 .team {
+  @fontsize: 23px;
+  @width: 85%;
+
   height: 40px;
   color: @colorscheme[warm-grey-darker];
 
@@ -56,8 +60,10 @@
   }
 
   &-textbox {
-    width: 85%;
-    font-size: 23px;
+    .search-bar-content{width: @width; font-size: @fontsize;}
+    input{font-size: @fontsize; height: 48px;}
+    width: @width;
+    font-size: @fontsize;
   }
 
   &-margin-top {

@@ -38,17 +38,29 @@
 <div id="everything-above-table" class="container">
   <div class="row">
     <div class="col-11">
-      <div id="text-and-searchbar">
-        <h2 th:text="#{sites.ranking}"></h2>
-        <!-- Search Bar -->
-        <div class="searchbar input-group">
-          <div class="input-group-prepend">
-           <span class="input-group-text">
-             <i class="fas fa-search"></i>
-           </span>
+      <div id="text-container">
+        <!-- Searchbar -->
+        <div class="search-bar">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+          <i class="fas fa-search"></i>
+        </span>
+            </div>
+            <input class="form-control" type="text" th:placeholder="#{'searchbar'}"/>
           </div>
-          <input class="form-control" type="text" th:placeholder="#{searchbar}">
+          <div class="panel-body search-bar-content container">
+            <ul class="list-group">
+              <li class="list-group-item" th:each="u : ${allUsers}"
+                  onclick="window.location.href=this.getAttribute('href')"
+                  th:href="@{/ranking(page=${@rankingService.getPositionOfPlayer(u.ranking) <= (param.size == null ? 10 : T(Integer).parseInt(param.size)) ? 0 :
+                  ((@rankingService.getPositionOfPlayer(u.ranking) - 1) / (param.size == null ? 10 : T(Integer).parseInt(param.size)))},size=${param.size == null ? 10 : param.size})}">
+                <span th:text="${u.getFullName()}">No user found</span>
+              </li>
+            </ul>
+          </div>
         </div>
+        <h2 th:text="#{sites.ranking}"></h2>
       </div>
     </div>
     <!-- Pager Buttons Vertical -->
@@ -78,14 +90,16 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="player : ${users}">
+    <tr class="user-table-row" onclick="window.location.href=this.getAttribute('href')" th:each="player : ${users}"
+        th:href="@{/users/u/{id}(id=${player.userId})}">
       <td th:text="${@rankingService.getPositionOfPlayer(player.ranking)}"></td>
       <td th:text="${player.getFullName()}"></td>
       <td th:text="${player.wins}"></td>
       <td th:text="${player.getWinRatio() + '%'}"></td>
       <td th:text="${player.ranking.rating}"></td>
     </tr>
-    <tr th:if="${user}" id="user-self">
+    <tr class="user-table-row" th:if="${user}" onclick="window.location.href=this.getAttribute('href')"
+        th:href="@{/users/u/{id}(id=${user.userId})}" id="user-self">
       <td th:text="${@rankingService.getPositionOfPlayer(user.ranking)}"></td>
       <td th:text="${user.getFullName()}"></td>
       <td th:text="${user.wins}"></td>
@@ -105,5 +119,6 @@
     <button class="pager" onclick="nextPage()"><i class="fas fa-chevron-circle-down"></i></button>
   </div>
 </div>
+<script src="/js/searchbar.js"></script>
 </body>
 </html>

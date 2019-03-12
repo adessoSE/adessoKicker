@@ -27,16 +27,7 @@
 </head>
 <body>
 <header th:replace="~{fragments/header.html :: header}"></header>
-<div class="container" id="text-and-searchbar">
-  <!-- Search Bar -->
-  <div class="searchbar input-group">
-    <div class="input-group-prepend">
-    <span class="input-group-text">
-      <i class="fas fa-search"></i>
-    </span>
-    </div>
-    <input class="form-control" type="text" th:placeholder="#{searchbar}">
-  </div>
+<div class="container" id="text-container">
   <h2 th:text="${user.getFullName()}"></h2>
 </div>
 <!-- User Statistics -->

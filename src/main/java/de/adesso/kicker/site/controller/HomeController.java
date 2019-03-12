@@ -25,6 +25,7 @@ public class HomeController {
             @RequestParam(defaultValue = "10") int size) {
         ModelAndView modelAndView = new ModelAndView();
         var users = userService.getUserPageSortedByRating(page, size);
+        var allUsers = userService.getAllUsers();
         try {
             var user = userService.getLoggedInUser();
             var rank = rankingService.getPositionOfPlayer(user.getRanking());
@@ -38,6 +39,7 @@ public class HomeController {
             modelAndView.addObject("notifications", false);
         }
         modelAndView.addObject("users", users);
+        modelAndView.addObject("allUsers", allUsers);
         modelAndView.setViewName("sites/ranking.html");
         return modelAndView;
     }
