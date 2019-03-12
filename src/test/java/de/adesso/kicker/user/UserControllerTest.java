@@ -3,7 +3,6 @@ package de.adesso.kicker.user;
 import de.adesso.kicker.notification.message.MessageDummy;
 import de.adesso.kicker.notification.persistence.Notification;
 import de.adesso.kicker.notification.service.NotificationService;
-import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.controller.UserController;
 import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
@@ -36,9 +35,6 @@ class UserControllerTest {
     private UserService userService;
 
     @MockBean
-    private RankingService rankingService;
-
-    @MockBean
     private NotificationService notificationService;
 
     @Test
@@ -48,7 +44,6 @@ class UserControllerTest {
         var user = UserDummy.defaultUser();
         List<Notification> notificationList = Collections.singletonList(MessageDummy.messageDeclined());
         given(userService.getLoggedInUser()).willReturn(user);
-//        given(rankingService.calculateRank(user.getRanking())).willReturn(1);
         given(notificationService.getNotificationsByReceiver(any(User.class))).willReturn(notificationList);
 
         // when
@@ -57,7 +52,6 @@ class UserControllerTest {
         // then
         result.andExpect(status().isOk())
                 .andExpect(model().attribute("user", user))
-                .andExpect(model().attribute("rankingPosition", 1))
                 .andExpect(model().attribute("notifications", notificationList));
     }
 
@@ -67,15 +61,12 @@ class UserControllerTest {
         // given
         var user = UserDummy.defaultUser();
         given(userService.getUserById(user.getUserId())).willReturn(user);
-//        given(rankingService.calculateRank(user.getRanking())).willReturn(1);
 
         // when
         var result = mockMvc.perform(get("/users/u/{id}", user.getUserId()));
 
         // then
-        result.andExpect(status().isOk())
-                .andExpect(model().attribute("user", user))
-                .andExpect(model().attribute("rankingPosition", 1));
+        result.andExpect(status().isOk()).andExpect(model().attribute("user", user));
     }
 
     @Test
@@ -97,14 +88,11 @@ class UserControllerTest {
         var user = UserDummy.defaultUser();
         willThrow(UserNotFoundException.class).given(userService).getLoggedInUser();
         given(userService.getUserById(user.getUserId())).willReturn(user);
-        given(rankingService.getPositionOfPlayer(user.getRanking())).willReturn(1);
 
         // when
         var result = mockMvc.perform(get("/users/u/{id}", user.getUserId()));
 
         // then
-        result.andExpect(status().isOk())
-                .andExpect(model().attribute("user", user))
-                .andExpect(model().attribute("rankingPosition", 1));
+        result.andExpect(status().isOk()).andExpect(model().attribute("user", user));
     }
 }

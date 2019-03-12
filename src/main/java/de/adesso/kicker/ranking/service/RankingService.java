@@ -38,10 +38,9 @@ public class RankingService {
     public void updateRanks() {
         var rankings = getAllRankings();
         rankings.forEach(ranking -> {
-                    int rank = calculateRank(ranking);
-                    ranking.setRank(rank);
-                }
-        );
+            int rank = calculateRank(ranking);
+            ranking.setRank(rank);
+        });
         saveAllRankings(rankings);
     }
 
