@@ -170,9 +170,9 @@ class UserServiceTest {
     void expectListOfUsers() {
         // given
         var userList = createUserList();
-        var pageable = mock(Page.class);
-        given(userRepository.findAll(any(Pageable.class))).willReturn(pageable);
-        given(pageable.getContent()).willReturn(userList);
+        var page = mock(Page.class);
+        given(userRepository.findAll(any(Pageable.class))).willReturn(page);
+        given(page.getContent()).willReturn(userList);
 
         // when
         var actualList = userService.getUserPageSortedByRating(0, 10);

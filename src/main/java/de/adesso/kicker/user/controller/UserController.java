@@ -27,10 +27,6 @@ public class UserController {
     public ModelAndView getUserProfile(@PathVariable String id) {
         var modelAndView = new ModelAndView();
         var user = userService.getUserById(id);
-        var rankingPosition = rankingService.getPositionOfPlayer(user.getRanking());
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("rankingPosition", rankingPosition);
-        modelAndView.setViewName("sites/profile.html");
         return defaultProfileView(modelAndView, user);
     }
 
@@ -46,7 +42,8 @@ public class UserController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("rankingPosition", rankingPosition);
         try {
-            var notifications = notificationService.getNotificationsByReceiver(userService.getLoggedInUser());
+            var currentUser = userService.getLoggedInUser();
+            var notifications = notificationService.getNotificationsByReceiver(currentUser);
             modelAndView.addObject("notifications", notifications);
         } catch (UserNotFoundException e) {
             modelAndView.addObject("notifications", false);
