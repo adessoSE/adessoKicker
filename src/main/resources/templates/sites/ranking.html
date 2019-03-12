@@ -51,7 +51,10 @@
           </div>
           <div class="panel-body search-bar-content container">
             <ul class="list-group">
-              <li class="list-group-item" th:each="u : ${allUsers}" onclick="window.location.href=this.getAttribute('href')" th:href="@{/ranking(page=${@rankingService.getPositionOfPlayer(u.ranking) <= (param.size == null ? 10 : T(Integer).parseInt(param.size)) ? 0 : ((@rankingService.getPositionOfPlayer(u.ranking) - 1) / (param.size == null ? 10 : T(Integer).parseInt(param.size)))},size=${param.size == null ? 10 : param.size})}">
+              <li class="list-group-item" th:each="u : ${allUsers}"
+                  onclick="window.location.href=this.getAttribute('href')"
+                  th:href="@{/ranking(page=${@rankingService.getPositionOfPlayer(u.ranking) <= (param.size == null ? 10 : T(Integer).parseInt(param.size)) ? 0 :
+                  ((@rankingService.getPositionOfPlayer(u.ranking) - 1) / (param.size == null ? 10 : T(Integer).parseInt(param.size)))},size=${param.size == null ? 10 : param.size})}">
                 <span th:text="${u.getFullName()}">No user found</span>
               </li>
             </ul>
@@ -87,14 +90,16 @@
     </tr>
     </thead>
     <tbody>
-    <tr class="user-table-row" onclick="window.location.href=this.getAttribute('href')" th:each="player : ${users}" th:href="@{/users/u/{id}(id=${player.userId})}">
+    <tr class="user-table-row" onclick="window.location.href=this.getAttribute('href')" th:each="player : ${users}"
+        th:href="@{/users/u/{id}(id=${player.userId})}">
       <td th:text="${@rankingService.getPositionOfPlayer(player.ranking)}"></td>
       <td th:text="${player.getFullName()}"></td>
       <td th:text="${player.wins}"></td>
       <td th:text="${player.getWinRatio() + '%'}"></td>
       <td th:text="${player.ranking.rating}"></td>
     </tr>
-    <tr class="user-table-row" th:if="${user}" onclick="window.location.href=this.getAttribute('href')" th:href="@{/users/u/{id}(id=${user.userId})}" id="user-self">
+    <tr class="user-table-row" th:if="${user}" onclick="window.location.href=this.getAttribute('href')"
+        th:href="@{/users/u/{id}(id=${user.userId})}" id="user-self">
       <td th:text="${@rankingService.getPositionOfPlayer(user.ranking)}"></td>
       <td th:text="${user.getFullName()}"></td>
       <td th:text="${user.wins}"></td>
