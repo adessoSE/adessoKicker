@@ -34,7 +34,6 @@
     <a class="navbar-brand" href="#">
       <img class="adesso-logo" src="/img/adesso-logo.png" alt="adesso kicker">
     </a>
-    <script src="/js/notifications.js"></script>
     <!-- Links -->
     <div class="navbar-collapse collapse">
       <ul class="navbar-nav">
@@ -70,9 +69,9 @@
       <div class="shadow dropdown-menu-anim-in dropdown-menu dropdown-menu-right" id="notification-dropdown-menu"
            th:if="${notifications}">
         <!-- No Notifications Info -->
-        <div id="no-notifications" th:if="${notifications.isEmpty()}" th:text="#{notification.noNotifications}"></div>
+        <div id="no-notifications" th:style="${!notifications.isEmpty() ? 'display: none;' : ''}" th:text="#{notification.noNotifications}"></div>
         <!-- Notifications -->
-        <div th:each="notification : ${notifications}">
+        <div class="notification" th:each="notification : ${notifications}">
           <div
               th:if="${notification.type == T(de.adesso.kicker.notification.persistence.NotificationType).MATCH_VERIFICATION}">
             <div th:replace="~{fragments/matchverification.html :: matchverification}"></div>
@@ -114,6 +113,7 @@
     </div>
   </nav>
   <script src="/js/header.js"></script>
+  <script src="/js/notifications.js"></script>
 </header>
 </body>
 </html>
