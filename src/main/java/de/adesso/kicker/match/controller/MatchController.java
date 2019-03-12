@@ -67,11 +67,14 @@ public class MatchController {
     }
 
     private ModelAndView defaultAddMatchView(ModelAndView modelAndView) {
-        modelAndView.addObject("match", new Match());
-        modelAndView.addObject("users", userService.getAllUsers());
-        modelAndView.addObject("currentUser", userService.getLoggedInUser());
-        modelAndView.addObject("notifications",
-                notificationService.getNotificationsByReceiver(userService.getLoggedInUser()));
+        var match = new Match();
+        var user = userService.getLoggedInUser();
+        var notifications = notificationService.getNotificationsByReceiver(user);
+        var users = userService.getAllUsers();
+        modelAndView.addObject("match", match);
+        modelAndView.addObject("currentUser", user);
+        modelAndView.addObject("users", users);
+        modelAndView.addObject("notifications", notifications);
         modelAndView.setViewName("sites/matchresult.html");
         return modelAndView;
     }
