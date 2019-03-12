@@ -1,6 +1,6 @@
 package de.adesso.kicker.notification.service;
 
-import de.adesso.kicker.notification.exception.NotificationNotExistingException;
+import de.adesso.kicker.notification.exception.NotificationNotFoundException;
 import de.adesso.kicker.notification.exception.WrongReceiverException;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
 import de.adesso.kicker.notification.matchverificationrequest.service.VerifyMatchService;
@@ -71,6 +71,6 @@ public class NotificationService {
     }
 
     public Notification getNotificationById(long notificationId) {
-        return notificationRepository.findById(notificationId).orElseThrow(NotificationNotExistingException::new);
+        return notificationRepository.findById(notificationId).orElseThrow(NotificationNotFoundException::new);
     }
 }

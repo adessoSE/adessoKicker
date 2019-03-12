@@ -1,6 +1,6 @@
 package de.adesso.kicker.notification.controller;
 
-import de.adesso.kicker.notification.exception.NotificationNotExistingException;
+import de.adesso.kicker.notification.exception.NotificationNotFoundException;
 import de.adesso.kicker.notification.exception.WrongReceiverException;
 import de.adesso.kicker.notification.persistence.Notification;
 import de.adesso.kicker.notification.service.NotificationService;
@@ -34,7 +34,7 @@ public class NotificationController {
         try {
             notificationService.declineNotification(id);
             modelAndView.addObject("successDeclined", true);
-        } catch (NotificationNotExistingException e) {
+        } catch (NotificationNotFoundException e) {
             modelAndView.addObject("notExisting", true);
         } catch (WrongReceiverException e) {
             modelAndView.addObject("wrongReceiver", true);
@@ -49,7 +49,7 @@ public class NotificationController {
         try {
             notificationService.acceptNotification(id);
             modelAndView.addObject("successAccepted", true);
-        } catch (NotificationNotExistingException e) {
+        } catch (NotificationNotFoundException e) {
             modelAndView.addObject("notExisting", true);
         } catch (WrongReceiverException e) {
             modelAndView.addObject("wrongReceiver", true);

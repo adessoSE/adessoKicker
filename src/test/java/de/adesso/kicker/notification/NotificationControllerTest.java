@@ -1,7 +1,7 @@
 package de.adesso.kicker.notification;
 
 import de.adesso.kicker.notification.controller.NotificationController;
-import de.adesso.kicker.notification.exception.NotificationNotExistingException;
+import de.adesso.kicker.notification.exception.NotificationNotFoundException;
 import de.adesso.kicker.notification.exception.WrongReceiverException;
 import de.adesso.kicker.notification.message.MessageDummy;
 import de.adesso.kicker.notification.service.NotificationService;
@@ -74,13 +74,13 @@ public class NotificationControllerTest {
     void AcceptNotExistingNotification() throws Exception {
         // given
         var notificationId = 1;
-        doThrow(NotificationNotExistingException.class).when(notificationService).acceptNotification(notificationId);
+        doThrow(NotificationNotFoundException.class).when(notificationService).acceptNotification(notificationId);
 
         // when
         var result = this.mockMvc.perform(get("/notifications/accept/" + notificationId));
 
         // then
-        willThrow(NotificationNotExistingException.class).given(notificationService).acceptNotification(anyLong());
+        willThrow(NotificationNotFoundException.class).given(notificationService).acceptNotification(anyLong());
         result.andExpect(status().isOk())
                 .andExpect(view().name("sites/notificationresult.html"))
                 .andExpect(model().attribute("notExisting", true));
