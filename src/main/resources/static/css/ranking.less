@@ -30,17 +30,19 @@
 }
 
 #everything-above-table {
-  width: 80%;
+width: 80%;
 }
-
 #user-self {
   background-color: darken(@colorscheme[warm-grey-light], 5%);
 }
-
-.user-table-row:hover{background-color: darken(@colorscheme[warm-grey-light], 20%) !important;}
+.user-table-row:hover{.highlight;}
 .user-table {
   text-align: center;
   td {
+    .ranking-pos{
+      color:white;
+      background-color: @colorscheme[adesso-blue];
+    }
     border: none !important;
     cursor: pointer;
   }
@@ -61,5 +63,10 @@
   border: none;
   background: none;
   font-size: 40px;
+}
+
+.highlight{
+  background: linear-gradient(to right, white, @colorscheme[adesso-blue] 30%);
+  color: white;
 }
 
