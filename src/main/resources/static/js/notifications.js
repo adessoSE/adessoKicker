@@ -10,8 +10,12 @@ function updateBadgeCount() {
 }
 
 function removeNotification(btn) {
-    var notification = btn.parentNode.parentNode.parentNode;
-    notification.remove();
+    $(btn).parents('.notification').remove();
+    var list = $('#notification-dropdown-menu')
+    var noNotifications = $('#no-notifications');
+    if (list.children().length == 1) {
+        noNotifications.toggle();
+    }
 }
 
 function accept(btn) {
