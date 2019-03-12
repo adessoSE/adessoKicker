@@ -31,7 +31,6 @@
 
   <!-- ranking js -->
   <script src="/js/ranking.js"></script>
-
 </head>
 <body>
 <header th:replace="~{fragments/header.html :: header}"></header>
@@ -78,32 +77,35 @@
 </div>
 <!-- User List -->
 <div class="container-fluid">
-  <div id="table-container">
+  <div class="shadow-sm" id="table-container">
     <table class="user-table table">
       <thead>
       <tr>
-        <th th:text="#{statistics.rank}"></th>
-        <th th:text="#{ranking.name}"></th>
-        <th th:text="#{statistics.wins}"></th>
-        <th th:text="#{statistics.winRate}"></th>
-        <th th:text="#{statistics.points}"></th>
+        <th th:text="#{statistics.rank}"><i class="fas fa-chart-line"></i></th>
+        <th th:text="#{ranking.name}" class="text-align-right"><i class="fas fa-chart-line"></i></th>
+        <th th:text="#{statistics.wins}"><i class="fas fa-chart-line"></i></th>
+        <th th:text="#{statistics.winRate}"><i class="fas fa-chart-line"></i></th>
+        <th th:text="#{statistics.points}"><i class="fas fa-chart-line"></i></th>
       </tr>
       </thead>
       <tbody>
       <tr class="user-table-row" onclick="window.location.href=this.getAttribute('href')" th:each="player : ${users}"
-          th:href="@{/users/u/{id}(id=${player.userId})}">
-        <td class="user-pos">
-          <span class="badge" th:text="${@rankingService.getPositionOfPlayer(player.ranking)}"></span>
+          th:href="@{/users/u/{id}(id=${player.userId})}" th:id="${param.player == null ? '' : (player.getUserId() == param.player[0] ? 'user-searched' : '')}">
+        <td>
+          <span class="badge badge-position align-center" th:text="${@rankingService.getPositionOfPlayer(player.ranking)}"></span>
         </td>
-        <td th:text="${player.getFullName()}"></td>
+        <td class="user-table-name" th:text="${player.getFullName()}"></td>
         <td th:text="${player.wins}"></td>
         <td th:text="${player.getWinRatio() + '%'}"></td>
         <td th:text="${player.ranking.rating}"></td>
       </tr>
+      <!-- Logged-In User -->
       <tr class="user-table-row" th:if="${user}" onclick="window.location.href=this.getAttribute('href')"
           th:href="@{/users/u/{id}(id=${user.userId})}" id="user-self">
-        <td th:text="${@rankingService.getPositionOfPlayer(user.ranking)}"></td>
-        <td th:text="${user.getFullName()}"></td>
+        <td>
+          <span id="user-self-badge" class="badge badge-position align-center" th:text="${@rankingService.getPositionOfPlayer(user.ranking)}"></span>
+        </td>
+        <td class="user-table-name" th:text="${user.getFullName()}"></td>
         <td th:text="${user.wins}"></td>
         <td th:text="${user.getWinRatio() + '%'}"></td>
         <td th:text="${user.ranking.rating}"></td>
@@ -111,36 +113,6 @@
       </tbody>
     </table>
   </div>
-<div class="container-fluid" id="table-container">
-  <table class="user-table table">
-    <thead>
-    <tr>
-      <th th:text="#{statistics.rank}"></th>
-      <th th:text="#{ranking.name}"></th>
-      <th th:text="#{statistics.wins}"></th>
-      <th th:text="#{statistics.winRate}"></th>
-      <th th:text="#{statistics.points}"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr class="user-table-row" onclick="window.location.href=this.getAttribute('href')" th:each="player : ${users}"
-        th:href="@{/users/u/{id}(id=${player.userId})}" th:id="${param.player == null ? '' : (player.getUserId() == param.player[0] ? 'user-searched' : '')}">
-      <td th:text="${@rankingService.getPositionOfPlayer(player.ranking)}"></td>
-      <td th:text="${player.getFullName()}"></td>
-      <td th:text="${player.wins}"></td>
-      <td th:text="${player.getWinRatio() + '%'}"></td>
-      <td th:text="${player.ranking.rating}"></td>
-    </tr>
-    <tr class="user-table-row" th:if="${user}" onclick="window.location.href=this.getAttribute('href')"
-        th:href="@{/users/u/{id}(id=${user.userId})}" id="user-self">
-      <td th:text="${@rankingService.getPositionOfPlayer(user.ranking)}"></td>
-      <td th:text="${user.getFullName()}"></td>
-      <td th:text="${user.wins}"></td>
-      <td th:text="${user.getWinRatio() + '%'}"></td>
-      <td th:text="${user.ranking.rating}"></td>
-    </tr>
-    </tbody>
-  </table>
 </div>
 <!-- Pager Buttons Horizontal -->
 <div class="btn-group-horizontal hide-on-large-screen">

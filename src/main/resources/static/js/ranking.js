@@ -1,3 +1,14 @@
+$(window).on('load', function(){
+    // Apply animation to each table row with delay
+    var time = 0;
+    var delay = 25;
+    $('tr').each(function(){
+        var tr = this;
+        setTimeout(function(){$(tr).css('animation-play-state', 'running')}, time);
+        time += delay;
+    });
+});
+
 function nextPage() {
     var size = findGetParameter("size");
     var page = Number(findGetParameter("page"));
