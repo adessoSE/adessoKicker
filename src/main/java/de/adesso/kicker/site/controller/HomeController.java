@@ -28,14 +28,11 @@ public class HomeController {
         var allUsers = userService.getAllUsers();
         try {
             var user = userService.getLoggedInUser();
-            var rank = rankingService.getPositionOfPlayer(user.getRanking());
             var notifications = notificationService.getNotificationsByReceiver(user);
             modelAndView.addObject("user", user);
-            modelAndView.addObject("rank", rank);
             modelAndView.addObject("notifications", notifications);
         } catch (UserNotFoundException e) {
             modelAndView.addObject("user", false);
-            modelAndView.addObject("rank", false);
             modelAndView.addObject("notifications", false);
         }
         modelAndView.addObject("users", users);

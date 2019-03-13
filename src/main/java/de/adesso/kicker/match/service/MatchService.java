@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -31,6 +32,7 @@ public class MatchService {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
+    @Transactional
     public void addMatchEntry(Match match) {
         checkForFutureDate(match);
         checkSamePlayer(match);
@@ -45,6 +47,7 @@ public class MatchService {
     }
 
     @EventListener
+    @Transactional
     public void verifyMatch(MatchVerifiedEvent matchVerifiedEvent) {
         Match match = matchVerifiedEvent.getMatch();
         match.setVerified(true);
@@ -74,6 +77,7 @@ public class MatchService {
             loser.increaseLosses();
         }
         rankingService.updateRatings(match);
+        rankingService.updateRanks();
     }
 
     private void checkSamePlayer(Match match) {

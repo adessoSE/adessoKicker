@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>adesso kicker</title>
+  <meta charset="UTF-8">
+  <title>adesso kicker</title>
 </head>
 <body>
-  <!-- comparisons are made with != null because without it a null to bool conversion fail would appear -->
-  <div th:if="${notExisting != null || wrongReceiver != null}">
-    <div th:text="#{notification.invalid}"></div>
-  </div>
-  <div th:if="${successDeclined != null}">
-    <div th:text="#{notification.successDeclined}"></div>
-  </div>
-  <div th:if="${successAccepted != null}">
-      <div th:text="#{notification.successAccepted}"></div>
-  </div>
+<!-- comparisons are made with != null because without it a null to bool conversion fail would appear -->
+<div th:if="${notExisting != null || wrongReceiver != null}">
+  <div th:text="#{notification.invalid}"></div>
+</div>
+<div th:if="${successDeclined != null}">
+  <div th:text="#{notification.successDeclined}"></div>
+</div>
+<div th:if="${successAccepted != null}">
+  <div th:text="#{notification.successAccepted}"></div>
+</div>
 </body>
 </html>
