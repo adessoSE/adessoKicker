@@ -1,6 +1,6 @@
 package de.adesso.kicker.notification;
 
-import de.adesso.kicker.notification.exception.NotificationNotExistingException;
+import de.adesso.kicker.notification.exception.NotificationNotFoundException;
 import de.adesso.kicker.notification.exception.WrongReceiverException;
 import de.adesso.kicker.notification.matchverificationrequest.MatchVerificationRequestDummy;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
@@ -68,7 +68,7 @@ class NotificationServiceTest {
     }
 
     @Test
-    @DisplayName("If the notification does not exists a NotificationNotExistingException should be thrown")
+    @DisplayName("If the notification does not exists a NotificationNotFoundException should be thrown")
     void whenInvalidIdThenExceptionShouldBeThrown() {
         // given
         given(notificationRepository.findById(anyLong())).willReturn(Optional.empty());
@@ -77,7 +77,7 @@ class NotificationServiceTest {
         Executable when = () -> notificationService.getNotificationById(anyLong());
 
         // then
-        assertThrows(NotificationNotExistingException.class, when);
+        assertThrows(NotificationNotFoundException.class, when);
     }
 
     @Test
