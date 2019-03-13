@@ -5,22 +5,21 @@ $(document).ready(function () {
     var ENTER = 13;
 
     var searchbarInput = $(".search-bar input");
+    var searchbarElements = $(".search-bar-content li");
 
     // Select the hovered element
-    $('.search-bar-content li').mouseover(function(){
+    searchbarElements.mouseover(function () {
         selectNewElement($(this));
     });
 
+    //As putting the mouse button down on a list element would cause the on blur event, we need to cancel it
+    searchbarElements.mousedown(function (e) {
+        e.preventDefault();
+    });
+
     // Hide 'search-bar-content' when clicking anywhere else (loses focus)
-    searchbarInput.on("blur", function () {
-        var thisSearchbarInput = this;
-        /* When you click on an item in the 'search-bar-content' the 'search-bar-input' loses focus.
-         * Causing the 'search-bar-content' to vanish, so the action that should happen doesn't work.
-         * As the 'blur-event' happens before the 'click-event'. A small delay is a workaround to prevent this.
-         */
-        setTimeout(function () {
-            $(thisSearchbarInput).parents('.search-bar').find(".search-bar-content").hide();
-        }, 200);
+    searchbarInput.on("blur", function (e) {
+        $(this).parents('.search-bar').find(".search-bar-content").hide();
     });
 
     // Key controls
@@ -39,7 +38,7 @@ $(document).ready(function () {
             selectNewElement(previousElement);
             $(searchbarList).scrollTop($(previousElement).scrollHeight);
             var newScrollbarPos = $(searchbarList).scrollTop() - $(previousElement).prop('scrollHeight');
-            if (!isNaN(newScrollbarPos)){
+            if (!isNaN(newScrollbarPos)) {
                 $(searchbarList).scrollTop(newScrollbarPos);
             }
 
@@ -48,7 +47,7 @@ $(document).ready(function () {
             var nextElement = $(searchbarSelected).nextAll('li:visible').eq(0);
             selectNewElement(nextElement);
             var newScrollbarPos = $(searchbarList).scrollTop() + $(nextElement).prop('scrollHeight');
-            if (!isNaN(newScrollbarPos)){
+            if (!isNaN(newScrollbarPos)) {
                 $(searchbarList).scrollTop(newScrollbarPos);
             }
         }
@@ -56,7 +55,7 @@ $(document).ready(function () {
 
     // Search filter
     searchbarInput.on("keyup", function (event) {
-        if(event.keyCode === ENTER || event.keyCode === UP || event.keyCode === DOWN){
+        if (event.keyCode === ENTER || event.keyCode === UP || event.keyCode === DOWN) {
             return;
         }
         var value = $(this).val().toLowerCase();
@@ -75,7 +74,7 @@ $(document).ready(function () {
 
     function selectNewElement(element) {
         // To check if a JQuery object/result is valid we need to check for length > 0 (0 -> invalid)
-        if(element.length > 0){
+        if (element.length > 0) {
             $('#search-bar-selected').removeAttr('id');
             $(element).attr("id", "search-bar-selected");
         }
