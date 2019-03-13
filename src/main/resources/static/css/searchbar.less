@@ -1,6 +1,19 @@
 @import "_colorscheme.less";
 
-@lineCount: 4;
+.setSearchBarHeight(@elementCount: 5; @elementHeight: 50px;){
+  .search-bar{
+    &-content{
+      ul {
+        max-height: @elementCount * @elementHeight;
+      }
+      li {
+        min-height: @elementHeight;
+        max-height: @elementHeight;
+        height: @elementHeight;
+      }
+    }
+  }
+}
 
 .search-bar{
   #search-bar-selected{
@@ -10,13 +23,19 @@
   &-content{
     ul {
       overflow-y: scroll;
-      max-height: 195px;
     }
-    li {background-color: @colorscheme[warm-grey-light];}
+    li {
+      margin: 0;
+      line-height: inherit;
+      border: none;
+      background-color: @colorscheme[warm-grey-light];
+      cursor: pointer;
+    }
     display: none;
     position: absolute;
     z-index: 1;
     margin-left: -15px;
   }
 }
+.setSearchBarHeight();
 
