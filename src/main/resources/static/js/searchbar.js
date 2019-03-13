@@ -19,14 +19,13 @@ $(document).ready(function () {
          * As the 'blur-event' happens before the 'click-event'. A small delay is a workaround to prevent this.
          */
         setTimeout(function () {
-            $(thisSearchbarInput).parents('.search-bar').find(".search-bar-content").toggle();
-        }, 100);
+            $(thisSearchbarInput).parents('.search-bar').find(".search-bar-content").hide();
+        }, 200);
     });
 
     // Key controls
     searchbarInput.on("keydown", function (event) {
         var searchbar = $(this).parents('.search-bar');
-        var searchbarElements = $(searchbar).find(".list-group li");
         var searchbarList = $(searchbar).find(".search-bar-content ul");
         var searchbarSelected = $('#search-bar-selected');
 
