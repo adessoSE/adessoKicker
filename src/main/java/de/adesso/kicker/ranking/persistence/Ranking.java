@@ -19,6 +19,8 @@ public class Ranking {
     @NotNull
     private int rating;
 
+    private Integer rank;
+
     public Ranking() {
         this.rating = 1000;
     }

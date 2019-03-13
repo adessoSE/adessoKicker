@@ -66,6 +66,7 @@ class MatchControllerIntegrationTest {
                 .param("teamAPlayer1.losses", String.valueOf(user1.getLosses()))
                 .param("teamAPlayer1.ranking.rankingId", user1.getRanking().getRankingId())
                 .param("teamAPlayer1.ranking.rating", String.valueOf(user1.getRanking().getRating()))
+                .param("teamAPlayer1.ranking.rank", String.valueOf(user1.getRanking().getRank()))
                 .param("teamBPlayer1.userId", user2.getUserId())
                 .param("teamBPlayer1.firstName", user2.getFirstName())
                 .param("teamBPlayer1.lastName", user2.getLastName())
@@ -74,6 +75,7 @@ class MatchControllerIntegrationTest {
                 .param("teamBPlayer1.losses", String.valueOf(user2.getLosses()))
                 .param("teamBPlayer1.ranking.rankingId", user2.getRanking().getRankingId())
                 .param("teamBPlayer1.ranking.rating", String.valueOf(user2.getRanking().getRating()))
+                .param("teamBPlayer1.ranking.rank", String.valueOf(user2.getRanking().getRank()))
                 .param("winnerTeamA", "true"));
 
         // then
