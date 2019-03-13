@@ -1,7 +1,6 @@
 package de.adesso.kicker.user.controller;
 
 import de.adesso.kicker.notification.service.NotificationService;
-import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
@@ -18,8 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
 
     private final UserService userService;
-
-    private final RankingService rankingService;
 
     private final NotificationService notificationService;
 
@@ -38,9 +35,7 @@ public class UserController {
     }
 
     private ModelAndView defaultProfileView(ModelAndView modelAndView, User user) {
-        var rankingPosition = rankingService.getPositionOfPlayer(user.getRanking());
         modelAndView.addObject("user", user);
-        modelAndView.addObject("rankingPosition", rankingPosition);
         try {
             var currentUser = userService.getLoggedInUser();
             var notifications = notificationService.getNotificationsByReceiver(currentUser);

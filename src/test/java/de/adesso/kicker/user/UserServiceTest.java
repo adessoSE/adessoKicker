@@ -1,5 +1,6 @@
 package de.adesso.kicker.user;
 
+import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.persistence.UserRepository;
@@ -36,6 +37,9 @@ class UserServiceTest {
 
     @Mock
     UserRepository userRepository;
+
+    @Mock
+    RankingService rankingService;
 
     @InjectMocks
     UserService userService;
@@ -157,6 +161,8 @@ class UserServiceTest {
 
         given(userRepository.findById(anyString())).willReturn(Optional.empty());
         given(userRepository.save(user)).willReturn(user);
+
+        doNothing().when(rankingService).updateRanks();
 
         // when
         userService.checkFirstLogin(authEvent);
