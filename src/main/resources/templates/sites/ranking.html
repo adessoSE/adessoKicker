@@ -90,15 +90,16 @@
     </thead>
     <tbody>
     <tr class="user-table-row" onclick="window.location.href=this.getAttribute('href')" th:each="player : ${users}"
-        th:href="@{/users/u/{id}(id=${player.userId})}" th:id="${param.player == null ? '' : (player.getUserId() == param.player[0] ? 'user-searched' : '')}">
+        th:href="@{/users/u/{id}(id=${player.userId})}" th:id="${param.player == null ? (player == user ? 'user-self' : '')
+        : (player.getUserId() == param.player[0] ? 'user-searched' : (player == user ? 'user-self' : ''))}">
       <td th:text="${@rankingService.getPositionOfPlayer(player.ranking)}"></td>
       <td th:text="${player.getFullName()}"></td>
       <td th:text="${player.wins}"></td>
       <td th:text="${player.getWinRatio() + '%'}"></td>
       <td th:text="${player.ranking.rating}"></td>
     </tr>
-    <tr class="user-table-row" th:if="${user}" onclick="window.location.href=this.getAttribute('href')"
-        th:href="@{/users/u/{id}(id=${user.userId})}" id="user-self">
+    <tr class="user-table-row" th:if="${#authentication.getName() != 'anonymousUser' && !users.contains(user)}"
+        th:href="@{/users/u/{id}(id=${user.userId})}" onclick="window.location.href=this.getAttribute('href')" id="user-self">
       <td th:text="${@rankingService.getPositionOfPlayer(user.ranking)}"></td>
       <td th:text="${user.getFullName()}"></td>
       <td th:text="${user.wins}"></td>
