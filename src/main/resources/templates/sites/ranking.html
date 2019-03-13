@@ -2,8 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>adesso kicker</title>
-
-  <!-- Required meta tags -->
   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- JQuery -->
@@ -29,7 +27,7 @@
   <!-- LESS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
 
-  <!-- ranking js -->
+  <!-- Ranking JS -->
   <script src="/js/ranking.js"></script>
 </head>
 <body>
@@ -81,11 +79,25 @@
     <table class="user-table table">
       <thead>
       <tr>
-        <th th:text="#{statistics.rank}"><i class="fas fa-chart-line"></i></th>
-        <th th:text="#{ranking.name}" class="text-align-right"><i class="fas fa-chart-line"></i></th>
-        <th th:text="#{statistics.wins}"><i class="fas fa-chart-line"></i></th>
-        <th th:text="#{statistics.winRate}"><i class="fas fa-chart-line"></i></th>
-        <th th:text="#{statistics.points}"><i class="fas fa-chart-line"></i></th>
+        <th>
+          <span th:text="#{statistics.rank}"></span>
+          <i class="fas fa-chart-line"></i>
+        </th>
+        <th class="thead-name">
+          <span th:text="#{ranking.name}"></span>
+        </th>
+        <th>
+          <span th:text="#{statistics.wins}"></span>
+          <i class="fas fa-check"></i>
+        </th>
+        <th>
+          <span th:text="#{statistics.winRate}"></span>
+          <i class="fas fa-balance-scale"></i>
+        </th>
+        <th>
+          <span th:text="#{statistics.points}"></span>
+          <i class="fas fa-trophy"></i>
+        </th>
       </tr>
       </thead>
       <tbody>
