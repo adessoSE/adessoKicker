@@ -1,7 +1,5 @@
 package de.adesso.kicker.user.service;
 
-import de.adesso.kicker.ranking.persistence.Ranking;
-import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.persistence.UserRepository;
@@ -26,15 +24,17 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    private final RankingService rankingService;
-
     public List<User> getAllUsers() {
         return new ArrayList<>(userRepository.findAll());
     }
 
+    public List<User> getAllUsersWithRank() {
+        return new ArrayList<>(userRepository.findAllByRankingNotNull());
+    }
+
     public List<User> getUserPageSortedByRating(int page, int size) {
         var pageable = PageRequest.of(page, size, Sort.by("ranking.rating").descending());
-        return userRepository.findAll(pageable).getContent();
+        return userRepository.findAllByRankingNotNull(pageable).getContent();
     }
 
     public User getUserById(String id) {
@@ -55,9 +55,8 @@ public class UserService {
         var firstName = userAccessToken.getGivenName();
         var lastName = userAccessToken.getFamilyName();
         var email = userAccessToken.getEmail();
-        User user = new User(userId, firstName, lastName, email, new Ranking());
+        User user = new User(userId, firstName, lastName, email);
         saveUser(user);
-        rankingService.updateRanks();
     }
 
     private AccessToken getAccessToken(Authentication authentication) {
