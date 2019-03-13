@@ -41,24 +41,28 @@ class HomeControllerTest {
     @MockBean
     private NotificationService notificationService;
 
-    private static User createUser() {
-        return UserDummy.defaultUser();
+    private static User createUserWithRank() {
+        return UserDummy.userWithLowRating();
     }
 
     private static List<Notification> createNotifications() {
         return List.of(MessageDummy.messageDeclined(), MatchVerificationRequestDummy.matchVerificationRequest());
     }
 
-    private static List<User> createUserList() {
+    private static List<User> createUsersWithRank() {
         return List.of(UserDummy.userWithLowRating(), UserDummy.userWithHighRating());
+    }
+
+    private static User createUserWithoutRank() {
+        return UserDummy.defaultUser();
     }
 
     @Test
     @WithAnonymousUser
     void viewRendersWithAnonymousUser() throws Exception {
         // given
-        var userList = createUserList();
-        given(userService.getAllUsers()).willReturn(userList);
+        var userList = createUsersWithRank();
+        given(userService.getAllUsersWithRank()).willReturn(userList);
         given(userService.getUserPageSortedByRating(anyInt(), anyInt())).willReturn(userList);
         willThrow(UserNotFoundException.class).given(userService).getLoggedInUser();
 
@@ -79,11 +83,11 @@ class HomeControllerTest {
     @WithMockUser
     void viewRendersWithUser() throws Exception {
         // given
-        var user = createUser();
+        var user = createUserWithRank();
         var notifications = createNotifications();
-        var userList = createUserList();
+        var userList = createUsersWithRank();
         given(userService.getLoggedInUser()).willReturn(user);
-        given(userService.getAllUsers()).willReturn(userList);
+        given(userService.getAllUsersWithRank()).willReturn(userList);
         given(notificationService.getNotificationsByReceiver(user)).willReturn(notifications);
 
         // when
@@ -96,6 +100,29 @@ class HomeControllerTest {
                 .andExpect(model().attribute("notifications", notifications))
                 .andExpect(model().attribute("allUsers", userList))
                 .andExpect(content().string(containsString("id=\"user-self\"")))
+                .andExpect(content().string(containsString("id=\"notification-dropdown\"")))
+                .andExpect(content().string(containsString("id=\"profile-dropdown\"")));
+    }
+
+    @Test
+    @WithMockUser
+    void viewRendersForUserWithoutRank() throws Exception {
+        // given
+        var user = createUserWithoutRank();
+        var notifications = createNotifications();
+        var userList = createUsersWithRank();
+        given(userService.getLoggedInUser()).willReturn(user);
+        given(userService.getAllUsersWithRank()).willReturn(userList);
+        given(notificationService.getNotificationsByReceiver(user)).willReturn(notifications);
+
+        // when
+        var result = mockMvc.perform(get("/"));
+
+        // then
+        result.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("user", user))
+                .andExpect(model().attribute("allUsers", userList))
                 .andExpect(content().string(containsString("id=\"notification-dropdown\"")))
                 .andExpect(content().string(containsString("id=\"profile-dropdown\"")));
     }
