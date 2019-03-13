@@ -1,5 +1,5 @@
 // Apply animation to each table row with delay
-$(window).on('load', function(){
+$(window).on('load', function () {
     var time = 0;
     var delay = 20;
     /* If we have more than x elements in the list, we just animate them without delay
@@ -7,11 +7,15 @@ $(window).on('load', function(){
      */
     var i = 0;
     var stopDelayAfter = 20;
-    $('tr').each(function(){
+    $('tr').each(function () {
         var tr = this;
-        setTimeout(function(){$(tr).css('animation-play-state', 'running')}, time);
+        setTimeout(function () {
+            $(tr).css('animation-play-state', 'running')
+        }, time);
         i++;
-        if (i < stopDelayAfter){time += delay;}
+        if (i < stopDelayAfter) {
+            time += delay;
+        }
     });
 });
 
