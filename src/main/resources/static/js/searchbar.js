@@ -13,12 +13,12 @@ $(document).ready(function () {
     });
 
     //As putting the mouse button down on a list element would cause the on blur event, we need to cancel it
-    searchbarElements.mousedown(function (e) {
-        e.preventDefault();
+    searchbarElements.mousedown(function (event) {
+        event.preventDefault();
     });
 
     // Hide 'search-bar-content' when clicking anywhere else (loses focus)
-    searchbarInput.on("blur", function (e) {
+    searchbarInput.on("blur", function () {
         $(this).parents('.search-bar').find(".search-bar-content").hide();
     });
 
