@@ -1,7 +1,6 @@
 package de.adesso.kicker.site.controller;
 
 import de.adesso.kicker.notification.service.NotificationService;
-import de.adesso.kicker.ranking.service.RankingService;
 import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
     private final UserService userService;
-
-    private final RankingService rankingService;
 
     private final NotificationService notificationService;
 
