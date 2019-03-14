@@ -8,10 +8,15 @@ import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.Test;
+import org.keycloak.adapters.springboot.KeycloakAutoConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
@@ -25,7 +30,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(value = UserController.class, secure = false)
+@TestPropertySource("classpath:application-test.properties")
+@Import(KeycloakAutoConfiguration.class)
+@WebMvcTest(value = UserController.class)
 class UserControllerTest {
 
     @Autowired
@@ -82,7 +89,7 @@ class UserControllerTest {
     }
 
     @Test
-    @WithMockUser("anonymousUser")
+    @WithAnonymousUser
     void whenUserExistsReturnUserLoggedOut() throws Exception {
         // given
         var user = UserDummy.defaultUser();
