@@ -53,15 +53,15 @@ class UserServiceTest {
         return UserDummy.defaultUser();
     }
 
-    private static List<User> createUserList() {
-        return Collections.singletonList(UserDummy.defaultUser());
+    private static List<User> createUserWithRankingList() {
+        return Collections.singletonList(UserDummy.userWithVeryHighRating());
     }
 
     @Test
     @DisplayName("Should return a list of all users")
     void whenUsersExistReturnAllUsers() {
         // given
-        var userList = createUserList();
+        var userList = createUserWithRankingList();
         given(userRepository.findAll()).willReturn(userList);
 
         // when
@@ -175,9 +175,9 @@ class UserServiceTest {
     @DisplayName("Expect a list of users")
     void expectListOfUsers() {
         // given
-        var userList = createUserList();
+        var userList = createUserWithRankingList();
         var page = mock(Page.class);
-        given(userRepository.findAll(any(Pageable.class))).willReturn(page);
+        given(userRepository.findAllByRankingNotNull(any(Pageable.class))).willReturn(page);
         given(page.getContent()).willReturn(userList);
 
         // when

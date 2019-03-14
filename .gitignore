@@ -256,3 +256,4 @@ $RECYCLE.BIN/
 /src/main/resources/application-dev.properties
 /.idea/.name
 .idea/*
+.attach_pid*
