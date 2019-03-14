@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
-class EmailServiceTest {
+class SendVerificationMailServiceTest {
 
     @Mock
     private JavaMailSenderImpl mailSenderMock;
@@ -50,14 +50,14 @@ class EmailServiceTest {
     private User teamBPlayer2Mock;
 
     @InjectMocks
-    private EmailService emailService;
+    private SendVerificationMailService sendVerificationMailService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Disabled("Needs to be updated for HTML Mails")
+    @Disabled
     @Test
     void when1v1thenSendEmail() {
         // given
@@ -69,8 +69,6 @@ class EmailServiceTest {
         var teamBPlayer1FullName = "Full Name PlayerB1";
 
         var matchDate = LocalDate.now();
-        var expectedAcceptUrl = EmailService.ACCEPT_URL + notificationId;
-        var expectedDeclineUrl = EmailService.DECLINE_URL + notificationId;
 
         ResourceBundle labels = ResourceBundle.getBundle("messages", LocaleContextHolder.getLocale());
         var expectedWinner = MessageFormat.format(labels.getString("email.oneWinner"), teamAPlayer1FullName);
@@ -78,37 +76,44 @@ class EmailServiceTest {
         var expectedMessageSubject = MessageFormat.format(labels.getString("email.subject"), matchId, matchDate);
         var expectedMessageText = MessageFormat.format(labels.getString("email.oneOpponent"), teamAPlayer1FullName);
 
-        MimeMessagePreparator messagePreparator = mimeMessage -> {
-            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-            messageHelper.setFrom(teamAPlayer1Mail);
-            messageHelper.setTo(teamBPlayer1Mail);
-            messageHelper.setSubject(expectedMessageSubject);
-            messageHelper.setText(expectedMessageText);
-        };
+        var expectedSimpleMailMessage = new SimpleMailMessage();
+        expectedSimpleMailMessage.setFrom(teamAPlayer1Mail);
+        expectedSimpleMailMessage.setTo(teamBPlayer1Mail);
+        expectedSimpleMailMessage.setSubject(expectedMessageSubject);
+        expectedSimpleMailMessage.setText(expectedMessageText);
 
         given(teamAPlayer1Mock.getEmail()).willReturn(teamAPlayer1Mail);
+
         given(teamAPlayer1Mock.getFullName()).willReturn(teamAPlayer1FullName);
 
         given(teamBPlayer1Mock.getEmail()).willReturn(teamBPlayer1Mail);
+
         given(teamBPlayer1Mock.getFullName()).willReturn(teamBPlayer1FullName);
 
         given(matchMock.getMatchId()).willReturn(matchId);
+
         given(matchMock.getDate()).willReturn(matchDate);
+
         given(matchMock.getWinners()).willReturn(List.of(teamAPlayer1Mock));
+
         given(matchMock.getLosers()).willReturn(List.of(teamBPlayer1Mock));
 
         given(matchVerificationSentEventMock.getMatchVerificationRequest()).willReturn(matchVerificationRequestMock);
+
         given(matchVerificationRequestMock.getMatch()).willReturn(matchMock);
+
         given(matchVerificationRequestMock.getReceiver()).willReturn(teamBPlayer1Mock);
+
         given(matchVerificationRequestMock.getNotificationId()).willReturn(notificationId);
 
         given(matchMock.getTeamAPlayer1()).willReturn(teamAPlayer1Mock);
 
         // when
-        emailService.sendVerification(matchVerificationSentEventMock);
+        sendVerificationMailService.sendVerification(matchVerificationSentEventMock);
 
         // then
         verify(mailSenderMock).send(expectedSimpleMailMessage);
+
     }
 
     @Disabled("Needs to be updated for HTML Mails")
@@ -132,13 +137,11 @@ class EmailServiceTest {
 
         var matchDate = LocalDate.now();
 
-        var expectedAcceptUrl = EmailService.ACCEPT_URL + notificationId;
-        var expectedDeclineUrl = EmailService.DECLINE_URL + notificationId;
         var expectedWinnerText = String.format("Winners: %s\tLosers:%s", teamAPlayer1FullName, teamBPlayerFullNames);
         var expectedMessageSubject = String.format("Verify Match: %s played on %s", matchId, matchDate.toString());
         var expectedMessageText = String.format(
                 "Your recently played Match against %s needs to be verified.\n%s\nVerify -> %s\nDecline -> %s",
-                teamAPlayer1FullName.get(0), expectedWinnerText, expectedAcceptUrl, expectedDeclineUrl);
+                teamAPlayer1FullName.get(0), expectedWinnerText);
 
         var expectedSimpleMailMessage = new SimpleMailMessage();
         expectedSimpleMailMessage.setFrom(teamAPlayer1Mail);
@@ -167,7 +170,7 @@ class EmailServiceTest {
         given(matchMock.getTeamAPlayer1()).willReturn(teamAPlayer1Mock);
 
         // when
-        emailService.sendVerification(matchVerificationSentEventMock);
+        sendVerificationMailService.sendVerification(matchVerificationSentEventMock);
 
         // then
         verify(mailSenderMock).send(expectedSimpleMailMessage);
@@ -193,14 +196,11 @@ class EmailServiceTest {
         teamBPlayerFullNames.add("Full Name PlayerB1");
 
         var matchDate = LocalDate.now();
-        var expectedAcceptUrl = EmailService.ACCEPT_URL + notificationId;
-        var expectedDeclineUrl = EmailService.DECLINE_URL + notificationId;
         var expectedWinnerText = String.format("Winners: %s\tLosers:%s", teamAPlayerFullNames, teamBPlayerFullNames);
         var expectedMessageSubject = String.format("Verify Match: %s played on %s", matchId, matchDate.toString());
         var expectedMessageText = String.format(
                 "Your recently played Match against %s and %s needs to be verified.\n%s\nVerify -> %s\nDecline -> %s",
-                teamAPlayerFullNames.get(0), teamAPlayerFullNames.get(1), expectedWinnerText, expectedAcceptUrl,
-                expectedDeclineUrl);
+                teamAPlayerFullNames.get(0), teamAPlayerFullNames.get(1), expectedWinnerText);
 
         var expectedSimpleMailMessage = new SimpleMailMessage();
         expectedSimpleMailMessage.setFrom(teamAPlayer1Mail);
@@ -230,7 +230,7 @@ class EmailServiceTest {
         given(matchMock.getTeamAPlayer1()).willReturn(teamAPlayer1Mock);
 
         // when
-        emailService.sendVerification(matchVerificationSentEventMock);
+        sendVerificationMailService.sendVerification(matchVerificationSentEventMock);
 
         // then
         verify(mailSenderMock).send(expectedSimpleMailMessage);
@@ -258,14 +258,11 @@ class EmailServiceTest {
         teamBPlayerFullNames.add("Full Name PlayerB2");
 
         var matchDate = LocalDate.now();
-        var expectedAcceptUrl = EmailService.ACCEPT_URL + notificationId;
-        var expectedDeclineUrl = EmailService.DECLINE_URL + notificationId;
         var expectedWinnerText = String.format("Winners: %s\tLosers:%s", teamAPlayerFullNames, teamBPlayerFullNames);
         var expectedMessageSubject = String.format("Verify Match: %s played on %s", matchId, matchDate.toString());
         var expectedMessageText = String.format(
                 "Your recently played Match against %s and %s needs to be verified.\n%s\nVerify -> %s\nDecline -> %s",
-                teamAPlayerFullNames.get(0), teamAPlayerFullNames.get(1), expectedWinnerText, expectedAcceptUrl,
-                expectedDeclineUrl);
+                teamAPlayerFullNames.get(0), teamAPlayerFullNames.get(1), expectedWinnerText);
 
         var expectedSimpleMailMessage = new SimpleMailMessage();
         expectedSimpleMailMessage.setFrom(teamAPlayer1Mail);
@@ -299,7 +296,7 @@ class EmailServiceTest {
         given(matchMock.getTeamAPlayer1()).willReturn(teamAPlayer1Mock);
 
         // when
-        emailService.sendVerification(matchVerificationSentEventMock);
+        sendVerificationMailService.sendVerification(matchVerificationSentEventMock);
 
         // then
         verify(mailSenderMock).send(expectedSimpleMailMessage);

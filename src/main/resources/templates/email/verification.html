@@ -2,31 +2,31 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <body>
 <div th:if="${playerA2Name}!=null">
-    <p th:text="#{emails.twoOpponents(${playerA1Name}, ${playerA2Name})}"></p>
+    <p th:text="#{email.twoOpponents(${playerA1Name}, ${playerA2Name})}"></p>
 </div>
 
 <div th:if="${playerA2name}==null">
-    <p th:text="#{emails.oneOpponent(${playerA1Name})}"></p>
+    <p th:text="#{email.oneOpponent(${playerA1Name})}"></p>
 </div>
 
 <div th:if="${winners.size()==1}">
-    <p th:text="#{emails.oneWinner(${winners.get(0).getFullName()})}"></p>
+    <p th:text="#{email.oneWinner(${winners.get(0).getFullName()})}"></p>
 </div>
 
 <div th:if="${winners.size()==2}">
-    <p th:text="#{emails.twoWinners(${winners.get(0).getFullName()}, ${winners.get(1).getFullName()})}"></p>
+    <p th:text="#{email.twoWinners(${winners.get(0).getFullName()}, ${winners.get(1).getFullName()})}"></p>
 </div>
 
 <div th:if="${losers.size()==1}">
-    <p th:text="#{emails.oneLoser(${losers.get(0).getFullName()})}"></p>
+    <p th:text="#{email.oneLoser(${losers.get(0).getFullName()})}"></p>
 </div>
 
 <div th:if="${losers.size()==2}">
-    <p th:text="#{emails.twoLosers(${losers.get(0).getFullName()}, losers.get(1).getFullName())}"></p>
+    <p th:text="#{email.twoLosers(${losers.get(0).getFullName()}, losers.get(1).getFullName())}"></p>
 </div>
 
-<a th:href="@{${acceptUrl}}" th:text="#{email.verify}"></a>
-<a th:href="@{${declineUrl}}" th:text="#{email.decline}"></a>
+<a th:href="@{'http://'+${#request.getServerName()}+'/notifications/accept/' + ${matchId}}" th:text="#{email.verify}"></a>
+<a th:href="@{'http://'+${#request.getServerName()}+'/notifications/decline/' + ${matchId}}" th:text="#{email.decline}"></a>
 
 </body>
 </html>
