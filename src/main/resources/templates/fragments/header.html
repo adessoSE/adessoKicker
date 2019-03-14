@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <title>adesso kicker</title>
 
@@ -58,7 +58,7 @@
       </ul>
     </div>
     <!-- Notification Dropdown -->
-    <div class="dropdown ml-auto" id="notification-dropdown" th:if="${#authentication.getName() != 'anonymousUser'}">
+    <div class="dropdown ml-auto" id="notification-dropdown" sec:authorize="isAuthenticated()">
       <button onblur="toggleEnvelope()" onfocus="toggleEnvelope()"
               type="button" class="btn header-dropdown-bt hvr-fade" id="notification-dropdown-icon"
               data-toggle="dropdown">
@@ -82,11 +82,11 @@
         </div>
       </div>
     </div>
-    <div th:if="${#authentication.getName() == 'anonymousUser'}">
+    <div sec:authorize="!isAuthenticated()">
       <a type="button" class="btn btn-primary hvr-fade" id="login-button" href="/sso/login" th:text="#{sites.login}"></a>
     </div>
     <!-- Profile Settings -->
-    <div class="dropdown ml-auto" id="profile-dropdown" th:if="${#authentication.getName() != 'anonymousUser'}">
+    <div class="dropdown ml-auto" id="profile-dropdown" sec:authorize="isAuthenticated()">
       <button type="button" class="btn dropdown-toggle header-dropdown-bt hvr-fade" data-toggle="dropdown">
         <!-- User Name -->
         <span th:text="${#authentication.getName()}"></span>

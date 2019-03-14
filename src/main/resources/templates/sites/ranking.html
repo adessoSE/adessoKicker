@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <title>adesso kicker</title>
   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -121,7 +121,8 @@
       </tr>
       <!-- Logged-In User -->
       <tr class="user-table-row"
-          th:if="${#authentication.getName() != 'anonymousUser' && !users.contains(user)}"
+          sec:authorize="isAuthenticated()"
+          th:if="${!users.contains(user)}"
           th:href="@{/users/u/{id}(id=${user.userId})}"
           onclick="window.location.href=this.getAttribute('href')" id="user-self">
         <td>
