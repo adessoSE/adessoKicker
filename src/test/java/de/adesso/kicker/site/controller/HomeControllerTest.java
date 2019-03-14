@@ -66,7 +66,8 @@ class HomeControllerTest {
         var result = mockMvc.perform(get("/"));
 
         // then
-        result.andDo(print()).andExpect(status().isOk())
+        result.andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(model().attribute("user", false))
                 .andExpect(model().attribute("notifications", false))
                 .andExpect(model().attribute("users", userList))
