@@ -44,7 +44,7 @@
           <i class="fas fa-search"></i>
         </span>
             </div>
-            <input class="form-control" type="text" th:placeholder="#{'searchbar'}"/>
+            <input class="form-control" type="text" th:placeholder="#{searchbar}"/>
           </div>
           <div class="panel-body search-bar-content container">
             <ul class="list-group">
@@ -76,7 +76,7 @@
 </div>
 <!-- User List -->
 <div class="container-fluid">
-  <div class="shadow-sm" id="table-container">
+  <div class="shadow-sm" id="table-container" th:if="${allUsers.size()>0}">
     <table class="user-table table">
       <thead>
       <tr>
@@ -136,6 +136,9 @@
       </tr>
       </tbody>
     </table>
+  </div>
+  <div th:if="${allUsers.size()==0}">
+    <h2 class="text-center" th:text="#{statistics.noRanks}"></h2>
   </div>
 </div>
 <!-- Pager Buttons Horizontal -->
