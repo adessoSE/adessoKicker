@@ -66,7 +66,8 @@
         <div th:if="${(param.page != null) && (T(Integer).parseInt(param.page) != 0)}">
           <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>
         </div>
-        <div th:if="${@userService.getUserPageSortedByRating((param.page == null ? 1 : T(Integer).parseInt(param.page)+1), (param.size == null ? 10 : param.size)).size() != 0}">
+        <div
+            th:if="${@userService.getUserPageSortedByRating((param.page == null ? 1 : T(Integer).parseInt(param.page)+1), (param.size == null ? 10 : param.size)).size() != 0}">
           <button class="pager" onclick="nextPage()"><i class="fas fa-chevron-circle-down"></i></button>
         </div>
       </div>
@@ -75,7 +76,7 @@
 </div>
 <!-- User List -->
 <div class="container-fluid">
-  <div class="shadow-sm" id="table-container">
+  <div class="shadow-sm" id="table-container" th:if="${@userService.getAllUsers().size()>0}">
     <table class="user-table table">
       <thead>
       <tr>
@@ -135,6 +136,9 @@
       </tr>
       </tbody>
     </table>
+  </div>
+  <div th:if="${@userService.getAllUsers().size()==0}">
+    <h2 class="text-center" th:text="#{statistics.noPlayers}"></h2>
   </div>
 </div>
 <!-- Pager Buttons Horizontal -->
