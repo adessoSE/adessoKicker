@@ -15,20 +15,20 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @TestPropertySource("classpath:application-test.properties")
 @Import(KeycloakAutoConfiguration.class)
@@ -66,7 +66,7 @@ class UserControllerTest {
     @WithMockUser
     void whenUserExistsReturnUser() throws Exception {
         // given
-        var user = UserDummy.defaultUser();
+        var user = UserDummy.userWithLowRating();
         given(userService.getUserById(user.getUserId())).willReturn(user);
 
         // when
@@ -89,10 +89,27 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser
+    void whenUserWithOutRankExpectNoStatistics() throws Exception {
+        // given
+        var user = UserDummy.defaultUser();
+        var messages = ResourceBundle.getBundle("messages");
+        given(userService.getUserById(user.getUserId())).willReturn(user);
+
+        // when
+        var result = mockMvc.perform(get("/users/u/{id}", user.getUserId()));
+
+        // then
+        result.andExpect(status().isOk())
+                .andExpect(model().attribute("user", user))
+                .andExpect(content().string(containsString(messages.getString("statistics.noRank"))));
+    }
+
+    @Test
     @WithAnonymousUser
     void whenUserExistsReturnUserLoggedOut() throws Exception {
         // given
-        var user = UserDummy.defaultUser();
+        var user = UserDummy.userWithLowRating();
         willThrow(UserNotFoundException.class).given(userService).getLoggedInUser();
         given(userService.getUserById(user.getUserId())).willReturn(user);
 

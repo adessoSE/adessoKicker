@@ -66,7 +66,8 @@
         <div th:if="${(param.page != null) && (T(Integer).parseInt(param.page) != 0)}">
           <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>
         </div>
-        <div th:if="${@userService.getUserPageSortedByRating((param.page == null ? 1 : T(Integer).parseInt(param.page)+1), (param.size == null ? 10 : param.size)).size() != 0}">
+        <div
+            th:if="${@userService.getUserPageSortedByRating((param.page == null ? 1 : T(Integer).parseInt(param.page)+1), (param.size == null ? 10 : param.size)).size() != 0}">
           <button class="pager" onclick="nextPage()"><i class="fas fa-chevron-circle-down"></i></button>
         </div>
       </div>
@@ -122,7 +123,7 @@
       <!-- Logged-In User -->
       <tr class="user-table-row"
           sec:authorize="isAuthenticated()"
-          th:if="${!users.contains(user)}"
+          th:if="${!users.contains(user) && user.ranking != null}"
           th:href="@{/users/u/{id}(id=${user.userId})}"
           onclick="window.location.href=this.getAttribute('href')" id="user-self">
         <td>
