@@ -32,7 +32,7 @@
 </div>
 <!-- User Statistics -->
 <div class="container">
-  <div class="row">
+  <div class="row" th:if="${user.ranking}">
     <div class="col-lg-2">
       <div class="statistic statistic-1">
         <p class="statistic-title" th:text="#{statistics.rank}"></p>
@@ -75,6 +75,8 @@
         <p class="statistic-value" th:text="${user.getWinRatio() + '%'}"></p>
       </div>
     </div>
+  </div>
+  <div th:if="${user.ranking == null}" th:text="#{statistics.noRank}">
   </div>
 </div>
 <hr>

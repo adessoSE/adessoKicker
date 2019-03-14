@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -74,7 +75,14 @@ public class RankingService {
     }
 
     private int getTeamRating(List<User> players) {
-        return players.stream().map(User::getRanking).mapToInt(Ranking::getRating).sum();
+        return players.stream().map(user -> {
+            var ranking = user.getRanking();
+            if (Objects.isNull(ranking)) {
+                ranking = new Ranking();
+                user.setRanking(ranking);
+            }
+            return ranking;
+        }).mapToInt(Ranking::getRating).sum();
     }
 
     private void applyResultsToTeam(List<User> players, Outcome outcome, double expectedScore) {

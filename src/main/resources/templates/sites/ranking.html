@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <title>adesso kicker</title>
   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -44,7 +44,7 @@
           <i class="fas fa-search"></i>
         </span>
             </div>
-            <input class="form-control" type="text" th:placeholder="#{'searchbar'}"/>
+            <input class="form-control" type="text" th:placeholder="#{searchbar}"/>
           </div>
           <div class="panel-body search-bar-content container">
             <ul class="list-group">
@@ -66,7 +66,8 @@
         <div th:if="${(param.page != null) && (T(Integer).parseInt(param.page) != 0)}">
           <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>
         </div>
-        <div th:if="${@userService.getUserPageSortedByRating((param.page == null ? 1 : T(Integer).parseInt(param.page)+1), (param.size == null ? 10 : param.size)).size() != 0}">
+        <div
+            th:if="${@userService.getUserPageSortedByRating((param.page == null ? 1 : T(Integer).parseInt(param.page)+1), (param.size == null ? 10 : param.size)).size() != 0}">
           <button class="pager" onclick="nextPage()"><i class="fas fa-chevron-circle-down"></i></button>
         </div>
       </div>
@@ -75,7 +76,7 @@
 </div>
 <!-- User List -->
 <div class="container-fluid">
-  <div class="shadow-sm" id="table-container">
+  <div class="shadow-sm" id="table-container" th:if="${allUsers.size()>0}">
     <table class="user-table table">
       <thead>
       <tr>
@@ -121,7 +122,8 @@
       </tr>
       <!-- Logged-In User -->
       <tr class="user-table-row"
-          th:if="${#authentication.getName() != 'anonymousUser' && !users.contains(user)}"
+          sec:authorize="isAuthenticated()"
+          th:if="${!users.contains(user) && user.ranking != null}"
           th:href="@{/users/u/{id}(id=${user.userId})}"
           onclick="window.location.href=this.getAttribute('href')" id="user-self">
         <td>
@@ -134,6 +136,9 @@
       </tr>
       </tbody>
     </table>
+  </div>
+  <div th:if="${allUsers.size()==0}">
+    <h2 class="text-center" th:text="#{statistics.noRanks}"></h2>
   </div>
 </div>
 <!-- Pager Buttons Horizontal -->
