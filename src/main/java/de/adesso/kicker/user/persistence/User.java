@@ -1,6 +1,6 @@
 package de.adesso.kicker.user.persistence;
 
-import de.adesso.kicker.ranking.persistence.Ranking;
+import de.adesso.kicker.statistics.ranking.persistence.Ranking;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

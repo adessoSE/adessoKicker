@@ -1,10 +1,11 @@
-package de.adesso.kicker.ranking;
+package de.adesso.kicker.statistics.ranking;
 
 import de.adesso.kicker.match.MatchDummy;
-import de.adesso.kicker.ranking.persistence.Ranking;
-import de.adesso.kicker.ranking.persistence.RankingRepository;
-import de.adesso.kicker.ranking.service.RankingService;
+import de.adesso.kicker.statistics.ranking.persistence.Ranking;
+import de.adesso.kicker.statistics.ranking.persistence.RankingRepository;
+import de.adesso.kicker.statistics.ranking.service.RankingService;
 import de.adesso.kicker.user.persistence.User;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -125,7 +126,7 @@ class RankingServiceTest {
     private static void assertRatingPlayers(int expected, List<User> players) {
         for (var player : players) {
             var actual = player.getRanking().getRating();
-            assertEquals(expected, actual);
+            Assertions.assertEquals(expected, actual);
         }
     }
 }

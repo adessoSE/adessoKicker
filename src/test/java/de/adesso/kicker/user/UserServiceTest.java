@@ -1,6 +1,6 @@
 package de.adesso.kicker.user;
 
-import de.adesso.kicker.ranking.service.RankingService;
+import de.adesso.kicker.statistics.ranking.service.RankingService;
 import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.persistence.UserRepository;
