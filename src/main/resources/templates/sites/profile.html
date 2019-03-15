@@ -76,7 +76,7 @@
       </div>
     </div>
   </div>
-  <div th:if="${user.ranking == null}" th:text="#{statistics.noRank}">
+  <div class="alert alert-danger" role="alert" th:if="${user.ranking == null}" th:text="#{statistics.noRank}">
   </div>
 </div>
 <hr>
