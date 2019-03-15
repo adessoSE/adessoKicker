@@ -102,7 +102,7 @@ class UserControllerTest {
         // then
         result.andExpect(status().isOk())
                 .andExpect(model().attribute("user", user))
-                .andExpect(content().string(containsString(messages.getString("statistics.noRank"))));
+                .andExpect(content().string(containsString(messages.getString("profile.noRank"))));
     }
 
     @Test
