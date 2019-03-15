@@ -1,11 +1,11 @@
-package de.adesso.kicker.statistics.ranking;
+package de.adesso.kicker.statistics.ranking.service;
 
 import de.adesso.kicker.match.MatchDummy;
-import de.adesso.kicker.statistics.ranking.persistence.Ranking;
-import de.adesso.kicker.statistics.ranking.persistence.RankingRepository;
-import de.adesso.kicker.statistics.ranking.service.RankingService;
+import de.adesso.kicker.statistics.ranking.RankingDummy;
+import de.adesso.kicker.user.persistence.Ranking;
+import de.adesso.kicker.user.persistence.RankingRepository;
 import de.adesso.kicker.user.persistence.User;
-import org.junit.jupiter.api.Assertions;
+import de.adesso.kicker.user.service.RankingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +45,7 @@ class RankingServiceTest {
         var match = MatchDummy.matchWithLowRating();
 
         // when
-        rankingService.updateRatings(match);
+        rankingService.updateRatings(match.getWinners(), match.getLosers());
 
         // then
         assertRatingPlayers(1016, match.getWinners());
@@ -59,7 +59,7 @@ class RankingServiceTest {
         var match = MatchDummy.matchWithHighRating();
 
         // when
-        rankingService.updateRatings(match);
+        rankingService.updateRatings(match.getWinners(), match.getLosers());
 
         // then
         assertRatingPlayers(2112, match.getWinners());
@@ -73,7 +73,7 @@ class RankingServiceTest {
         var match = MatchDummy.matchWithVeryHighRating();
 
         // when
-        rankingService.updateRatings(match);
+        rankingService.updateRatings(match.getWinners(), match.getLosers());
 
         // then
         assertRatingPlayers(2408, match.getWinners());
@@ -88,7 +88,7 @@ class RankingServiceTest {
         given(rankingRepository.save(any(Ranking.class))).willReturn(new Ranking());
 
         // when
-        rankingService.updateRatings(match);
+        rankingService.updateRatings(match.getWinners(), match.getLosers());
 
         // then
         assertRatingPlayers(1032, match.getWinners());
@@ -126,7 +126,7 @@ class RankingServiceTest {
     private static void assertRatingPlayers(int expected, List<User> players) {
         for (var player : players) {
             var actual = player.getRanking().getRating();
-            Assertions.assertEquals(expected, actual);
+            assertEquals(expected, actual);
         }
     }
 }

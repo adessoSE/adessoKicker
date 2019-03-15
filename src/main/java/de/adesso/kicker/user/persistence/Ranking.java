@@ -1,4 +1,4 @@
-package de.adesso.kicker.statistics.ranking.persistence;
+package de.adesso.kicker.user.persistence;
 
 import lombok.Data;
 

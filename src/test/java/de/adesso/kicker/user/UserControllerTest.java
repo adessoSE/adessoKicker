@@ -38,10 +38,10 @@ class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockBean(name = "userService")
     private UserService userService;
 
-    @MockBean
+    @MockBean(name = "notificationService")
     private NotificationService notificationService;
 
     @Test
@@ -57,9 +57,7 @@ class UserControllerTest {
         var result = mockMvc.perform(get("/users/you"));
 
         // then
-        result.andExpect(status().isOk())
-                .andExpect(model().attribute("user", user))
-                .andExpect(model().attribute("notifications", notificationList));
+        result.andExpect(status().isOk()).andExpect(model().attribute("user", user));
     }
 
     @Test

@@ -2,14 +2,14 @@ package de.adesso.kicker.match;
 
 import de.adesso.kicker.events.MatchDeclinedEventDummy;
 import de.adesso.kicker.events.MatchVerifiedEventDummy;
-import de.adesso.kicker.events.match.MatchCreatedEvent;
 import de.adesso.kicker.match.exception.FutureDateException;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.match.persistence.MatchRepository;
 import de.adesso.kicker.match.service.MatchService;
-import de.adesso.kicker.statistics.ranking.service.RankingService;
+import de.adesso.kicker.match.service.events.MatchCreatedEvent;
+import de.adesso.kicker.user.service.RankingService;
 import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -114,7 +114,6 @@ class MatchServiceTest {
         // then
         assertTrue(match.isVerified());
         then(matchRepository).should(times(1)).save(match);
-        then(rankingService).should(times(1)).updateRatings(match);
     }
 
     @ParameterizedTest

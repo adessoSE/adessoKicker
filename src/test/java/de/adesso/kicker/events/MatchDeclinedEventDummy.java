@@ -1,7 +1,7 @@
 package de.adesso.kicker.events;
 
-import de.adesso.kicker.events.match.MatchDeclinedEvent;
 import de.adesso.kicker.match.MatchDummy;
+import de.adesso.kicker.match.service.events.MatchDeclinedEvent;
 
 public class MatchDeclinedEventDummy {
 

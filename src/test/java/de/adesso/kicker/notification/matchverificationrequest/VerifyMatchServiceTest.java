@@ -1,10 +1,10 @@
 package de.adesso.kicker.notification.matchverificationrequest;
 
 import de.adesso.kicker.events.MatchCreatedEventDummy;
-import de.adesso.kicker.events.match.MatchDeclinedEvent;
-import de.adesso.kicker.events.match.MatchVerifiedEvent;
 import de.adesso.kicker.match.MatchDummy;
 import de.adesso.kicker.match.persistence.Match;
+import de.adesso.kicker.match.service.events.MatchDeclinedEvent;
+import de.adesso.kicker.match.service.events.MatchVerifiedEvent;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequestRepository;
 import de.adesso.kicker.notification.matchverificationrequest.service.VerifyMatchService;

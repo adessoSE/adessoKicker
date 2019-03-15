@@ -1,9 +1,9 @@
 package de.adesso.kicker.user;
 
-import de.adesso.kicker.statistics.ranking.service.RankingService;
 import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.persistence.UserRepository;
+import de.adesso.kicker.user.service.RankingService;
 import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -162,7 +162,7 @@ class UserServiceTest {
         given(userRepository.findById(anyString())).willReturn(Optional.empty());
         given(userRepository.save(user)).willReturn(user);
 
-        doNothing().when(rankingService).updateRanks();
+//        doNothing().when(rankingService).updateRanks();
 
         // when
         userService.checkFirstLogin(authEvent);

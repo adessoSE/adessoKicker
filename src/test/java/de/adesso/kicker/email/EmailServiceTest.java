@@ -1,8 +1,8 @@
 package de.adesso.kicker.email;
 
-import de.adesso.kicker.events.match.MatchVerificationSentEvent;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
+import de.adesso.kicker.notification.matchverificationrequest.service.events.MatchVerificationSentEvent;
 import de.adesso.kicker.user.persistence.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,7 @@
-package de.adesso.kicker.statistics.ranking.service;
+package de.adesso.kicker.user.service;
 
-import de.adesso.kicker.match.persistence.Match;
-import de.adesso.kicker.statistics.ranking.persistence.RankingRepository;
-import de.adesso.kicker.statistics.ranking.persistence.Ranking;
+import de.adesso.kicker.user.persistence.Ranking;
+import de.adesso.kicker.user.persistence.RankingRepository;
 import de.adesso.kicker.user.persistence.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -49,10 +48,7 @@ public class RankingService {
         return rankingRepository.countAllByRatingAfter(ranking.getRating()) + INDEX_OFFSET;
     }
 
-    public void updateRatings(Match match) {
-        var winners = match.getWinners();
-        var losers = match.getLosers();
-
+    public void updateRatings(List<User> winners, List<User> losers) {
         var winnerRating = getTeamRating(winners);
         var loserRating = getTeamRating(losers);
 
@@ -61,6 +57,8 @@ public class RankingService {
 
         applyResultsToTeam(winners, Outcome.WON, expectedWinnerScore);
         applyResultsToTeam(losers, Outcome.LOST, expectedLoserScore);
+
+        updateRanks();
     }
 
     private double expectedScore(int winnerRating, int loserRating) {

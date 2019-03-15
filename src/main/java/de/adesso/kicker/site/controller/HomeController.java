@@ -1,6 +1,5 @@
 package de.adesso.kicker.site.controller;
 
-import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +14,6 @@ public class HomeController {
 
     private final UserService userService;
 
-    private final NotificationService notificationService;
-
     @GetMapping(value = { "/", "/home", "/ranking" })
     public ModelAndView ranking(@RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
@@ -25,12 +22,9 @@ public class HomeController {
         var allUsers = userService.getAllUsersWithRank();
         try {
             var user = userService.getLoggedInUser();
-            var notifications = notificationService.getNotificationsByReceiver(user);
             modelAndView.addObject("user", user);
-            modelAndView.addObject("notifications", notifications);
         } catch (UserNotFoundException e) {
             modelAndView.addObject("user", false);
-            modelAndView.addObject("notifications", false);
         }
         modelAndView.addObject("users", users);
         modelAndView.addObject("allUsers", allUsers);
