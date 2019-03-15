@@ -8,7 +8,7 @@ import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.match.persistence.MatchRepository;
-import de.adesso.kicker.ranking.service.RankingService;
+import de.adesso.kicker.statistics.ranking.service.RankingService;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;

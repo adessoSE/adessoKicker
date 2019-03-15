@@ -1,8 +1,8 @@
-package de.adesso.kicker.ranking.service;
+package de.adesso.kicker.statistics.ranking.service;
 
 import de.adesso.kicker.match.persistence.Match;
-import de.adesso.kicker.ranking.persistence.Ranking;
-import de.adesso.kicker.ranking.persistence.RankingRepository;
+import de.adesso.kicker.statistics.ranking.persistence.RankingRepository;
+import de.adesso.kicker.statistics.ranking.persistence.Ranking;
 import de.adesso.kicker.user.persistence.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
