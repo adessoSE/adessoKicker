@@ -1,13 +1,13 @@
 @import "_colorscheme.less";
 @import "_util.less";
 
+.useBackground();
+
 #text-container {
   text-align: center;
   margin-top: 15px;
   margin-bottom: 20px;
-  h2 {
-    margin-top: 10px;
-  }
+  h2 {margin-top: 10px;}
 }
 
 .statistic {
@@ -31,44 +31,20 @@
     padding-top: 10px;
     padding-bottom: 10px;
   }
-
   &-value {
     font-size: 35px;
     padding-bottom: 15px;
     padding-top: 10px;
   }
+  i {font-size: 40px;}
 
-  i {
-    font-size: 40px;
-  }
-
-  // Different animation delay for each statistic
+  // Different animation delays for each statistic
   animation: fly-in-up 1.2s cubic-bezier(.19, 1, .22, 1) forwards;
-
-  &-2 {
-    animation-delay: 0.1s;
-  }
-
-  &-3 {
-    animation-delay: 0.2s;
-  }
-
-  &-4 {
-    animation-delay: 0.3s;
-  }
-
-  &-5 {
-    animation-delay: 0.4s;
-  }
-
-  &-6 {
-    animation-delay: 0.5s;
-  }
-}
-
-body{
-  background: linear-gradient(to top, @colorscheme[warm-grey-light], white) center center fixed no-repeat;
-  background-size: cover;
+  &-2 {animation-delay: 0.1s;}
+  &-3 {animation-delay: 0.2s;}
+  &-4 {animation-delay: 0.3s;}
+  &-5 {animation-delay: 0.4s;}
+  &-6 {animation-delay: 0.5s;}
 }
 
 @keyframes fly-in-up {

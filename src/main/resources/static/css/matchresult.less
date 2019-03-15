@@ -1,5 +1,6 @@
 @import "_colorscheme.less";
 @import "searchbar.less";
+@import "_util.less";
 
 /* When container-fly-in animation starts, the scrollbar appears,
  * As the container is out of the initial screen. This looks weird,
@@ -20,6 +21,8 @@
     margin-left: -30px;
   }
 }
+
+.useBackground();
 
 #form {
   border: 1px solid @colorscheme[warm-grey-midtone];
@@ -143,11 +146,6 @@
   &-error {
     background-color: @colorscheme[error];
   }
-}
-
-body{
-  background: linear-gradient(to top, @colorscheme[warm-grey-light], white) center center fixed no-repeat;
-  background-size: cover;
 }
 
 @keyframes popup-display {

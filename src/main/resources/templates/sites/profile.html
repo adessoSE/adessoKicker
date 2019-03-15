@@ -25,13 +25,20 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
 </head>
 <body>
+
+<!-- Header -->
 <header th:replace="~{fragments/header.html :: header}"></header>
+
+<!-- Profile Name -->
 <div class="container" id="text-container">
   <h2 th:text="${user.getFullName()}"></h2>
 </div>
-<!-- User Statistics -->
+<!-- Profile Statistics -->
 <div class="container">
+  <!-- Display if player has no statistics -->
+  <div class="alert alert-danger" role="alert" th:if="${user.ranking == null}" th:text="#{statistics.noRank}"></div>
   <div class="row" th:if="${user.ranking}">
+    <!-- Rank -->
     <div class="col-lg-2">
       <div class="statistic statistic-1">
         <p class="statistic-title" th:text="#{statistics.rank}"></p>
@@ -39,6 +46,7 @@
         <p class="statistic-value" th:text="${user.ranking.rank}"></p>
       </div>
     </div>
+    <!-- Points -->
     <div class="col-lg-2">
       <div class="statistic statistic-2">
         <p class="statistic-title" th:text="#{statistics.points}"></p>
@@ -46,6 +54,7 @@
         <p class="statistic-value" th:text="${user.ranking.rating}"></p>
       </div>
     </div>
+    <!-- Matches Played -->
     <div class="col-lg-2">
       <div class="statistic statistic-3">
         <p class="statistic-title" th:text="#{statistics.matchesPlayed}"></p>
@@ -53,6 +62,7 @@
         <p class="statistic-value" th:text="${user.getPlayedMatches()}"></p>
       </div>
     </div>
+    <!-- Wins -->
     <div class="col-lg-2">
       <div class="statistic statistic-4">
         <p class="statistic-title" th:text="#{statistics.wins}"></p>
@@ -60,6 +70,7 @@
         <p class="statistic-value" th:text="${user.wins}"></p>
       </div>
     </div>
+    <!-- Losses -->
     <div class="col-lg-2">
       <div class="statistic statistic-5">
         <p class="statistic-title" th:text="#{statistics.losses}"></p>
@@ -67,17 +78,15 @@
         <p class="statistic-value" th:text="${user.losses}"></p>
       </div>
     </div>
+    <!-- WinRate -->
     <div class="col-lg-2">
       <div class="statistic statistic-6">
         <p class="statistic-title" th:text="#{statistics.winRate}"></p>
         <i class="fas fa-balance-scale"></i>
-        <p class="statistic-value" th:text="${user.getWinRatio() + '%'}"></p>
+        <p class="statistic-value" th:text="${user.getWinRatio()+'%'}"></p>
       </div>
     </div>
   </div>
-  <div class="alert alert-danger" role="alert" th:if="${user.ranking == null}" th:text="#{statistics.noRank}">
-  </div>
 </div>
-<hr>
 </body>
 </html>

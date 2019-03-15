@@ -2,6 +2,8 @@
 @import "searchbar.less";
 @import "_util.less";
 
+.useBackground();
+
 @media screen and (max-width: 800px){
   .hide-on-small-screen{display: none;}
   #everything-above-table{margin-bottom: 20px;}
@@ -95,11 +97,6 @@
 }
 
 .setSearchBarHeight(@elementHeight: 50px; @elementCount: 7);
-
-body{
-  background: linear-gradient(to top, @colorscheme[warm-grey-light], white) center center fixed no-repeat;
-  background-size: cover;
-}
 
 @keyframes appear{
   0%{opacity: 0;}
