@@ -25,6 +25,7 @@
 }
 
 #table-container{
+  background-color: white;
   border: 1px solid @colorscheme[warm-grey-midtone];
 }
 
@@ -94,6 +95,11 @@
 }
 
 .setSearchBarHeight(@elementHeight: 50px; @elementCount: 7);
+
+body{
+  background: linear-gradient(to top, @colorscheme[warm-grey-light], white) center center fixed no-repeat;
+  background-size: cover;
+}
 
 @keyframes appear{
   0%{opacity: 0;}
