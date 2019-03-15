@@ -1,7 +1,5 @@
 @import "_colorscheme.less";
-@import "_util.less";
-
-.useBackground();
+@import "_background.less";
 
 #text-container {
   text-align: center;
@@ -15,8 +13,7 @@
     width: 60%;
     margin-left: 20%;
   }
-
-  .box-shadow(@xOffset:6px,@yOffset:6px,@blur:8px,@scale:-4px,@color:@colorscheme[warm-grey-dark]);
+  box-shadow: 6px 6px 8px -4px @colorscheme[warm-grey-dark];
   text-align: center;
   opacity: 0;
   width: 90%;

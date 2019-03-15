@@ -1,8 +1,6 @@
 @import "_colorscheme.less";
 @import "searchbar.less";
-@import "_util.less";
-
-.useBackground();
+@import "_background.less";
 
 @media screen and (max-width: 800px){
   .hide-on-small-screen{display: none;}
@@ -36,8 +34,7 @@
   background-color: @colorscheme[adesso-blue];
   border-radius: 100px;
   font-size: 15px;
-  // Outline
-  .box-shadow(0, 0, 0, 6px, white);
+  box-shadow: 0px 0px 0px 6px white;
 }
 
 #user-searched{
