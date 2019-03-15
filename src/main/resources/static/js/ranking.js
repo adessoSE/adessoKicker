@@ -59,3 +59,12 @@ function findGetParameter(parameterName) {
         });
     return result;
 }
+
+$(document).ready(function () {
+    $('#search-bt').click(function(){
+
+        if ($('#search-bar-selected').length > 0){
+            window.location.href = $('#search-bar-selected').attr('href');
+        }
+    });
+});
