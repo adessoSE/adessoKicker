@@ -1,9 +1,35 @@
+@import "_colorscheme.less";
+
+.setSearchBarHeight(@elementCount: 5; @elementHeight: 50px;){
+  .search-bar{
+    &-content{
+      ul {
+        max-height: @elementCount * @elementHeight;
+      }
+      li {
+        min-height: @elementHeight;
+        max-height: @elementHeight;
+        height: @elementHeight;
+      }
+    }
+  }
+}
+
 .search-bar{
-  #search-bar-selected{background-color: @colorscheme[warm-grey-light];}
+  #search-bar-selected{
+    background-color: @colorscheme[adesso-blue];
+    color: white !important;
+  }
   &-content{
     ul {
       overflow-y: scroll;
-      max-height: 195px;
+    }
+    li {
+      margin: 0;
+      line-height: inherit;
+      border: none;
+      background-color: @colorscheme[warm-grey-light];
+      cursor: pointer;
     }
     display: none;
     position: absolute;
@@ -11,4 +37,5 @@
     margin-left: -15px;
   }
 }
+.setSearchBarHeight();
 

@@ -40,10 +40,13 @@ function selectSearchedUser(element) {
     var inputGroup = $(element).parents('.search-bar').children('.input-group');
     var hiddenInput = $(inputGroup).children('.hidden-input');
     var pseudoInput = $(inputGroup).children('.pseudo-input');
+    var searchBarContent = $(element).parents('.search-bar').find('.search-bar-content');
 
     /* Notice: 'attr()' changes the value attribute (aka the default value) and 'val()'
      * Changes the actual value of the DOM element
      */
     $(hiddenInput).val(userID);
     $(pseudoInput).val(userName);
+
+    $(searchBarContent).hide();
 }

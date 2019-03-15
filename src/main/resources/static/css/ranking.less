@@ -1,6 +1,6 @@
 @import "_colorscheme.less";
-@import "_util.less";
 @import "searchbar.less";
+@import "_util.less";
 
 @media screen and (max-width: 800px){
   .hide-on-small-screen{display: none;}
@@ -92,6 +92,8 @@
   color: white !important;
   & > .user-table-name{color: white;}
 }
+
+.setSearchBarHeight(@elementHeight: 50px; @elementCount: 7);
 
 @keyframes appear{
   0%{opacity: 0;}
