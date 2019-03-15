@@ -23,6 +23,7 @@
 
 #form {
   border: 1px solid @colorscheme[warm-grey-midtone];
+  background-color: white;
   margin-top: 50px;
   padding-bottom: 20px;
   padding-left: 30px;
@@ -142,6 +143,11 @@
   &-error {
     background-color: @colorscheme[error];
   }
+}
+
+body{
+  background: linear-gradient(to top, @colorscheme[warm-grey-light], white) center center fixed no-repeat;
+  background-size: cover;
 }
 
 @keyframes popup-display {
