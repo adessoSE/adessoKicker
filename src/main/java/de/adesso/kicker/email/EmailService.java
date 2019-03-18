@@ -1,7 +1,7 @@
 package de.adesso.kicker.email;
 
-import de.adesso.kicker.events.match.MatchVerificationSentEvent;
 import de.adesso.kicker.match.persistence.Match;
+import de.adesso.kicker.notification.matchverificationrequest.service.events.MatchVerificationSentEvent;
 import de.adesso.kicker.user.persistence.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;

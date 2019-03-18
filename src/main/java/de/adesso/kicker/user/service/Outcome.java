@@ -1,4 +1,4 @@
-package de.adesso.kicker.statistics.ranking.service;
+package de.adesso.kicker.user.service;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

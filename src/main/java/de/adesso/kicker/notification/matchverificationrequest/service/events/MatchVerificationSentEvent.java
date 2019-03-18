@@ -1,4 +1,4 @@
-package de.adesso.kicker.events.match;
+package de.adesso.kicker.notification.matchverificationrequest.service.events;
 
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
 import lombok.Getter;

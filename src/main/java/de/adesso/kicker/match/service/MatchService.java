@@ -1,15 +1,14 @@
 package de.adesso.kicker.match.service;
 
-import de.adesso.kicker.events.match.MatchCreatedEvent;
-import de.adesso.kicker.events.match.MatchDeclinedEvent;
-import de.adesso.kicker.events.match.MatchVerifiedEvent;
 import de.adesso.kicker.match.exception.FutureDateException;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.match.persistence.MatchRepository;
-import de.adesso.kicker.statistics.ranking.service.RankingService;
-import de.adesso.kicker.user.persistence.User;
+import de.adesso.kicker.match.service.events.MatchCreatedEvent;
+import de.adesso.kicker.match.service.events.MatchDeclinedEvent;
+import de.adesso.kicker.match.service.events.MatchVerifiedEvent;
+import de.adesso.kicker.user.service.RankingService;
 import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -70,13 +69,15 @@ public class MatchService {
     }
 
     private void updateStatistics(Match match) {
-        for (User winner : match.getWinners()) {
+        var winners = match.getWinners();
+        var losers = match.getWinners();
+        for (var winner : winners) {
             winner.increaseWins();
         }
-        for (User loser : match.getLosers()) {
+        for (var loser : losers) {
             loser.increaseLosses();
         }
-        rankingService.updateRatings(match);
+        rankingService.updateRatings(winners, losers);
         rankingService.updateRanks();
     }
 

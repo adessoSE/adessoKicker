@@ -1,6 +1,6 @@
 package de.adesso.kicker.statistics.ranking;
 
-import de.adesso.kicker.statistics.ranking.persistence.Ranking;
+import de.adesso.kicker.user.persistence.Ranking;
 
 public class RankingDummy {
     public static Ranking ranking() {

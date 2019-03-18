@@ -1,12 +1,12 @@
 package de.adesso.kicker.notification.matchverificationrequest.service;
 
-import de.adesso.kicker.events.match.MatchCreatedEvent;
-import de.adesso.kicker.events.match.MatchDeclinedEvent;
-import de.adesso.kicker.events.match.MatchVerificationSentEvent;
-import de.adesso.kicker.events.match.MatchVerifiedEvent;
 import de.adesso.kicker.match.persistence.Match;
+import de.adesso.kicker.match.service.events.MatchCreatedEvent;
+import de.adesso.kicker.match.service.events.MatchDeclinedEvent;
+import de.adesso.kicker.match.service.events.MatchVerifiedEvent;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequestRepository;
+import de.adesso.kicker.notification.matchverificationrequest.service.events.MatchVerificationSentEvent;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;

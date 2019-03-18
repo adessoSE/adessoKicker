@@ -1,4 +1,4 @@
-package de.adesso.kicker.statistics.trackedranking.persistence;
+package de.adesso.kicker.user.trackedranking.persistence;
 
 import de.adesso.kicker.user.persistence.User;
 import org.springframework.data.jpa.repository.JpaRepository;

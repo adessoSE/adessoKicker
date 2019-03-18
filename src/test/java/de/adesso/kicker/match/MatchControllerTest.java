@@ -42,10 +42,10 @@ class MatchControllerTest {
     @MockBean
     MatchService matchService;
 
-    @MockBean
+    @MockBean(name = "userService")
     UserService userService;
 
-    @MockBean
+    @MockBean(name = "notificationService")
     NotificationService notificationService;
 
     @Autowired
@@ -79,8 +79,7 @@ class MatchControllerTest {
                 .andExpect(view().name("sites/matchresult.html"))
                 .andExpect(model().attribute("match", new Match()))
                 .andExpect(model().attribute("currentUser", user))
-                .andExpect(model().attribute("users", userList))
-                .andExpect(model().attribute("notifications", notificationList));
+                .andExpect(model().attribute("users", userList));
     }
 
     @Test

@@ -1,7 +1,7 @@
 package de.adesso.kicker.events;
 
-import de.adesso.kicker.events.match.MatchCreatedEvent;
 import de.adesso.kicker.match.persistence.Match;
+import de.adesso.kicker.match.service.events.MatchCreatedEvent;
 
 public class MatchCreatedEventDummy {
 

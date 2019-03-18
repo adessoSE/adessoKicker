@@ -1,7 +1,5 @@
 package de.adesso.kicker.user.controller;
 
-import de.adesso.kicker.notification.service.NotificationService;
-import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
 
     private final UserService userService;
-
-    private final NotificationService notificationService;
 
     @GetMapping("/u/{id}")
     public ModelAndView getUserProfile(@PathVariable String id) {
@@ -36,13 +32,6 @@ public class UserController {
 
     private ModelAndView defaultProfileView(ModelAndView modelAndView, User user) {
         modelAndView.addObject("user", user);
-        try {
-            var currentUser = userService.getLoggedInUser();
-            var notifications = notificationService.getNotificationsByReceiver(currentUser);
-            modelAndView.addObject("notifications", notifications);
-        } catch (UserNotFoundException e) {
-            modelAndView.addObject("notifications", false);
-        }
         modelAndView.setViewName("sites/profile.html");
         return modelAndView;
     }
