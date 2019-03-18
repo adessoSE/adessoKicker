@@ -32,7 +32,7 @@ public class Statistics {
     }
 
     public int getWinRatio() {
-        if (getPlayedMatches() == 0 || losses == 0) {
+        if (losses == 0) {
             return 100;
         }
         return Math.round(100 - (100f / getPlayedMatches() * losses));
