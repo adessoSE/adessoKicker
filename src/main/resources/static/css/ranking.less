@@ -3,19 +3,19 @@
 @import "_background";
 @import "_mediaqueries";
 
-#everything-above-table{
+#everything-above-table {
   @media @mobile, @tablet {margin-bottom: 20px;}
   width: 80%;
 }
 
-#playerName{
+#playerName {
   margin-top: 15px;
   margin-bottom: 15px;
   text-align: center;
   h2 {margin-top: 10px;}
 }
 
-#table-container{
+#table-container {
   @media @mobile, @tablet{
     width: 100%;
     margin-left: 0;
@@ -26,7 +26,7 @@
   border: 1px solid @colorscheme[warm-grey-midtone];
 }
 
-.badge-position{
+.badge-position {
   color: white;
   background-color: @colorscheme[adesso-blue];
   border-radius: 100px;
@@ -34,11 +34,11 @@
   box-shadow: 0 0 0 6px white;
 }
 
-#user-searched{
+#user-searched {
   .highlight(@colorscheme[warm-grey-midtone]);
 }
 
-#user-self{
+#user-self {
   .highlight(@colorscheme[warm-grey-midtone]);
   &-badge {background-color: @colorscheme[orange];}
   td {border-top: solid @colorscheme[warm-grey-light] 1px;}
@@ -46,14 +46,14 @@
 
 .thead-name {vertical-align: top !important;}
 
-.user-table{
+.user-table {
   text-align: center;
   margin-bottom: 0;
-  td{
+  td {
     border: none;
     cursor: pointer;
   }
-  tr{
+  tr {
     opacity: 0;
     line-height: 18px;
     min-height: 18px;
@@ -62,36 +62,36 @@
     animation-play-state: paused;
     :not(.user-table-name):not(.badge-position) {font-size: 20px;}
   }
-  &-name{
+  &-name {
     color: @colorscheme[adesso-blue];
     font-weight: bold;
     padding-right: 10%;
   }
-  &-row:hover{
+  &-row:hover {
     .highlight() !important;
     color: white;
   }
 }
 
-.search-bar{.setElementCount(@elementCount: 8; @fontSize: 20px; @padding: 10px);}
+.search-bar {.setElementCount(@elementCount: 8; @fontSize: 20px; @padding: 10px);}
 
-.btn-group-horizontal{margin-left: 70%;}
-#pager-horizontal{@media @desktop, @large-desktop {display: none;}}
-#pager-vertical{@media @mobile, @tablet {display: none;}}
-.pager{
+.btn-group-horizontal {margin-left: 70%;}
+#pager-horizontal {@media @desktop, @large-desktop {display: none;}}
+#pager-vertical {@media @mobile, @tablet {display: none;}}
+.pager {
   color: @colorscheme[adesso-blue];
   border: none;
   background: none;
   font-size: 40px;
 }
 
-.highlight(@color : @colorscheme[adesso-blue]){
+.highlight(@color : @colorscheme[adesso-blue]) {
   background: linear-gradient(to right, white, @color 30%);
   color: white;
   & > .user-table-name{color: white;}
 }
 
-@keyframes appear{
+@keyframes appear {
   0%{opacity: 0;}
   100%{opacity: 1;}
 }

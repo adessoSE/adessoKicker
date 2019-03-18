@@ -14,15 +14,6 @@
   }
 }
 
-/* Move info-tooltip to the right when the screen reaches a specific size
- * Otherwise it looks weird.
- */
-@media screen and(max-width: 767px) {
-  .fa-info-circle {
-    margin-left: -30px;
-  }
-}
-
 #form {
   border: 1px solid @colorscheme[warm-grey-midtone];
   background-color: white;
@@ -41,8 +32,8 @@
 
 #info-tooltip {
   text-align: center;
-
   .fa-info-circle {
+    @media @mobile, @tablet {margin-left: -30px;}
     color: @colorscheme[adesso-blue];
     font-size: 30px;
     margin-top: 25px;
@@ -50,63 +41,49 @@
 }
 
 .team {
-  @fontsize: 23px;
-  @width: 85%;
-
   height: 40px;
   color: @colorscheme[warm-grey-darker];
-
   &-description {
     font-size: 15px;
     text-decoration: underline;
     color: @colorscheme[warm-grey-dark];
   }
-
   &-textbox {
-    .search-bar-content{width: @width; font-size: @fontsize; line-height: 1;}
-    input{font-size: @fontsize; height: 50px;}
+    @width: 85%;
     width: @width;
-    font-size: @fontsize;
+    .search-bar-content {width: @width;}
+    input{
+      font-size: 23px;
+      height: 50px;
+    }
   }
-
-  &-margin-top {
-    margin-top: 15px;
-  }
+  &-margin-top {margin-top: 15px;}
 }
 
-#form-check-1, #form-check-2 {
-  margin-left: -20px;
-}
+#form-check-1, #form-check-2 {margin-left: -20px;}
 
 .form-check {
   width: 60%;
 
-  &-input {
-    display: none;
-  }
-
+  &-input {display: none;}
   &-label {
     font-size: 35px;
     color: @colorscheme[warm-grey-dark];
   }
-
   &:hover > .outline-trophy {
     -webkit-text-stroke: 0 black;
     -webkit-text-fill-color: @colorscheme[orange];
     opacity: 0.5;
   }
-
-  i {
+  i{
     font-size: 40px;
     padding-left: 5px;
   }
-
   .trophy-selected {
     -webkit-text-stroke: 0 black !important;
     -webkit-text-fill-color: @colorscheme[orange] !important;
     opacity: 1 !important;
   }
-
   .outline-trophy {
     -webkit-text-stroke: 1px @colorscheme[warm-grey-dark];
     -webkit-text-fill-color: transparent;
@@ -119,16 +96,9 @@
   color: white;
 }
 
-#datetimepicker-form-group {
-  width: 41%;
-}
+#datetimepicker-form-group {width: 41%;}
 
 .popup {
-  .fa {
-    color: white;
-    margin-right: 5px;
-  }
-
   opacity: 0;
   font-size: 22px;
   margin-bottom: 10px;
@@ -138,25 +108,18 @@
   animation: popup-display 0.4s ease-in forwards;
   animation-delay: 0.5s;
 
-  &-success {
-    background-color: @colorscheme[success];
+  .fa {
+    color: white;
+    margin-right: 5px;
   }
-
-  &-error {
-    background-color: @colorscheme[error];
-  }
+  &-success {background-color: @colorscheme[success];}
+  &-error {background-color: @colorscheme[error];}
 }
 
 @keyframes popup-display {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 20%;
-  }
-  100% {
-    opacity: 1;
-  }
+  0% {opacity: 0;}
+  50% {opacity: 0.2;}
+  100% {opacity: 1;}
 }
 
 @keyframes container-fly-in {
