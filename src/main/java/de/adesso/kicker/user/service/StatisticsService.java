@@ -1,7 +1,7 @@
 package de.adesso.kicker.user.service;
 
-import de.adesso.kicker.user.persistence.Ranking;
-import de.adesso.kicker.user.persistence.RankingRepository;
+import de.adesso.kicker.user.persistence.Statistics;
+import de.adesso.kicker.user.persistence.StatisticsRepository;
 import de.adesso.kicker.user.persistence.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,9 +11,9 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-public class RankingService {
+public class StatisticsService {
 
-    private final RankingRepository rankingRepository;
+    private final StatisticsRepository statisticsRepository;
 
     /**
      * When two opponents have a rating difference of
@@ -35,30 +35,43 @@ public class RankingService {
 
     private static final int INDEX_OFFSET = 1;
 
-    public void updateRanks() {
-        var rankings = getAllRankings();
-        rankings.forEach(ranking -> {
-            int rank = calculateRank(ranking);
-            ranking.setRank(rank);
-        });
-        saveAllRankings(rankings);
+    void updateRanks() {
+        var statistics = getAllStatistics();
+        statistics.forEach(this::setRanks);
+        saveAllStatistics(statistics);
     }
 
-    private int calculateRank(Ranking ranking) {
-        return rankingRepository.countAllByRatingAfter(ranking.getRating()) + INDEX_OFFSET;
+    private void setRanks(Statistics statistic) {
+        var rank = calculateRank(statistic);
+        statistic.setRank(rank);
     }
 
-    public void updateRatings(List<User> winners, List<User> losers) {
+    private int calculateRank(Statistics statistics) {
+        return statisticsRepository.countAllByRatingAfter(statistics.getRating()) + INDEX_OFFSET;
+    }
+
+    public void updateStatistics(List<User> winners, List<User> losers) {
         var winnerRating = getTeamRating(winners);
         var loserRating = getTeamRating(losers);
 
         var expectedWinnerScore = expectedScore(winnerRating, loserRating);
         var expectedLoserScore = ONE_HUNDRED_PERCENT - expectedWinnerScore;
 
+        increaseWins(winners);
+        increaseLosses(losers);
+
         applyResultsToTeam(winners, Outcome.WON, expectedWinnerScore);
         applyResultsToTeam(losers, Outcome.LOST, expectedLoserScore);
 
         updateRanks();
+    }
+
+    private void increaseWins(List<User> winners) {
+        winners.stream().map(User::getStatistics).forEach(Statistics::increaseWins);
+    }
+
+    private void increaseLosses(List<User> losers) {
+        losers.stream().map(User::getStatistics).forEach(Statistics::increaseLosses);
     }
 
     private double expectedScore(int winnerRating, int loserRating) {
@@ -73,19 +86,21 @@ public class RankingService {
     }
 
     private int getTeamRating(List<User> players) {
-        return players.stream().map(user -> {
-            var ranking = user.getRanking();
-            if (Objects.isNull(ranking)) {
-                ranking = new Ranking();
-                user.setRanking(ranking);
-            }
-            return ranking;
-        }).mapToInt(Ranking::getRating).sum();
+        return players.stream().map(this::getStatisticOrElseNew).mapToInt(Statistics::getRating).sum();
+    }
+
+    private Statistics getStatisticOrElseNew(User user) {
+        var statistic = user.getStatistics();
+        if (Objects.isNull(statistic)) {
+            statistic = new Statistics();
+            user.setStatistics(statistic);
+        }
+        return statistic;
     }
 
     private void applyResultsToTeam(List<User> players, Outcome outcome, double expectedScore) {
         for (var player : players) {
-            var ranking = player.getRanking();
+            var ranking = player.getStatistics();
             var rating = ranking.getRating();
             var kFactor = kFactor(rating);
             var change = ratingChange(kFactor, outcome, expectedScore);
@@ -97,8 +112,8 @@ public class RankingService {
         return Math.round(kFactor.getValue() * (outcome.getScore() - expectedScore));
     }
 
-    private void applyRatingChange(Ranking ranking, long change) {
-        ranking.updateRating(change);
+    private void applyRatingChange(Statistics statistics, long change) {
+        statistics.updateRating(change);
     }
 
     private KFactor kFactor(int rating) {
@@ -111,11 +126,11 @@ public class RankingService {
         return KFactor.HIGH;
     }
 
-    private List<Ranking> getAllRankings() {
-        return rankingRepository.findAll();
+    private List<Statistics> getAllStatistics() {
+        return statisticsRepository.findAll();
     }
 
-    private void saveAllRankings(List<Ranking> rankings) {
-        rankingRepository.saveAll(rankings);
+    private void saveAllStatistics(List<Statistics> statistics) {
+        statisticsRepository.saveAll(statistics);
     }
 }

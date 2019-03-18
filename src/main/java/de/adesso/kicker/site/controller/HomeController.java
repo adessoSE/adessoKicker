@@ -19,7 +19,7 @@ public class HomeController {
             @RequestParam(defaultValue = "10") int size) {
         ModelAndView modelAndView = new ModelAndView();
         var users = userService.getUserPageSortedByRating(page, size);
-        var allUsers = userService.getAllUsersWithRank();
+        var allUsers = userService.getAllUsersWithStatistics();
         try {
             var user = userService.getLoggedInUser();
             modelAndView.addObject("user", user);
