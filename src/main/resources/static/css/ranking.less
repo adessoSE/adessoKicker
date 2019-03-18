@@ -102,44 +102,26 @@
   100%{opacity: 1;}
 }
 
-@media screen and(max-width: 767px) {
-  .user-table {
-    width: 100%;
-    font-size: 11px !important;
-  }
-  .user-table th span {font-size: 20px !important;}
-  .user-table td.user-table-name {font-size: 15px;}
-  .fa-chart-line {display: none;}
-  .fa-check {display: none;}
-  .fa-balance-scale {display: none;}
-  .fa-trophy {display: none;}
+@media @mobile{
   .container-fluid {overflow: hidden;}
+  .user-table {
+    font-size: 11px !important;
+    &-name {font-size: 15px;}
+    .fas{display: none;}
+  }
 }
-
 @media screen and(max-width: 480px) {
   .user-table {
-    width: 100%;
     font-size: 7px !important;
+    th span {font-size: 13px !important;}
   }
-  .user-table th span {font-size: 13px !important;}
-  .user-table td.user-table-name{font-size: 13px;}
-  .fa-chart-line {display: none;}
-  .fa-check {display: none;}
-  .fa-balance-scale {display: none;}
-  .fa-trophy {display: none;}
-  .container-fluid {overflow: hidden;}
 }
-
 @media screen and(max-width: 400px) {
-  .user-table {width: 100%;}
-  .user-table td span.badge-position.align-center {font-size: 10px;}
-  .user-table th span {font-size: 8px !important;}
-  .user-table td.user-table-name{font-size: 10px !important;}
-  .user-table td {font-size: 11px !important;}
-  .fa-chart-line {display: none;}
-  .fa-check {display: none;}
-  .fa-balance-scale {display: none;}
-  .fa-trophy {display: none;}
-  .container-fluid {overflow: hidden;}
+  .user-table {
+    td {font-size: 11px !important;}
+    .badge-position {font-size: 10px;}
+    th span {font-size: 8px !important;}
+    &-name{font-size: 10px !important;}
+  }
   body {min-width: 320px;}
 }
