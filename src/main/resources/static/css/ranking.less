@@ -1,5 +1,5 @@
 @import "_colorscheme.less";
-@import "searchbar.less";
+@import "_searchbar.less";
 @import "_background.less";
 
 @media screen and (max-width: 800px){
@@ -17,7 +17,7 @@
 }
 
 #everything-above-table{width: 80%;}
-#text-container{
+#playerName{
   margin-top: 15px;
   margin-bottom: 15px;
   text-align: center;
@@ -93,7 +93,7 @@
   & > .user-table-name{color: white;}
 }
 
-.setSearchBarHeight(@elementHeight: 50px; @elementCount: 7);
+.search-bar{.setElementCount(@elementCount: 8; @fontSize: 20px; @padding: 10px);}
 
 @keyframes appear{
   0%{opacity: 0;}

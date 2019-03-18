@@ -28,7 +28,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
 </head>
 <body>
+
+<!-- Header -->
 <header th:replace="~{fragments/header.html :: header}"></header>
+
+<!-- Match Form -->
 <form action="#" th:action="@{/matches/add}" th:object="${match}" method="POST">
   <div class="container shadow" id="form">
     <div class="row">
@@ -40,19 +44,22 @@
            th:title="#{matchResult.tooltip}"></i>
       </div>
     </div>
-    <!-- Error warnings -->
+    <!-- Error Warning (Same Player) -->
     <div class="popup popup-error" th:if="${samePlayer}">
       <i class="fa fa-times" aria-hidden="true"></i>
       <span th:text="#{error.samePlayer}"></span>
     </div>
+    <!-- Error Warning (Invalid Creator) -->
     <div class="popup popup-error" th:if="${invalidCreator}">
       <i class="fa fa-times" aria-hidden="true"></i>
       <span th:text="#{error.invalidCreator}"></span>
     </div>
+    <!-- Error Warning (Null Player) -->
     <div class="popup popup-error" th:if="${nullPlayer}">
       <i class="fa fa-times" aria-hidden="true"></i>
       <span th:text="#{error.nullPlayer}"></span>
     </div>
+    <!-- Error Warning (Too Many Mails) -->
     <div class="popup popup-error" th:if="${tooManyMails}">
       <i class="fa fa-times" aria-hidden="true"></i>
       <span th:text="#{error.tooManyMails}"></span>
