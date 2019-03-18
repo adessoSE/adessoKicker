@@ -32,57 +32,57 @@
 <!-- Profile Name -->
 <h1 th:text="${user.getFullName()}" id="playerName"></h1>
 
-<!-- Profile Statistics -->
+<!-- Profile Statistic -->
 <div class="container">
-  <!-- Display if player has no statistics -->
-  <div class="alert alert-danger" role="alert" th:if="${user.statistics == null}" th:text="#{profile.noRank}"></div>
-  <div class="row" th:if="${user.statistics}">
+  <!-- Display if player has no statistic -->
+  <div class="alert alert-danger" role="alert" th:if="${user.statistic == null}" th:text="#{profile.noRank}"></div>
+  <div class="row" th:if="${user.statistic}">
     <!-- Rank -->
     <div class="col-lg-2">
       <div class="statistic">
-        <p class="statistic-title" th:text="#{statistics.rank}"></p>
+        <p class="statistic-title" th:text="#{statistic.rank}"></p>
         <i class="fas fa-chart-line"></i>
-        <p class="statistic-value" th:text="${user.statistics.rank}"></p>
+        <p class="statistic-value" th:text="${user.statistic.rank}"></p>
       </div>
     </div>
     <!-- Points -->
     <div class="col-lg-2">
       <div class="statistic" id="statistic-2">
-        <p class="statistic-title" th:text="#{statistics.points}"></p>
+        <p class="statistic-title" th:text="#{statistic.points}"></p>
         <i class="fas fa-trophy"></i>
-        <p class="statistic-value" th:text="${user.statistics.rating}"></p>
+        <p class="statistic-value" th:text="${user.statistic.rating}"></p>
       </div>
     </div>
     <!-- Matches Played -->
     <div class="col-lg-2">
       <div class="statistic" id="statistic-3">
-        <p class="statistic-title" th:text="#{statistics.matchesPlayed}"></p>
+        <p class="statistic-title" th:text="#{statistic.matchesPlayed}"></p>
         <i class="fas fa-futbol"></i>
-        <p class="statistic-value" th:text="${user.statistics.getPlayedMatches()}"></p>
+        <p class="statistic-value" th:text="${user.statistic.getPlayedMatches()}"></p>
       </div>
     </div>
     <!-- Wins -->
     <div class="col-lg-2">
       <div class="statistic" id="statistic-4">
-        <p class="statistic-title" th:text="#{statistics.wins}"></p>
+        <p class="statistic-title" th:text="#{statistic.wins}"></p>
         <i class="fas fa-check"></i>
-        <p class="statistic-value" th:text="${user.statistics.wins}"></p>
+        <p class="statistic-value" th:text="${user.statistic.wins}"></p>
       </div>
     </div>
     <!-- Losses -->
     <div class="col-lg-2">
       <div class="statistic" id="statistic-5">
-        <p class="statistic-title" th:text="#{statistics.losses}"></p>
+        <p class="statistic-title" th:text="#{statistic.losses}"></p>
         <i class="fas fa-times"></i>
-        <p class="statistic-value" th:text="${user.statistics.losses}"></p>
+        <p class="statistic-value" th:text="${user.statistic.losses}"></p>
       </div>
     </div>
     <!-- WinRate -->
     <div class="col-lg-2">
       <div class="statistic" id="statistic-6">
-        <p class="statistic-title" th:text="#{statistics.winRate}"></p>
+        <p class="statistic-title" th:text="#{statistic.winRate}"></p>
         <i class="fas fa-balance-scale"></i>
-        <p class="statistic-value" th:text="${user.statistics.getWinRatio()+'%'}"></p>
+        <p class="statistic-value" th:text="${user.statistic.getWinRatio()+'%'}"></p>
       </div>
     </div>
   </div>

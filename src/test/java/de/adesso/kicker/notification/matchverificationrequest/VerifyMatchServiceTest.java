@@ -65,8 +65,7 @@ class VerifyMatchServiceTest {
         verifyMatchService.acceptRequest(matchVerification);
 
         // then
-        then(matchVerificationRequestRepository).should(times(createMatchVerificationList().size()))
-                .delete(any(MatchVerificationRequest.class));
+        then(matchVerificationRequestRepository).should().deleteAll(any(List.class));
         then(applicationEventPublisher).should(times(1)).publishEvent(any(MatchVerifiedEvent.class));
     }
 
@@ -113,7 +112,7 @@ class VerifyMatchServiceTest {
 
         // then
         then(applicationEventPublisher).should(times(1)).publishEvent(any(MatchDeclinedEvent.class));
-        then(matchVerificationRequestRepository).should(times(2)).delete(any(MatchVerificationRequest.class));
+        then(matchVerificationRequestRepository).should().delete(any(MatchVerificationRequest.class));
         assertEquals(3, verifyMatchService.declineRequest(matchVerification).size());
     }
 }

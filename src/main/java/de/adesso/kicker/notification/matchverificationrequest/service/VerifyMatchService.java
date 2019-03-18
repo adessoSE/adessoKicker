@@ -14,8 +14,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -29,64 +29,69 @@ public class VerifyMatchService {
 
     public void acceptRequest(MatchVerificationRequest matchVerificationRequest) {
         sendMatchVerifiedEvent(matchVerificationRequest.getMatch());
-        List<MatchVerificationRequest> requests = getRequestsByMatch(matchVerificationRequest.getMatch());
-        for (MatchVerificationRequest request : requests) {
-            deleteRequest(request);
-        }
+        var requests = getRequestsByMatch(matchVerificationRequest.getMatch());
+        deleteRequests(requests);
     }
 
     @EventListener
     public void sendRequests(MatchCreatedEvent matchCreatedEvent) {
-        Match match = matchCreatedEvent.getMatch();
-        User sender = userService.getLoggedInUser();
-        List<User> receivers = new ArrayList<>();
+        var match = matchCreatedEvent.getMatch();
+        var sender = userService.getLoggedInUser();
+        var receivers = getReceivers(match, sender);
+        receivers.forEach(receiver -> createAndSaveRequest(sender, receiver, match));
+    }
 
-        if (match.getWinners().contains(sender)) {
-            receivers.addAll(match.getLosers());
+    private List<User> getReceivers(Match match, User sender) {
+        var winners = match.getWinners();
+        var losers = match.getLosers();
+        if (winners.contains(sender)) {
+            return winners;
         } else {
-            receivers.addAll(match.getWinners());
+            return losers;
         }
-        for (User receiver : receivers) {
-            MatchVerificationRequest request = new MatchVerificationRequest(sender, receiver, match);
-            saveRequest(request);
-            sendMatchVerificationRequestEvent(request);
-        }
+    }
+
+    private void createAndSaveRequest(User sender, User receiver, Match match) {
+        var request = new MatchVerificationRequest(sender, receiver, match);
+        saveRequest(request);
+        sendMatchVerificationRequestEvent(request);
     }
 
     public List<User> declineRequest(MatchVerificationRequest matchVerificationRequest) {
         deleteRequest(matchVerificationRequest);
-        List<MatchVerificationRequest> otherRequests = getRequestsByMatch(matchVerificationRequest.getMatch());
-        List<User> usersToInform = new ArrayList<>();
-        for (MatchVerificationRequest request : otherRequests) {
-            deleteRequest(request);
-        }
-        sendMatchRequestDeclinedEvent(matchVerificationRequest.getMatch());
-        for (User player : matchVerificationRequest.getMatch().getPlayers()) {
-            if (!userService.getLoggedInUser().equals(player)) {
-                usersToInform.add(player);
-            }
-        }
-        return usersToInform;
+
+        var remainingRequests = getRequestsByMatch(matchVerificationRequest.getMatch());
+        deleteRequests(remainingRequests);
+
+        var match = matchVerificationRequest.getMatch();
+        var players = match.getPlayers();
+        sendMatchRequestDeclinedEvent(match);
+        return players.stream()
+                .filter(user -> !user.equals(userService.getLoggedInUser()))
+                .collect(Collectors.toList());
     }
 
     private void sendMatchVerificationRequestEvent(MatchVerificationRequest matchVerificationRequest) {
-        MatchVerificationSentEvent matchVerificationSentEvent = new MatchVerificationSentEvent(this,
-                matchVerificationRequest);
+        var matchVerificationSentEvent = new MatchVerificationSentEvent(this, matchVerificationRequest);
         applicationEventPublisher.publishEvent(matchVerificationSentEvent);
     }
 
     private void sendMatchVerifiedEvent(Match match) {
-        MatchVerifiedEvent matchVerifiedEvent = new MatchVerifiedEvent(this, match);
+        var matchVerifiedEvent = new MatchVerifiedEvent(this, match);
         applicationEventPublisher.publishEvent(matchVerifiedEvent);
     }
 
     private void sendMatchRequestDeclinedEvent(Match match) {
-        MatchDeclinedEvent matchDeclinedEvent = new MatchDeclinedEvent(this, match);
+        var matchDeclinedEvent = new MatchDeclinedEvent(this, match);
         applicationEventPublisher.publishEvent(matchDeclinedEvent);
     }
 
     private List<MatchVerificationRequest> getRequestsByMatch(Match match) {
         return matchVerificationRequestRepository.getAllByMatch(match);
+    }
+
+    private void deleteRequests(List<MatchVerificationRequest> matchVerificationRequests) {
+        matchVerificationRequestRepository.deleteAll(matchVerificationRequests);
     }
 
     private void deleteRequest(MatchVerificationRequest matchVerificationRequest) {
