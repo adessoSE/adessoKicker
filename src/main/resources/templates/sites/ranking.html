@@ -59,7 +59,7 @@
     </div>
     <!-- Pager Buttons Vertical -->
     <div class="col-1">
-      <div class="btn-group-vertical hide-on-small-screen">
+      <div class="btn-group-vertical" id="pager-vertical">
         <div th:if="${(param.page != null) && (T(Integer).parseInt(param.page) != 0)}">
           <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>
         </div>
@@ -139,7 +139,7 @@
   </div>
 </div>
 <!-- Pager Buttons Horizontal -->
-<div class="btn-group-horizontal hide-on-large-screen">
+<div class="btn-group-horizontal" id="pager-horizontal">
   <div th:if="${(param.page != null) && (T(Integer).parseInt(param.page) != 0)}">
     <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>
   </div>

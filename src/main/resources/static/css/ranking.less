@@ -1,30 +1,27 @@
-@import "_colorscheme.less";
-@import "_searchbar.less";
-@import "_background.less";
+@import "_colorscheme";
+@import "_searchbar";
+@import "_background";
+@import "_mediaqueries";
 
-@media screen and (max-width: 800px){
-  .hide-on-small-screen{display: none;}
-  #everything-above-table{margin-bottom: 20px;}
-  #table-container{width: 100%;}
+#everything-above-table{
+  @media @mobile, @tablet {margin-bottom: 20px;}
+  width: 80%;
 }
 
-@media screen and (min-width: 800px){
-  .hide-on-large-screen {display: none;}
-  #table-container{
-    width: 80%;
-    margin-left: 10%;
-  }
-}
-
-#everything-above-table{width: 80%;}
 #playerName{
   margin-top: 15px;
   margin-bottom: 15px;
   text-align: center;
-  h2{margin-top: 10px;}
+  h2 {margin-top: 10px;}
 }
 
 #table-container{
+  @media @mobile, @tablet{
+    width: 100%;
+    margin-left: 0;
+  }
+  width: 80%;
+  margin-left: 10%;
   background-color: white;
   border: 1px solid @colorscheme[warm-grey-midtone];
 }
@@ -34,7 +31,7 @@
   background-color: @colorscheme[adesso-blue];
   border-radius: 100px;
   font-size: 15px;
-  box-shadow: 0px 0px 0px 6px white;
+  box-shadow: 0 0 0 6px white;
 }
 
 #user-searched{
@@ -44,12 +41,10 @@
 #user-self{
   .highlight(@colorscheme[warm-grey-midtone]);
   &-badge {background-color: @colorscheme[orange];}
-  td{border-top: solid @colorscheme[warm-grey-light] 1px;}
+  td {border-top: solid @colorscheme[warm-grey-light] 1px;}
 }
 
-.thead-name{
-  vertical-align: top !important;
-}
+.thead-name {vertical-align: top !important;}
 
 .user-table{
   text-align: center;
@@ -65,7 +60,7 @@
     height: 18px;
     animation: appear 0.3s ease-out forwards;
     animation-play-state: paused;
-    :not(.user-table-name):not(.badge-position){font-size: 20px;}
+    :not(.user-table-name):not(.badge-position) {font-size: 20px;}
   }
   &-name{
     color: @colorscheme[adesso-blue];
@@ -78,8 +73,11 @@
   }
 }
 
-.btn-group-horizontal{margin-left: 70%;}
+.search-bar{.setElementCount(@elementCount: 8; @fontSize: 20px; @padding: 10px);}
 
+.btn-group-horizontal{margin-left: 70%;}
+#pager-horizontal{@media @desktop, @large-desktop {display: none;}}
+#pager-vertical{@media @mobile, @tablet {display: none;}}
 .pager{
   color: @colorscheme[adesso-blue];
   border: none;
@@ -89,11 +87,9 @@
 
 .highlight(@color : @colorscheme[adesso-blue]){
   background: linear-gradient(to right, white, @color 30%);
-  color: white !important;
+  color: white;
   & > .user-table-name{color: white;}
 }
-
-.search-bar{.setElementCount(@elementCount: 8; @fontSize: 20px; @padding: 10px);}
 
 @keyframes appear{
   0%{opacity: 0;}
