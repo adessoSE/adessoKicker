@@ -40,19 +40,19 @@
         <li class="nav-item header-link">
           <a class="nav-link" th:href="@{/matches/add}">
             <i class="fa fa-calendar-check hvr-icon"></i>
-            <span class="nav-link hvr-underline-from-left" th:text="#{sites.matchRequest}"></span>
+            <span class="nav-link hvr-underline-from-left" th:text="#{header.matchRequest}"></span>
           </a>
         </li>
         <li class="nav-item header-link">
           <a class="nav-link" th:href="@{/ranking}">
             <i class="fa fa-trophy hvr-icon"></i>
-            <span class="nav-link hvr-underline-from-left" th:text="#{sites.ranking}"></span>
+            <span class="nav-link hvr-underline-from-left" th:text="#{header.ranking}"></span>
           </a>
         </li>
         <li class="nav-item header-link">
           <a class="nav-link" th:href="@{/users/you}">
             <i class="fa fa-user hvr-icon"></i>
-            <span class="nav-link hvr-underline-from-left" th:text="#{sites.profile}"></span>
+            <span class="nav-link hvr-underline-from-left" th:text="#{header.profile}"></span>
           </a>
         </li>
       </ul>
@@ -83,7 +83,7 @@
       </div>
     </div>
     <div sec:authorize="!isAuthenticated()">
-      <a type="button" class="btn btn-primary hvr-fade" id="login-button" href="/sso/login" th:text="#{sites.login}"></a>
+      <a type="button" class="btn btn-primary hvr-fade" id="login-button" href="/sso/login" th:text="#{header.login}"></a>
     </div>
     <!-- Profile Settings -->
     <div class="dropdown ml-auto" id="profile-dropdown" sec:authorize="isAuthenticated()">
@@ -94,20 +94,20 @@
       <div class="shadow dropdown-menu-anim-in dropdown-menu dropdown-menu-right" id="profile-dropdown-menu">
         <div class="dropdown-item">
           <i class="fa fa-calendar-check hvr-icon"></i>
-          <a class="move-2px-right adesso-blue-text" th:href="@{/matches/add}" th:text="#{sites.matchRequest}"></a>
+          <a class="move-2px-right adesso-blue-text" th:href="@{/matches/add}" th:text="#{header.matchRequest}"></a>
         </div>
         <div class="dropdown-item">
           <i class="fa fa-trophy hvr-icon move-1px-left"></i>
-          <a class="adesso-blue-text" th:href="@{/ranking}" th:text="#{sites.ranking}"></a>
+          <a class="adesso-blue-text" th:href="@{/ranking}" th:text="#{header.ranking}"></a>
         </div>
         <div class="dropdown-item">
           <i class="fa fa-user hvr-icon"></i>
-          <a class="move-2px-right adesso-blue-text" th:href="@{/users/you}" th:text="#{sites.profile}"></a>
+          <a class="move-2px-right adesso-blue-text" th:href="@{/users/you}" th:text="#{header.profile}"></a>
         </div>
         <div class="dropdown-divider"></div>
         <div class="dropdown-item hvr-icon-back">
           <i class="fa fa-sign-out-alt hvr-icon"></i>
-          <a class="move-2px-right adesso-blue-text" th:href="@{/logout}" th:text="#{sites.logout}">Logout</a>
+          <a class="move-2px-right adesso-blue-text" th:href="@{/logout}" th:text="#{header.logout}">Logout</a>
         </div>
       </div>
     </div>
