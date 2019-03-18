@@ -18,6 +18,8 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css">
   <!-- Hover CSS -->
   <link rel="stylesheet" type="text/css" href="/css/hover-min.css">
+  <!-- ChartJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
 
   <!-- My stylesheets -->
   <link rel="stylesheet/less" type="text/css" href="/css/header.less">
@@ -80,5 +82,61 @@
   </div>
 </div>
 <hr>
+<!--ChartJs Canvas-->
+<div class="container">
+  <div class="row" th:if="${user.ranking}">
+    <div class="col-lg-5" style="background-color: #aaaaaa">
+      <h3>ranks over time</h3>
+      <canvas id="canvas-rank"></canvas>
+    </div>
+    <div class="col-lg-2"></div>
+    <div class="col-lg-5" style="background-color: #aaaaaa">
+      <h3>wins over time</h3>
+      <canvas id="canvas-wins"></canvas>
+    </div>
+  </div>
+</div>
+<!--Script for chartJs
+This script cannot be outsourced into its own .js file.
+That is because Thymeleaf only ca be used in the main .html file to fill in the data-->
+<script>
+    var ctx = $('#canvas-rank');
+    var rankOverTimeGraph = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["datum", "datum2"],
+            datasets: [{
+                fill: false,
+                borderColor: "rgb(0,0,255)",
+                data: [
+                    {x: 10, y: 20},
+                    {x: 15, y: 10},
+                ]
+            }]
+        },
+        options: {
+            legend: { display: false }
+        }
+    });
+
+    var cty = $('#canvas-wins');
+    var winsOverTimeGraph = new Chart(cty, {
+        type: 'line',
+        data: {
+            labels: ["datum", "datum2"],
+            datasets: [{
+                fill: false,
+                borderColor: "rgb(0,0,255)",
+                data: [
+                    {x: 10, y: 10},
+                    {x: 15, y: 20},
+                ]
+            }]
+        },
+        options: {
+            legend: { display: false }
+        }
+    });
+</script>
 </body>
 </html>
