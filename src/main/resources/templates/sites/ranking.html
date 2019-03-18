@@ -7,9 +7,6 @@
   <!-- JQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-  <!-- Popper JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
@@ -35,7 +32,7 @@
 <div id="everything-above-table" class="container">
   <div class="row">
     <div class="col-11">
-      <div id="text-container">
+      <div id="playerName">
         <!-- Searchbar -->
         <div class="search-bar">
           <div class="input-group">
@@ -62,7 +59,7 @@
     </div>
     <!-- Pager Buttons Vertical -->
     <div class="col-1">
-      <div class="btn-group-vertical hide-on-small-screen">
+      <div class="btn-group-vertical" id="pager-vertical">
         <div th:if="${(param.page != null) && (T(Integer).parseInt(param.page) != 0)}">
           <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>
         </div>
@@ -143,7 +140,7 @@
   <div id="noRankList" class="text-center alert alert-danger" role="alert" sec:authorize="isAuthenticated()" th:if="${@userService.getLoggedInUser().getRanking()==null}" th:text="#{ranking.noRank}"></div>
 </div>
 <!-- Pager Buttons Horizontal -->
-<div class="btn-group-horizontal hide-on-large-screen">
+<div class="btn-group-horizontal" id="pager-horizontal">
   <div th:if="${(param.page != null) && (T(Integer).parseInt(param.page) != 0)}">
     <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>
   </div>

@@ -1,104 +1,94 @@
 @import "_colorscheme.less";
-@import "searchbar.less";
-@import "_util.less";
+@import "_searchbar.less";
+@import "_background.less";
+@import "_mediaqueries.less";
 
-@media screen and (max-width: 800px){
-  .hide-on-small-screen{display: none;}
-  #everything-above-table{margin-bottom: 20px;}
-  #table-container{width: 100%;}
+#everything-above-table {
+  @media @mobile, @tablet {margin-bottom: 20px;}
+  width: 80%;
 }
 
-@media screen and (min-width: 800px){
-  .hide-on-large-screen {display: none;}
-  #table-container{
-    width: 80%;
-    margin-left: 10%;
-  }
-}
-
-#everything-above-table{width: 80%;}
-#text-container{
+#playerName {
   margin-top: 15px;
   margin-bottom: 15px;
   text-align: center;
-  h2{margin-top: 10px;}
+  h2 {margin-top: 10px;}
 }
 
-#table-container{
+#table-container {
+  @media @mobile, @tablet{
+    width: 100%;
+    margin-left: 0;
+  }
+  width: 80%;
+  margin-left: 10%;
   background-color: white;
   border: 1px solid @colorscheme[warm-grey-midtone];
 }
 
-.badge-position{
+.badge-position {
   color: white;
   background-color: @colorscheme[adesso-blue];
   border-radius: 100px;
   font-size: 15px;
-  // Outline
-  .box-shadow(0, 0, 0, 6px, white);
+  box-shadow: 0 0 0 6px white;
 }
 
-#user-searched{
+#user-searched {
   .highlight(@colorscheme[warm-grey-midtone]);
 }
 
-#user-self{
+#user-self {
   .highlight(@colorscheme[warm-grey-midtone]);
   &-badge {background-color: @colorscheme[orange];}
-  td{border-top: solid @colorscheme[warm-grey-light] 1px;}
+  td {border-top: solid @colorscheme[warm-grey-light] 1px;}
 }
 
-.thead-name{
-  vertical-align: top !important;
-}
+.thead-name {vertical-align: top !important;}
 
-.user-table{
+.user-table {
   text-align: center;
   margin-bottom: 0;
-  td{
+  td {
     border: none;
     cursor: pointer;
   }
-  tr{
+  tr {
     opacity: 0;
     line-height: 18px;
     min-height: 18px;
     height: 18px;
     animation: appear 0.3s ease-out forwards;
     animation-play-state: paused;
-    :not(.user-table-name):not(.badge-position){font-size: 20px;}
+    :not(.user-table-name):not(.badge-position) {font-size: 20px;}
   }
-  &-name{
+  &-name {
     color: @colorscheme[adesso-blue];
     font-weight: bold;
     padding-right: 10%;
   }
-  &-row:hover{
+  &-row:hover {
     .highlight() !important;
     color: white;
   }
 }
 
-.btn-group-horizontal{margin-left: 70%;}
+.search-bar {.setElementCount(@elementCount: 8; @fontSize: 20px; @padding: 10px);}
 
-.pager{
+.btn-group-horizontal {margin-left: 70%;}
+#pager-horizontal {@media @desktop, @large-desktop {display: none;}}
+#pager-vertical {@media @mobile, @tablet {display: none;}}
+.pager {
   color: @colorscheme[adesso-blue];
   border: none;
   background: none;
   font-size: 40px;
 }
 
-.highlight(@color : @colorscheme[adesso-blue]){
+.highlight(@color : @colorscheme[adesso-blue]) {
   background: linear-gradient(to right, white, @color 30%);
-  color: white !important;
+  color: white;
   & > .user-table-name{color: white;}
-}
-
-.setSearchBarHeight(@elementHeight: 50px; @elementCount: 7);
-
-body{
-  background: linear-gradient(to top, @colorscheme[warm-grey-light], white) center center fixed no-repeat;
-  background-size: cover;
 }
 
 #noRankList{
@@ -112,121 +102,26 @@ body{
   100%{opacity: 1;}
 }
 
-@media screen and(max-width: 767px) {
+@media @mobile{
+  .container-fluid {overflow: hidden;}
   .user-table {
-    width: 100%;
     font-size: 11px !important;
+    &-name {font-size: 15px;}
+    .fas{display: none;}
   }
-
-  .user-table th span {
-    font-size: 20px !important;
-  }
-
-  .user-table td.user-table-name{
-    font-size: 15px;
-  }
-
-  .fa-chart-line {
-    display: none;
-  }
-
-  .fa-check {
-    display: none;
-  }
-
-  .fa-balance-scale {
-    display: none;
-  }
-
-  .fa-trophy {
-    display: none;
-  }
-
-  .container-fluid {
-    overflow: hidden;
-  }
-
 }
-
 @media screen and(max-width: 480px) {
   .user-table {
-    width: 100%;
     font-size: 7px !important;
+    th span {font-size: 13px !important;}
   }
-
-  .user-table th span {
-    font-size: 13px !important;
-  }
-
-  .user-table td.user-table-name{
-    font-size: 13px;
-  }
-
-  .fa-chart-line {
-    display: none;
-  }
-
-  .fa-check {
-    display: none;
-  }
-
-  .fa-balance-scale {
-    display: none;
-  }
-
-  .fa-trophy {
-    display: none;
-  }
-
-  .container-fluid {
-    overflow: hidden;
-  }
-
 }
-
 @media screen and(max-width: 400px) {
   .user-table {
-    width: 100%;
+    td {font-size: 11px !important;}
+    .badge-position {font-size: 10px;}
+    th span {font-size: 8px !important;}
+    &-name{font-size: 10px !important;}
   }
-
-  .user-table td span.badge-position.align-center {
-    font-size: 10px;
-  }
-
-  .user-table th span {
-    font-size: 8px !important;
-  }
-
-  .user-table td.user-table-name{
-    font-size: 10px !important;
-  }
-
-  .user-table td {
-    font-size: 11px !important;
-  }
-
-  .fa-chart-line {
-    display: none;
-  }
-
-  .fa-check {
-    display: none;
-  }
-
-  .fa-balance-scale {
-    display: none;
-  }
-
-  .fa-trophy {
-    display: none;
-  }
-
-  .container-fluid {
-    overflow: hidden;
-  }
-
-  body {
-    min-width: 320px;
-  }
-
+  body {min-width: 320px;}
 }
