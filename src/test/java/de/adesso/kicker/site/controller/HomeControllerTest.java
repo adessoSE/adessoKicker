@@ -38,7 +38,7 @@ class HomeControllerTest {
     @MockBean(name = "userService")
     private UserService userService;
 
-    @MockBean
+    @MockBean(name = "notificationService")
     private NotificationService notificationService;
 
     private static User createUserWithRank() {
@@ -73,7 +73,6 @@ class HomeControllerTest {
         result.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("user", false))
-                .andExpect(model().attribute("notifications", false))
                 .andExpect(model().attribute("users", userList))
                 .andExpect(model().attribute("allUsers", userList))
                 .andExpect(content().string(containsString("id=\"login-button\"")));
@@ -97,7 +96,6 @@ class HomeControllerTest {
         result.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("user", user))
-                .andExpect(model().attribute("notifications", notifications))
                 .andExpect(model().attribute("allUsers", userList))
                 .andExpect(content().string(containsString("id=\"user-self\"")))
                 .andExpect(content().string(containsString("id=\"notification-dropdown\"")))

@@ -1,9 +1,9 @@
-package de.adesso.kicker.statistics.trackedranking.service;
+package de.adesso.kicker.user.trackedranking.service;
 
-import de.adesso.kicker.statistics.trackedranking.persistence.TrackedRanking;
-import de.adesso.kicker.statistics.trackedranking.persistence.TrackedRankingRepository;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
+import de.adesso.kicker.user.trackedranking.persistence.TrackedRanking;
+import de.adesso.kicker.user.trackedranking.persistence.TrackedRankingRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
