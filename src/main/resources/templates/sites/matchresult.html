@@ -47,22 +47,22 @@
     <!-- Error Warning (Same Player) -->
     <div class="popup popup-error" th:if="${samePlayer}">
       <i class="fa fa-times" aria-hidden="true"></i>
-      <span th:text="#{error.samePlayer}"></span>
+      <span th:text="#{matchResult.error.samePlayer}"></span>
     </div>
     <!-- Error Warning (Invalid Creator) -->
     <div class="popup popup-error" th:if="${invalidCreator}">
       <i class="fa fa-times" aria-hidden="true"></i>
-      <span th:text="#{error.invalidCreator}"></span>
+      <span th:text="#{matchResult.error.invalidCreator}"></span>
     </div>
     <!-- Error Warning (Null Player) -->
     <div class="popup popup-error" th:if="${nullPlayer}">
       <i class="fa fa-times" aria-hidden="true"></i>
-      <span th:text="#{error.nullPlayer}"></span>
+      <span th:text="#{matchResult.error.noPlayers}"></span>
     </div>
     <!-- Error Warning (Too Many Mails) -->
     <div class="popup popup-error" th:if="${tooManyMails}">
       <i class="fa fa-times" aria-hidden="true"></i>
-      <span th:text="#{error.tooManyMails}"></span>
+      <span th:text="#{matchResult.error.tooManyMails}"></span>
     </div>
     <div class="row">
       <!-- Team A -->
@@ -153,18 +153,18 @@
     </div>
     <div class="popup popup-error" th:if="${noWinner}">
       <i class="fa fa-times" aria-hidden="true"></i>
-      <span th:text="#{error.noWinner}"></span>
+      <span th:text="#{matchResult.error.noWinner}"></span>
     </div>
     <!-- When did you play? -->
     <div class="headline" th:text="#{matchResult.whenDidYouPlay}"></div>
     <!-- Timepicker -->
     <div class="popup popup-error" th:if="${futureDate}">
       <i class="fa fa-times" aria-hidden="true"></i>
-      <span th:text="#{error.futureDate}"></span>
+      <span th:text="#{matchResult.error.futureDate}"></span>
     </div>
     <div class="popup popup-error" th:if="${noDate}">
       <i class="fa fa-times" aria-hidden="true"></i>
-      <span th:text="#{error.noDate}"></span>
+      <span th:text="#{matchResult.error.noDate}"></span>
     </div>
     <div class="form-group" id="datetimepicker-form-group">
       <div class="input-group date">

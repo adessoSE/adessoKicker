@@ -35,7 +35,7 @@
 <!-- Profile Statistics -->
 <div class="container">
   <!-- Display if player has no statistics -->
-  <div class="alert alert-danger" role="alert" th:if="${user.ranking == null}" th:text="#{statistics.noRank}"></div>
+  <div class="alert alert-danger" role="alert" th:if="${user.ranking == null}" th:text="#{profile.noRank}"></div>
   <div class="row" th:if="${user.ranking}">
     <!-- Rank -->
     <div class="col-lg-2">

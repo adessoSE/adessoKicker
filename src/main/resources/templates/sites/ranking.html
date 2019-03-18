@@ -41,7 +41,7 @@
                 <i class="fas fa-search"></i>
               </span>
             </div>
-            <input class="form-control" type="text" th:placeholder="#{searchbar}"/>
+            <input class="form-control" type="text" th:placeholder="#{searchBar}"/>
           </div>
           <div class="panel-body search-bar-content container">
             <ul class="list-group">
@@ -54,7 +54,7 @@
             </ul>
           </div>
         </div>
-        <h2 th:text="#{sites.ranking}"></h2>
+        <h2 th:text="#{header.ranking}"></h2>
       </div>
     </div>
     <!-- Pager Buttons Vertical -->
@@ -84,7 +84,7 @@
         </th>
         <!-- Name -->
         <th class="thead-name">
-          <span th:text="#{ranking.name}"></span>
+          <span th:text="#{statistics.name}"></span>
         </th>
         <!-- Wins -->
         <th>
@@ -135,8 +135,9 @@
     </table>
   </div>
   <div th:if="${allUsers.size()==0}">
-    <h2 class="text-center" th:text="#{statistics.noRanks}"></h2>
+    <h2 class="text-center" th:text="#{ranking.noRanks}"></h2>
   </div>
+  <div id="noRankList" class="text-center alert alert-danger" role="alert" sec:authorize="isAuthenticated()" th:if="${@userService.getLoggedInUser().getRanking()==null}" th:text="#{ranking.noRank}"></div>
 </div>
 <!-- Pager Buttons Horizontal -->
 <div class="btn-group-horizontal" id="pager-horizontal">
