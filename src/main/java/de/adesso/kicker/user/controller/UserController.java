@@ -2,7 +2,7 @@ package de.adesso.kicker.user.controller;
 
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
-import de.adesso.kicker.user.trackedranking.service.TrackedRankingService;
+import de.adesso.kicker.user.trackedstatistics.service.TrackedStatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +18,7 @@ public class UserController {
 
     private final UserService userService;
 
-    private final TrackedRankingService trackedRankingService;
+    private final TrackedStatisticsService trackedStatisticsService;
 
     @GetMapping("/u/{id}")
     public ModelAndView getUserProfile(@PathVariable String id) {
@@ -43,9 +43,9 @@ public class UserController {
     @GetMapping("/js/{id}")
     public String getExampleJS(@PathVariable String id, Model model) {
         var user = userService.getUserById(id);
-        var rankings = trackedRankingService.getTrackedRankingsByUser(user);
+        var statistics = trackedStatisticsService.getTrackedStatisticsByUser(user);
         model.addAttribute("user", user);
-        model.addAttribute("rankings", rankings);
+        model.addAttribute("statistics", statistics);
         return "js/profile.js";
     }
 }

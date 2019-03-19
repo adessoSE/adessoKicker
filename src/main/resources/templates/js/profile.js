@@ -3,12 +3,12 @@ var ranks = [];
 var wins = [];
 var dates = [];
 var x = 0;
-[# th:each="ranking : ${rankings}"]
-var rank = [[${ranking.rank}]];
-var preWins = [[${ranking.wins - ranking.losses}]]
+[# th:each="statistic : ${statistics}"]
+var rank = [[${statistic.rank}]];
+var preWins = [[${statistic.wins - statistic.losses}]];
     ranks.push({x : + x, y : rank});
     wins.push({x : + x, y : preWins});
-    dates.push([[${ranking.date}]]);
+    dates.push([[${statistic.date}]]);
     x++;
 [/]
 
