@@ -1,57 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <title>adesso kicker</title>
-
-  <!-- Required meta tags -->
-  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- JQuery -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-
-  <!-- Fontawesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css">
-
-  <!-- Hover CSS -->
-  <link rel="stylesheet" type="text/css" href="/css/hover-min.css">
-
-  <!-- My stylesheets -->
-  <link rel="stylesheet/less" type="text/css" href="/css/header.less">
-
-  <!-- LESS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
-</head>
-<body>
+<!-- Match-Verification -->
 <div th:fragment="matchverification">
   <div class="dropdown-item matchverification notification" th:value="${notification.notificationId}">
     <p class="adesso-blue-text" th:text="${#temporals.format(notification.sendDate, 'd MMM yyyy')}"></p>
     <div class="notification-text">
       <div th:if="${notification.match.getWinners().size() == 1}">
-        <div
-            th:text="#{notification.matchRequest.oneOpponent(${notification.match.getWinners().get(0).firstName}, ${#temporals.format(notification.match.date, 'd MMM yyyy')})}"></div>
+        <div th:text="#{notification.matchRequest.oneOpponent(${notification.match.getWinners().get(0).firstName},
+            ${#temporals.format(notification.match.date, 'd MMM yyyy')})}">
+        </div>
       </div>
       <div th:if="${notification.match.getWinners().size() == 2}">
-        <div
-            th:text="#{notification.matchRequest.twoOpponents(${notification.match.getWinners().get(0).firstName}, ${notification.match.getWinners().get(1).firstName}, ${#temporals.format(notification.match.date, 'd MMM yyyy')})}"></div>
+        <div th:text="#{notification.matchRequest.twoOpponents(${notification.match.getWinners().get(0).firstName},
+            ${notification.match.getWinners().get(1).firstName}, ${#temporals.format(notification.match.date, 'd MMM yyyy')})}">
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-6">
         <button type="button" class="btn hvr-fade notification-bt" onclick="accept(this);"
-                th:text="#{notification.yes}"></button>
+                th:text="#{notification.yes}">
+        </button>
       </div>
       <div class="col-sm-6">
         <button type="button" class="btn hvr-fade notification-bt" onclick="decline(this);"
-                th:text="#{notification.no}"></button>
+                th:text="#{notification.no}">
+        </button>
       </div>
     </div>
     <div class="dropdown-divider"></div>
   </div>
 </div>
-</body>
 </html>

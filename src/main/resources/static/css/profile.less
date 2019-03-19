@@ -1,74 +1,49 @@
 @import "_colorscheme.less";
-@import "_util.less";
+@import "_background.less";
+@import "_mediaqueries.less";
 
-#text-container {
+#playerName {
   text-align: center;
   margin-top: 15px;
-  margin-bottom: 20px;
-  h2 {
-    margin-top: 10px;
-  }
+  margin-bottom: 15px;
 }
 
 .statistic {
-  @media screen and(max-width: 991px) {
-    width: 60%;
-    margin-left: 20%;
-  }
-
-  .box-shadow(@xOffset:6px,@yOffset:6px,@blur:8px,@scale:-4px,@color:@colorscheme[warm-grey-dark]);
-  text-align: center;
   opacity: 0;
   width: 90%;
   margin-left: 5%;
-  background-color: @colorscheme[adesso-blue];
   color: white;
+  text-align: center;
+  background-color: @colorscheme[adesso-blue];
+  box-shadow: 6px 6px 8px -4px @colorscheme[warm-grey-dark];
+  animation: fly-in-up 1.2s cubic-bezier(.19, 1, .22, 1) forwards;
 
+  @media @mobile, @tablet{
+    width: 60%;
+    margin-left: 20%;
+  }
   &-title {
+    font-size: 1em;
     font-weight: bold;
     margin-top: 20px;
-    font-size: 18px;
     padding-top: 10px;
     padding-bottom: 10px;
   }
-
   &-value {
-    font-size: 35px;
+    font-size: 2.5em;
     padding-bottom: 15px;
     padding-top: 10px;
   }
-
-  i {
-    font-size: 40px;
-  }
-
-  // Different animation delay for each statistic
-  animation: fly-in-up 1.2s cubic-bezier(.19, 1, .22, 1) forwards;
-
-  &-2 {
-    animation-delay: 0.1s;
-  }
-
-  &-3 {
-    animation-delay: 0.2s;
-  }
-
-  &-4 {
-    animation-delay: 0.3s;
-  }
-
-  &-5 {
-    animation-delay: 0.4s;
-  }
-
-  &-6 {
-    animation-delay: 0.5s;
-  }
+  i {font-size: 3em;}
 }
 
-body{
-  background: linear-gradient(to top, @colorscheme[warm-grey-light], white) center center fixed no-repeat;
-  background-size: cover;
+#statistic {
+  // Different animation delays for each statistic
+  &-2 {animation-delay: 0.1s;}
+  &-3 {animation-delay: 0.2s;}
+  &-4 {animation-delay: 0.3s;}
+  &-5 {animation-delay: 0.4s;}
+  &-6 {animation-delay: 0.5s;}
 }
 
 @keyframes fly-in-up {

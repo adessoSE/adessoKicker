@@ -1,0 +1,39 @@
+@import "_colorscheme.less";
+
+/* This allows you to set the element count, visible in the scrollbar.
+ * It automatically sizes the max-height of the scroll bar according to
+ * The entered font size and padding (top and bottom).
+ */
+
+.setElementCount(@elementCount: 6; @fontSize: 20px; @padding: 12px){
+    .search-bar-content {
+      ul {max-height: @elementCount * (@fontSize + 2*@padding);}
+      li {
+        font-size: @fontSize;
+        line-height: @fontSize;
+        padding-top: @padding;
+        padding-bottom: @padding;
+      }
+    }
+}
+
+.search-bar{
+  #search-bar-selected{
+    background-color: @colorscheme[adesso-blue];
+    color: white;
+  }
+  &-content{
+    z-index: 1;
+    margin-left: -15px;
+    display: none;
+    position: absolute;
+    ul { overflow-y: scroll;}
+    li {
+      margin: 0;
+      border: none;
+      background-color: @colorscheme[warm-grey-light];
+      cursor: pointer;
+    }
+  }
+  .setElementCount();
+}

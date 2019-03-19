@@ -1,0 +1,12 @@
+/* How to use:
+ *
+ * Import this file in the less file were you want to use @media
+ * (@import "_mediaqueries";). Then you can specify rules for a specific
+ * Device with @media @mobile {...}. If you want to declare a rule set for multiple
+ * Devices for example for small devices (mobile and tablet) use
+ * @media @mobile, @tablet {...}
+ */
+@mobile:           ~"only screen and (max-width: 767px)";
+@tablet:           ~"only screen and (min-width: 768px) and (max-width: 991px)";
+@desktop:          ~"only screen and (min-width: 992px) and (max-width: 1199px)";
+@large-desktop:    ~"only screen and (min-width: 1200px)";
