@@ -62,7 +62,7 @@ class HomeControllerTest {
     void viewRendersWithAnonymousUser() throws Exception {
         // given
         var userList = createUsersWithRank();
-        given(userService.getAllUsersWithRank()).willReturn(userList);
+        given(userService.getAllUsersWithStatistics()).willReturn(userList);
         given(userService.getUserPageSortedByRating(anyInt(), anyInt())).willReturn(userList);
         willThrow(UserNotFoundException.class).given(userService).getLoggedInUser();
 
@@ -86,7 +86,7 @@ class HomeControllerTest {
         var notifications = createNotifications();
         var userList = createUsersWithRank();
         given(userService.getLoggedInUser()).willReturn(user);
-        given(userService.getAllUsersWithRank()).willReturn(userList);
+        given(userService.getAllUsersWithStatistics()).willReturn(userList);
         given(notificationService.getNotificationsByReceiver(user)).willReturn(notifications);
 
         // when
@@ -110,7 +110,7 @@ class HomeControllerTest {
         var notifications = createNotifications();
         var userList = createUsersWithRank();
         given(userService.getLoggedInUser()).willReturn(user);
-        given(userService.getAllUsersWithRank()).willReturn(userList);
+        given(userService.getAllUsersWithStatistics()).willReturn(userList);
         given(notificationService.getNotificationsByReceiver(user)).willReturn(notifications);
 
         // when

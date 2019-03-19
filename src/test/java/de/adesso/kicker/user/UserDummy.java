@@ -1,6 +1,5 @@
 package de.adesso.kicker.user;
 
-import de.adesso.kicker.statistics.ranking.RankingDummy;
 import de.adesso.kicker.user.persistence.User;
 
 public class UserDummy {
@@ -23,19 +22,19 @@ public class UserDummy {
 
     public static User userWithLowRating() {
         var user = new User("user", "User", "User", "user@mail");
-        user.setRanking(RankingDummy.ranking());
+        user.setStatistics(StatisticsDummy.statistic());
         return user;
     }
 
     public static User userWithHighRating() {
         var user = new User("user", "User", "User", "user@mail");
-        user.setRanking(RankingDummy.highRating());
+        user.setStatistics(StatisticsDummy.statisticHighRating());
         return user;
     }
 
     public static User userWithVeryHighRating() {
         var user = new User("user", "User", "User", "user@mail");
-        user.setRanking(RankingDummy.veryHighRating());
+        user.setStatistics(StatisticsDummy.statisticVeryHighRating());
         return user;
     }
 }

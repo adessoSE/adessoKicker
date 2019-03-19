@@ -1,11 +1,10 @@
-package de.adesso.kicker.statistics.ranking.service;
+package de.adesso.kicker.user.service;
 
 import de.adesso.kicker.match.MatchDummy;
-import de.adesso.kicker.statistics.ranking.RankingDummy;
-import de.adesso.kicker.user.persistence.Ranking;
-import de.adesso.kicker.user.persistence.RankingRepository;
+import de.adesso.kicker.user.StatisticsDummy;
+import de.adesso.kicker.user.persistence.Statistics;
+import de.adesso.kicker.user.persistence.StatisticsRepository;
 import de.adesso.kicker.user.persistence.User;
-import de.adesso.kicker.user.service.RankingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,21 +20,22 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.any;
 
-class RankingServiceTest {
+class StatisticsServiceTest {
 
     @Mock
-    private RankingRepository rankingRepository;
+    private StatisticsRepository statisticsRepository;
 
     @InjectMocks
-    private RankingService rankingService;
+    private StatisticsService statisticsService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
-    static List<Ranking> createRankingList() {
-        return List.of(RankingDummy.ranking(), RankingDummy.highRating(), RankingDummy.veryHighRating());
+    static List<Statistics> createStatisticsList() {
+        return List.of(StatisticsDummy.statistic(), StatisticsDummy.statisticHighRating(),
+                StatisticsDummy.statisticVeryHighRating());
     }
 
     @Test
@@ -45,7 +45,7 @@ class RankingServiceTest {
         var match = MatchDummy.matchWithLowRating();
 
         // when
-        rankingService.updateRatings(match.getWinners(), match.getLosers());
+        statisticsService.updateStatistics(match.getWinners(), match.getLosers());
 
         // then
         assertRatingPlayers(1016, match.getWinners());
@@ -59,7 +59,7 @@ class RankingServiceTest {
         var match = MatchDummy.matchWithHighRating();
 
         // when
-        rankingService.updateRatings(match.getWinners(), match.getLosers());
+        statisticsService.updateStatistics(match.getWinners(), match.getLosers());
 
         // then
         assertRatingPlayers(2112, match.getWinners());
@@ -73,7 +73,7 @@ class RankingServiceTest {
         var match = MatchDummy.matchWithVeryHighRating();
 
         // when
-        rankingService.updateRatings(match.getWinners(), match.getLosers());
+        statisticsService.updateStatistics(match.getWinners(), match.getLosers());
 
         // then
         assertRatingPlayers(2408, match.getWinners());
@@ -85,10 +85,10 @@ class RankingServiceTest {
     void shouldUseEachPlayersKFactor() {
         // given
         var match = MatchDummy.matchWithPlayersInDifferentRatingRanges();
-        given(rankingRepository.save(any(Ranking.class))).willReturn(new Ranking());
+        given(statisticsRepository.save(any(Statistics.class))).willReturn(new Statistics());
 
         // when
-        rankingService.updateRatings(match.getWinners(), match.getLosers());
+        statisticsService.updateStatistics(match.getWinners(), match.getLosers());
 
         // then
         assertRatingPlayers(1032, match.getWinners());
@@ -96,28 +96,28 @@ class RankingServiceTest {
     }
 
     @Test
-    void assertNewRankingsAreSaved() {
+    void assertNewStatisticsAreSaved() {
         // given
-        var rankingList = createRankingList();
-        given(rankingRepository.findAll()).willReturn(rankingList);
-        given(rankingRepository.countAllByRatingAfter(anyInt())).willReturn(0);
+        var rankingList = createStatisticsList();
+        given(statisticsRepository.findAll()).willReturn(rankingList);
+        given(statisticsRepository.countAllByRatingAfter(anyInt())).willReturn(0);
 
         // when
-        rankingService.updateRanks();
+        statisticsService.updateRanks();
 
         // then
-        then(rankingRepository).should().saveAll(rankingList);
+        then(statisticsRepository).should().saveAll(rankingList);
     }
 
     @Test
     void assertRankIsCorrect() {
         // given
-        var ranking = RankingDummy.ranking();
-        given(rankingRepository.findAll()).willReturn(List.of(ranking));
-        given(rankingRepository.countAllByRatingAfter(anyInt())).willReturn(0);
+        var ranking = StatisticsDummy.statistic();
+        given(statisticsRepository.findAll()).willReturn(List.of(ranking));
+        given(statisticsRepository.countAllByRatingAfter(anyInt())).willReturn(0);
 
         // when
-        rankingService.updateRanks();
+        statisticsService.updateRanks();
 
         // then
         assertEquals(1, ranking.getRank());
@@ -125,7 +125,7 @@ class RankingServiceTest {
 
     private static void assertRatingPlayers(int expected, List<User> players) {
         for (var player : players) {
-            var actual = player.getRanking().getRating();
+            var actual = player.getStatistics().getRating();
             assertEquals(expected, actual);
         }
     }

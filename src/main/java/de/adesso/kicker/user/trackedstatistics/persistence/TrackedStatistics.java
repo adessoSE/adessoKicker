@@ -1,4 +1,4 @@
-package de.adesso.kicker.user.trackedranking.persistence;
+package de.adesso.kicker.user.trackedstatistics.persistence;
 
 import de.adesso.kicker.user.persistence.User;
 import lombok.Data;
@@ -12,17 +12,19 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @Entity
-public class TrackedRanking {
+public class TrackedStatistics {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String rankingId;
+    private String trackedStatisticsId;
 
-    private int rank;
-    private int rating;
+    private Integer rank;
 
-    private long wins;
-    private long losses;
+    private Integer rating;
+
+    private Long wins;
+
+    private Long losses;
 
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
@@ -30,7 +32,7 @@ public class TrackedRanking {
 
     private LocalDate date;
 
-    public TrackedRanking(int rank, int rating, long wins, long losses, User user) {
+    public TrackedStatistics(Integer rank, Integer rating, Long wins, Long losses, User user) {
         this.rank = rank;
         this.rating = rating;
         this.wins = wins;

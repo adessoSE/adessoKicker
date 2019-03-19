@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
-    Page<User> findAllByRankingNotNull(Pageable pageable);
+    Page<User> findAllByStatisticsNotNull(Pageable pageable);
 
-    List<User> findAllByRankingNotNull();
+    List<User> findAllByStatisticsNotNull();
 }

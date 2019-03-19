@@ -62,23 +62,25 @@ class MatchControllerIntegrationTest {
                 .param("teamAPlayer1.firstName", user1.getFirstName())
                 .param("teamAPlayer1.lastName", user1.getLastName())
                 .param("teamAPlayer1.email", user1.getEmail())
-                .param("teamAPlayer1.wins", String.valueOf(user1.getWins()))
-                .param("teamAPlayer1.losses", String.valueOf(user1.getLosses()))
-                .param("teamAPlayer1.ranking.rankingId", user1.getRanking().getRankingId())
-                .param("teamAPlayer1.ranking.rating", String.valueOf(user1.getRanking().getRating()))
-                .param("teamAPlayer1.ranking.rank", String.valueOf(user1.getRanking().getRank()))
+                .param("teamAPlayer1.statistics.statisticId", user1.getStatistics().getStatisticId())
+                .param("teamAPlayer1.statistics.rating", String.valueOf(user1.getStatistics().getRating()))
+                .param("teamAPlayer1.statistics.rank", String.valueOf(user1.getStatistics().getRank()))
+                .param("teamAPlayer1.wins", String.valueOf(user1.getStatistics().getWins()))
+                .param("teamAPlayer1.losses", String.valueOf(user1.getStatistics().getLosses()))
                 .param("teamBPlayer1.userId", user2.getUserId())
                 .param("teamBPlayer1.firstName", user2.getFirstName())
                 .param("teamBPlayer1.lastName", user2.getLastName())
                 .param("teamBPlayer1.email", user2.getEmail())
-                .param("teamBPlayer1.wins", String.valueOf(user2.getWins()))
-                .param("teamBPlayer1.losses", String.valueOf(user2.getLosses()))
-                .param("teamBPlayer1.ranking.rankingId", user2.getRanking().getRankingId())
-                .param("teamBPlayer1.ranking.rating", String.valueOf(user2.getRanking().getRating()))
-                .param("teamBPlayer1.ranking.rank", String.valueOf(user2.getRanking().getRank()))
+                .param("teamBPlayer1.statistics.statisticId", user2.getStatistics().getStatisticId())
+                .param("teamBPlayer1.statistics.rating", String.valueOf(user2.getStatistics().getRating()))
+                .param("teamBPlayer1.statistics.rank", String.valueOf(user2.getStatistics().getRank()))
+                .param("teamBPlayer1.wins", String.valueOf(user2.getStatistics().getWins()))
+                .param("teamBPlayer1.losses", String.valueOf(user2.getStatistics().getLosses()))
                 .param("winnerTeamA", "true"));
 
         // then
+        var matches = matchRepository.findAll();
+        System.out.println(matches);
         var match = matchRepository.findById("1").orElseThrow();
         var notifications = matchVerificationRequestRepository.getAllByMatch(match);
         assertEquals(user1.getUserId(), match.getTeamAPlayer1().getUserId());
