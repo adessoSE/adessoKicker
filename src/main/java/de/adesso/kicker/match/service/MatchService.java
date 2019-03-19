@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -117,4 +118,11 @@ public class MatchService {
                 && (match.getTeamBPlayer2() != null || match.getTeamAPlayer2() != null));
     }
 
+    public List<Match> getAllVerifiedMatches() {
+        return matchRepository.findAllByVerified(true);
+    }
+
+    public void deleteAll() {
+        matchRepository.deleteAll();
+    }
 }

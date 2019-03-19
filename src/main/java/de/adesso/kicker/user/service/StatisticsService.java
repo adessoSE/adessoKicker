@@ -134,4 +134,8 @@ public class StatisticsService {
     private void saveAllStatistics(List<Statistic> statistics) {
         statisticRepository.saveAll(statistics);
     }
+
+    void deleteAll() {
+        statisticRepository.deleteAll();
+    }
 }
