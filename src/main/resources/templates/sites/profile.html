@@ -30,7 +30,7 @@
 <body>
 <header th:replace="~{fragments/header.html :: header}"></header>
 <div class="container" id="text-container">
-  <h2 th:text="${user.getFullName()}"></h2>
+  <h2 th:text="${user.getFullName()}" id="id" th:value="${user.userId}"></h2>
 </div>
 <!-- User Statistics -->
 <div class="container">
@@ -85,58 +85,21 @@
 <!--ChartJs Canvas-->
 <div class="container">
   <div class="row" th:if="${user.ranking}">
-    <div class="col-lg-5" style="background-color: #aaaaaa">
+    <div class="col-lg-5">
       <h3>ranks over time</h3>
       <canvas id="canvas-rank"></canvas>
     </div>
     <div class="col-lg-2"></div>
-    <div class="col-lg-5" style="background-color: #aaaaaa">
+    <div class="col-lg-5">
       <h3>wins over time</h3>
       <canvas id="canvas-wins"></canvas>
     </div>
   </div>
 </div>
-<!--Script for chartJs
-This script cannot be outsourced into its own .js file.
-That is because Thymeleaf only ca be used in the main .html file to fill in the data-->
+<!--Script for chartJs-->
 <script>
-    var ctx = $('#canvas-rank');
-    var rankOverTimeGraph = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["datum", "datum2"],
-            datasets: [{
-                fill: false,
-                borderColor: "rgb(0,0,255)",
-                data: [
-                    {x: 10, y: 20},
-                    {x: 15, y: 10},
-                ]
-            }]
-        },
-        options: {
-            legend: { display: false }
-        }
-    });
-
-    var cty = $('#canvas-wins');
-    var winsOverTimeGraph = new Chart(cty, {
-        type: 'line',
-        data: {
-            labels: ["datum", "datum2"],
-            datasets: [{
-                fill: false,
-                borderColor: "rgb(0,0,255)",
-                data: [
-                    {x: 10, y: 10},
-                    {x: 15, y: 20},
-                ]
-            }]
-        },
-        options: {
-            legend: { display: false }
-        }
-    });
+    var id = $('#id').attr("value");
+    $.getScript("/users/js/" + id);
 </script>
 </body>
 </html>
