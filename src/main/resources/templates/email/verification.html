@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <body>
+<p th:text="#{email.hello(${receiver})}"></p>
 <div th:if="${playerA2Name}!=null">
     <p th:text="#{email.twoOpponents(${playerA1Name}, ${playerA2Name})}"></p>
 </div>
 
-<div th:if="${playerA2name}==null">
+<div th:if="${playerA2name}==''">
     <p th:text="#{email.oneOpponent(${playerA1Name})}"></p>
 </div>
 
@@ -22,7 +23,7 @@
 </div>
 
 <div th:if="${losers.size()==2}">
-    <p th:text="#{email.twoLosers(${losers.get(0).getFullName()}, losers.get(1).getFullName())}"></p>
+    <p th:text="#{email.twoLosers(${losers.get(0).getFullName()}, ${losers.get(1).getFullName()})}"></p>
 </div>
 
 <a th:href="@{'http://'+${#request.getServerName()}+'/notifications/accept/' + ${matchId}}" th:text="#{email.verify}"></a>

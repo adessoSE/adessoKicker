@@ -57,9 +57,9 @@ public class MatchController {
             modelAndView.addObject("invalidCreator", true);
         } catch (SamePlayerException e) {
             modelAndView.addObject("samePlayer", true);
-        } //catch (MailException e) {
-            //modelAndView.addObject("tooManyMails", true);
-        //}
+        } catch (MailException e) {
+            modelAndView.addObject("tooManyMails", true);
+        }
         return defaultAddMatchView(modelAndView);
     }
 

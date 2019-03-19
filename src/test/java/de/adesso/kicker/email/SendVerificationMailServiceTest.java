@@ -57,7 +57,6 @@ class SendVerificationMailServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
-
     @Disabled
     @Test
     void when1v1thenSendEmail() {
