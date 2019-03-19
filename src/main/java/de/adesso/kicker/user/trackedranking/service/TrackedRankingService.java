@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-class TrackedRankingService {
+public class TrackedRankingService {
 
     private final UserService userService;
 
@@ -32,7 +32,9 @@ class TrackedRankingService {
             var ranking = user.getRanking();
             var rank = ranking.getRank();
             var rating = ranking.getRating();
-            return new TrackedRanking(rank, rating, user);
+            var wins = user.getWins();
+            var losses = user.getLosses();
+            return new TrackedRanking(rank, rating, wins, losses, user);
         }).collect(Collectors.toList());
         trackedRankingRepository.saveAll(trackedRankings);
         logger.info("Tracked rankings of {} users", users.size());

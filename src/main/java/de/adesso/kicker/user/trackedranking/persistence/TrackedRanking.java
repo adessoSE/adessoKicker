@@ -19,8 +19,10 @@ public class TrackedRanking {
     private String rankingId;
 
     private int rank;
-
     private int rating;
+
+    private long wins;
+    private long losses;
 
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
@@ -28,9 +30,11 @@ public class TrackedRanking {
 
     private LocalDate date;
 
-    public TrackedRanking(int rank, int rating, User user) {
+    public TrackedRanking(int rank, int rating, long wins, long losses, User user) {
         this.rank = rank;
         this.rating = rating;
+        this.wins = wins;
+        this.losses = losses;
         this.user = user;
         this.date = LocalDate.now();
     }
