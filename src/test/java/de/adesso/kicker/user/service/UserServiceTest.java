@@ -1,10 +1,9 @@
-package de.adesso.kicker.user;
+package de.adesso.kicker.user.service;
 
+import de.adesso.kicker.user.UserDummy;
 import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.persistence.UserRepository;
-import de.adesso.kicker.user.service.RankingService;
-import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,7 +38,7 @@ class UserServiceTest {
     UserRepository userRepository;
 
     @Mock
-    RankingService rankingService;
+    StatisticsService statisticsService;
 
     @InjectMocks
     UserService userService;
@@ -53,7 +52,7 @@ class UserServiceTest {
         return UserDummy.defaultUser();
     }
 
-    private static List<User> createUserWithRankingList() {
+    private static List<User> createUserListWithStatistics() {
         return Collections.singletonList(UserDummy.userWithVeryHighRating());
     }
 
@@ -61,7 +60,7 @@ class UserServiceTest {
     @DisplayName("Should return a list of all users")
     void whenUsersExistReturnAllUsers() {
         // given
-        var userList = createUserWithRankingList();
+        var userList = createUserListWithStatistics();
         given(userRepository.findAll()).willReturn(userList);
 
         // when
@@ -175,9 +174,9 @@ class UserServiceTest {
     @DisplayName("Expect a list of users")
     void expectListOfUsers() {
         // given
-        var userList = createUserWithRankingList();
+        var userList = createUserListWithStatistics();
         var page = mock(Page.class);
-        given(userRepository.findAllByRankingNotNull(any(Pageable.class))).willReturn(page);
+        given(userRepository.findAllByStatisticsNotNull(any(Pageable.class))).willReturn(page);
         given(page.getContent()).willReturn(userList);
 
         // when

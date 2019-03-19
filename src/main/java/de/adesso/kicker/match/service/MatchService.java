@@ -8,7 +8,7 @@ import de.adesso.kicker.match.persistence.MatchRepository;
 import de.adesso.kicker.match.service.events.MatchCreatedEvent;
 import de.adesso.kicker.match.service.events.MatchDeclinedEvent;
 import de.adesso.kicker.match.service.events.MatchVerifiedEvent;
-import de.adesso.kicker.user.service.RankingService;
+import de.adesso.kicker.user.service.StatisticsService;
 import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -27,7 +27,7 @@ public class MatchService {
 
     private final UserService userService;
 
-    private final RankingService rankingService;
+    private final StatisticsService statisticsService;
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
@@ -71,14 +71,7 @@ public class MatchService {
     private void updateStatistics(Match match) {
         var winners = match.getWinners();
         var losers = match.getWinners();
-        for (var winner : winners) {
-            winner.increaseWins();
-        }
-        for (var loser : losers) {
-            loser.increaseLosses();
-        }
-        rankingService.updateRatings(winners, losers);
-        rankingService.updateRanks();
+        statisticsService.updateStatistics(winners, losers);
     }
 
     private void checkSamePlayer(Match match) {

@@ -28,13 +28,13 @@ public class UserService {
         return new ArrayList<>(userRepository.findAll());
     }
 
-    public List<User> getAllUsersWithRank() {
-        return new ArrayList<>(userRepository.findAllByRankingNotNull());
+    public List<User> getAllUsersWithStatistics() {
+        return new ArrayList<>(userRepository.findAllByStatisticsNotNull());
     }
 
     public List<User> getUserPageSortedByRating(int page, int size) {
-        var pageable = PageRequest.of(page, size, Sort.by("ranking.rating").descending());
-        return userRepository.findAllByRankingNotNull(pageable).getContent();
+        var pageable = PageRequest.of(page, size, Sort.by("statistics.rating").descending());
+        return userRepository.findAllByStatisticsNotNull(pageable).getContent();
     }
 
     public User getUserById(String id) {

@@ -19,13 +19,13 @@
 
   <!-- My stylesheets -->
   <link rel="stylesheet/less" type="text/css" href="/css/header.less">
-  <link rel="stylesheet/less" type="text/css" href="/css/ranking.less">
+  <link rel="stylesheet/less" type="text/css" href="/css/statistics.less">
 
   <!-- LESS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
 
-  <!-- Ranking JS -->
-  <script src="/js/ranking.js"></script>
+  <!-- Statistics JS -->
+  <script src="/js/statistics.js"></script>
 </head>
 <body>
 <header th:replace="~{fragments/header.html :: header}"></header>
@@ -47,14 +47,14 @@
             <ul class="list-group">
               <li class="list-group-item" th:each="user : ${allUsers}"
                   onclick="window.location.href=this.getAttribute('href')"
-                  th:href="@{/ranking(page=${user.ranking.rank <= (param.size == null ? 10 : T(Integer).parseInt(param.size)) ? 0 :
-                  ((user.ranking.rank - 1) / (param.size == null ? 10 : T(Integer).parseInt(param.size)))},size=${param.size == null ? 10 : param.size}, player=${user.getUserId()})}">
+                  th:href="@{/statistics(page=${user.statistics.rank <= (param.size == null ? 10 : T(Integer).parseInt(param.size)) ? 0 :
+                  ((user.statistics.rank - 1) / (param.size == null ? 10 : T(Integer).parseInt(param.size)))},size=${param.size == null ? 10 : param.size}, player=${user.getUserId()})}">
                 <span th:text="${user.getFullName()}">No user found</span>
               </li>
             </ul>
           </div>
         </div>
-        <h2 th:text="#{header.ranking}"></h2>
+        <h2 th:text="#{header.statistics}"></h2>
       </div>
     </div>
     <!-- Pager Buttons Vertical -->
@@ -110,34 +110,34 @@
           th:href="@{/users/u/{id}(id=${player.userId})}"
           th:id="${param.player == null ? (player == user ? 'user-self' : '') : (player.getUserId() == param.player[0] ? 'user-searched' : (player == user ? 'user-self' : ''))}">
         <td>
-          <span class="badge badge-position align-center" th:text="${player.ranking.rank}"></span>
+          <span class="badge badge-position align-center" th:text="${player.statistics.rank}"></span>
         </td>
         <td class="user-table-name" th:text="${player.getFullName()}"></td>
-        <td th:text="${player.wins}"></td>
-        <td th:text="${player.getWinRatio() + '%'}"></td>
-        <td th:text="${player.ranking.rating}"></td>
+        <td th:text="${player.statistics.wins}"></td>
+        <td th:text="${player.statistics.getWinRatio() + '%'}"></td>
+        <td th:text="${player.statistics.rating}"></td>
       </tr>
       <!-- Logged-In User -->
       <tr class="user-table-row"
           sec:authorize="isAuthenticated()"
-          th:if="${!users.contains(user) && user.ranking != null}"
+          th:if="${!users.contains(user) && user.statistics != null}"
           th:href="@{/users/u/{id}(id=${user.userId})}"
           onclick="window.location.href=this.getAttribute('href')" id="user-self">
         <td>
-          <span id="user-self-badge" class="badge badge-position align-center" th:text="${user.ranking.rank}"></span>
+          <span id="user-self-badge" class="badge badge-position align-center" th:text="${user.statistics.rank}"></span>
         </td>
         <td class="user-table-name" th:text="${user.getFullName()}"></td>
-        <td th:text="${user.wins}"></td>
-        <td th:text="${user.getWinRatio() + '%'}"></td>
-        <td th:text="${user.ranking.rating}"></td>
+        <td th:text="${user.statistics.wins}"></td>
+        <td th:text="${user.statistics.getWinRatio() + '%'}"></td>
+        <td th:text="${user.statistics.rating}"></td>
       </tr>
       </tbody>
     </table>
   </div>
   <div th:if="${allUsers.size()==0}">
-    <h2 class="text-center" th:text="#{ranking.noRanks}"></h2>
+    <h2 class="text-center" th:text="#{statistics.noRanks}"></h2>
   </div>
-  <div id="noRankList" class="text-center alert alert-danger" role="alert" sec:authorize="isAuthenticated()" th:if="${@userService.getLoggedInUser().getRanking()==null}" th:text="#{ranking.noRank}"></div>
+  <div id="noRankList" class="text-center alert alert-danger" role="alert" sec:authorize="isAuthenticated()" th:if="${@userService.getLoggedInUser().getStatistics()==null}" th:text="#{statistics.noRank}"></div>
 </div>
 <!-- Pager Buttons Horizontal -->
 <div class="btn-group-horizontal" id="pager-horizontal">
