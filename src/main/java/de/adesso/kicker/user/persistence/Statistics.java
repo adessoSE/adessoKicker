@@ -18,17 +18,15 @@ public class Statistics {
 
     @NotNull
     private int rating;
+    private int rank;
 
-    private Integer rank;
-
-    private Long wins;
-
-    private Long losses;
+    private long wins;
+    private long losses;
 
     public Statistics() {
         this.rating = 1000;
-        this.wins = 0L;
-        this.losses = 0L;
+        this.wins = 0;
+        this.losses = 0;
     }
 
     public int getWinRatio() {
@@ -38,7 +36,7 @@ public class Statistics {
         return Math.round(100 - (100f / getPlayedMatches() * losses));
     }
 
-    public Long getPlayedMatches() {
+    public long getPlayedMatches() {
         return wins + losses;
     }
 
