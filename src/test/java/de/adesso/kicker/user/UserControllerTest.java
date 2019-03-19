@@ -7,7 +7,7 @@ import de.adesso.kicker.user.controller.UserController;
 import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
-import de.adesso.kicker.user.trackedranking.service.TrackedRankingService;
+import de.adesso.kicker.user.trackedstatistics.service.TrackedStatisticsService;
 import org.junit.jupiter.api.Test;
 import org.keycloak.adapters.springboot.KeycloakAutoConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +45,8 @@ class UserControllerTest {
     @MockBean(name = "notificationService")
     private NotificationService notificationService;
 
-    @MockBean(name = "trackedRankingService")
-    private TrackedRankingService trackedRankingService;
+    @MockBean(name = "trackedStatisticsService")
+    private TrackedStatisticsService trackedStatisticsService;
 
     @Test
     @WithMockUser
