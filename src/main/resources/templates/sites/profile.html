@@ -91,14 +91,14 @@
 <hr>
 <!--ChartJs Canvas-->
 <div class="container">
-  <div class="row" th:if="${user.statistics}">
+  <div class="row" th:if="${user.statistic}">
     <div class="col-lg-5">
-      <h3 th:text="#{statistics.rankOverTime}"></h3>
+      <h3 th:text="#{statistic.rankOverTime}"></h3>
       <canvas id="canvas-rank"></canvas>
     </div>
     <div class="col-lg-2"></div>
     <div class="col-lg-5">
-      <h3 th:text="#{statistics.winRatio}"></h3>
+      <h3 th:text="#{statistic.winRatio}"></h3>
       <canvas id="canvas-wins"></canvas>
     </div>
   </div>
