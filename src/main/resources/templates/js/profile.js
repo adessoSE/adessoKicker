@@ -10,11 +10,15 @@ var winRateOverTime = [];
 [# th:each="statistic : ${statistics}"]
     var rank = [[${statistic.rank}]];
     var diffWinLoose = [[${statistic.wins - statistic.losses}]];
-    var winRate = [[${statistic.wins / statistic.losses}]];
+    var wins = [[${statistic.wins}]];
+    var losses = [[${statistic.losses}]];
+    var winRate = parseFloat(wins / losses).toFixed(2);
+
     ranksOverTime.push({x : + x, y : rank});
     diffWinLossesOverTime.push({x : + x, y : diffWinLoose});
     winRateOverTime.push({x : + x, y : winRate});
     dates.push([[${statistic.date}]]);
+
     x++;
 [/]
 
