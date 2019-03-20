@@ -1,7 +1,7 @@
 package de.adesso.kicker.user.service;
 
-import de.adesso.kicker.user.persistence.Statistics;
-import de.adesso.kicker.user.persistence.StatisticsRepository;
+import de.adesso.kicker.user.persistence.Statistic;
+import de.adesso.kicker.user.persistence.StatisticRepository;
 import de.adesso.kicker.user.persistence.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class StatisticsService {
 
-    private final StatisticsRepository statisticsRepository;
+    private final StatisticRepository statisticRepository;
 
     /**
      * When two opponents have a rating difference of
@@ -41,13 +41,13 @@ public class StatisticsService {
         saveAllStatistics(statistics);
     }
 
-    private void setRanks(Statistics statistic) {
+    private void setRanks(Statistic statistic) {
         var rank = calculateRank(statistic);
         statistic.setRank(rank);
     }
 
-    private int calculateRank(Statistics statistics) {
-        return statisticsRepository.countAllByRatingAfter(statistics.getRating()) + INDEX_OFFSET;
+    private int calculateRank(Statistic statistic) {
+        return statisticRepository.countAllByRatingAfter(statistic.getRating()) + INDEX_OFFSET;
     }
 
     public void updateStatistics(List<User> winners, List<User> losers) {
@@ -60,18 +60,18 @@ public class StatisticsService {
         increaseWins(winners);
         increaseLosses(losers);
 
-        applyResultsToTeam(winners, Outcome.WON, expectedWinnerScore);
-        applyResultsToTeam(losers, Outcome.LOST, expectedLoserScore);
+        updateRatings(winners, Outcome.WON, expectedWinnerScore);
+        updateRatings(losers, Outcome.LOST, expectedLoserScore);
 
         updateRanks();
     }
 
     private void increaseWins(List<User> winners) {
-        winners.stream().map(User::getStatistics).forEach(Statistics::increaseWins);
+        winners.stream().map(User::getStatistic).forEach(Statistic::increaseWins);
     }
 
     private void increaseLosses(List<User> losers) {
-        losers.stream().map(User::getStatistics).forEach(Statistics::increaseLosses);
+        losers.stream().map(User::getStatistic).forEach(Statistic::increaseLosses);
     }
 
     private double expectedScore(int winnerRating, int loserRating) {
@@ -86,34 +86,35 @@ public class StatisticsService {
     }
 
     private int getTeamRating(List<User> players) {
-        return players.stream().map(this::getStatisticOrElseNew).mapToInt(Statistics::getRating).sum();
+        return players.stream().map(this::getStatisticOrElseNew).mapToInt(Statistic::getRating).sum();
     }
 
-    private Statistics getStatisticOrElseNew(User user) {
-        var statistic = user.getStatistics();
+    private Statistic getStatisticOrElseNew(User user) {
+        var statistic = user.getStatistic();
         if (Objects.isNull(statistic)) {
-            statistic = new Statistics();
-            user.setStatistics(statistic);
+            statistic = new Statistic();
+            user.setStatistic(statistic);
         }
         return statistic;
     }
 
-    private void applyResultsToTeam(List<User> players, Outcome outcome, double expectedScore) {
-        for (var player : players) {
-            var ranking = player.getStatistics();
-            var rating = ranking.getRating();
-            var kFactor = kFactor(rating);
-            var change = ratingChange(kFactor, outcome, expectedScore);
-            applyRatingChange(ranking, change);
-        }
+    private void updateRatings(List<User> players, Outcome outcome, double expectedScore) {
+        players.stream().map(User::getStatistic).forEach(statistic -> updateRating(statistic, outcome, expectedScore));
+    }
+
+    private void updateRating(Statistic statistic, Outcome outcome, double expectedScore) {
+        var rating = statistic.getRating();
+        var kFactor = kFactor(rating);
+        var change = ratingChange(kFactor, outcome, expectedScore);
+        applyRatingChange(statistic, change);
     }
 
     private long ratingChange(KFactor kFactor, Outcome outcome, double expectedScore) {
         return Math.round(kFactor.getValue() * (outcome.getScore() - expectedScore));
     }
 
-    private void applyRatingChange(Statistics statistics, long change) {
-        statistics.updateRating(change);
+    private void applyRatingChange(Statistic statistic, long change) {
+        statistic.updateRating(change);
     }
 
     private KFactor kFactor(int rating) {
@@ -126,11 +127,11 @@ public class StatisticsService {
         return KFactor.HIGH;
     }
 
-    private List<Statistics> getAllStatistics() {
-        return statisticsRepository.findAll();
+    private List<Statistic> getAllStatistics() {
+        return statisticRepository.findAll();
     }
 
-    private void saveAllStatistics(List<Statistics> statistics) {
-        statisticsRepository.saveAll(statistics);
+    private void saveAllStatistics(List<Statistic> statistics) {
+        statisticRepository.saveAll(statistics);
     }
 }
