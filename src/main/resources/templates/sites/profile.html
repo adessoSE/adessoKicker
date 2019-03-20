@@ -30,10 +30,13 @@
 
 <!-- Header -->
 <header th:replace="~{fragments/header.html :: header}"></header>
+
+<!-- Profile Name -->
 <div class="container" id="text-container">
-  <h2 th:text="${user.getFullName()}" id="id" th:value="${user.userId}"></h2>
+  <h1 th:text="${user.getFullName()}" id="userID" th:value="${user.userId}"></h1>
 </div>
-<!-- User Statistics -->
+
+<!-- Profile Statistics -->
 <div class="container">
   <!-- Display if player has no statistic -->
   <div class="alert alert-danger" role="alert" th:if="${user.statistic == null}" th:text="#{profile.noRank}"></div>
@@ -105,8 +108,8 @@
 </div>
 <!--Script for chartJs-->
 <script>
-    var id = $('#id').attr("value");
-    $.getScript("/users/js/" + id);
+    var userID = $('#userID').attr("value");
+    $.getScript("/users/js/" + userID);
 </script>
 </body>
 </html>
