@@ -23,7 +23,7 @@ public class User {
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Statistics statistics;
+    private Statistic statistic;
 
     public User(String userId, String firstName, String lastName, String email) {
         this.userId = userId;

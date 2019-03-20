@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-public class Statistics {
+public class Statistic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,7 @@ public class Statistics {
     private long wins;
     private long losses;
 
-    public Statistics() {
+    public Statistic() {
         this.rating = 1000;
         this.wins = 0;
         this.losses = 0;

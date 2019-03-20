@@ -176,7 +176,7 @@ class UserServiceTest {
         // given
         var userList = createUserListWithStatistics();
         var page = mock(Page.class);
-        given(userRepository.findAllByStatisticsNotNull(any(Pageable.class))).willReturn(page);
+        given(userRepository.findAllByStatisticNotNull(any(Pageable.class))).willReturn(page);
         given(page.getContent()).willReturn(userList);
 
         // when

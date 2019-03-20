@@ -29,12 +29,12 @@ public class UserService {
     }
 
     public List<User> getAllUsersWithStatistics() {
-        return new ArrayList<>(userRepository.findAllByStatisticsNotNull());
+        return new ArrayList<>(userRepository.findAllByStatisticNotNull());
     }
 
     public List<User> getUserPageSortedByRating(int page, int size) {
-        var pageable = PageRequest.of(page, size, Sort.by("statistics.rating").descending());
-        return userRepository.findAllByStatisticsNotNull(pageable).getContent();
+        var pageable = PageRequest.of(page, size, Sort.by("statistic.rating").descending());
+        return userRepository.findAllByStatisticNotNull(pageable).getContent();
     }
 
     public User getUserById(String id) {
