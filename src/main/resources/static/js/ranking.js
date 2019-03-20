@@ -30,7 +30,7 @@ function nextPage() {
     if (size == null) {
         size = 10;
     }
-    location.href = "/statistic?page=" + page + "&size=" + size;
+    location.href = "/ranking?page=" + page + "&size=" + size;
 }
 
 function previousPage() {
@@ -44,7 +44,7 @@ function previousPage() {
     if (size == null) {
         size = 10;
     }
-    location.href = "/statistic?page=" + page + "&size=" + size;
+    location.href = "/ranking?page=" + page + "&size=" + size;
 }
 
 function findGetParameter(parameterName) {
