@@ -94,8 +94,7 @@ var winsAndLossesPerDayChart = new Chart($('#canvas-wins-losses-over-time'), {
     }
 });
 
-/* Florian Albers wants to keep this chart
-var winsAndLossesPerDayChart = new Chart($('#canvas-wins-losses-over-time'), {
+var winsAndLossesPerDayChart = new Chart($('#canvas-win-difference'), {
     type: 'line',
     data: {
         labels: dates,
@@ -109,5 +108,4 @@ var winsAndLossesPerDayChart = new Chart($('#canvas-wins-losses-over-time'), {
         legend: { display: false }
     }
 });
-*/
 

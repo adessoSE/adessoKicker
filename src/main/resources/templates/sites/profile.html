@@ -93,8 +93,8 @@
 </div>
 <hr>
 <!--ChartJS Canvas-->
-<div class="container-fluid chart-container">
-  <div class="row" th:if="${user.statistic}">
+<div class="container-fluid chart-container" th:if="${user.statistic}">
+  <div class="row">
     <div class="col-lg-4 chart">
       <h3 class="chart-headline" th:text="#{chart.rankOverTime}"></h3>
       <canvas class="chart-canvas" id="canvas-rank-over-time"></canvas>
@@ -106,6 +106,20 @@
     <div class="col-lg-4 chart">
       <h3 class="chart-headline" th:text="#{chart.winsAndLossesPerDay}"></h3>
       <canvas class="chart-canvas" id="canvas-wins-losses-over-time"></canvas>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 chart">
+      <h3 class="chart-headline" th:text="#{chart.winDifference}"></h3>
+      <canvas class="chart-canvas" id="canvas-win-difference"></canvas>
+    </div>
+    <div class="col-lg-4 chart">
+      <h3 class="chart-headline">chart 5</h3>
+      <canvas class="chart-canvas" id=""></canvas>
+    </div>
+    <div class="col-lg-4 chart">
+      <h3 class="chart-headline">chart 6</h3>
+      <canvas class="chart-canvas" id=""></canvas>
     </div>
   </div>
 </div>
