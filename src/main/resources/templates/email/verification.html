@@ -2,13 +2,9 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <body>
 <p th:text="#{email.hello(${receiver})}"></p>
-<div th:if="${playerA2Name}!=null">
-    <p th:text="#{email.twoOpponents(${playerA1Name}, ${playerA2Name})}"></p>
-</div>
 
-<div th:if="${playerA2name}==''">
-    <p th:text="#{email.oneOpponent(${playerA1Name})}"></p>
-</div>
+<span th:if="${playerA2Name}!=null" th:text="#{email.twoOpponents(${playerA1Name}, ${playerA2Name})}"></span>
+<span th:unless="${playerA2Name}!=null" th:text="#{email.oneOpponent(${playerA1Name})}"></span>
 
 <div th:if="${winners.size()==1}">
     <p th:text="#{email.oneWinner(${winners.get(0).getFullName()})}"></p>

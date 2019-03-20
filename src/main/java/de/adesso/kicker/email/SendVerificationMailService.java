@@ -13,6 +13,8 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -27,26 +29,31 @@ public class SendVerificationMailService {
 
     @EventListener
     public void sendVerification(MatchVerificationSentEvent matchVerificationSentEvent) {
-        var message = createEmail(matchVerificationSentEvent);
-        mailSender.send(message);
+        User user = matchVerificationSentEvent.getMatchVerificationRequest().getReceiver();
+
+        if (checkSendMail(user)) {
+            var message = createEmail(matchVerificationSentEvent);
+            mailSender.send(message);
+        }
     }
 
     private String setSubject(Match match) {
-        ResourceBundle labels = ResourceBundle.getBundle("messages", LocaleContextHolder.getLocale());
-        return MessageFormat.format(labels.getString("email.subject"), match.getMatchId(), match.getDate().toString());
+        var labels = ResourceBundle.getBundle("messages", LocaleContextHolder.getLocale());
+        var date = match.getDate().format(LocalDateFormatter());
+        return MessageFormat.format(labels.getString("email.subject"), match.getMatchId(), date);
     }
 
     private String verificationText(MatchVerificationSentEvent matchVerificationSentEvent) {
-        Match match = matchVerificationSentEvent.getMatchVerificationRequest().getMatch();
+        var matchVerificationRequest = matchVerificationSentEvent.getMatchVerificationRequest();
 
-        return emailMessageBuilder.build(setProperties(matchVerificationSentEvent.getMatchVerificationRequest()),
+        return emailMessageBuilder.build(setProperties(matchVerificationRequest),
                 "email/plainText.txt");
     }
 
     private String verificationHTML(MatchVerificationSentEvent matchVerificationSentEvent) {
-        Match match = matchVerificationSentEvent.getMatchVerificationRequest().getMatch();
+        var matchVerificationRequest = matchVerificationSentEvent.getMatchVerificationRequest();
 
-        return emailMessageBuilder.build(setProperties(matchVerificationSentEvent.getMatchVerificationRequest()),
+        return emailMessageBuilder.build(setProperties(matchVerificationRequest),
                 "email/verification.html");
     }
 
@@ -76,6 +83,13 @@ public class SendVerificationMailService {
 
     private boolean checkPlayerExist(User user) {
         return Objects.nonNull(user);
+    }
+
+    private boolean checkSendMail(User user) { return user.isSendEmail();}
+
+    private DateTimeFormatter LocalDateFormatter() {
+        var dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        return dateTimeFormatter;
     }
 
     private MimeMessagePreparator createEmail(MatchVerificationSentEvent matchVerificationSentEvent) {
