@@ -135,7 +135,7 @@
     </table>
   </div>
   <div th:if="${allUsers.size()==0}">
-    <h2 class="text-center" th:text="#{statistic.noRanks}"></h2>
+    <div class="text-center alert alert-danger" th:text="#{statistic.noRanks}"></div>
   </div>
   <div id="noRankList" class="text-center alert alert-danger" role="alert" sec:authorize="isAuthenticated()" th:if="${@userService.getLoggedInUser().getStatistic()==null}" th:text="#{statistic.noRank}"></div>
 </div>
