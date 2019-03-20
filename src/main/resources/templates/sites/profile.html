@@ -32,7 +32,7 @@
 <header th:replace="~{fragments/header.html :: header}"></header>
 
 <!-- Profile Name -->
-<h1 th:text="${user.getFullName()}" id="id" th:value="${user.userId}"></h1>
+<h1 th:text="${user.getFullName()}" id="userID" th:value="${user.userId}"></h1>
 
 <!-- Profile Statistics -->
 <div class="container">
@@ -106,8 +106,8 @@
 </div>
 <!--Script for chartJs-->
 <script>
-    var id = $('#id').attr("value");
-    $.getScript("/users/js/" + id);
+    var userID = $('#userID').attr("value");
+    $.getScript("/users/js/" + userID);
 </script>
 </body>
 </html>
