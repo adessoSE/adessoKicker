@@ -4,7 +4,7 @@ Adesso kicker is a web application for adesso coworkers to make playing foosball
 Each person can login with Keycloak and record the result of matches they have played.
 Our web application is sending notifications and email to the other participants, so they can
 confirm valid games.
-Our internal ranking system based on elo will determine the position and skill of each person.
+Our internal ranking system based on elo will determine the skill of each person and position them into a ranking list.
 You can also look at each players statistics which will be also displayed in various charts at their profiles.
 
 # Screenshots
