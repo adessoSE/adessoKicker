@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/js/{id}")
-    public String getExampleJS(@PathVariable String id, Model model) {
+    public String getProfileJS(@PathVariable String id, Model model) {
         var user = userService.getUserById(id);
         var statistics = trackedStatisticService.getTrackedStatisticsByUser(user);
         model.addAttribute("user", user);
