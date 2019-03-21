@@ -21,24 +21,22 @@
 .dropdown-item:hover {background-color: @colorscheme[warm-grey-light];}
 
 .header-link {
-  margin-top: -10px;
   margin-left: 20px;
 }
 .header-dropdown-bt {
-  margin-top: -10px;
   color: @colorscheme[warm-grey-dark];
   background: @colorscheme[warm-grey-light];
   font-size: 14px;
 }
 
-#profile-dropdown-menu {margin-top: 25px;}
+#profile-dropdown-menu {margin-top: 18px;}
 
 #notification-dropdown {margin-right: 10px;}
 #notification-dropdown-icon {font-size: 25px;}
 #notification-dropdown-menu {
   max-height: 500px;
   overflow-y: auto;
-  margin-top: 18px;
+  margin-top: 10px;
 }
 #notification-badge {
   position: absolute !important;
@@ -61,10 +59,9 @@
 
 #no-notifications {text-align: center;}
 .matchverification:hover {background-color: @colorscheme[warm-grey-lighter];}
-.dropdown-menu-anim-in {animation: dropdown-fly-in-bounce 0.35s;}
+.dropdown-menu-anim-in {animation: dropdown-fly-in-bounce 0.20s;}
 
 @keyframes dropdown-fly-in-bounce {
   0% {transform: translateY(-300px);}
-  75% {transform: translateY(20px);}
   100% {transform: translateY(0px);}
 }
