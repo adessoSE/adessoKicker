@@ -77,17 +77,18 @@ var winsAndLossesPerDayChart = new Chart($('#canvas-wins-losses-over-time'), {
         labels: dates,
         datasets: [
             {
-                fill: origin,
-                borderColor: '#0071B9',
-                data: winsPerDay
+                fill: false,
+                borderColor: '#ff2a28',
+                data: lossesPerDay
             },
             {
-                fill: origin,
-                borderColor: '#ff2a28',
-                backgroundColor: '#ff7978',
-                data: lossesPerDay
-            }
-            ]
+                fill: false,
+                borderColor: '#0071B9',
+                fillBetweenColor: "rgba(154,0,255, 0.3)",
+                fillBetweenSet: 0,
+                data: winsPerDay
+            },
+        ]
     },
     options: {
         legend: { display: false },
