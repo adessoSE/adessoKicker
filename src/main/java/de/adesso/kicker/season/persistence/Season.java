@@ -23,5 +23,5 @@ public class Season {
     private List<SeasonMatch> seasonMatches;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<SeasonStatistic> seasonStatistics;
+    private List<SeasonTrackedStatistic> seasonTrackedStatistics;
 }

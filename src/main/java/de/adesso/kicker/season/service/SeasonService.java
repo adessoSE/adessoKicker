@@ -2,8 +2,10 @@ package de.adesso.kicker.season.service;
 
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.match.service.MatchService;
-import de.adesso.kicker.season.persistence.*;
-import de.adesso.kicker.user.persistence.User;
+import de.adesso.kicker.season.persistence.Season;
+import de.adesso.kicker.season.persistence.SeasonMatch;
+import de.adesso.kicker.season.persistence.SeasonRepository;
+import de.adesso.kicker.season.persistence.SeasonTrackedStatistic;
 import de.adesso.kicker.user.service.UserService;
 import de.adesso.kicker.user.trackedstatistic.persistence.TrackedStatistic;
 import de.adesso.kicker.user.trackedstatistic.service.TrackedStatisticService;
@@ -42,7 +44,7 @@ public class SeasonService {
         var seasonName = getSeasonName();
         backUpOldSeason(seasonName);
         deleteOldSeason();
-        seasonEndedEvent(seasonName);
+        sendSeasonEndedEvent(seasonName);
     }
 
     private String getSeasonName() {
@@ -52,7 +54,7 @@ public class SeasonService {
 
     private void backUpOldSeason(String seasonName) {
         var seasonMatches = copyAllMatches();
-        var seasonStatistics = copyAllStatistics();
+        var seasonStatistics = copyStatisticsForUser();
 
         var season = new Season(seasonName, seasonMatches, seasonStatistics);
         seasonRepository.save(season);
@@ -67,7 +69,7 @@ public class SeasonService {
         logger.info("All statistics have been deleted");
     }
 
-    private void seasonEndedEvent(String seasonName) {
+    private void sendSeasonEndedEvent(String seasonName) {
         var seasonEndedEvent = new SeasonEndedEvent(this, seasonName);
         eventPublisher.publishEvent(seasonEndedEvent);
     }
@@ -95,41 +97,26 @@ public class SeasonService {
                 .build();
     }
 
-    private List<SeasonStatistic> copyAllStatistics() {
-        var users = userService.getAllUsersWithStatistics();
-        return users.stream().map(this::copyStatistic).collect(Collectors.toList());
+    private List<SeasonTrackedStatistic> copyStatisticsForUser() {
+        var trackedStatistics = trackedStatisticService.getAllTrackedStatistics();
+        return trackedStatistics.stream().map(this::copyTrackedStatistic).collect(Collectors.toList());
     }
 
-    private SeasonStatistic copyStatistic(User user) {
-        var statistic = user.getStatistic();
-        var rank = statistic.getRank();
-        var rating = statistic.getRating();
-        var wins = statistic.getWins();
-        var losses = statistic.getLosses();
-        var seasonTrackedStatistics = copyStatisticsForUser(user);
+    private SeasonTrackedStatistic copyTrackedStatistic(TrackedStatistic trackedStatistic) {
+        var user = trackedStatistic.getUser();
+        var rank = trackedStatistic.getRank();
+        var rating = trackedStatistic.getRating();
+        var wins = trackedStatistic.getWins();
+        var losses = trackedStatistic.getLosses();
+        var data = trackedStatistic.getDate();
 
-        return SeasonStatistic.builder()
+        return SeasonTrackedStatistic.builder()
                 .user(user)
                 .rank(rank)
                 .rating(rating)
                 .wins(wins)
                 .losses(losses)
-                .seasonTrackedStatistics(seasonTrackedStatistics)
+                .date(data)
                 .build();
-    }
-
-    private List<SeasonTrackedStatistic> copyStatisticsForUser(User user) {
-        var trackedStatistics = trackedStatisticService.getTrackedStatisticsByUser(user);
-        return trackedStatistics.stream().map(this::copyTrackedStatistic).collect(Collectors.toList());
-    }
-
-    private SeasonTrackedStatistic copyTrackedStatistic(TrackedStatistic trackedStatistics) {
-        var rank = trackedStatistics.getRank();
-        var rating = trackedStatistics.getRating();
-        var wins = trackedStatistics.getWins();
-        var losses = trackedStatistics.getLosses();
-        var data = trackedStatistics.getDate();
-
-        return SeasonTrackedStatistic.builder().rank(rank).rating(rating).wins(wins).losses(losses).date(data).build();
     }
 }

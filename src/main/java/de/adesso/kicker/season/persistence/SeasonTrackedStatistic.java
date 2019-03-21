@@ -1,14 +1,12 @@
 package de.adesso.kicker.season.persistence;
 
+import de.adesso.kicker.user.persistence.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Builder
@@ -21,6 +19,9 @@ public class SeasonTrackedStatistic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seasonStatisticId;
+
+    @ManyToOne
+    private User user;
 
     private int rank;
     private int rating;
