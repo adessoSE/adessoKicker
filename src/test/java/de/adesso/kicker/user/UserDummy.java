@@ -22,19 +22,19 @@ public class UserDummy {
 
     public static User userWithLowRating() {
         var user = new User("user", "User", "User", "user@mail");
-        user.setStatistic(StatisticsDummy.statistic());
+        user.setStatistic(StatisticDummy.statistic());
         return user;
     }
 
     public static User userWithHighRating() {
         var user = new User("user", "User", "User", "user@mail");
-        user.setStatistic(StatisticsDummy.statisticHighRating());
+        user.setStatistic(StatisticDummy.statisticHighRating());
         return user;
     }
 
     public static User userWithVeryHighRating() {
         var user = new User("user", "User", "User", "user@mail");
-        user.setStatistic(StatisticsDummy.statisticVeryHighRating());
+        user.setStatistic(StatisticDummy.statisticVeryHighRating());
         return user;
     }
 }
