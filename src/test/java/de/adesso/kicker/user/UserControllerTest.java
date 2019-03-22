@@ -136,7 +136,8 @@ class UserControllerTest {
         var result = mockMvc.perform(get("/users/js/{id}", user.getUserId()));
 
         // then
-        result.andExpect(status().isOk()).andExpect(model().attribute("user", user))
-                                         .andExpect(model().attribute("statistics", statistics));
+        result.andExpect(status().isOk())
+                .andExpect(model().attribute("user", user))
+                .andExpect(model().attribute("statistics", statistics));
     }
 }
