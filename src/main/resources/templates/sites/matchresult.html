@@ -67,7 +67,7 @@
     <div class="row">
       <!-- Team A -->
       <div class="col-sm-6">
-        <p class="team-description" th:text="#{matchResult.teamA}"></p>
+        <div class="team-description" th:text="#{matchResult.teamA}"></div>
         <div class="team team-textbox">
           <!-- As we want to display the user in a disabled input text field, we cant add the field value to it.
                As Thymeleaf wouldn't use it for the form, so were creating a hidden input field.
@@ -92,9 +92,10 @@
           </div>
         </div>
       </div>
+      <!--<div class="w-100"></div>-->
       <!-- Team B -->
       <div class="col-sm-6">
-        <p class="team-description" th:text="#{matchResult.teamB}"></p>
+        <div class="team-description" th:text="#{matchResult.teamB}"></div>
         <!-- Searchbar -->
         <div class="team team-textbox search-bar">
           <div class="input-group">
@@ -171,14 +172,15 @@
       <i class="fa fa-times" aria-hidden="true"></i>
       <span th:text="#{matchResult.error.noDate}"></span>
     </div>
-    <div class="form-group" id="datetimepicker-form-group">
-      <div class="input-group date">
-        <input type="date" th:field="*{date}" id="datetimepicker" class="form-control" th:max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
-        <div class="input-group-append">
-          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+      <div class="form-group col-sm-6" id="datetimepicker-form-group">
+        <div class="input-group date">
+          <input type="date" th:field="*{date}" id="datetimepicker" class="form-control"
+                 th:max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
+          <div class="input-group-append">
+            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+          </div>
         </div>
       </div>
-    </div>
     <!-- Submit Match -->
     <div>
       <div class="popup popup-success" th:if="${successMessage}">
