@@ -29,12 +29,8 @@ public class SendVerificationMailService {
 
     @EventListener
     public void sendVerification(MatchVerificationSentEvent matchVerificationSentEvent) {
-        User user = matchVerificationSentEvent.getMatchVerificationRequest().getReceiver();
-
-        if (checkSendMail(user)) {
-            var message = createEmail(matchVerificationSentEvent);
-            mailSender.send(message);
-        }
+        var message = createEmail(matchVerificationSentEvent);
+        mailSender.send(message);
     }
 
     private String setSubject(Match match) {
@@ -46,15 +42,13 @@ public class SendVerificationMailService {
     private String verificationText(MatchVerificationSentEvent matchVerificationSentEvent) {
         var matchVerificationRequest = matchVerificationSentEvent.getMatchVerificationRequest();
 
-        return emailMessageBuilder.build(setProperties(matchVerificationRequest),
-                "email/plainText.txt");
+        return emailMessageBuilder.build(setProperties(matchVerificationRequest), "email/plainText.txt");
     }
 
     private String verificationHTML(MatchVerificationSentEvent matchVerificationSentEvent) {
         var matchVerificationRequest = matchVerificationSentEvent.getMatchVerificationRequest();
 
-        return emailMessageBuilder.build(setProperties(matchVerificationRequest),
-                "email/verification.html");
+        return emailMessageBuilder.build(setProperties(matchVerificationRequest), "email/verification.html");
     }
 
     private HashMap<String, Object> setProperties(MatchVerificationRequest matchVerificationRequest) {
@@ -85,11 +79,8 @@ public class SendVerificationMailService {
         return Objects.nonNull(user);
     }
 
-    private boolean checkSendMail(User user) { return user.isSendEmail();}
-
     private DateTimeFormatter LocalDateFormatter() {
-        var dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-        return dateTimeFormatter;
+        return DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
     }
 
     private MimeMessagePreparator createEmail(MatchVerificationSentEvent matchVerificationSentEvent) {
