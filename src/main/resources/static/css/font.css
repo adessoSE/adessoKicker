@@ -2,4 +2,8 @@
     font-family: 'Adesso-Klavika';
     font-display: swap;
     src: url('./font/Klavika.woff') format('woff');
+    /* WOFF
+    Supports almost every modern Browser
+    check here -> https://caniuse.com/#feat=woff
+    */
 }
