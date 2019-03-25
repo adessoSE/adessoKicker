@@ -24,6 +24,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final StatisticsService statisticsService;
+
     public List<User> getAllUsers() {
         return new ArrayList<>(userRepository.findAll());
     }
@@ -79,5 +81,16 @@ public class UserService {
 
     private boolean checkUserExists(String id) {
         return userRepository.existsById(id);
+    }
+
+    public void deleteAllStatistics() {
+        var users = getAllUsersWithStatistics();
+        users.forEach(user -> user.setStatistic(null));
+        saveAllUsers(users);
+        statisticsService.deleteAll();
+    }
+
+    private void saveAllUsers(Iterable<User> users) {
+        userRepository.saveAll(users);
     }
 }

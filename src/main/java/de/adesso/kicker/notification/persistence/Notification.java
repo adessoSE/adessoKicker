@@ -3,6 +3,8 @@ package de.adesso.kicker.notification.persistence;
 import de.adesso.kicker.user.persistence.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,8 +18,10 @@ public abstract class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long notificationId;
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToOne
     private User sender;
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToOne
     private User receiver;
 

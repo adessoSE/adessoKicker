@@ -6,6 +6,8 @@ import de.adesso.kicker.notification.persistence.NotificationType;
 import de.adesso.kicker.user.persistence.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -15,6 +17,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class MatchVerificationRequest extends Notification {
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
     private Match match;
 

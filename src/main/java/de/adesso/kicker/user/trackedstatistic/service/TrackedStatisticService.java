@@ -45,4 +45,8 @@ public class TrackedStatisticService {
     public List<TrackedStatistic> getTrackedStatisticsByUser(User user) {
         return trackedStatisticRepository.findAllByUser(user);
     }
+
+    public List<TrackedStatistic> getAllTrackedStatistics() {
+        return trackedStatisticRepository.findAll();
+    }
 }
