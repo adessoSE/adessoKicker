@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<p th:text="#{email.hello(${receiver})}"></p>
+
+<span th:if="${playerA2Name}!=null" th:text="#{email.twoOpponents(${playerA1Name}, ${playerA2Name})}"></span>
+<span th:unless="${playerA2Name}!=null" th:text="#{email.oneOpponent(${playerA1Name})}"></span>
+
+<div th:if="${winners.size()==1}">
+    <p th:text="#{email.oneWinner(${winners.get(0).getFullName()})}"></p>
+</div>
+
+<div th:if="${winners.size()==2}">
+    <p th:text="#{email.twoWinners(${winners.get(0).getFullName()}, ${winners.get(1).getFullName()})}"></p>
+</div>
+
+<div th:if="${losers.size()==1}">
+    <p th:text="#{email.oneLoser(${losers.get(0).getFullName()})}"></p>
+</div>
+
+<div th:if="${losers.size()==2}">
+    <p th:text="#{email.twoLosers(${losers.get(0).getFullName()}, ${losers.get(1).getFullName()})}"></p>
+</div>
+
+<a th:href="@{'http://'+${#request.getServerName()}+'/notifications/accept/' + ${matchId}}" th:text="#{email.verify}"></a>
+<a th:href="@{'http://'+${#request.getServerName()}+'/notifications/decline/' + ${matchId}}" th:text="#{email.decline}"></a>
+
+</body>
+</html>

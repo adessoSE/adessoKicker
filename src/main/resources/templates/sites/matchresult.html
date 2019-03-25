@@ -72,7 +72,8 @@
           <!-- As we want to display the user in a disabled input text field, we cant add the field value to it.
                As Thymeleaf wouldn't use it for the form, so were creating a hidden input field.
                This is the easiest solution as we don't need to style the input to behave like a disabled input -->
-          <input type="text" name="teamAPlayer1" th:value="${#authentication.getName()}" id="teamAPlayer1" hidden/>
+          <input type="text" name="teamAPlayer1" th:value="${#authentication.getName()}" id="teamAPlayer1"
+                 hidden/>
           <input class="form-control" type="text" th:value="${currentUser.fullName}" disabled>
         </div>
         <!-- Searchbar -->
@@ -133,20 +134,24 @@
     <div class="row" id="radio-winner-team">
       <div class="col-sm-6">
         <div class="form-check" id="form-check-1">
-          <input th:field="*{winnerTeamA}" th:value="true" class="form-check-input" type="radio" name="winnerteam"
+          <input th:field="*{winnerTeamA}" th:value="true" class="form-check-input" type="radio"
+                 name="winnerteam"
                  id="radio1" checked>
           <script>
               document.getElementById("optionsRadios1").setAttribute("checked", "checked")
           </script>
-          <label class="form-check-label" for="radio1" id="radio1-label" th:text="#{matchResult.teamA}"></label>
+          <label class="form-check-label" for="radio1" id="radio1-label"
+                 th:text="#{matchResult.teamA}"></label>
           <i class="fas fa-trophy trophy-selected" id="radio1-icon" aria-hidden="true"></i>
         </div>
       </div>
       <div class="col-sm-6">
         <div class="form-check" id="form-check-2">
-          <input th:field="*{winnerTeamA}" th:value="false" class="form-check-input" type="radio" name="winnerteam"
+          <input th:field="*{winnerTeamA}" th:value="false" class="form-check-input" type="radio"
+                 name="winnerteam"
                  id="radio2">
-          <label class="form-check-label" id="radio2-label" for="radio2" th:text="#{matchResult.teamB}"></label>
+          <label class="form-check-label" id="radio2-label" for="radio2"
+                 th:text="#{matchResult.teamB}"></label>
           <i class="fas fa-trophy outline-trophy" id="radio2-icon" aria-hidden="true"></i>
         </div>
       </div>

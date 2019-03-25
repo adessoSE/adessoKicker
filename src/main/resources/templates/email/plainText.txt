@@ -1,0 +1,9 @@
+[(#{email.hello(${receiver})})]
+
+[# th:if="${playerA2Name}!=null"][(#{email.twoOpponents(${playerA1Name}, ${playerA2Name})})][/][# th:if="${playerA2Name}==null"][(#{email.oneOpponent(${playerA1Name})})][/]
+[# th:if="${winners.size()==1}"][(#{email.oneWinner(${winners.get(0).getFullName()})})][/][# th:if="${winners.size()==2}"][(#{email.twoWinners(${winners.get(0).getFullName()}, ${winners.get(1).getFullName()})})][/]
+[# th:if="${losers.size()==1}"][(#{email.oneLoser(${losers.get(0).getFullName()})})][/][# th:if="${losers.size()==2}"][(#{email.twoLosers(${losers.get(0).getFullName()}, ${losers.get(1).getFullName()})})][/]
+
+Bestätigen -> [('http://'+${#request.getServerName()}+'/notifications/accept/'+${matchId})]
+
+Ablehnen -> [('http://'+${#request.getServerName()}+'/notifications/accept/'+${matchId})]

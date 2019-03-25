@@ -1,6 +1,6 @@
 package de.adesso.kicker.match;
 
-import de.adesso.kicker.email.EmailService;
+import de.adesso.kicker.email.SendVerificationMailService;
 import de.adesso.kicker.match.persistence.MatchRepository;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequestRepository;
 import de.adesso.kicker.notification.matchverificationrequest.service.events.MatchVerificationSentEvent;
@@ -44,14 +44,14 @@ class MatchControllerIntegrationTest {
     private MatchVerificationRequestRepository matchVerificationRequestRepository;
 
     @MockBean
-    private EmailService emailService;
+    private SendVerificationMailService sendVerificationMailService;
 
     @Test
     @DisplayName("Assures that adding a match works through all layers")
     @WithMockUser(username = "user1")
     void addMatchWorksThroughAllLayers() throws Exception {
         // given
-        willDoNothing().given(emailService).sendVerification(any(MatchVerificationSentEvent.class));
+        willDoNothing().given(sendVerificationMailService).sendVerification(any(MatchVerificationSentEvent.class));
         var user1 = userRepository.findById("user1").orElseThrow();
         var user2 = userRepository.findById("user2").orElseThrow();
 
@@ -86,6 +86,6 @@ class MatchControllerIntegrationTest {
         assertEquals(user1.getUserId(), match.getTeamAPlayer1().getUserId());
         assertEquals(user2.getUserId(), match.getTeamBPlayer1().getUserId());
         assertNotNull(notifications);
-        then(emailService).should(times(1)).sendVerification(any(MatchVerificationSentEvent.class));
+        then(sendVerificationMailService).should(times(1)).sendVerification(any(MatchVerificationSentEvent.class));
     }
 }
