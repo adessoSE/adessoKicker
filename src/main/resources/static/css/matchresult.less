@@ -2,12 +2,14 @@
 @import "_mediaqueries.less";
 @import "_background.less";
 @import "_searchbar.less";
+@import "font.css";
 
 /* When container-fly-in animation starts, the scrollbar appears,
  * As the container is out of the initial screen. This looks weird,
  * So we hide the scrollbar, as we don't need it at this specific size.
  * This is an ideal solution, as it can mess up the scrollbar in other sizes too.
  */
+
 @media screen and(min-width: 1480px) {
   body {
     overflow: hidden;
@@ -21,6 +23,7 @@
   padding-bottom: 20px;
   padding-left: 30px;
   animation: container-fly-in 0.75s cubic-bezier(.17, .84, .44, 1);
+  font-family: Adesso-Klavika, sans-serif;
 }
 
 .headline {
