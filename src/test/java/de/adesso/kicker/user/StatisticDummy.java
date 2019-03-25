@@ -2,7 +2,7 @@ package de.adesso.kicker.user;
 
 import de.adesso.kicker.user.persistence.Statistic;
 
-public class StatisticsDummy {
+public class StatisticDummy {
     public static Statistic statistic() {
         return new Statistic();
     }

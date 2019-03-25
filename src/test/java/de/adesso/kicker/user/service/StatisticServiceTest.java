@@ -1,7 +1,7 @@
 package de.adesso.kicker.user.service;
 
 import de.adesso.kicker.match.MatchDummy;
-import de.adesso.kicker.user.StatisticsDummy;
+import de.adesso.kicker.user.StatisticDummy;
 import de.adesso.kicker.user.persistence.Statistic;
 import de.adesso.kicker.user.persistence.StatisticRepository;
 import de.adesso.kicker.user.persistence.User;
@@ -34,8 +34,8 @@ class StatisticServiceTest {
     }
 
     static List<Statistic> createStatisticsList() {
-        return List.of(StatisticsDummy.statistic(), StatisticsDummy.statisticHighRating(),
-                StatisticsDummy.statisticVeryHighRating());
+        return List.of(StatisticDummy.statistic(), StatisticDummy.statisticHighRating(),
+                StatisticDummy.statisticVeryHighRating());
     }
 
     @Test
@@ -112,7 +112,7 @@ class StatisticServiceTest {
     @Test
     void assertRankIsCorrect() {
         // given
-        var ranking = StatisticsDummy.statistic();
+        var ranking = StatisticDummy.statistic();
         given(statisticRepository.findAll()).willReturn(List.of(ranking));
         given(statisticRepository.countAllByRatingAfter(anyInt())).willReturn(0);
 

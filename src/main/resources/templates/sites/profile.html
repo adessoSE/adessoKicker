@@ -16,6 +16,9 @@
 
   <!-- Hover CSS -->
   <link rel="stylesheet" type="text/css" href="/css/hover-min.css">
+  <!-- ChartJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+  <script src="/js/chartFillPlugin.js"></script>
 
   <!-- My stylesheets -->
   <link rel="stylesheet/less" type="text/css" href="/css/header.less">
@@ -30,9 +33,11 @@
 <header th:replace="~{fragments/header.html :: header}"></header>
 
 <!-- Profile Name -->
-<h1 th:text="${user.getFullName()}" id="playerName"></h1>
+<div class="container" id="text-container">
+  <h1 th:text="${user.getFullName()}" id="userID" th:value="${user.userId}"></h1>
+</div>
 
-<!-- Profile Statistic -->
+<!-- Profile Statistics -->
 <div class="container">
   <!-- Display if player has no statistic -->
   <div class="alert alert-danger" role="alert" th:if="${user.statistic == null}" th:text="#{profile.noRank}"></div>
@@ -87,5 +92,34 @@
     </div>
   </div>
 </div>
+<hr>
+<!--ChartJS Canvas-->
+<div class="container-fluid chart-container" th:if="${user.statistic}">
+  <div class="row">
+    <div class="col-lg-6 chart">
+      <h3 class="chart-headline" th:text="#{chart.rankOverTime}"></h3>
+      <canvas class="chart-canvas" id="canvas-rank-over-time"></canvas>
+    </div>
+    <div class="col-lg-6 chart">
+      <h3 class="chart-headline" th:text="#{chart.winRateOverTime}"></h3>
+      <canvas class="chart-canvas" id="canvas-win-rate-over-time"></canvas>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 chart">
+      <h3 class="chart-headline" th:text="#{chart.winsAndLossesPerDay}"></h3>
+      <canvas class="chart-canvas" id="canvas-wins-losses-over-time"></canvas>
+    </div>
+    <div class="col-lg-6 chart">
+      <h3 class="chart-headline" th:text="#{chart.winDifference}"></h3>
+      <canvas class="chart-canvas" id="canvas-win-difference"></canvas>
+    </div>
+  </div>
+</div>
+<!--Script for chartJs-->
+<script>
+    var userID = $('#userID').attr("value");
+    $.getScript("/users/js/" + userID);
+</script>
 </body>
 </html>

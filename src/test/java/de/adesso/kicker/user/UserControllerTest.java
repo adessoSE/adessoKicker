@@ -7,6 +7,7 @@ import de.adesso.kicker.user.controller.UserController;
 import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.service.UserService;
+import de.adesso.kicker.user.trackedstatistic.service.TrackedStatisticService;
 import org.junit.jupiter.api.Test;
 import org.keycloak.adapters.springboot.KeycloakAutoConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import java.util.ResourceBundle;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
@@ -43,6 +45,9 @@ class UserControllerTest {
 
     @MockBean(name = "notificationService")
     private NotificationService notificationService;
+
+    @MockBean(name = "trackedStatisticsService")
+    private TrackedStatisticService trackedStatisticService;
 
     @Test
     @WithMockUser
@@ -116,5 +121,23 @@ class UserControllerTest {
 
         // then
         result.andExpect(status().isOk()).andExpect(model().attribute("user", user));
+    }
+
+    @Test
+    @WithMockUser
+    void whenJsRequestedSendJsWithTrackedStatistics() throws Exception {
+        // given
+        var user = UserDummy.defaultUser();
+        var statistics = Collections.singletonList(TrackedStatisticDummy.trackedStatisticWithVeryHighRating());
+        given(userService.getUserById(any())).willReturn(user);
+        given(trackedStatisticService.getTrackedStatisticsByUser(any(User.class))).willReturn(statistics);
+
+        // when
+        var result = mockMvc.perform(get("/users/js/{id}", user.getUserId()));
+
+        // then
+        result.andExpect(status().isOk())
+                .andExpect(model().attribute("user", user))
+                .andExpect(model().attribute("statistics", statistics));
     }
 }

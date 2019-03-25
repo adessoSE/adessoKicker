@@ -3,7 +3,9 @@
 @import "_mediaqueries.less";
 @import "font.css";
 
-#playerName {
+.alert{ text-align: center; }
+
+#userID {
   font-family: Adesso-Klavika, sans-serif;
   text-align: center;
   margin-top: 15px;
@@ -46,6 +48,16 @@
   &-4 {animation-delay: 0.3s;}
   &-5 {animation-delay: 0.4s;}
   &-6 {animation-delay: 0.5s;}
+}
+
+.chart {
+  &-container{
+    width: 95%;
+    margin-left: 2.5%;
+  }
+  &-headline {
+    text-align: center;
+  }
 }
 
 @keyframes fly-in-up {
