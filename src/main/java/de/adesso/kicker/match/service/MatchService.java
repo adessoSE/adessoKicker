@@ -71,7 +71,7 @@ public class MatchService {
 
     private void updateStatistics(Match match) {
         var winners = match.getWinners();
-        var losers = match.getWinners();
+        var losers = match.getLosers();
         statisticsService.updateStatistics(winners, losers);
     }
 

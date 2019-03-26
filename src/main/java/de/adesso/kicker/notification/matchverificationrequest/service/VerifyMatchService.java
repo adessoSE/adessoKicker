@@ -8,7 +8,6 @@ import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchV
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequestRepository;
 import de.adesso.kicker.notification.matchverificationrequest.service.events.MatchVerificationSentEvent;
 import de.adesso.kicker.user.persistence.User;
-import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
@@ -23,8 +22,6 @@ public class VerifyMatchService {
 
     private final MatchVerificationRequestRepository matchVerificationRequestRepository;
 
-    private final UserService userService;
-
     private final ApplicationEventPublisher applicationEventPublisher;
 
     public void acceptRequest(MatchVerificationRequest matchVerificationRequest) {
@@ -36,7 +33,7 @@ public class VerifyMatchService {
     @EventListener
     public void sendRequests(MatchCreatedEvent matchCreatedEvent) {
         var match = matchCreatedEvent.getMatch();
-        var sender = userService.getLoggedInUser();
+        var sender = match.getTeamAPlayer1();
         var receivers = getReceivers(match, sender);
         receivers.forEach(receiver -> createAndSaveRequest(sender, receiver, match));
     }
@@ -45,9 +42,9 @@ public class VerifyMatchService {
         var winners = match.getWinners();
         var losers = match.getLosers();
         if (winners.contains(sender)) {
-            return winners;
-        } else {
             return losers;
+        } else {
+            return winners;
         }
     }
 
@@ -67,7 +64,7 @@ public class VerifyMatchService {
         var players = match.getPlayers();
         sendMatchRequestDeclinedEvent(match);
         return players.stream()
-                .filter(user -> !user.equals(userService.getLoggedInUser()))
+                .filter(user -> !user.equals(match.getTeamAPlayer1()))
                 .collect(Collectors.toList());
     }
 
