@@ -4,45 +4,45 @@
   <title>adesso kicker</title>
   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- JQuery -->
+  <!--/* JQuery */-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-  <!-- Bootstrap -->
+  <!--/* Bootstrap */-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-  <!-- Fontawesome -->
+  <!--/* Fontawesome */-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css">
 
-  <!-- Hover CSS -->
+  <!--/* Hover CSS */-->
   <link rel="stylesheet" type="text/css" href="/css/hover-min.css">
-  <!-- ChartJS -->
+  <!--/* ChartJS */-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
   <script src="/js/chartFillPlugin.js"></script>
 
-  <!-- My stylesheets -->
+  <!--/* My stylesheets */-->
   <link rel="stylesheet/less" type="text/css" href="/css/header.less">
   <link rel="stylesheet/less" type="text/css" href="/css/profile.less">
 
-  <!-- LESS -->
+  <!--/* LESS */-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
 </head>
 <body>
 
-<!-- Header -->
+<!--/* Header */-->
 <header th:replace="~{fragments/header.html :: header}"></header>
 
-<!-- Profile Name -->
+<!--/* Profile Name */-->
 <div class="container" id="text-container">
   <h1 th:text="${user.getFullName()}" id="userID" th:value="${user.userId}"></h1>
 </div>
 
-<!-- Profile Statistics -->
+<!--/* Profile Statistics */-->
 <div class="container">
-  <!-- Display if player has no statistic -->
+  <!--/* Display if player has no statistic */-->
   <div class="alert alert-danger" role="alert" th:if="${user.statistic == null}" th:text="#{profile.noRank}"></div>
   <div class="row" th:if="${user.statistic}">
-    <!-- Rank -->
+    <!--/* Rank */-->
     <div class="col-lg-2">
       <div class="statistic">
         <p class="statistic-title" th:text="#{statistic.rank}"></p>
@@ -50,7 +50,7 @@
         <p class="statistic-value" th:text="${user.statistic.rank}"></p>
       </div>
     </div>
-    <!-- Points -->
+    <!--/* Points */-->
     <div class="col-lg-2">
       <div class="statistic" id="statistic-2">
         <p class="statistic-title" th:text="#{statistic.points}"></p>
@@ -58,7 +58,7 @@
         <p class="statistic-value" th:text="${user.statistic.rating}"></p>
       </div>
     </div>
-    <!-- Matches Played -->
+    <!--/* Matches Played */-->
     <div class="col-lg-2">
       <div class="statistic" id="statistic-3">
         <p class="statistic-title" th:text="#{statistic.matchesPlayed}"></p>
@@ -66,7 +66,7 @@
         <p class="statistic-value" th:text="${user.statistic.getPlayedMatches()}"></p>
       </div>
     </div>
-    <!-- Wins -->
+    <!--/* Wins */-->
     <div class="col-lg-2">
       <div class="statistic" id="statistic-4">
         <p class="statistic-title" th:text="#{statistic.wins}"></p>
@@ -74,7 +74,7 @@
         <p class="statistic-value" th:text="${user.statistic.wins}"></p>
       </div>
     </div>
-    <!-- Losses -->
+    <!--/* Losses */-->
     <div class="col-lg-2">
       <div class="statistic" id="statistic-5">
         <p class="statistic-title" th:text="#{statistic.losses}"></p>
@@ -82,7 +82,7 @@
         <p class="statistic-value" th:text="${user.statistic.losses}"></p>
       </div>
     </div>
-    <!-- WinRate -->
+    <!--/* WinRate */-->
     <div class="col-lg-2">
       <div class="statistic" id="statistic-6">
         <p class="statistic-title" th:text="#{statistic.winRate}"></p>
@@ -93,7 +93,7 @@
   </div>
 </div>
 <hr>
-<!--ChartJS Canvas-->
+<!--/* ChartJS Canvas */-->
 <div class="container-fluid chart-container" th:if="${user.statistic}">
   <div class="row">
     <div class="col-lg-6 chart">
@@ -116,7 +116,7 @@
     </div>
   </div>
 </div>
-<!--Script for chartJs-->
+<!--/* Script for chartJs */-->
 <script>
     var userID = $('#userID').attr("value");
     $.getScript("/users/js/" + userID);
