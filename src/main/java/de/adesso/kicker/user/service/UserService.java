@@ -90,6 +90,15 @@ public class UserService {
         statisticsService.deleteAll();
     }
 
+    public void changeEmailNotifications() {
+        var user = getLoggedInUser();
+        if (user.isEmailNotifications()) {
+            user.setEmailNotifications(false);
+        } else {
+            user.setEmailNotifications(true);
+        }
+    }
+
     private void saveAllUsers(Iterable<User> users) {
         userRepository.saveAll(users);
     }

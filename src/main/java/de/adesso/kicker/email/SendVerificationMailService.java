@@ -29,8 +29,12 @@ public class SendVerificationMailService {
 
     @EventListener
     public void sendVerification(MatchVerificationSentEvent matchVerificationSentEvent) {
-        var message = createEmail(matchVerificationSentEvent);
-        mailSender.send(message);
+        var match = matchVerificationSentEvent.getMatchVerificationRequest();
+        var user = match.getReceiver();
+        if (checkMails(user)) {
+            var message = createEmail(matchVerificationSentEvent);
+            mailSender.send(message);
+        }
     }
 
     private String setSubject(Match match) {
@@ -77,6 +81,10 @@ public class SendVerificationMailService {
 
     private boolean checkPlayerExist(User user) {
         return Objects.nonNull(user);
+    }
+
+    private boolean checkMails(User user) {
+        return user.isEmailNotifications();
     }
 
     private DateTimeFormatter LocalDateFormatter() {
