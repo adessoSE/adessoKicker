@@ -22,6 +22,8 @@ public class User {
     @NotNull
     private String email;
 
+    private boolean emailNotifications;
+
     @OneToOne(cascade = CascadeType.ALL)
     private Statistic statistic;
 
@@ -30,6 +32,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.emailNotifications = true;
     }
 
     public String getFullName() {
