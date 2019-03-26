@@ -86,7 +86,7 @@
             <ul class="list-group">
               <li th:each="u : ${users}" th:value="${u.userId}" onclick="selectSearchedUser(this);"
                   th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">
-                <span th:text="${u.getFullName()}">No user found</span>
+                <span th:text="${#strings.concat(u.getFullName(), ' (', u.userId,')')}">No user found</span>
               </li>
             </ul>
           </div>
@@ -105,7 +105,7 @@
             <ul class="list-group">
               <li th:each="u : ${users}" th:value="${u.userId}" onclick="selectSearchedUser(this);"
                   th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">
-                <span th:text="${u.getFullName()}">No user found</span>
+                <span th:text="${#strings.concat(u.getFullName(), ' (', u.userId,')')}">No user found</span>
               </li>
             </ul>
           </div>
@@ -120,7 +120,7 @@
             <ul class="list-group">
               <li th:each="u : ${users}" th:value="${u.userId}" onclick="selectSearchedUser(this);"
                   th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">
-                <span th:text="${u.getFullName()}">No user found</span>
+                <span th:text="${#strings.concat(u.getFullName(), ' (', u.userId,')')}">No user found</span>
               </li>
             </ul>
           </div>
