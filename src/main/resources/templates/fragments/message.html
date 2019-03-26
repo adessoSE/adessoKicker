@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<!-- Message -->
+<!--/* Message */-->
 <div th:fragment="message">
   <div class="dropdown-item message" th:value="${notification.notificationId}">
     <p class="adesso-blue-text" th:text="${notification.sendDate}"></p>
     <p class="notification-text">
-    <div th:if="${notification.messageType == T(de.adesso.kicker.notification.message.persistence.MessageType).MESSAGE_DECLINED}">
+    <div
+        th:if="${notification.messageType == T(de.adesso.kicker.notification.message.persistence.MessageType).MESSAGE_DECLINED}">
       <div th:text="#{notification.message.declined(${notification.sender.firstName})}"></div>
     </div>
     <div class="row">

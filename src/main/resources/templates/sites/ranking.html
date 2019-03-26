@@ -4,27 +4,27 @@
   <title>adesso kicker</title>
   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- JQuery -->
+  <!--/* JQuery */-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-  <!-- Bootstrap -->
+  <!--/* Bootstrap */-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-  <!-- Fontawesome -->
+  <!--/* Fontawesome */-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css">
 
-  <!-- Hover CSS -->
+  <!--/* Hover CSS */-->
   <link rel="stylesheet" type="text/css" href="/css/hover-min.css">
 
-  <!-- My stylesheets -->
+  <!--/* My stylesheets */-->
   <link rel="stylesheet/less" type="text/css" href="/css/header.less">
   <link rel="stylesheet/less" type="text/css" href="/css/ranking.less">
 
-  <!-- LESS -->
+  <!--/* LESS */-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
 
-  <!-- ranking JS -->
+  <!--/* ranking JS */-->
   <script src="/js/ranking.js"></script>
 </head>
 <body>
@@ -33,7 +33,7 @@
   <div class="row">
     <div class="col-11">
       <div id="playerName">
-        <!-- Searchbar -->
+        <!--/* Searchbar */-->
         <div class="search-bar">
           <div class="input-group">
             <div class="input-group-prepend" id="search-bt">
@@ -49,7 +49,7 @@
                   onclick="window.location.href=this.getAttribute('href')"
                   th:href="@{/statistic(page=${user.statistic.rank <= (param.size == null ? 10 : T(Integer).parseInt(param.size)) ? 0 :
                   ((user.statistic.rank - 1) / (param.size == null ? 10 : T(Integer).parseInt(param.size)))},size=${param.size == null ? 10 : param.size}, player=${user.getUserId()})}">
-                <span th:text="${user.getFullName()}">No user found</span>
+                <span th:text="${#strings.concat(user.getFullName(), ' (', user.userId,')')}">No user found</span>
               </li>
             </ul>
           </div>
@@ -57,7 +57,7 @@
         <h2 th:text="#{header.ranking}"></h2>
       </div>
     </div>
-    <!-- Pager Buttons Vertical -->
+    <!--/* Pager Buttons Vertical */-->
     <div class="col-1">
       <div class="btn-group-vertical" id="pager-vertical">
         <div th:if="${(param.page != null) && (T(Integer).parseInt(param.page) != 0)}">
@@ -71,32 +71,32 @@
     </div>
   </div>
 </div>
-<!-- User List -->
+<!--/* User List */-->
 <div class="container-fluid">
   <div class="shadow-sm" id="table-container" th:if="${allUsers.size()>0}">
     <table class="user-table table">
       <thead>
       <tr>
-        <!-- Rank -->
+        <!--/* Rank */-->
         <th>
           <span th:text="#{statistic.rank}"></span>
           <i class="fas fa-chart-line"></i>
         </th>
-        <!-- Name -->
+        <!--/* Name */-->
         <th class="thead-name">
           <span th:text="#{statistic.name}"></span>
         </th>
-        <!-- Wins -->
+        <!--/* Wins */-->
         <th>
           <span th:text="#{statistic.wins}"></span>
           <i class="fas fa-check"></i>
         </th>
-        <!-- Win-Rate -->
+        <!--/* Win Rate */-->
         <th>
           <span th:text="#{statistic.winRate}"></span>
           <i class="fas fa-balance-scale"></i>
         </th>
-        <!-- Points -->
+        <!--/* Points */-->
         <th>
           <span th:text="#{statistic.points}"></span>
           <i class="fas fa-trophy"></i>
@@ -104,7 +104,7 @@
       </tr>
       </thead>
       <tbody>
-      <!-- All users -->
+      <!--/* All users */-->
       <tr class="user-table-row" onclick="window.location.href=this.getAttribute('href')"
           th:each="player : ${users}"
           th:href="@{/users/u/{id}(id=${player.userId})}"
@@ -117,7 +117,7 @@
         <td th:text="${player.statistic.getWinRatio() + '%'}"></td>
         <td th:text="${player.statistic.rating}"></td>
       </tr>
-      <!-- Logged-In User -->
+      <!--/* Logged In User */-->
       <tr class="user-table-row"
           sec:authorize="isAuthenticated()"
           th:if="${!users.contains(user) && user.statistic != null}"
@@ -137,9 +137,10 @@
   <div th:if="${allUsers.size()==0}">
     <div class="text-center alert alert-danger" th:text="#{statistic.noRanks}"></div>
   </div>
-  <div id="noRankList" class="text-center alert alert-danger" role="alert" sec:authorize="isAuthenticated()" th:if="${@userService.getLoggedInUser().getStatistic()==null}" th:text="#{statistic.noRank}"></div>
+  <div id="noRankList" class="text-center alert alert-danger" role="alert" sec:authorize="isAuthenticated()"
+       th:if="${@userService.getLoggedInUser().getStatistic()==null}" th:text="#{statistic.noRank}"></div>
 </div>
-<!-- Pager Buttons Horizontal -->
+<!--/* Pager Buttons Horizontal */-->
 <div class="btn-group-horizontal" id="pager-horizontal">
   <div th:if="${(param.page != null) && (T(Integer).parseInt(param.page) != 0)}">
     <button class="pager" onclick="previousPage()"><i class="fas fa-chevron-circle-up"></i></button>

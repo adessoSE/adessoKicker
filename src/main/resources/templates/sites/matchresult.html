@@ -4,79 +4,79 @@
   <title>adesso kicker</title>
   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- JQuery -->
+   <!--/* JQuery */-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-  <!-- Popper JS -->
+  <!--/* Popper JS */-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 
-  <!-- Bootstrap -->
+  <!--/* Bootstrap */-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-  <!-- Fontawesome -->
+  <!--/* Fontawesome */-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css">
 
-  <!-- Hover CSS -->
+  <!--/* Hover CSS */-->
   <link rel="stylesheet" type="text/css" href="/css/hover-min.css">
 
-  <!-- My stylesheets -->
+  <!--/* My stylesheets */-->
   <link rel="stylesheet/less" type="text/css" href="/css/header.less">
   <link rel="stylesheet/less" type="text/css" href="/css/matchresult.less">
 
-  <!-- LESS -->
+  <!--/* LESS */-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
 </head>
 <body>
 
-<!-- Header -->
+<!--/* Header */-->
 <header th:replace="~{fragments/header.html :: header}"></header>
 
-<!-- Match Form -->
+<!--/* Match Form */-->
 <form action="#" th:action="@{/matches/add}" th:object="${match}" method="POST">
   <div class="container shadow" id="form">
     <div class="row">
-      <!-- Who played? -->
+      <!--/* Who played? */-->
       <div class="col-sm-11 headline" th:text="#{matchResult.whoPlayed}"></div>
-      <!-- Info Tooltip -->
+      <!--/* Info Tooltip */-->
       <div class="col-sm-1" id="info-tooltip">
         <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="left"
            th:title="#{matchResult.tooltip}"></i>
       </div>
     </div>
-    <!-- Error Warning (Same Player) -->
+    <!--/* Error Warning (Same Player) */-->
     <div class="popup popup-error" th:if="${samePlayer}">
       <i class="fa fa-times" aria-hidden="true"></i>
       <span th:text="#{matchResult.error.samePlayer}"></span>
     </div>
-    <!-- Error Warning (Invalid Creator) -->
+    <!--/* Error Warning (Invalid Creator) */-->
     <div class="popup popup-error" th:if="${invalidCreator}">
       <i class="fa fa-times" aria-hidden="true"></i>
       <span th:text="#{matchResult.error.invalidCreator}"></span>
     </div>
-    <!-- Error Warning (Null Player) -->
+    <!--/* Error Warning (Null Player) */-->
     <div class="popup popup-error" th:if="${nullPlayer}">
       <i class="fa fa-times" aria-hidden="true"></i>
       <span th:text="#{matchResult.error.noPlayers}"></span>
     </div>
-    <!-- Error Warning (Too Many Mails) -->
+    <!--/* Error Warning (Too Many Mails) */-->
     <div class="popup popup-error" th:if="${tooManyMails}">
       <i class="fa fa-times" aria-hidden="true"></i>
       <span th:text="#{matchResult.error.tooManyMails}"></span>
     </div>
     <div class="row">
-      <!-- Team A -->
+      <!--/* Team A */-->
       <div class="col-sm-6">
         <div class="team-description" th:text="#{matchResult.teamA}"></div>
         <div class="team team-textbox">
-          <!-- As we want to display the user in a disabled input text field, we cant add the field value to it.
+          <!--/* As we want to display the user in a disabled input text field, we cant add the field value to it.
                As Thymeleaf wouldn't use it for the form, so were creating a hidden input field.
-               This is the easiest solution as we don't need to style the input to behave like a disabled input -->
+               This is the easiest solution as we don't need to style the input to behave like a disabled input */-->
           <input type="text" name="teamAPlayer1" th:value="${#authentication.getName()}" id="teamAPlayer1"
                  hidden/>
           <input class="form-control" type="text" th:value="${currentUser.fullName}" disabled>
         </div>
-        <!-- Searchbar -->
+        <!--/* Searchbar */-->
         <div class="team team-textbox team-margin-top search-bar">
           <div class="input-group">
             <input class="hidden-input" type="text" id="teamAPlayer2" name="teamAPlayer2" value="" hidden/>
@@ -86,17 +86,16 @@
             <ul class="list-group">
               <li th:each="u : ${users}" th:value="${u.userId}" onclick="selectSearchedUser(this);"
                   th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">
-                <span th:text="${u.getFullName()}">No user found</span>
+                <span th:text="${#strings.concat(u.getFullName(), ' (', u.userId,')')}">No user found</span>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      <!--<div class="w-100"></div>-->
-      <!-- Team B -->
+      <!--/* Team B */-->
       <div class="col-sm-6">
         <div class="team-description" th:text="#{matchResult.teamB}"></div>
-        <!-- Searchbar -->
+        <!--/* Searchbar */-->
         <div class="team team-textbox search-bar">
           <div class="input-group">
             <input class="hidden-input" type="text" id="teamBPlayer1" name="teamBPlayer1" value="" hidden/>
@@ -106,12 +105,12 @@
             <ul class="list-group">
               <li th:each="u : ${users}" th:value="${u.userId}" onclick="selectSearchedUser(this);"
                   th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">
-                <span th:text="${u.getFullName()}">No user found</span>
+                <span th:text="${#strings.concat(u.getFullName(), ' (', u.userId,')')}">No user found</span>
               </li>
             </ul>
           </div>
         </div>
-        <!-- Searchbar -->
+        <!--/* Searchbar */-->
         <div class="team team-textbox team-margin-top search-bar">
           <div class="input-group">
             <input class="hidden-input" type="text" id="teamBPlayer2" name="teamBPlayer2" value="" hidden/>
@@ -121,17 +120,17 @@
             <ul class="list-group">
               <li th:each="u : ${users}" th:value="${u.userId}" onclick="selectSearchedUser(this);"
                   th:href="@{/users/u/{id}(id=${u.userId})}" class="list-group-item">
-                <span th:text="${u.getFullName()}">No user found</span>
+                <span th:text="${#strings.concat(u.getFullName(), ' (', u.userId,')')}">No user found</span>
               </li>
             </ul>
           </div>
         </div>
       </div>
     </div>
-    <!-- Who won -->
+    <!--/* Who won */-->
     <div class="headline" th:text="#{matchResult.whoWon}">
     </div>
-    <!-- Radio Buttons -->
+    <!--/* Radio Buttons */-->
     <div class="row" id="radio-winner-team">
       <div class="col-sm-6">
         <div class="form-check" id="form-check-1">
@@ -161,9 +160,9 @@
       <i class="fa fa-times" aria-hidden="true"></i>
       <span th:text="#{matchResult.error.noWinner}"></span>
     </div>
-    <!-- When did you play? -->
+    <!--/* When did you play? */-->
     <div class="headline" th:text="#{matchResult.whenDidYouPlay}"></div>
-    <!-- Timepicker -->
+    <!--/* Timepicker */-->
     <div class="popup popup-error" th:if="${futureDate}">
       <i class="fa fa-times" aria-hidden="true"></i>
       <span th:text="#{matchResult.error.futureDate}"></span>
@@ -172,16 +171,16 @@
       <i class="fa fa-times" aria-hidden="true"></i>
       <span th:text="#{matchResult.error.noDate}"></span>
     </div>
-      <div class="form-group col-sm-6" id="datetimepicker-form-group">
-        <div class="input-group date">
-          <input type="date" th:field="*{date}" id="datetimepicker" class="form-control"
-                 th:max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
-          <div class="input-group-append">
-            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-          </div>
+    <div class="form-group col-sm-6" id="datetimepicker-form-group">
+      <div class="input-group date">
+        <input type="date" th:field="*{date}" id="datetimepicker" class="form-control"
+               th:max="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
+        <div class="input-group-append">
+          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
         </div>
       </div>
-    <!-- Submit Match -->
+    </div>
+    <!--/* Submit Match */-->
     <div>
       <div class="popup popup-success" th:if="${successMessage}">
         <i class="fa fa-check" aria-hidden="true"></i>
