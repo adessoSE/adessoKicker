@@ -48,4 +48,10 @@ public class UserController {
         model.addAttribute("statistics", statistics);
         return "js/profile.js";
     }
+
+    @GetMapping(value = "/email")
+    public String changeEmail() {
+        userService.changeEmailNotifications();
+        return "redirect:/";
+    }
 }

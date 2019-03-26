@@ -97,6 +97,7 @@ public class UserService {
         } else {
             user.setEmailNotifications(true);
         }
+        saveUser(user);
     }
 
     private void saveAllUsers(Iterable<User> users) {
