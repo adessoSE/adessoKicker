@@ -81,6 +81,14 @@
           <a class="move-2px-right adesso-blue-text" th:href="@{/users/you}" th:text="#{header.profile}"></a>
         </div>
         <div class="dropdown-divider"></div>
+        <div class="dropdown-item">
+          <form th:action="@{/users/email}" method="get">
+            <input type="checkbox"
+                   th:checked="${@userService.getLoggedInUser().isEmailNotifications()}" onchange="this.form.submit()">
+            <a class="move-2px-right adesso-blue-text" th:href="@{/users/email}" th:text="#{header.email}"></a>
+          </form>
+        </div>
+        <div class="dropdown-divider"></div>
         <div class="dropdown-item hvr-icon-back">
           <i class="fa fa-sign-out-alt hvr-icon"></i>
           <a class="move-2px-right adesso-blue-text" th:href="@{/logout}"

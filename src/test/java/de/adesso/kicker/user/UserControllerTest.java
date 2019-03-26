@@ -25,7 +25,6 @@ import java.util.ResourceBundle;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
@@ -71,6 +70,7 @@ class UserControllerTest {
         // given
         var user = UserDummy.userWithLowRating();
         given(userService.getUserById(user.getUserId())).willReturn(user);
+        given(userService.getLoggedInUser()).willReturn(user);
 
         // when
         var result = mockMvc.perform(get("/users/u/{id}", user.getUserId()));
@@ -98,6 +98,7 @@ class UserControllerTest {
         var user = UserDummy.defaultUser();
         var messages = ResourceBundle.getBundle("messages");
         given(userService.getUserById(user.getUserId())).willReturn(user);
+        given(userService.getLoggedInUser()).willReturn(user);
 
         // when
         var result = mockMvc.perform(get("/users/u/{id}", user.getUserId()));
