@@ -32,7 +32,7 @@
 }
 
 #info-tooltip {
-  text-align: center;
+  text-align: right;
   .fa-info-circle {
     @media @mobile, @tablet {margin-left: -30px;}
     color: @colorscheme[adesso-blue];
@@ -42,7 +42,7 @@
 }
 
 .team {
-  height: 40px;
+  height: 30%;
   color: @colorscheme[warm-grey-darker];
   &-description {
     font-size: 15px;
@@ -97,7 +97,11 @@
   color: white;
 }
 
-#datetimepicker-form-group {width: 41%;}
+#datetimepicker-form-group {
+  padding-left: 0;
+  width: 43%;
+  @media @mobile { width: 90% }
+}
 
 .popup {
   opacity: 0;
@@ -137,3 +141,5 @@
     opacity: 1;
   }
 }
+
+body { min-width: 320px; }
