@@ -63,9 +63,7 @@ public class VerifyMatchService {
         var match = matchVerificationRequest.getMatch();
         var players = match.getPlayers();
         sendMatchRequestDeclinedEvent(match);
-        return players.stream()
-                .filter(user -> !user.equals(match.getTeamAPlayer1()))
-                .collect(Collectors.toList());
+        return players.stream().filter(user -> !user.equals(match.getTeamAPlayer1())).collect(Collectors.toList());
     }
 
     private void sendMatchVerificationRequestEvent(MatchVerificationRequest matchVerificationRequest) {
