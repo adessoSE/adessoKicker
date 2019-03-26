@@ -49,7 +49,7 @@
                   onclick="window.location.href=this.getAttribute('href')"
                   th:href="@{/statistic(page=${user.statistic.rank <= (param.size == null ? 10 : T(Integer).parseInt(param.size)) ? 0 :
                   ((user.statistic.rank - 1) / (param.size == null ? 10 : T(Integer).parseInt(param.size)))},size=${param.size == null ? 10 : param.size}, player=${user.getUserId()})}">
-                <span th:text="${user.getFullName()}">No user found</span>
+                <span th:text="${#strings.concat(user.getFullName(), ' (', user.userId,')')}">No user found</span>
               </li>
             </ul>
           </div>
