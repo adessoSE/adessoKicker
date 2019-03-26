@@ -8,7 +8,6 @@ import de.adesso.kicker.match.service.events.MatchVerifiedEvent;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequestRepository;
 import de.adesso.kicker.notification.matchverificationrequest.service.VerifyMatchService;
-import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,9 +29,6 @@ class VerifyMatchServiceTest {
 
     @Mock
     MatchVerificationRequestRepository matchVerificationRequestRepository;
-
-    @Mock
-    UserService userService;
 
     @Mock
     ApplicationEventPublisher applicationEventPublisher;
@@ -75,7 +71,6 @@ class VerifyMatchServiceTest {
         // given
         var match = MatchDummy.match();
         var matchCreatedEvent = MatchCreatedEventDummy.matchCreatedEvent(match);
-        given(userService.getLoggedInUser()).willReturn(match.getTeamAPlayer1());
 
         // when
         verifyMatchService.sendRequests(matchCreatedEvent);
@@ -88,7 +83,6 @@ class VerifyMatchServiceTest {
     void sendRequestToOpponentsAsLoser() {
         var match = MatchDummy.matchTeamBWon();
         var matchCreatedEvent = MatchCreatedEventDummy.matchCreatedEvent(match);
-        given(userService.getLoggedInUser()).willReturn(match.getTeamAPlayer1());
 
         // when
         verifyMatchService.sendRequests(matchCreatedEvent);
@@ -103,7 +97,6 @@ class VerifyMatchServiceTest {
     void deleteMatchAndRequestsAndReturnUsersToInform() {
         // given
         var matchVerification = createMatchVerification();
-        given(userService.getLoggedInUser()).willReturn(matchVerification.getMatch().getTeamAPlayer1());
         given(matchVerificationRequestRepository.getAllByMatch(any(Match.class)))
                 .willReturn(createMatchVerificationList());
 
