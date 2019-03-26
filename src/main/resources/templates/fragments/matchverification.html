@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<!-- Match-Verification -->
+<!--/* Match-Verification */-->
 <div th:fragment="matchverification">
   <div class="dropdown-item matchverification notification" th:value="${notification.notificationId}">
     <p class="adesso-blue-text" th:text="${#temporals.format(notification.sendDate, 'd MMM yyyy')}"></p>
