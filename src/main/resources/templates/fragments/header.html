@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <header th:fragment="header">
-  <nav class="navbar navbar-light navbar-expand-lg">
+  <nav class="navbar navbar-light navbar-expand-lg justify-content-end">
     <!--/* Logo */-->
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand mr-auto" href="/">
       <img class="adesso-logo" src="/img/adesso-logo.png" alt="adesso kicker">
     </a>
     <!--/* Links */-->
@@ -30,7 +30,7 @@
       </ul>
     </div>
     <!--/* Notification Dropdown */-->
-    <div class="dropdown ml-auto" id="notification-dropdown" sec:authorize="isAuthenticated()"
+    <div class="dropdown" id="notification-dropdown" sec:authorize="isAuthenticated()"
          th:with="notifications=${@notificationService.getNotificationsByReceiver(@userService.getLoggedInUser())}">
       <button onblur="toggleEnvelope()" onfocus="toggleEnvelope()"
               type="button" class="btn header-dropdown-bt hvr-fade" id="notification-dropdown-icon"
@@ -61,7 +61,7 @@
          th:text="#{header.login}"></a>
     </div>
     <!--/* Profile Settings */-->
-    <div class="dropdown ml-auto" id="profile-dropdown" sec:authorize="isAuthenticated()">
+    <div class="dropdown" id="profile-dropdown" sec:authorize="isAuthenticated()">
       <button type="button" class="btn dropdown-toggle header-dropdown-bt hvr-fade" data-toggle="dropdown">
         <!--/* User Name */-->
         <span th:text="${#authentication.getName()}"></span>
