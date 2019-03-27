@@ -35,15 +35,13 @@
 <!--/* Match Form */-->
 <form action="#" th:action="@{/matches/add}" th:object="${match}" method="POST">
   <div class="container shadow" id="form">
-    <div class="row">
-      <!--/* Who played? */-->
-      <div class="col-sm-11 headline" th:text="#{matchResult.whoPlayed}"></div>
       <!--/* Info Tooltip */-->
-      <div class="col-sm-1" id="info-tooltip">
-        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="left"
-           th:title="#{matchResult.tooltip}"></i>
+      <div id="info-tooltip">
+        <div class="fa fa-info-circle" data-toggle="tooltip" data-placement="left"
+             th:title="#{matchResult.tooltip}"></div>
       </div>
-    </div>
+      <!--/* Who played? */-->
+      <div class="headline" th:text="#{matchResult.whoPlayed}"></div>
     <!--/* Error Warning (Same Player) */-->
     <div class="popup popup-error" th:if="${samePlayer}">
       <i class="fa fa-times" aria-hidden="true"></i>
@@ -132,20 +130,17 @@
     </div>
     <!--/* Radio Buttons */-->
     <div class="row" id="radio-winner-team">
-      <div class="col-sm-6">
+      <div class="col">
         <div class="form-check" id="form-check-1">
           <input th:field="*{winnerTeamA}" th:value="true" class="form-check-input" type="radio"
                  name="winnerteam"
                  id="radio1" checked>
-          <script>
-              document.getElementById("optionsRadios1").setAttribute("checked", "checked")
-          </script>
           <label class="form-check-label" for="radio1" id="radio1-label"
                  th:text="#{matchResult.teamA}"></label>
           <i class="fas fa-trophy trophy-selected" id="radio1-icon" aria-hidden="true"></i>
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col">
         <div class="form-check" id="form-check-2">
           <input th:field="*{winnerTeamA}" th:value="false" class="form-check-input" type="radio"
                  name="winnerteam"

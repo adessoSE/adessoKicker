@@ -21,6 +21,7 @@
   margin-top: 50px;
   padding-bottom: 20px;
   padding-left: 30px;
+  padding-right: 30px;
   animation: container-fly-in 0.75s cubic-bezier(.17, .84, .44, 1);
 }
 
@@ -32,9 +33,8 @@
 }
 
 #info-tooltip {
-  text-align: right;
+  float: right;
   .fa-info-circle {
-    @media @mobile, @tablet {margin-left: -30px;}
     color: @colorscheme[adesso-blue];
     font-size: 30px;
     margin-top: 25px;
@@ -50,7 +50,7 @@
     color: @colorscheme[warm-grey-dark];
   }
   &-textbox {
-    @width: 85%;
+    @width: 100%;
     width: @width;
     .search-bar-content {width: @width;}
     input{
@@ -61,7 +61,7 @@
   &-margin-top {margin-top: 15px;}
 }
 
-#form-check-1, #form-check-2 {margin-left: -20px;}
+#form-check-1, #form-check-2 { margin-left: -20px; }
 
 .form-check {
   width: 60%;
@@ -70,6 +70,7 @@
   &-label {
     font-size: 35px;
     color: @colorscheme[warm-grey-dark];
+    min-width: 109px;
   }
   &:hover > .outline-trophy {
     -webkit-text-stroke: 0 black;
@@ -98,9 +99,13 @@
 }
 
 #datetimepicker-form-group {
+  @width: 100%;
   padding-left: 0;
-  width: 43%;
-  @media @mobile { width: 90% }
+  width: @width/2;
+  @media @mobile {
+    width: @width;
+    padding-right: 0;
+  }
 }
 
 .popup {
@@ -111,7 +116,7 @@
   text-align: center;
   color: white;
   animation: popup-display 0.4s ease-in forwards;
-  animation-delay: 0.5s;
+  animation-delay: 0.2s;
 
   .fa {
     color: white;
