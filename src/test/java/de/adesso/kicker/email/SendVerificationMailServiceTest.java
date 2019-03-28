@@ -1,6 +1,6 @@
 package de.adesso.kicker.email;
 
-import de.adesso.kicker.match.MatchDummy;
+import de.adesso.kicker.match.persistence.MatchDummy;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
 import de.adesso.kicker.notification.matchverificationrequest.service.events.MatchVerificationSentEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,12 +10,14 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
 
+@TestPropertySource("classpath:application-test.properties")
 class SendVerificationMailServiceTest {
 
     @Mock

@@ -1,4 +1,4 @@
-package de.adesso.kicker.user.trackedstatistics;
+package de.adesso.kicker.user.trackedstatistics.entity;
 
 import de.adesso.kicker.user.persistence.User;
 import de.adesso.kicker.user.trackedstatistic.persistence.TrackedStatistic;

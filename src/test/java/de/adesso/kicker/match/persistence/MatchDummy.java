@@ -1,7 +1,6 @@
-package de.adesso.kicker.match;
+package de.adesso.kicker.match.persistence;
 
-import de.adesso.kicker.match.persistence.Match;
-import de.adesso.kicker.user.UserDummy;
+import de.adesso.kicker.user.persistence.UserDummy;
 
 import java.time.LocalDate;
 

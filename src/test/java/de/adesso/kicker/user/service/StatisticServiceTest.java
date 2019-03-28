@@ -1,8 +1,8 @@
 package de.adesso.kicker.user.service;
 
-import de.adesso.kicker.match.MatchDummy;
-import de.adesso.kicker.user.StatisticDummy;
+import de.adesso.kicker.match.persistence.MatchDummy;
 import de.adesso.kicker.user.persistence.Statistic;
+import de.adesso.kicker.user.persistence.StatisticDummy;
 import de.adesso.kicker.user.persistence.StatisticRepository;
 import de.adesso.kicker.user.persistence.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.any;
 
+@TestPropertySource("classpath:application-test.properties")
 class StatisticServiceTest {
 
     @Mock

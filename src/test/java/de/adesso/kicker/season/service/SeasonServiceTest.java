@@ -1,29 +1,29 @@
 package de.adesso.kicker.season.service;
 
-import de.adesso.kicker.match.MatchDummy;
-import de.adesso.kicker.match.persistence.Match;
+import de.adesso.kicker.match.persistence.MatchDummy;
 import de.adesso.kicker.match.service.MatchService;
-import de.adesso.kicker.season.persistence.Season;
-import de.adesso.kicker.season.persistence.SeasonMatch;
+import de.adesso.kicker.season.persistence.SeasonDummy;
+import de.adesso.kicker.season.persistence.SeasonMatchDummy;
 import de.adesso.kicker.season.persistence.SeasonRepository;
-import de.adesso.kicker.season.persistence.SeasonTrackedStatistic;
-import de.adesso.kicker.user.UserDummy;
+import de.adesso.kicker.season.persistence.SeasonTrackedStatisticDummy;
+import de.adesso.kicker.user.persistence.UserDummy;
 import de.adesso.kicker.user.service.UserService;
-import de.adesso.kicker.user.trackedstatistic.persistence.TrackedStatistic;
 import de.adesso.kicker.user.trackedstatistic.service.TrackedStatisticService;
-import de.adesso.kicker.user.trackedstatistics.TrackedStatisticsDummy;
+import de.adesso.kicker.user.trackedstatistics.entity.TrackedStatisticsDummy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 
+@TestPropertySource("classpath:application-test.properties")
 class SeasonServiceTest {
 
     @Mock
@@ -49,44 +49,18 @@ class SeasonServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    private static Season expectedSeason(Match match, TrackedStatistic trackedStatistics) {
-        var seasonMatches = List.of(seasonMatches(match));
-        var seasonTrackedStatistic = List.of(seasonTrackedStatistic(trackedStatistics));
-        return new Season("Season 1", seasonMatches, seasonTrackedStatistic);
-    }
-
-    private static SeasonMatch seasonMatches(Match match) {
-        return SeasonMatch.builder()
-                .teamAPlayer1(match.getTeamAPlayer1())
-                .teamBPlayer1(match.getTeamBPlayer1())
-                .teamAPlayer2(match.getTeamAPlayer2())
-                .teamBPlayer2(match.getTeamBPlayer2())
-                .date(match.getDate())
-                .winnerTeamA(match.getWinnerTeamA())
-                .build();
-    }
-
-    private static SeasonTrackedStatistic seasonTrackedStatistic(TrackedStatistic trackedStatistics) {
-        return SeasonTrackedStatistic.builder()
-                .user(trackedStatistics.getUser())
-                .date(trackedStatistics.getDate())
-                .rank(trackedStatistics.getRank())
-                .rating(trackedStatistics.getRating())
-                .wins(trackedStatistics.getWins())
-                .losses(trackedStatistics.getLosses())
-                .build();
-    }
-
     @Test
     void verifySeasonIsEndedCorrectly() {
         // given
         var match = MatchDummy.match();
+        var matches = List.of(match);
         var user = UserDummy.userWithLowRating();
         var trackedStatistic = TrackedStatisticsDummy.trackedStatistic(user);
-        var matches = List.of(match);
+        var seasonTrackedStatistic = SeasonTrackedStatisticDummy.seasonTrackedStatistic(trackedStatistic);
+        var seasonMatch = SeasonMatchDummy.seasonMatch(match);
         var trackedStatistics = List.of(trackedStatistic);
 
-        var expectedSeason = expectedSeason(match, trackedStatistic);
+        var expectedSeason = SeasonDummy.season(List.of(seasonMatch), List.of(seasonTrackedStatistic));
 
         given(seasonRepository.count()).willReturn(0L);
         given(matchService.getAllVerifiedMatches()).willReturn(matches);

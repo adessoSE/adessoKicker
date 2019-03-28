@@ -1,19 +1,18 @@
-package de.adesso.kicker.notification;
+package de.adesso.kicker.notification.service;
 
 import de.adesso.kicker.notification.exception.NotificationNotFoundException;
 import de.adesso.kicker.notification.exception.WrongReceiverException;
-import de.adesso.kicker.notification.matchverificationrequest.MatchVerificationRequestDummy;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
+import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequestDummy;
 import de.adesso.kicker.notification.matchverificationrequest.service.VerifyMatchService;
-import de.adesso.kicker.notification.message.MessageDummy;
 import de.adesso.kicker.notification.message.persistence.Message;
+import de.adesso.kicker.notification.message.persistence.MessageDummy;
 import de.adesso.kicker.notification.message.persistence.MessageType;
 import de.adesso.kicker.notification.message.service.SendMessageService;
 import de.adesso.kicker.notification.persistence.Notification;
 import de.adesso.kicker.notification.persistence.NotificationRepository;
-import de.adesso.kicker.notification.service.NotificationService;
-import de.adesso.kicker.user.UserDummy;
 import de.adesso.kicker.user.persistence.User;
+import de.adesso.kicker.user.persistence.UserDummy;
 import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,6 +21,7 @@ import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +33,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
+@TestPropertySource("classpath:application-test.properties")
 class NotificationServiceTest {
 
     @Mock
