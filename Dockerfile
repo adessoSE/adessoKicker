@@ -1,14 +1,25 @@
-FROM openjdk:11
-FROM maven
-
+FROM openjdk:11-slim as build
 WORKDIR /kicker
 
-COPY . /kicker
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+COPY src src
 
-RUN mvn clean:clean
+RUN ./mvnw install -Dmaven.test.skip
+RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*jar)
 
-RUN mvn package
+FROM openjdk:11-slim
+
+VOLUME /tmp
+VOLUME /logs
+VOLUME /db
+
+ARG DEPENDENCY=/kicker/target/dependency
+COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /kicker/lib
+COPY --from=build ${DEPENDENCY}/META-INF /kicker/META-INF
+COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /kicker
 
 EXPOSE 80
 
-ENTRYPOINT ["java", "-jar", "target/kicker.jar"]
+ENTRYPOINT ["java","-cp","kicker:kicker/lib/*","-Dspring.profiles.active=prod","de.adesso.kicker.Application"]
