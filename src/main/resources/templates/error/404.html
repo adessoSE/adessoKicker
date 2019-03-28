@@ -16,16 +16,19 @@
 
   <!--/* Hover CSS */-->
   <link rel="stylesheet" type="text/css" href="/css/hover-min.css">
+  <!--/* ChartJS */-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+  <script src="/js/chartFillPlugin.js"></script>
 
   <!--/* My stylesheets */-->
-  <link rel="stylesheet/less" type="text/css" href="/css/header.less">
-  <link rel="stylesheet/less" type="text/css" href="/css/ranking.less">
+  <link rel="stylesheet/less" type="text/css" href="/css/error.less">
 
   <!--/* LESS */-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
 </head>
 <body>
-<div>404</div>
-<div th:text="#{error.notFound}"></div>
+<div class="error-code">404</div>
+<div class="error-message" th:text="#{error.notFound}"></div>
+<a th:href="@{/}"><div class="error-advice" th:text="#{statusCode.notFound}"></div></a>
 </body>
 </html>
