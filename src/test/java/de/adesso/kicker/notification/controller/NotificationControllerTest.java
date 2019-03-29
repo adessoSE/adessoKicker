@@ -1,9 +1,8 @@
-package de.adesso.kicker.notification;
+package de.adesso.kicker.notification.controller;
 
-import de.adesso.kicker.notification.controller.NotificationController;
 import de.adesso.kicker.notification.exception.NotificationNotFoundException;
 import de.adesso.kicker.notification.exception.WrongReceiverException;
-import de.adesso.kicker.notification.message.MessageDummy;
+import de.adesso.kicker.notification.message.persistence.MessageDummy;
 import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;

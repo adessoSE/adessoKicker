@@ -1,22 +1,24 @@
-package de.adesso.kicker.notification.message;
+package de.adesso.kicker.notification.message.service;
 
 import de.adesso.kicker.notification.message.persistence.Message;
+import de.adesso.kicker.notification.message.persistence.MessageDummy;
 import de.adesso.kicker.notification.message.persistence.MessageRepository;
 import de.adesso.kicker.notification.message.persistence.MessageType;
-import de.adesso.kicker.notification.message.service.SendMessageService;
-import de.adesso.kicker.user.UserDummy;
+import de.adesso.kicker.user.persistence.UserDummy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.times;
 
+@TestPropertySource("classpath:application-test.properties")
 class SendMessageServiceTest {
 
     @Mock

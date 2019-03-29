@@ -1,4 +1,4 @@
-package de.adesso.kicker.match;
+package de.adesso.kicker.match.controller;
 
 import de.adesso.kicker.email.SendVerificationMailService;
 import de.adesso.kicker.match.persistence.MatchRepository;
@@ -82,7 +82,6 @@ class MatchControllerIntegrationTest {
 
         // then
         var matches = matchRepository.findAll();
-        System.out.println(matches);
         var match = matchRepository.findById("1").orElseThrow();
         var notifications = matchVerificationRequestRepository.getAllByMatch(match);
         assertEquals(user1.getUserId(), match.getTeamAPlayer1().getUserId());

@@ -1,13 +1,14 @@
-package de.adesso.kicker.user;
+package de.adesso.kicker.user.controller;
 
-import de.adesso.kicker.notification.message.MessageDummy;
+import de.adesso.kicker.notification.message.persistence.MessageDummy;
 import de.adesso.kicker.notification.persistence.Notification;
 import de.adesso.kicker.notification.service.NotificationService;
-import de.adesso.kicker.user.controller.UserController;
 import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
+import de.adesso.kicker.user.persistence.UserDummy;
 import de.adesso.kicker.user.service.UserService;
 import de.adesso.kicker.user.trackedstatistic.service.TrackedStatisticService;
+import de.adesso.kicker.user.trackedstatistics.entity.TrackedStatisticsDummy;
 import org.junit.jupiter.api.Test;
 import org.keycloak.adapters.springboot.KeycloakAutoConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,7 +130,7 @@ class UserControllerTest {
     void whenJsRequestedSendJsWithTrackedStatistics() throws Exception {
         // given
         var user = UserDummy.defaultUser();
-        var statistics = Collections.singletonList(TrackedStatisticDummy.trackedStatisticWithVeryHighRating());
+        var statistics = Collections.singletonList(TrackedStatisticsDummy.trackedStatistic(user));
         given(userService.getUserById(any())).willReturn(user);
         given(trackedStatisticService.getTrackedStatisticsByUser(any(User.class))).willReturn(statistics);
 

@@ -1,4 +1,4 @@
-package de.adesso.kicker.match;
+package de.adesso.kicker.match.service;
 
 import de.adesso.kicker.events.MatchDeclinedEventDummy;
 import de.adesso.kicker.events.MatchVerifiedEventDummy;
@@ -6,8 +6,8 @@ import de.adesso.kicker.match.exception.FutureDateException;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.match.persistence.Match;
+import de.adesso.kicker.match.persistence.MatchDummy;
 import de.adesso.kicker.match.persistence.MatchRepository;
-import de.adesso.kicker.match.service.MatchService;
 import de.adesso.kicker.match.service.events.MatchCreatedEvent;
 import de.adesso.kicker.user.service.StatisticsService;
 import de.adesso.kicker.user.service.UserService;
@@ -21,6 +21,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.stream.Stream;
 
@@ -31,6 +32,7 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.times;
 
+@TestPropertySource("classpath:application-test.properties")
 class MatchServiceTest {
 
     @Mock
