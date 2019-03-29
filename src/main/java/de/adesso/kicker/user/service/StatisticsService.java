@@ -6,6 +6,7 @@ import de.adesso.kicker.user.persistence.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -86,7 +87,11 @@ public class StatisticsService {
     }
 
     private int getTeamRating(List<User> players) {
-        return players.stream().map(this::getStatisticOrElseNew).mapToInt(Statistic::getRating).sum();
+        var statistics = new ArrayList<Statistic>();
+        for (var player : players) {
+            statistics.add(getStatisticOrElseNew(player));
+        }
+        return statistics.stream().mapToInt(Statistic::getRating).sum();
     }
 
     private Statistic getStatisticOrElseNew(User user) {

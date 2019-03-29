@@ -8,6 +8,8 @@ import de.adesso.kicker.match.service.events.MatchVerifiedEvent;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequestDummy;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequestRepository;
+import de.adesso.kicker.user.persistence.UserDummy;
+import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,6 +36,9 @@ class VerifyMatchServiceTest {
 
     @Mock
     ApplicationEventPublisher applicationEventPublisher;
+
+    @Mock
+    UserService userService;
 
     @InjectMocks
     VerifyMatchService verifyMatchService;
@@ -101,6 +106,7 @@ class VerifyMatchServiceTest {
         var matchVerification = createMatchVerification();
         given(matchVerificationRequestRepository.getAllByMatch(any(Match.class)))
                 .willReturn(createMatchVerificationList());
+        given(userService.getLoggedInUser()).willReturn(UserDummy.defaultUser());
 
         // when
         verifyMatchService.declineRequest(matchVerification);
