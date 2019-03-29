@@ -18,3 +18,17 @@ You can also look at each players statistics which will be also displayed in var
 ## User profile
 ![alt text](screenshot_profile.png)
 
+# Building
+Before the project can be build the properties for a Keycloak and SMTP Server have to be set in
+`application-prod.properties`
+
+## Docker
+To build with docker run `docker build --tag=tag .`.  
+Afterwards run the container with `docker run -d -p external_port:80 tag`.  
+If you want to persist logs and database run `docker run -d -p external_port:80 --mount source=kicker_logs,target=/kicker/logs 
+--mount source=kicker_db,target=/kicker/db tag`  
+This creates the volumes kicker_logs and kicker_db if they don't exist yet and persists logs and the database.  
+
+## Maven
+To build with maven you can use the maven wrapper and run `./mvnw package  -DskipTests` (or `mvnw.cmd package -DskipTest`
+on Windows) in the root directory to create a jar of the project in `target`.
