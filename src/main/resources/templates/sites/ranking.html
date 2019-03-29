@@ -46,11 +46,11 @@
           </div>
           <div class="panel-body search-bar-content container">
             <ul class="list-group">
-              <li class="list-group-item" th:each="user : ${allUsers}"
+              <li class="list-group-item" th:each="userStatistic : ${usersStatistics}"
                   onclick="window.location.href=this.getAttribute('href')"
-                  th:href="@{/ranking(page=${user.statistic.rank <= (size == null ? 10 : T(Integer).parseInt(size)) ? 0 :
-                  ((user.statistic.rank - 1) / (size == null ? 10 : T(Integer).parseInt(size)))},size=${size == null ? 10 : size}, player=${user.getUserId()})}">
-                <span th:text="${#strings.concat(user.getFullName(), ' (', user.userId,')')}">No user found</span>
+                  th:href="@{/ranking(page=${userStatistic.statistic.rank <= (size == null ? 10 : T(Integer).parseInt(size)) ? 0 :
+                  ((userStatistic.statistic.rank - 1) / (size == null ? 10 : T(Integer).parseInt(size)))},size=${size == null ? 10 : size}, player=${userStatistic.getUserId()})}">
+                <span th:text="${#strings.concat(userStatistic.getFullName(), ' (', userStatistic.userId,')')}">No user found</span>
               </li>
             </ul>
           </div>
@@ -74,7 +74,7 @@
 </div>
 <!--/* User List */-->
 <div class="container-fluid">
-  <div class="shadow-sm" id="table-container" th:if="${allUsers.size()>0}">
+  <div class="shadow-sm" id="table-container" th:if="${usersStatistics.size()>0}">
     <table class="user-table table">
       <thead>
       <tr>
@@ -109,7 +109,7 @@
       <tr class="user-table-row" onclick="window.location.href=this.getAttribute('href')"
           th:each="user : ${users}"
           th:href="@{/users/u/{id}(id=${user.userId})}"
-          th:id="${player == null ? (user == user ? 'user-self' : '') : (user.getUserId() == player[0] ? 'user-searched' : (user == user ? 'user-self' : ''))}">
+          th:id="${player == null ? (user == currentUser ? 'user-self' : '') : (user.getUserId() == player ? 'user-searched' : (user == currentUser ? 'user-self' : ''))}">
         <td>
           <span class="badge badge-position align-center" th:text="${user.statistic.rank}"></span>
         </td>
@@ -121,21 +121,22 @@
       <!--/* Logged In User */-->
       <tr class="user-table-row"
           sec:authorize="isAuthenticated()"
-          th:if="${!users.contains(user) && user.statistic != null}"
-          th:href="@{/users/u/{id}(id=${user.userId})}"
+          th:if="${!users.contains(currentUser) && currentUser.statistic != null}"
+          th:href="@{/users/u/{id}(id=${currentUser.userId})}"
           onclick="window.location.href=this.getAttribute('href')" id="user-self">
         <td>
-          <span id="user-self-badge" class="badge badge-position align-center" th:text="${user.statistic.rank}"></span>
+          <span id="user-self-badge" class="badge badge-position align-center"
+                th:text="${currentUser.statistic.rank}"></span>
         </td>
-        <td class="user-table-name" th:text="${user.getFullName()}"></td>
-        <td th:text="${user.statistic.wins}"></td>
-        <td th:text="${user.statistic.getWinRatio() + '%'}"></td>
-        <td th:text="${user.statistic.rating}"></td>
+        <td class="user-table-name" th:text="${currentUser.getFullName()}"></td>
+        <td th:text="${currentUser.statistic.wins}"></td>
+        <td th:text="${currentUser.statistic.getWinRatio() + '%'}"></td>
+        <td th:text="${currentUser.statistic.rating}"></td>
       </tr>
       </tbody>
     </table>
   </div>
-  <div th:if="${allUsers.size()==0}">
+  <div th:if="${usersStatistics.size()==0}">
     <div class="text-center alert alert-danger" th:text="#{statistic.noRanks}"></div>
   </div>
   <div id="noRankList" class="text-center alert alert-danger" role="alert" sec:authorize="isAuthenticated()"

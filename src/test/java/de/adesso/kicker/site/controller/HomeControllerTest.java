@@ -72,7 +72,7 @@ class HomeControllerTest {
         result.andExpect(status().isOk())
                 .andExpect(model().attribute("userFound", false))
                 .andExpect(model().attribute("users", userList))
-                .andExpect(model().attribute("allUsers", userList))
+                .andExpect(model().attribute("usersStatistics", userList))
                 .andExpect(content().string(containsString("id=\"login-button\"")));
     }
 
@@ -92,8 +92,8 @@ class HomeControllerTest {
 
         // then
         result.andExpect(status().isOk())
-                .andExpect(model().attribute("user", user))
-                .andExpect(model().attribute("allUsers", userList))
+                .andExpect(model().attribute("currentUser", user))
+                .andExpect(model().attribute("usersStatistics", userList))
                 .andExpect(content().string(containsString("id=\"user-self\"")))
                 .andExpect(content().string(containsString("id=\"notification-dropdown\"")))
                 .andExpect(content().string(containsString("id=\"profile-dropdown\"")));
@@ -115,8 +115,8 @@ class HomeControllerTest {
 
         // then
         result.andExpect(status().isOk())
-                .andExpect(model().attribute("user", user))
-                .andExpect(model().attribute("allUsers", userList))
+                .andExpect(model().attribute("currentUser", user))
+                .andExpect(model().attribute("usersStatistics", userList))
                 .andExpect(content().string(containsString("id=\"notification-dropdown\"")))
                 .andExpect(content().string(containsString("id=\"profile-dropdown\"")));
     }

@@ -18,15 +18,15 @@ public class HomeController {
     public String ranking(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
             Model model) {
         var users = userService.getUserPageSortedByRating(page, size);
-        var allUsers = userService.getAllUsersWithStatistics();
+        var usersStatistics = userService.getAllUsersWithStatistics();
         try {
             var user = userService.getLoggedInUser();
-            model.addAttribute("user", user);
+            model.addAttribute("currentUser", user);
         } catch (UserNotFoundException e) {
             model.addAttribute("userFound", false);
         }
         model.addAttribute("users", users);
-        model.addAttribute("allUsers", allUsers);
+        model.addAttribute("usersStatistics", usersStatistics);
         return "sites/ranking.html";
     }
 }
