@@ -70,7 +70,7 @@ class HomeControllerTest {
 
         // then
         result.andExpect(status().isOk())
-                .andExpect(model().attribute("user", false))
+                .andExpect(model().attribute("userFound", false))
                 .andExpect(model().attribute("users", userList))
                 .andExpect(model().attribute("allUsers", userList))
                 .andExpect(content().string(containsString("id=\"login-button\"")));
