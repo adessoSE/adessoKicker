@@ -22,7 +22,8 @@ import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @TestPropertySource("classpath:application-test.properties")
 @Import(KeycloakAutoConfiguration.class)
@@ -46,13 +47,11 @@ class NotificationControllerTest {
         var notification = MessageDummy.messageDeclined();
 
         // when
-        var result = this.mockMvc.perform(get("/notifications/accept/" + notification.getNotificationId()));
+        var result = this.mockMvc.perform(get("/notifications/accept/{id}", notification.getNotificationId()));
 
         // then
         then(notificationService).should(times(1)).acceptNotification(notification.getNotificationId());
-        result.andExpect(status().isOk())
-                .andExpect(view().name("sites/notificationresult.html"))
-                .andExpect(model().attribute("successAccepted", true));
+        result.andExpect(status().isOk()).andExpect(model().attribute("successAccepted", true));
     }
 
     @Test
@@ -63,13 +62,11 @@ class NotificationControllerTest {
         var notification = MessageDummy.messageDeclined();
 
         // when
-        var result = this.mockMvc.perform(get("/notifications/decline/" + notification.getNotificationId()));
+        var result = this.mockMvc.perform(get("/notifications/decline/{id}", notification.getNotificationId()));
 
         // then
         then(notificationService).should(times(1)).declineNotification(notification.getNotificationId());
-        result.andExpect(status().isOk())
-                .andExpect(view().name("sites/notificationresult.html"))
-                .andExpect(model().attribute("successDeclined", true));
+        result.andExpect(status().isOk()).andExpect(model().attribute("successDeclined", true));
     }
 
     @Test
@@ -81,13 +78,11 @@ class NotificationControllerTest {
         doThrow(NotificationNotFoundException.class).when(notificationService).acceptNotification(notificationId);
 
         // when
-        var result = this.mockMvc.perform(get("/notifications/accept/" + notificationId));
+        var result = this.mockMvc.perform(get("/notifications/accept/{id}", notificationId));
 
         // then
         willThrow(NotificationNotFoundException.class).given(notificationService).acceptNotification(anyLong());
-        result.andExpect(status().isOk())
-                .andExpect(view().name("sites/notificationresult.html"))
-                .andExpect(model().attribute("notExisting", true));
+        result.andExpect(status().isOk()).andExpect(model().attribute("notExisting", true));
     }
 
     @Test
@@ -99,12 +94,10 @@ class NotificationControllerTest {
         doThrow(WrongReceiverException.class).when(notificationService).acceptNotification(notificationId);
 
         // when
-        var result = this.mockMvc.perform(get("/notifications/accept/" + notificationId));
+        var result = this.mockMvc.perform(get("/notifications/accept/{id}", notificationId));
 
         // then
         willThrow(WrongReceiverException.class).given(notificationService).acceptNotification(anyLong());
-        result.andExpect(status().isOk())
-                .andExpect(view().name("sites/notificationresult.html"))
-                .andExpect(model().attribute("wrongReceiver", true));
+        result.andExpect(status().isOk()).andExpect(model().attribute("wrongReceiver", true));
     }
 }
