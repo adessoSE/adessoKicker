@@ -1,16 +1,15 @@
-package de.adesso.kicker.match;
+package de.adesso.kicker.match.controller;
 
-import de.adesso.kicker.match.controller.MatchController;
 import de.adesso.kicker.match.exception.FutureDateException;
 import de.adesso.kicker.match.exception.InvalidCreatorException;
 import de.adesso.kicker.match.exception.SamePlayerException;
 import de.adesso.kicker.match.persistence.Match;
 import de.adesso.kicker.match.service.MatchService;
-import de.adesso.kicker.notification.message.MessageDummy;
+import de.adesso.kicker.notification.message.persistence.MessageDummy;
 import de.adesso.kicker.notification.persistence.Notification;
 import de.adesso.kicker.notification.service.NotificationService;
-import de.adesso.kicker.user.UserDummy;
 import de.adesso.kicker.user.persistence.User;
+import de.adesso.kicker.user.persistence.UserDummy;
 import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +30,6 @@ import java.util.List;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @TestPropertySource("classpath:application-test.properties")
@@ -98,8 +96,7 @@ class MatchControllerTest {
                 .param("winnerTeamA", "true"));
 
         // then
-        result.andDo(print())
-                .andExpect(status().isOk())
+        result.andExpect(status().isOk())
                 .andExpect(model().attributeExists("noDate"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
@@ -122,8 +119,7 @@ class MatchControllerTest {
                 .param("teamBPlayer1.userId", "user2"));
 
         // then
-        result.andDo(print())
-                .andExpect(status().isOk())
+        result.andExpect(status().isOk())
                 .andExpect(model().attributeExists("noWinner"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
@@ -145,8 +141,7 @@ class MatchControllerTest {
                 .perform(post("/matches/add").param("date", LocalDate.now().toString()).param("winnerTeamA", "true"));
 
         // then
-        result.andDo(print())
-                .andExpect(status().isOk())
+        result.andExpect(status().isOk())
                 .andExpect(model().attributeExists("nullPlayer"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
@@ -169,8 +164,7 @@ class MatchControllerTest {
                 .param("winnerTeamA", "true"));
 
         // then
-        result.andDo(print())
-                .andExpect(status().isOk())
+        result.andExpect(status().isOk())
                 .andExpect(model().attributeExists("nullPlayer"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
@@ -193,8 +187,7 @@ class MatchControllerTest {
                 .param("winnerTeamA", "true"));
 
         // then
-        result.andDo(print())
-                .andExpect(status().isOk())
+        result.andExpect(status().isOk())
                 .andExpect(model().attributeExists("nullPlayer"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
@@ -218,8 +211,7 @@ class MatchControllerTest {
                 .param("winnerTeamA", "true"));
 
         // then
-        result.andDo(print())
-                .andExpect(status().isOk())
+        result.andExpect(status().isOk())
                 .andExpect(model().attributeExists("successMessage"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
@@ -244,8 +236,7 @@ class MatchControllerTest {
                 .param("winnerTeamA", "true"));
 
         // then
-        result.andDo(print())
-                .andExpect(status().isOk())
+        result.andExpect(status().isOk())
                 .andExpect(model().attributeExists("futureDate"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
@@ -270,8 +261,7 @@ class MatchControllerTest {
                 .param("winnerTeamA", "true"));
 
         // then
-        result.andDo(print())
-                .andExpect(status().isOk())
+        result.andExpect(status().isOk())
                 .andExpect(model().attributeExists("invalidCreator"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));
@@ -296,8 +286,7 @@ class MatchControllerTest {
                 .param("winnerTeamA", "true"));
 
         // then
-        result.andDo(print())
-                .andExpect(status().isOk())
+        result.andExpect(status().isOk())
                 .andExpect(model().attributeExists("samePlayer"))
                 .andExpect(model().attribute("currentUser", user))
                 .andExpect(model().attribute("users", userList));

@@ -6,15 +6,15 @@ import de.adesso.kicker.notification.persistence.Notification;
 import de.adesso.kicker.notification.service.NotificationService;
 import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/notifications")
 public class NotificationController {
@@ -29,33 +29,28 @@ public class NotificationController {
     }
 
     @GetMapping("/decline/{id}")
-    public ModelAndView declineNotification(@PathVariable long id) {
-        var modelAndView = new ModelAndView();
+    public String declineNotification(@PathVariable long id, Model model) {
         try {
             notificationService.declineNotification(id);
-            modelAndView.addObject("successDeclined", true);
+            model.addAttribute("successDeclined", true);
         } catch (NotificationNotFoundException e) {
-            modelAndView.addObject("notExisting", true);
+            model.addAttribute("notExisting", true);
         } catch (WrongReceiverException e) {
-            modelAndView.addObject("wrongReceiver", true);
+            model.addAttribute("wrongReceiver", true);
         }
-        modelAndView.setViewName("sites/notificationresult.html");
-        return modelAndView;
+        return "sites/notificationresult.html";
     }
 
     @GetMapping("/accept/{id}")
-    public ModelAndView acceptNotification(@PathVariable long id) {
-        var modelAndView = new ModelAndView();
+    public String acceptNotification(@PathVariable long id, Model model) {
         try {
             notificationService.acceptNotification(id);
-            modelAndView.addObject("successAccepted", true);
+            model.addAttribute("successAccepted", true);
         } catch (NotificationNotFoundException e) {
-            modelAndView.addObject("notExisting", true);
+            model.addAttribute("notExisting", true);
         } catch (WrongReceiverException e) {
-            modelAndView.addObject("wrongReceiver", true);
+            model.addAttribute("wrongReceiver", true);
         }
-        modelAndView.setViewName("sites/notificationresult.html");
-        return modelAndView;
+        return "sites/notificationresult.html";
     }
-
 }

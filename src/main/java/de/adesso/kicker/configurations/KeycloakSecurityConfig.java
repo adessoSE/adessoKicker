@@ -49,7 +49,7 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         super.configure(http);
         http.authorizeRequests()
                 .antMatchers("/", "/home", "/ranking", "/users/u/**", "/users/js/**", "/css/**", "/js/**", "/img/**",
-                        "/favicon.ico")
+                        "/font/**", "/favicon.ico")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

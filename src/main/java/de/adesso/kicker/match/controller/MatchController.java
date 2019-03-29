@@ -9,11 +9,11 @@ import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
@@ -27,50 +27,49 @@ public class MatchController {
     private final UserService userService;
 
     @GetMapping("/add")
-    public ModelAndView getAddMatch() {
-        return defaultAddMatchView(new ModelAndView());
+    public String getAddMatch(Model model) {
+        defaultAddMatchModel(model);
+        return "sites/matchresult.html";
     }
 
     @PostMapping("/add")
-    public ModelAndView postAddMatch(@Valid Match match, BindingResult bindingResult) {
-        var modelAndView = new ModelAndView();
-
+    public String postAddMatch(@Valid Match match, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             if (bindingResult.hasFieldErrors("date")) {
-                modelAndView.addObject("noDate", true);
+                model.addAttribute("noDate", true);
             }
             if (bindingResult.hasFieldErrors("teamAPlayer1") || bindingResult.hasFieldErrors("teamBPlayer1")) {
-                modelAndView.addObject("nullPlayer", true);
+                model.addAttribute("nullPlayer", true);
             }
             if (bindingResult.hasFieldErrors("winnerTeamA")) {
-                modelAndView.addObject("noWinner", true);
+                model.addAttribute("noWinner", true);
             }
-            return defaultAddMatchView(modelAndView);
+            defaultAddMatchModel(model);
+            return "sites/matchresult.html";
         }
 
         try {
             matchService.addMatchEntry(match);
-            modelAndView.addObject("successMessage", true);
+            model.addAttribute("successMessage", true);
         } catch (FutureDateException e) {
-            modelAndView.addObject("futureDate", true);
+            model.addAttribute("futureDate", true);
         } catch (InvalidCreatorException e) {
-            modelAndView.addObject("invalidCreator", true);
+            model.addAttribute("invalidCreator", true);
         } catch (SamePlayerException e) {
-            modelAndView.addObject("samePlayer", true);
+            model.addAttribute("samePlayer", true);
         } catch (MailException e) {
-            modelAndView.addObject("tooManyMails", true);
+            model.addAttribute("tooManyMails", true);
         }
-        return defaultAddMatchView(modelAndView);
+        defaultAddMatchModel(model);
+        return "sites/matchresult.html";
     }
 
-    private ModelAndView defaultAddMatchView(ModelAndView modelAndView) {
+    private void defaultAddMatchModel(Model model) {
         var match = new Match();
         var user = userService.getLoggedInUser();
         var users = userService.getAllUsers();
-        modelAndView.addObject("match", match);
-        modelAndView.addObject("currentUser", user);
-        modelAndView.addObject("users", users);
-        modelAndView.setViewName("sites/matchresult.html");
-        return modelAndView;
+        model.addAttribute("match", match);
+        model.addAttribute("currentUser", user);
+        model.addAttribute("users", users);
     }
 }

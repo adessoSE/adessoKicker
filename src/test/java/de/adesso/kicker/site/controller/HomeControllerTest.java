@@ -1,12 +1,12 @@
 package de.adesso.kicker.site.controller;
 
-import de.adesso.kicker.notification.matchverificationrequest.MatchVerificationRequestDummy;
-import de.adesso.kicker.notification.message.MessageDummy;
+import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequestDummy;
+import de.adesso.kicker.notification.message.persistence.MessageDummy;
 import de.adesso.kicker.notification.persistence.Notification;
 import de.adesso.kicker.notification.service.NotificationService;
-import de.adesso.kicker.user.UserDummy;
 import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
+import de.adesso.kicker.user.persistence.UserDummy;
 import de.adesso.kicker.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.keycloak.adapters.springboot.KeycloakAutoConfiguration;
@@ -24,7 +24,6 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @TestPropertySource("classpath:application-test.properties")
@@ -70,9 +69,8 @@ class HomeControllerTest {
         var result = mockMvc.perform(get("/"));
 
         // then
-        result.andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("user", false))
+        result.andExpect(status().isOk())
+                .andExpect(model().attribute("userFound", false))
                 .andExpect(model().attribute("users", userList))
                 .andExpect(model().attribute("allUsers", userList))
                 .andExpect(content().string(containsString("id=\"login-button\"")));
@@ -93,8 +91,7 @@ class HomeControllerTest {
         var result = mockMvc.perform(get("/"));
 
         // then
-        result.andDo(print())
-                .andExpect(status().isOk())
+        result.andExpect(status().isOk())
                 .andExpect(model().attribute("user", user))
                 .andExpect(model().attribute("allUsers", userList))
                 .andExpect(content().string(containsString("id=\"user-self\"")))
@@ -117,8 +114,7 @@ class HomeControllerTest {
         var result = mockMvc.perform(get("/"));
 
         // then
-        result.andDo(print())
-                .andExpect(status().isOk())
+        result.andExpect(status().isOk())
                 .andExpect(model().attribute("user", user))
                 .andExpect(model().attribute("allUsers", userList))
                 .andExpect(content().string(containsString("id=\"notification-dropdown\"")))
