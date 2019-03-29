@@ -8,6 +8,7 @@ import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchV
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequestRepository;
 import de.adesso.kicker.notification.matchverificationrequest.service.events.MatchVerificationSentEvent;
 import de.adesso.kicker.user.persistence.User;
+import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
 public class VerifyMatchService {
 
     private final MatchVerificationRequestRepository matchVerificationRequestRepository;
+
+    private final UserService userService;
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
@@ -62,8 +65,9 @@ public class VerifyMatchService {
 
         var match = matchVerificationRequest.getMatch();
         var players = match.getPlayers();
+        var currentUser = userService.getLoggedInUser();
         sendMatchRequestDeclinedEvent(match);
-        return players.stream().filter(user -> !user.equals(match.getTeamAPlayer1())).collect(Collectors.toList());
+        return players.stream().filter(user -> !user.equals(currentUser)).collect(Collectors.toList());
     }
 
     private void sendMatchVerificationRequestEvent(MatchVerificationRequest matchVerificationRequest) {
