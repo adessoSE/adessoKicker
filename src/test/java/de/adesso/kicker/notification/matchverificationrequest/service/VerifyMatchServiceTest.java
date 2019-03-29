@@ -1,13 +1,13 @@
-package de.adesso.kicker.notification.matchverificationrequest;
+package de.adesso.kicker.notification.matchverificationrequest.service;
 
 import de.adesso.kicker.events.MatchCreatedEventDummy;
-import de.adesso.kicker.match.MatchDummy;
 import de.adesso.kicker.match.persistence.Match;
+import de.adesso.kicker.match.persistence.MatchDummy;
 import de.adesso.kicker.match.service.events.MatchDeclinedEvent;
 import de.adesso.kicker.match.service.events.MatchVerifiedEvent;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequest;
+import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequestDummy;
 import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchVerificationRequestRepository;
-import de.adesso.kicker.notification.matchverificationrequest.service.VerifyMatchService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +26,7 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.times;
 
+@TestPropertySource("classpath:application-test.properties")
 class VerifyMatchServiceTest {
 
     @Mock

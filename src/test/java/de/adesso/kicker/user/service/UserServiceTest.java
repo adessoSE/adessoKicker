@@ -1,8 +1,8 @@
 package de.adesso.kicker.user.service;
 
-import de.adesso.kicker.user.UserDummy;
 import de.adesso.kicker.user.exception.UserNotFoundException;
 import de.adesso.kicker.user.persistence.User;
+import de.adesso.kicker.user.persistence.UserDummy;
 import de.adesso.kicker.user.persistence.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,6 +21,7 @@ import org.springframework.security.authentication.event.AuthenticationSuccessEv
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,13 +33,11 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
+@TestPropertySource("classpath:application-test.properties")
 class UserServiceTest {
 
     @Mock
     UserRepository userRepository;
-
-    @Mock
-    StatisticsService statisticsService;
 
     @InjectMocks
     UserService userService;
@@ -160,8 +159,6 @@ class UserServiceTest {
 
         given(userRepository.findById(anyString())).willReturn(Optional.empty());
         given(userRepository.save(user)).willReturn(user);
-
-//        doNothing().when(rankingService).updateRanks();
 
         // when
         userService.checkFirstLogin(authEvent);

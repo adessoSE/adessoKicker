@@ -1,6 +1,4 @@
-package de.adesso.kicker.user;
-
-import de.adesso.kicker.user.persistence.User;
+package de.adesso.kicker.user.persistence;
 
 public class UserDummy {
 
