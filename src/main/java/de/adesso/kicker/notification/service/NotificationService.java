@@ -29,9 +29,8 @@ public class NotificationService {
     private final UserService userService;
 
     public void acceptNotification(long notificationId) {
-        Notification notification = getNotificationById(notificationId);
+        var notification = getNotificationById(notificationId);
         checkWrongReceiver(notification);
-
         switch (notification.getType()) {
         case MESSAGE:
             sendMessageService.deleteMessage((Message) notification);
@@ -43,7 +42,7 @@ public class NotificationService {
     }
 
     public void declineNotification(long notificationId) {
-        Notification notification = getNotificationById(notificationId);
+        var notification = getNotificationById(notificationId);
         checkWrongReceiver(notification);
 
         switch (notification.getType()) {
