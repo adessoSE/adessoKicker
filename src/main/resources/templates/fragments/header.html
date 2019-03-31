@@ -82,10 +82,10 @@
         </div>
         <div class="dropdown-divider"></div>
         <div class="dropdown-item">
-          <form th:action="@{/users/togglemail}" method="post">
+          <form th:action="@{/users/togglemail}" method="get">
             <input type="checkbox"
                    th:checked="${@userService.getLoggedInUser().isEmailNotifications()}" onchange="this.form.submit()">
-            <a class="move-2px-right adesso-blue-text" th:href="@{/users/email}" th:text="#{header.email}"></a>
+            <a class="move-2px-right adesso-blue-text" th:href="@{/users/togglemail}" th:text="#{header.email}"></a>
           </form>
         </div>
         <div class="dropdown-divider"></div>

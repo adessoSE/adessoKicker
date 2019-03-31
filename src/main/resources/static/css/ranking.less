@@ -26,10 +26,14 @@
   border: 1px solid @colorscheme[warm-grey-midtone];
 }
 
+.badge {
+  min-width: 22px;
+}
+
 .badge-position {
   color: white;
   background-color: @colorscheme[adesso-blue];
-  border-radius: 100px;
+  border-radius: 50%;
   font-size: 15px;
   box-shadow: 0 0 0 6px white;
 }
@@ -39,8 +43,7 @@
 }
 
 #user-self {
-  .highlight(@colorscheme[warm-grey-midtone]);
-  &-badge {background-color: @colorscheme[orange];}
+  .highlight(lighten(@colorscheme[orange], 10%));
   td {border-top: solid @colorscheme[warm-grey-light] 1px;}
 }
 
