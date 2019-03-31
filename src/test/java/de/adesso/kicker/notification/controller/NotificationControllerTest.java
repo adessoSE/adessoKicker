@@ -22,7 +22,7 @@ import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @TestPropertySource("classpath:application-test.properties")
@@ -51,7 +51,7 @@ class NotificationControllerTest {
 
         // then
         then(notificationService).should(times(1)).acceptNotification(notification.getNotificationId());
-        result.andExpect(status().isOk()).andExpect(model().attribute("successAccepted", true));
+        result.andExpect(status().isFound()).andExpect(flash().attribute("acceptSuccess", true));
     }
 
     @Test
@@ -66,7 +66,7 @@ class NotificationControllerTest {
 
         // then
         then(notificationService).should(times(1)).declineNotification(notification.getNotificationId());
-        result.andExpect(status().isOk()).andExpect(model().attribute("successDeclined", true));
+        result.andExpect(status().isFound()).andExpect(flash().attribute("declineSuccess", true));
     }
 
     @Test
@@ -82,7 +82,7 @@ class NotificationControllerTest {
 
         // then
         willThrow(NotificationNotFoundException.class).given(notificationService).acceptNotification(anyLong());
-        result.andExpect(status().isOk()).andExpect(model().attribute("notExisting", true));
+        result.andExpect(status().isNotFound());
     }
 
     @Test
@@ -98,6 +98,6 @@ class NotificationControllerTest {
 
         // then
         willThrow(WrongReceiverException.class).given(notificationService).acceptNotification(anyLong());
-        result.andExpect(status().isOk()).andExpect(model().attribute("wrongReceiver", true));
+        result.andExpect(status().isForbidden());
     }
 }
