@@ -23,7 +23,9 @@ Before the project can be build the properties for a Keycloak and SMTP Server ha
 `application-prod.properties`
 
 ## Docker
-To build with docker run `docker build --tag=tag .`.  
+To build with docker run `docker build - t tag .`.  
+If you want to cache the maven dependencies you can enable experimental docker features and run
+`docker build -f experimental.Dockerfile -t tag .`.  
 Afterwards run the container with `docker run -d -p external_port:80 tag`.  
 If you want to persist logs and database run `docker run -d -p external_port:80 --mount source=kicker_logs,target=/kicker/logs 
 --mount source=kicker_db,target=/kicker/db tag`  
