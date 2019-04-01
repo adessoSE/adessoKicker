@@ -9,7 +9,7 @@ COPY src src
 RUN ./mvnw install -Dmaven.test.skip
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*jar)
 
-FROM openjdk:11-slim
+FROM openjdk:11-jre-slim
 WORKDIR /kicker
 
 VOLUME /tmp
@@ -23,4 +23,4 @@ COPY --from=build ${DEPENDENCY}/BOOT-INF/classes ./
 
 EXPOSE 80
 
-ENTRYPOINT ["java","-cp","./:./lib/*","-Dspring.profiles.active=prod","de.adesso.kicker.Application"]
+ENTRYPOINT ["java","-noverify","-cp","./:./lib/*","-Dspring.profiles.active=prod","de.adesso.kicker.Application","--spring.config.location=classpath:/"]
