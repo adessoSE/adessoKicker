@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum RatingRange {
-    VERY_HIGH(2400),
-    HIGH(2100);
+    VERY_HIGH(1500),
+    HIGH(1250);
 
     private final int rating;
 }
