@@ -4,7 +4,7 @@
 @import "_mediaqueries.less";
 
 #everything-above-table {
-  @media @mobile, @tablet {margin-bottom: 20px;}
+  margin-bottom: -25px;
   width: 80%;
 }
 
@@ -15,15 +15,27 @@
   h2 {margin-top: 10px;}
 }
 
-#table-container {
-  @media @mobile, @tablet{
-    width: 100%;
+.table-container {
+  @media @mobile, @tablet {
+  width: 100%;
     margin-left: 0;
-  }
+}
   width: 80%;
   margin-left: 10%;
+}
+
+#table-container {
   background-color: white;
   border: 1px solid @colorscheme[warm-grey-midtone];
+}
+
+#info-tooltip {
+  .fa-info-circle {
+    color: @colorscheme[adesso-blue];
+    font-size: 30px;
+    margin-top: 25px;
+  }
+  text-align: right;
 }
 
 .badge {

@@ -7,6 +7,9 @@
   <!--/* JQuery */-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+  <!--/* Popper JS */-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
   <!--/* Bootstrap */-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
@@ -84,69 +87,76 @@
     </div>
   </div>
 </div>
+
 <!--/* User List */-->
 <div class="container-fluid">
-  <div class="shadow-sm" id="table-container" th:if="${usersStatistics.size()>0}">
-    <table class="user-table table">
-      <thead>
-      <tr>
-        <!--/* Rank */-->
-        <th>
-          <span th:text="#{statistic.rank}"></span>
-          <i class="fas fa-chart-line"></i>
-        </th>
-        <!--/* Name */-->
-        <th class="thead-name">
-          <span th:text="#{statistic.name}"></span>
-        </th>
-        <!--/* Wins */-->
-        <th>
-          <span th:text="#{statistic.wins}"></span>
-          <i class="fas fa-check"></i>
-        </th>
-        <!--/* Win Rate */-->
-        <th>
-          <span th:text="#{statistic.winRate}"></span>
-          <i class="fas fa-balance-scale"></i>
-        </th>
-        <!--/* Points */-->
-        <th>
-          <span th:text="#{statistic.points}"></span>
-          <i class="fas fa-trophy"></i>
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <!--/* All users */-->
-      <tr class="user-table-row" onclick="window.location.href=this.getAttribute('href')"
-          th:each="user : ${users}"
-          th:href="@{/users/u/{id}(id=${user.userId})}"
-          th:id="${player == null ? (user == currentUser ? 'user-self' : '') : (user.getUserId() == player ? 'user-searched' : (user == currentUser ? 'user-self' : ''))}">
-        <td>
-          <span class="badge badge-position align-center" th:text="${user.statistic.rank}"></span>
-        </td>
-        <td class="user-table-name" th:text="${user.getFullName()}"></td>
-        <td th:text="${user.statistic.wins}"></td>
-        <td th:text="${user.statistic.getWinRatio() + '%'}"></td>
-        <td th:text="${user.statistic.rating}"></td>
-      </tr>
-      <!--/* Logged In User */-->
-      <tr class="user-table-row"
-          sec:authorize="isAuthenticated()"
-          th:if="${!users.contains(currentUser) && currentUser.statistic != null}"
-          th:href="@{/users/u/{id}(id=${currentUser.userId})}"
-          onclick="window.location.href=this.getAttribute('href')" id="user-self">
-        <td>
+  <div class="table-container">
+    <div id="info-tooltip">
+      <div class="fa fa-info-circle" data-toggle="tooltip" data-placement="top"
+           th:title="#{statistic.tooltip}"></div>
+    </div>
+    <div class="shadow-sm" id="table-container" th:if="${usersStatistics.size()>0}">
+      <table class="user-table table">
+        <thead>
+        <tr>
+          <!--/* Rank */-->
+          <th>
+            <span th:text="#{statistic.rank}"></span>
+            <i class="fas fa-chart-line"></i>
+          </th>
+          <!--/* Name */-->
+          <th class="thead-name">
+            <span th:text="#{statistic.name}"></span>
+          </th>
+          <!--/* Wins */-->
+          <th>
+            <span th:text="#{statistic.wins}"></span>
+            <i class="fas fa-check"></i>
+          </th>
+          <!--/* Win Rate */-->
+          <th>
+            <span th:text="#{statistic.winRate}"></span>
+            <i class="fas fa-balance-scale"></i>
+          </th>
+          <!--/* Points */-->
+          <th>
+            <span th:text="#{statistic.points}"></span>
+            <i class="fas fa-trophy"></i>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/* All users */-->
+        <tr class="user-table-row" onclick="window.location.href=this.getAttribute('href')"
+            th:each="user : ${users}"
+            th:href="@{/users/u/{id}(id=${user.userId})}"
+            th:id="${player == null ? (user == currentUser ? 'user-self' : '') : (user.getUserId() == player ? 'user-searched' : (user == currentUser ? 'user-self' : ''))}">
+          <td>
+            <span class="badge badge-position align-center" th:text="${user.statistic.rank}"></span>
+          </td>
+          <td class="user-table-name" th:text="${user.getFullName()}"></td>
+          <td th:text="${user.statistic.wins}"></td>
+          <td th:text="${user.statistic.getWinRatio() + '%'}"></td>
+          <td th:text="${user.statistic.rating}"></td>
+        </tr>
+        <!--/* Logged In User */-->
+        <tr class="user-table-row"
+            sec:authorize="isAuthenticated()"
+            th:if="${!users.contains(currentUser) && currentUser.statistic != null}"
+            th:href="@{/users/u/{id}(id=${currentUser.userId})}"
+            onclick="window.location.href=this.getAttribute('href')" id="user-self">
+          <td>
           <span id="user-self-badge" class="badge badge-position align-center"
                 th:text="${currentUser.statistic.rank}"></span>
-        </td>
-        <td class="user-table-name" th:text="${currentUser.getFullName()}"></td>
-        <td th:text="${currentUser.statistic.wins}"></td>
-        <td th:text="${currentUser.statistic.getWinRatio() + '%'}"></td>
-        <td th:text="${currentUser.statistic.rating}"></td>
-      </tr>
-      </tbody>
-    </table>
+          </td>
+          <td class="user-table-name" th:text="${currentUser.getFullName()}"></td>
+          <td th:text="${currentUser.statistic.wins}"></td>
+          <td th:text="${currentUser.statistic.getWinRatio() + '%'}"></td>
+          <td th:text="${currentUser.statistic.rating}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
   <div th:if="${usersStatistics.size()==0}">
     <div class="text-center alert alert-danger" th:text="#{statistic.noRanks}"></div>
