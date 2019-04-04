@@ -23,4 +23,4 @@ COPY --from=build ${DEPENDENCY}/BOOT-INF/classes ./
 
 EXPOSE 80
 
-ENTRYPOINT ["java","-noverify","-cp","./:./lib/*","-Dspring.profiles.active=prod","de.adesso.kicker.Application","--spring.config.location=classpath:/"]
+ENTRYPOINT ["java","-cp","./:./lib/*","-Dspring.profiles.active=prod","de.adesso.kicker.Application","--spring.config.location=classpath:/"]
