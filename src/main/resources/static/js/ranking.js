@@ -61,6 +61,9 @@ function findGetParameter(parameterName) {
 }
 
 $(document).ready(function () {
+    // Enable tooltip
+    $('[data-toggle="tooltip"]').tooltip();
+
     $('#search-bt').click(function(){
 
         if ($('#search-bar-selected').length > 0){
