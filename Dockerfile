@@ -13,8 +13,6 @@ FROM openjdk:11-jre-slim
 WORKDIR /kicker
 
 VOLUME /tmp
-VOLUME ./logs
-VOLUME ./db
 
 ARG DEPENDENCY=./kicker/target/dependency
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib ./lib
