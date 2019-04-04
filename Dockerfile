@@ -1,4 +1,5 @@
 FROM openjdk:11-slim as build
+FROM maven
 WORKDIR /kicker
 
 COPY mvnw .
@@ -6,7 +7,7 @@ COPY .mvn .mvn
 COPY pom.xml .
 COPY src src
 
-RUN ./mvnw install -Dmaven.test.skip
+RUN mvn install -Dmaven.test.skip
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*jar)
 
 FROM openjdk:11-jre-slim
