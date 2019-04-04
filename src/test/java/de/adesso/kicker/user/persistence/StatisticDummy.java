@@ -7,13 +7,13 @@ public class StatisticDummy {
 
     public static Statistic statisticHighRating() {
         var statistics = new Statistic();
-        statistics.setRating(2100);
+        statistics.setRating(1250);
         return statistics;
     }
 
     public static Statistic statisticVeryHighRating() {
         var statistics = new Statistic();
-        statistics.setRating(2400);
+        statistics.setRating(1500);
         return statistics;
     }
 }

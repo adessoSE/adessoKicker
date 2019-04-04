@@ -64,8 +64,8 @@ class StatisticServiceTest {
         statisticsService.updateStatistics(match.getWinners(), match.getLosers());
 
         // then
-        assertRatingPlayers(2112, match.getWinners());
-        assertRatingPlayers(2088, match.getLosers());
+        assertRatingPlayers(1262, match.getWinners());
+        assertRatingPlayers(1238, match.getLosers());
     }
 
     @Test
@@ -78,8 +78,8 @@ class StatisticServiceTest {
         statisticsService.updateStatistics(match.getWinners(), match.getLosers());
 
         // then
-        assertRatingPlayers(2408, match.getWinners());
-        assertRatingPlayers(2392, match.getLosers());
+        assertRatingPlayers(1508, match.getWinners());
+        assertRatingPlayers(1492, match.getLosers());
     }
 
     @Test
@@ -93,8 +93,8 @@ class StatisticServiceTest {
         statisticsService.updateStatistics(match.getWinners(), match.getLosers());
 
         // then
-        assertRatingPlayers(1032, match.getWinners());
-        assertRatingPlayers(2384, match.getLosers());
+        assertRatingPlayers(1030, match.getWinners());
+        assertRatingPlayers(1485, match.getLosers());
     }
 
     @Test
