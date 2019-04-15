@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
 import org.keycloak.representations.AccessToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -25,6 +27,8 @@ public class UserService {
     private final UserRepository userRepository;
 
     private final StatisticsService statisticsService;
+
+    private final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public List<User> getAllUsers() {
         return new ArrayList<>(userRepository.findAll());
@@ -59,6 +63,7 @@ public class UserService {
         var email = userAccessToken.getEmail();
         User user = new User(userId, firstName, lastName, email);
         saveUser(user);
+        logger.info("User {} has been created", user.getUserId());
     }
 
     private AccessToken getAccessToken(Authentication authentication) {

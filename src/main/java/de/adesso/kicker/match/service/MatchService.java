@@ -11,6 +11,8 @@ import de.adesso.kicker.match.service.events.MatchVerifiedEvent;
 import de.adesso.kicker.user.service.StatisticsService;
 import de.adesso.kicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,8 @@ public class MatchService {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
+    private final Logger logger = LoggerFactory.getLogger(MatchService.class);
+
     @Transactional
     public void addMatchEntry(Match match) {
         checkForFutureDate(match);
@@ -39,6 +43,7 @@ public class MatchService {
         checkCurrentUser(match);
         saveMatch(match);
         sendMatchCreationEvent(match);
+        logger.info("Match {} has been created", match.getMatchId());
     }
 
     private void sendMatchCreationEvent(Match match) {
@@ -53,6 +58,7 @@ public class MatchService {
         match.setVerified(true);
         updateStatistics(match);
         saveMatch(match);
+        logger.info("Match {} has been verified", match.getMatchId());
     }
 
     @EventListener
