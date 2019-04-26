@@ -5,6 +5,8 @@ import de.adesso.kicker.notification.matchverificationrequest.persistence.MatchV
 import de.adesso.kicker.notification.matchverificationrequest.service.events.MatchVerificationSentEvent;
 import de.adesso.kicker.user.persistence.User;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.event.EventListener;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -27,6 +29,8 @@ public class SendVerificationMailService {
 
     private final EmailMessageBuilder emailMessageBuilder;
 
+    private final Logger logger = LoggerFactory.getLogger(SendVerificationMailService.class);
+
     @EventListener
     public void sendVerification(MatchVerificationSentEvent matchVerificationSentEvent) {
         var match = matchVerificationSentEvent.getMatchVerificationRequest();
@@ -34,6 +38,7 @@ public class SendVerificationMailService {
         if (checkMails(user)) {
             var message = createEmail(matchVerificationSentEvent);
             mailSender.send(message);
+            logger.info("E-Mail has been sent to {}", user.getUserId());
         }
     }
 
