@@ -18,7 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithSecurityContext;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -28,6 +31,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.BDDMockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -92,6 +96,7 @@ class MatchControllerTest {
 
         // when
         var result = this.mockMvc.perform(post("/matches/add").param("teamAPlayer1.userId", "user")
+                .with(csrf())
                 .param("teamBPlayer1.userId", "user2")
                 .param("winnerTeamA", "true"));
 
@@ -115,6 +120,7 @@ class MatchControllerTest {
 
         // when
         var result = mockMvc.perform(post("/matches/add").param("date", LocalDate.now().toString())
+                .with(csrf())
                 .param("teamAPlayer1.userId", "user")
                 .param("teamBPlayer1.userId", "user2"));
 
@@ -137,8 +143,9 @@ class MatchControllerTest {
         when(userService.getLoggedInUser()).thenReturn(user);
 
         // when
-        var result = mockMvc
-                .perform(post("/matches/add").param("date", LocalDate.now().toString()).param("winnerTeamA", "true"));
+        var result = mockMvc.perform(post("/matches/add").with(csrf())
+                .param("date", LocalDate.now().toString())
+                .param("winnerTeamA", "true"));
 
         // then
         result.andExpect(status().isOk())
@@ -160,6 +167,7 @@ class MatchControllerTest {
 
         // when
         var result = mockMvc.perform(post("/matches/add").param("date", LocalDate.now().toString())
+                .with(csrf())
                 .param("teamAPlayer1.userId", "user")
                 .param("winnerTeamA", "true"));
 
@@ -183,6 +191,7 @@ class MatchControllerTest {
 
         // when
         var result = mockMvc.perform(post("/matches/add").param("date", LocalDate.now().toString())
+                .with(csrf())
                 .param("teamBPlayer1.userId", "user2")
                 .param("winnerTeamA", "true"));
 
@@ -206,6 +215,7 @@ class MatchControllerTest {
 
         // when
         var result = mockMvc.perform(post("/matches/add").param("date", LocalDate.now().toString())
+                .with(csrf())
                 .param("teamAPlayer1.userId", "user")
                 .param("teamBPlayer1.userId", "user2")
                 .param("winnerTeamA", "true"));
@@ -231,6 +241,7 @@ class MatchControllerTest {
 
         // when
         var result = mockMvc.perform(post("/matches/add").param("date", LocalDate.now().plusDays(1).toString())
+                .with(csrf())
                 .param("teamAPlayer1.userId", "user")
                 .param("teamBPlayer1.userId", "user2")
                 .param("winnerTeamA", "true"));
@@ -256,6 +267,7 @@ class MatchControllerTest {
 
         // when
         var result = mockMvc.perform(post("/matches/add").param("date", LocalDate.now().plusDays(1).toString())
+                .with(csrf())
                 .param("teamAPlayer1.userId", "user")
                 .param("teamBPlayer1.userId", "user2")
                 .param("winnerTeamA", "true"));
@@ -281,6 +293,7 @@ class MatchControllerTest {
 
         // when
         var result = mockMvc.perform(post("/matches/add").param("date", LocalDate.now().plusDays(1).toString())
+                .with(csrf())
                 .param("teamAPlayer1.userId", "user")
                 .param("teamBPlayer1.userId", "user2")
                 .param("winnerTeamA", "true"));
