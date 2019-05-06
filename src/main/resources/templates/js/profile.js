@@ -50,6 +50,8 @@ var rankOverTimeChart = new Chart($('#canvas-rank-over-time'), {
             yAxes: [{
                 ticks: {
                     reverse: true,
+                    stepSize: 1,
+                    min: 1,
                 }
             }]
         }
@@ -92,6 +94,11 @@ var winsAndLossesPerDayChart = new Chart($('#canvas-wins-losses-over-time'), {
     },
     options: {
         legend: { display: false },
+        scales: {
+            yAxes: [{
+                ticks: {stepSize: 1,}
+            }]
+        }
     }
 });
 
@@ -106,7 +113,12 @@ var winsAndLossesPerDayChart = new Chart($('#canvas-win-difference'), {
         }]
     },
     options: {
-        legend: { display: false }
+        legend: { display: false },
+        scales: {
+            yAxes: [{
+                ticks: {stepSize: 1,}
+            }]
+        }
     }
 });
 
